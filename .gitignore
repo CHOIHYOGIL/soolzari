@@ -10,7 +10,7 @@ pom.properties
 
 
 .classpath 
-
+.settings/
 .project
 
 .target/
