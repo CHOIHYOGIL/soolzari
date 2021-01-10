@@ -5,6 +5,7 @@
 <head>
 <meta charset="EUC-KR">
 <title>관리자</title>
+<link href="/resources/css/admin.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<section>
