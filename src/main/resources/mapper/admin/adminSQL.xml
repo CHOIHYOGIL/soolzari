@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="admin">
+  <select id="selectAllNotice" resultType="n">
+		select
+			notice_no as noticeNo,
+			notice_title as noticeTitle,
+			notice_writer as noticeWriter,
+			notice_content as noticeContent,
+			notice_enroll as noticeEnroll,
+			notice_count as noticeCount
+		from notice order by 1 desc
+	</select>
+</mapper>

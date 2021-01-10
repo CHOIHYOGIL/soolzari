@@ -7,22 +7,19 @@
 <title>관리자</title>
 </head>
 <body>
-	<div class="wrapper">
-            <div class="navi off">
-                <span class="glyphicon glyphicon-menu-hamburger"></span>
-            </div>
-            <div class="navi on">
-                <span class="glyphicon glyphicon-menu-hamburger"></span>
+	<section>
+		<div class="wrapper">
+            <div class="navi">
                 <h1>관리자</h1>
                 <ul>
                     <li>
                         <a href="#">홈</a>
                     </li>
                     <li>
-                        <a href="/notice.sool">공지사항</a>
+                        <a href="/notice/list.sool">공지사항</a>
                     </li>
                     <li>
-                        <a href="#">QnA</a>
+                        <a href="/faq.sool">자주 묻는 질문</a>
                     </li>
                     <li>
                         <a href="#">문의</a>
@@ -40,5 +37,6 @@
                 <div class="stat">통계</div>
             </div>
         </div>
+	</section>
 </body>
 </html>
