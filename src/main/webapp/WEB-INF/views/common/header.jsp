@@ -59,9 +59,9 @@
                             <ul class="sub"></ul>
                         </li>
 
-                        <li><a href="#">클래스</a>
+                        <li><a href="/reservation_intro.sool">클래스</a>
                             <ul class="sub">
-                                <li id="nop"><a href="#">안내</a></li>
+                                <li id="nop"><a href="/reservation_intro.sool">안내</a></li>
                                 <li id="nop"><a href="/reservation.sool">예약</a></li>
                             </ul>
                         </li>

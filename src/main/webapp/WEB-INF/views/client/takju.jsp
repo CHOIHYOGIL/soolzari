@@ -127,7 +127,7 @@
                                             <div class="item_cont">
                                                 <div class="item_photo_box">
                                                     <a href="#">
-                                                        <img src="/resources/image/carousel2.jpg" alt="전통주 짱맛있어" width="260" class="middle">
+                                                        <img src="/resources/image/carousel2.jpg" alt="전통주 짱맛있어" width="240" class="middle">
                                                     </a>
                                                 </div>
                                                 
@@ -153,7 +153,7 @@
                                             <div class="item_cont">
                                                 <div class="item_photo_box">
                                                     <a href="#">
-                                                        <img src="/resources/image/carousel2.jpg" alt="전통주 짱맛있어" width="260" class="middle">
+                                                        <img src="/resources/image/carousel2.jpg" alt="전통주 짱맛있어" width="240" class="middle">
                                                     </a>
                                                 </div>
                                                 
@@ -179,7 +179,7 @@
                                             <div class="item_cont">
                                                 <div class="item_photo_box">
                                                     <a href="#">
-                                                        <img src="/resources/image/carousel2.jpg" alt="전통주 짱맛있어" width="260" class="middle">
+                                                        <img src="/resources/image/carousel2.jpg" alt="전통주 짱맛있어" width="240" class="middle">
                                                     </a>
                                                 </div>
                                                 
@@ -205,7 +205,7 @@
                                             <div class="item_cont">
                                                 <div class="item_photo_box">
                                                     <a href="#">
-                                                        <img src="/resources/image/carousel2.jpg" alt="전통주 짱맛있어" width="260" class="middle">
+                                                           <img src="/resources/image/carousel2.jpg" alt="전통주 짱맛있어" width="240" class="middle">
                                                     </a>
                                                 </div>
                                                 
@@ -231,7 +231,7 @@
                                             <div class="item_cont">
                                                 <div class="item_photo_box">
                                                     <a href="#">
-                                                        <img src="/resources/image/carousel2.jpg" alt="전통주 짱맛있어"width="260" class="middle">
+                                           <img src="/resources/image/carousel2.jpg" alt="전통주 짱맛있어" width="240" class="middle">
                                                     </a>
                                                 </div>
                                                 
@@ -257,7 +257,7 @@
                                             <div class="item_cont">
                                                 <div class="item_photo_box">
                                                     <a href="#">
-                                                        <img src="/resources/image/carousel2.jpg" alt="전통주 짱맛있어" width="260" class="middle">
+                                               <img src="/resources/image/carousel2.jpg" alt="전통주 짱맛있어" width="240" class="middle">
                                                     </a>
                                                 </div>
                                                 
@@ -283,7 +283,7 @@
                                             <div class="item_cont">
                                                 <div class="item_photo_box">
                                                     <a href="#">
-                                                        <img src="/resources/image/carousel2.jpg" alt="전통주 짱맛있어" width="260" class="middle">
+                                      <img src="/resources/image/carousel2.jpg" alt="전통주 짱맛있어" width="240" class="middle">
                                                     </a>
                                                 </div>
                                                 
@@ -309,7 +309,7 @@
                                             <div class="item_cont">
                                                 <div class="item_photo_box">
                                                     <a href="#">
-                                                        <img src="/resources/image/carousel2.jpg" alt="전통주 짱맛있어"width="260" class="middle">
+                                         <img src="/resources/image/carousel2.jpg" alt="전통주 짱맛있어" width="240" class="middle">
                                                     </a>
                                                 </div>
                                                 
@@ -335,7 +335,7 @@
                                             <div class="item_cont">
                                                 <div class="item_photo_box">
                                                     <a href="#">
-                                                        <img src="/resources/image/carousel2.jpg" alt="전통주 짱맛있어" width="260" class="middle">
+                                            <img src="/resources/image/carousel2.jpg" alt="전통주 짱맛있어" width="240" class="middle">
                                                     </a>
                                                 </div>
                                                 
@@ -361,7 +361,7 @@
                                             <div class="item_cont">
                                                 <div class="item_photo_box">
                                                     <a href="#">
-                                                        <img src="/resources/image/carousel2.jpg" alt="전통주 짱맛있어" width="260" class="middle">
+                                        <img src="/resources/image/carousel2.jpg" alt="전통주 짱맛있어" width="240" class="middle">
                                                     </a>
                                                 </div>
                                                 
@@ -387,7 +387,7 @@
                                             <div class="item_cont">
                                                 <div class="item_photo_box">
                                                     <a href="#">
-                                                        <img src="/resources/image/carousel2.jpg" alt="전통주 짱맛있어" width="260" class="middle">
+                                           <img src="/resources/image/carousel2.jpg" alt="전통주 짱맛있어" width="240" class="middle">
                                                     </a>
                                                 </div>
                                                 
@@ -413,7 +413,7 @@
                                             <div class="item_cont">
                                                 <div class="item_photo_box">
                                                     <a href="#">
-                                                        <img src="/resources/image/carousel2.jpg" alt="전통주 짱맛있어" width="260" class="middle">
+                               <img src="/resources/image/carousel2.jpg" alt="전통주 짱맛있어" width="240" class="middle">
                                                     </a>
                                                 </div>
                                                 

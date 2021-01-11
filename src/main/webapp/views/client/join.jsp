@@ -74,8 +74,8 @@
                            <td><span class="comment">&nbsp;</span></td>
                     </tr>
                       <tr>
-                        <td><label for="userage">나이 *&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
-                        <td><input type="text" id="userage" name="clientAge" required></td>
+                        <td><label for="userage">생년월일 *&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
+                        <td><input type="text" id="userage" name="clientAge" placeholder="예시)19950904" required></td>
                             <td> <span class="comment">&nbsp;</span></td>
                     </tr>
                     <tr>
@@ -145,16 +145,7 @@
   $(function(){
 	
 	  
-	   $("#check").click(function(){
-		      var submit1 = document.getElementById('submit-1');
-		      if($("#check").is(":checked")==true){
-		    	  console.log("hi");
-		         submit1.disabled = false;
-		      }else{
-		    	  console.log("hi1");
-		         submit1.disabled = true;
-		      }
-		   })
+	
 		   
 		      $("input[type=reset]").click(function(){
       $(location).attr('href','/');
@@ -210,10 +201,22 @@
            
               count++;
           }
+          var today=new Date();
+			var yearNow=today.getFullYear();
+			var adultYear=yearNow-20;
+			var year=Number(inputs.eq(5).val().substr(0,4));
 			
-          if(inputs.eq(5).val()<19){
+			var ageReg=/^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/;
+
+			
+			
+          if(year>adultYear){
+        	  console.log("year :"+year);
         	  comments.eq(3).html('만 19세 이상부터 가입가능합니다');
-        
+        	  count++;
+          }
+          if(!ageReg.test(inputs.eq(5).val())){
+        	  comments.eq(3).html('생년월일 형식이 다릅니다');
         	  count++;
           }
           //주소: 영어 및 공백사용불가
@@ -241,7 +244,15 @@
            
               count++;
           }
-      
+
+   		   var submit1 = $("#submit-1");
+   		      if($("#check").is(":checked")==false){
+   		 	  alert("체크박스 선택해주세요");
+   		    	count++;
+   		   
+   		      }
+   		 
+       
           if(count >0){
               event.preventDefault(); //폼을 자동으로 제출하는 이벤트를 삭제
           }
