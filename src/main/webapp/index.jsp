@@ -51,7 +51,7 @@
 
                 <div class="carousel-inner">
                     <div class="item active">
-                        <img src="resources/image/carousel1.jpg" alt="" style="width:100%;">
+                        <img src="resources/image/carousel1.PNG" alt="" style="width:100%;">
                     </div>
 
                     <div class="item">

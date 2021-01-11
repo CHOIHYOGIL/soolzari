@@ -1,10 +1,13 @@
 package com.soolzari.shop.client.model.service;
 
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.soolzari.shop.client.model.dao.ClientDao;
+import com.soolzari.shop.client.model.vo.Class_List;
 import com.soolzari.shop.client.model.vo.Client;
 import com.soolzari.shop.client.model.vo.Reservation;
 
@@ -26,4 +29,12 @@ public class ClientService {
 		
 		return dao.reservation(r);
 	}
+	public ArrayList<Reservation> getClassInfo() {
+		return dao.getClassInfo();
+	}
+	public int setClassList(int session, int eventDB) {
+		
+		return dao.setClassList(session,eventDB);
+	}
+	
 }

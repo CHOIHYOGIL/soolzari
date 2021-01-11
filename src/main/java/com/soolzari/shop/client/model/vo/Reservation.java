@@ -10,6 +10,7 @@ public class Reservation {
 	private String classDescription;
 	private int classPrice;
 	private int classPerson;
-	private String classEnroll;
+	private String classDate;
+	private String classStartTime;
 	
 }

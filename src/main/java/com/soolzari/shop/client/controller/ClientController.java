@@ -2,6 +2,9 @@ package com.soolzari.shop.client.controller;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.soolzari.shop.client.model.service.ClientService;
+import com.soolzari.shop.client.model.vo.Class_List;
 import com.soolzari.shop.client.model.vo.Client;
 import com.soolzari.shop.client.model.vo.KakaoAccessToken;
 import com.soolzari.shop.client.model.vo.KakaoUserInfo;
@@ -63,6 +67,13 @@ public class ClientController {
 		System.out.println("예약페이지로 이동");
 		return "client/reservation";
 	}
+	@RequestMapping("/reservation_intro.sool")
+	public String reservationIntro(Model model, HttpSession session) {
+		
+		System.out.println("예약 안내 페이지로 이동");
+		return "client/reservation_introduce";
+	}
+	
 	
 	@RequestMapping(value="/loginNaver.sool", method= {RequestMethod.GET, RequestMethod.POST})
 	public void loginNaver(Model model, HttpSession session, HttpServletResponse httpServletResponse) throws IOException {
@@ -174,10 +185,11 @@ public class ClientController {
 
 	        return "common/msg";
 	}
-	
+
 	@RequestMapping("/register.sool")
 	public String join(Client c , Model model) {
 		System.out.println("register");
+		System.out.println(c.getClientAge());
 		c.setClientAddr(c.getClientAddr()+" "+c.getClientAddr1()+" "+c.getClientAddr2()+" "+c.getClientAddr3());
 		int result = service.insertClient(c);
 		
@@ -230,7 +242,38 @@ public class ClientController {
 		
 	}
 	
+	@ResponseBody
+	@RequestMapping("/getClassDB.sool")
+	public ArrayList<Reservation> getClassInfo(Model model) {
+		System.out.println("getClassDB");
+		ArrayList<Reservation> list = service.getClassInfo();
+		
+		System.out.println("list:"+list);
+		return list;
+		
+	}
 	
+	@ResponseBody
+	@RequestMapping("/setClassListDB.sool")
+	public String setClassList(Model model, int eventDB, int session){
+		System.out.println("setClassDB");
+	
+		System.out.println("clinetNo :"+session);
+		System.out.println("classNo:"+eventDB);
+
+	
+		int result = service.setClassList(session,eventDB);
+		
+		if(result>0) {
+			model.addAttribute("msg","클래스 리스트 삽입 성공");
+		
+		}else {
+			model.addAttribute("msg","클래스 리스트 삽입 실패");
+			
+		}
+
+		return "common/msg";
+	}
 //	@RequestMapping("/classRegister.sool")
 //	public String classRegister(Reservation r,Model model ) {
 //		

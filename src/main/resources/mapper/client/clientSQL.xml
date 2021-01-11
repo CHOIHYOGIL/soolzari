@@ -20,4 +20,13 @@
  	<insert id="reservationClass" parameterType="r">
  		insert into class_db values(class_db_seq.nextval, #{className},#{classCreator},#{classDescription},#{classPrice},#{classPerson},#{classEnroll})
  	</insert>
+ 	
+ 	<select id="getClassInfo" parameterType="r" resultType="r">
+ 		select cls_no as classNo, cls_name as className, sel_no as classCreator, cls_det as classDescription, cls_price as classPrice, class_person as classPerson, class_enroll as classDate, classStarttime as classStartTime from class_db  where class_enroll>TO_CHAR(SYSDATE,'yyyy-mm-dd')
+ 	</select>
+ 	
+ 	<insert id="setClass_list" parameterType="map">
+ 		
+ 		insert into class_list_db (cls_l_no, cls_cli_no, cls_class_no) select class_list_db_seq.nextval, #{clientNo}, #{classNo} from dual where not exists(select cls_class_no as classNo from class_list_db where cls_cli_no=#{clientNo} and cls_class_no=#{classNo})
+ 	</insert>
 </mapper>

@@ -19,7 +19,7 @@ public class Client {
 	private int clientRank;
 	private String clientDate;
 	private int clientPoint;
-	private int clientAge;
+	private String clientAge;
 	
 	
 

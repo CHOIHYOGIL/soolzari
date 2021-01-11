@@ -105,10 +105,10 @@
             <div class="choiceBtn">
                 <ul class>
                     <li>
-                        <a href="#">체험안내</a>
+                        <a href="/reservation_intro.sool">체험안내</a>
                     </li>
                     <li>
-                        <a href="#">체험예약</a>
+                        <a href="/reservation.sool">체험예약</a>
                     </li>
                 </ul>
             </div>
@@ -177,7 +177,9 @@
   $(function(){
 	
 	$("#payBtn").click(function(){
-		
+		console.log("pay");
+		console.log($('input[name=className]').val());
+		var title=$('input[name=className]').val();
 		var id='<%=session.getAttribute("sessionId")%>';
 		console.log("session: "+id);
 		var name='<%=session.getAttribute("sessionName")%>';
@@ -206,7 +208,18 @@
 			if(rsp.success){
 				var msg='클래스 예약 결제가 완료되었습니다';
 			        msg += '결제 금액 : ' + rsp.paid_amount;
+			        var eventDB=getEvents();
+			        console.log("결제완료");
+			        console.log(eventDB);
+			        console.log(eventDB.length);
+			        for(var i=0; i<eventDB.length; i++){
+			        	console.log(eventDB[i].id);
+			        if(eventDB[i].title==title){
+			          	setClassDB(eventDB[i].id);
+			        }
 			      
+			        }
+			  	  	
 			        alert(msg);
 			    
 			}else{
@@ -220,6 +233,7 @@
 	})
 	  
   })
+  
 
 
 
@@ -303,14 +317,107 @@ $(function(){
  		   
  		 $('.modal').modal("hide");
  	   });
+ 	
+ 	
  </script>
  
 <script>
 
+	
+var i=0;
+
+
+	function setClassDB(eventDB){
+	  var session='<%=session.getAttribute("sessionNo")%>';
+		console.log("session: "+session);
+	  console.log("setClass");
+	  var realClassNo;
+	  
+	  console.log(eventDB);
+		$.ajax({
+			url:"setClassListDB.sool",
+			type:"POST",
+			//dateType:'json',
+			async:false,
+			data:
+				{
+				eventDB:eventDB,
+				session:session
+				},
+			success:function(data){
+			console.log("data : "+data) //이런식으로 하면 안뜬다. 왜냐하면 "data :" 를 붙이면 javascrtip에서 string형으로 변환시킴
+				console.log(data);
+				console.log(data.length);
+				
+			},
+			error:function(error){
+				console.log(error);
+			}
+	
+		})
+}
+	function getEvents(){
+		
+		var title;
+		var start;
+		var classDate;
+		var classInfo=[];
+		var classNo;
+		var classStart;
+		
+		$.ajax({
+			url:"getClassDB.sool",
+			type:"POST",
+			dateType:'json',
+			async:false,  //이렇게 하면 객체를 return 하면 다른곳에서 받을수있다. 동기식으로 처리되는ㄴ 자바스크립트라면 반드시 이 getEvents()가 끝나고 classInfo를 리턴하고 다음 로직을 처리했을텐데
+						  //하지만 Ajax는 기본적으로 비동기식 처리방식이므로 Ajax 호출이 서버에서 응답받는데에 아무리 빨리 받아도 다음로직을 실행하기 전에 받을수 있다고 확신x 
+						  //async:false를 통해서 동기식 방식으로 설정하면 이제 ajax를 호출하여 서버에서 응답을 기다렸다가 응답을 모두 완료한 후 다음 로직을 싱행하므로 undefined가 뜨지않고 객체를 return할수있다.
+			success:function(data){
+				//console.log("data : "+data) 이런식으로 하면 안뜬다. 왜냐하면 "data :" 를 붙이면 javascrtip에서 string형으로 변환시킴
+				console.log(data);
+				console.log(data.length);
+				
+			
+					for(var i=0; i<data.length; i++){
+					classInfo[i]={
+							
+								
+						
+							title:data[i].className,
+							id:data[i].classNo,
+						
+							color:'#e5e5e5',
+							start:data[i].classDate+"T"+data[i].classStartTime,
+							}
+				
+					}
+				
+				
+					
+			},
+			error:function(error){
+				console.log(error);
+			}
+	
+		})
+				console.log(classInfo);
+		return classInfo;
+	
+	}
 
 
 
+		
+	
   document.addEventListener('DOMContentLoaded', function() {
+	
+	  var eventDB=getEvents();
+	  console.log('hi');
+	
+		
+	  
+	  console.log(eventDB);
+
     var calendarEl = document.getElementById('calendar');
 	var session='<%=session.getAttribute("sessionId")%>';
 	console.log("session: "+session);
@@ -320,6 +427,7 @@ $(function(){
     var m = date.getMonth();
     var y = date.getFullYear();
 
+    
     var calendar = new FullCalendar.Calendar(calendarEl, {
       plugins: [ 'dayGrid', 'timeGrid', 'list', 'interaction' ],
       initialView: 'dayGridMonth',
@@ -335,11 +443,7 @@ $(function(){
       eventLimit:true,
       selectable:true,
       //hiddenDays:[ 0, 6 ],
-      eventConstraint: {
-		  start: moment().format('YYYY-MM-DD'),
-		  
-		  end: '2200-01-01'
-		},
+ 
       
       dateClick:function(info){
     	  var myDate= moment().format('YYYY-MM-DD');
@@ -363,32 +467,8 @@ $(function(){
       
    
 
-    	events:[
-    		
-    		{
-    			title:'클래스1',
-    			startRecur: date.setDate(d+1),
-    			daysOfWeek:['0','1','2','3','4','5','6'],
-    			endRecur:date.setMonth(m+1),
-    			startTime:'13:00',
-    			endTime:'15:00',
-    			start: moment().format('YYYY-MM-DD'),
-    			color:'#e5e5e5'
-    			
-    			
-    		},
-    		{
-    			title:'클래스2',
-    			startRecur:date1.setDate(d+1),
-    			endRecur:date.setMonth(m+1),
-    			daysOfWeek:['0','1','2','3','4','5','6'],
-    			startTime:'10:00',
-    			
-    			endTime:'12:00',
-    			color:'#cdd0cb'
-    		
-    		}
-    	],
+    	events:eventDB,
+    
     	eventClick:function(info){
     		
     		
@@ -420,8 +500,8 @@ $(function(){
 
     calendar.render();
   });
-
   
+
  
   
 

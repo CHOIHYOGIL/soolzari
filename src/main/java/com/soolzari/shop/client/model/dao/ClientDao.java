@@ -1,10 +1,16 @@
 package com.soolzari.shop.client.model.dao;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.soolzari.shop.client.model.vo.Class_List;
 import com.soolzari.shop.client.model.vo.Client;
 import com.soolzari.shop.client.model.vo.Reservation;
 
@@ -35,6 +41,24 @@ public class ClientDao {
 	public int reservation(Reservation r) {
 		
 		return sqlSession.insert("client.reservationClass",r);
+	}
+
+	public ArrayList<Reservation> getClassInfo() {
+		
+		List<Reservation> list =sqlSession.selectList("client.getClassInfo");
+		return (ArrayList<Reservation>)list;
+	}
+
+
+
+	public int setClassList(int session, int eventDB) {
+		HashMap <String, Integer> map = new HashMap<String,Integer>();
+		map.put("clientNo", session);
+		map.put("classNo", eventDB);
+		System.out.println("setClassDao");
+		System.out.println(session);
+		System.out.println(eventDB);
+		return sqlSession.insert("client.setClass_list",map);
 	}
 
 }

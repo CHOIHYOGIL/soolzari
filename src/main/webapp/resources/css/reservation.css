@@ -22,9 +22,13 @@ address, em, i {font-style: normal;}
 
 .carousel-inner {
 width: 100%;
-    height:600px !important;
+  
     
   
+}
+.carousel-indicators{
+	
+	display:none !important;
 }
 
 .carousel-inner > .item > img{
@@ -87,7 +91,16 @@ width: 100%;
     text-decoration:none;
         
 }
-
+.choiceBtn ul li:nth-child(1) a{
+	
+	background-color:white;
+	color:blue !important;
+}
+.choiceBtn ul li:nth-child(2) a{
+	
+	background-color:orange;
+	color:white !important;
+}
 .text-table{
 	
 	margin-bottom:100px;
@@ -255,3 +268,8 @@ body {
             width:100px;
         
         }
+        
+
+
+
+        

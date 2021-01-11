@@ -20,7 +20,10 @@ address, em, i {font-style: normal;}
      font-style: normal;
 }
 
-
+.lead{
+	font-size:2.2rem !important;
+	font-weigh:300;
+}
 .wrapper{
     width:100vw;
 

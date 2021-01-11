@@ -84,7 +84,7 @@
                 <div class="col-md-7">
 
                     <h5 class="featurette-heading">
-                        <h2>우리들의 술 이야기,<br><span style="font-weight: bold">ABOUT 술자리</span></h2><br>
+                        <h2>우리들의 술 이야기,<br><span style="font-weight: bold; font-size:30px;">ABOUT 술자리</span></h2><br>
                         <p class="lead">안녕하십니까? 반갑습니다.<br>술자리를 방문해주신 여러분께 진심으로 감사의 말씀을 전해드립니다.<br><br>
                             우리는 대한민국 5,000년 역사와 함께 해온<br>자랑스러운 전통술을 알리고자 이 자리에 섰습니다.<br><br>
                             우리는 전통술의 발전을 통해 지역 경제를 활성화하고, <br>나아가 세계 10위의 경제대국에 걸맞은<br>
@@ -106,7 +106,7 @@
                 <div class="col-md-5">
                     <h5 class="featurette-heading">
 
-                        <p class="lead"><span style="font-size: 25px; font-weight: 500"><br>우리는 꿈을 꿉니다</span><br>
+                        <p class="lead"><span style="font-size: 30px; font-weight: 500"><br>우리는 꿈을 꿉니다</span><br>
                             <span style="font-size: 25px; font-weight: 800">우리와 함께 해주시겠습니까?</span><br><br>
                             우리의 전통술이 와인, 위스키 그리고 사케 등<br>
                             세계적인 술과 어깨를 나란히 하는 꿈을 꿉니다.<br><br>
@@ -151,3 +151,4 @@
        <%@include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>
+
