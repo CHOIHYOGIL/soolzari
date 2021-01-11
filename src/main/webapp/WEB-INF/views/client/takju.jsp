@@ -165,8 +165,24 @@
 
                 </div>
 
-
-
+	<!-- 페이징 -->
+		<div id="page-navi" >
+			<div>
+				<c:choose>
+					<c:when test="${list.size()%12 !=0 }">
+						<c:forEach items="${list}" begin="1" end="${list.size()+1 }" step="12" varStatus="status">
+	    					<span class="page-num">${status.count}</span>
+	    				</c:forEach> 
+					</c:when>
+					<c:otherwise>
+	    				<c:forEach items="${list}" begin="1" end="${list.size() }" step="12" varStatus="status">
+	    					<span class="page-num">${status.count}</span>
+	    				</c:forEach> 
+	    			</c:otherwise>
+				</c:choose>
+			</div>
+		
+		</div>
 	 
 
         </div>
@@ -266,7 +282,26 @@
     }
     
     /* 페이징 */
-
-
+	function paging(page){
+    	console.log("paging입장");
+    	console.log(page);
+		var a = $(".product-li li");
+		a.hide();
+		var s = 1+(12*(page-1));
+		console.log(a.length);
+		for(var i=s;i<=page*12;i++){
+			$(a).eq(i-1).show();
+		}
+	}
+	$(function(){
+		paging(1);
+		$(".page-num").eq(0).css({color:'#fac60e'});
+	})
+	
+	$(".page-num").click(function(){
+		$(".page-num").css({color:'darkgray'});
+		$(this).css({color:'#fac60e'});
+		paging(parseInt($(this).html()));
+	});
   
 </script>

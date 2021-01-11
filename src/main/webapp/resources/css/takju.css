@@ -34,7 +34,7 @@ address, em, i {font-style: normal;}
 
 .sub_content{
 	     font-family: 'S-CoreDream-3Light';
-    padding:0;
+    padding-bottom:100px;
     
 }
 
@@ -42,7 +42,7 @@ address, em, i {font-style: normal;}
          font-family: 'S-CoreDream-3Light';
     width:100%;
     min-height: 500px;
-    padding-bottom:200px;
+ 	padding:0;
 }
 
 
@@ -418,3 +418,22 @@ select {
     margin-right: 15px;
          font-family: 'S-CoreDream-3Light';
 }
+
+
+/* 페이징 */
+	#page-navi>div{
+		margin:0 auto;
+		text-align: center;
+		width:50%;
+		height:100%;
+	}
+	.page-num{
+		width:50px;
+		height:30px;
+		color: darkgray;
+		text-align: center;
+		cursor: pointer;
+		margin:10px;
+		font-size: 15px;
+		font-weight: bold;
+	}
