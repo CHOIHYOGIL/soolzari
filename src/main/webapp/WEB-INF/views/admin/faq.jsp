@@ -136,7 +136,7 @@
             });
             $(".ask").click(function(){
                 $(".content").hide();
-                $(this).find($(".content")).slideToggle();
+                $(this).find($(".content")).slideToggle(500);
             });
             $(".navi a").eq(0).click();
             $("#qna").click(function(){

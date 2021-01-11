@@ -14,8 +14,9 @@ public class NoticeDao {
 	@Autowired
 	SqlSessionTemplate session;
 
-	public ArrayList<Notice> selectAllNotice() {
-		List<Notice> list = session.selectList("admin.selectAllNotice");
+	public ArrayList<Notice> selectAllNotice(int start, int end) {
+		int[] page = {start, end};
+		List<Notice> list = session.selectList("admin.selectAllNotice", page);
 		return (ArrayList<Notice>)list;
 	}
 }

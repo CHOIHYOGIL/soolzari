@@ -2,6 +2,7 @@
 <%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%
     	Date nowTime = new Date();
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -11,8 +12,84 @@
 <head>
 <meta charset="UTF-8">
 <title>공지사항</title>
+<link href="/resources/css/notice.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.js"></script>
 </head>
 <body>
+	<section>
+		<h1>공지사항</h1>
+		<button onclick="noticeFrm();">글쓰기</button>
+		<table class="notice">
+			<tr>
+				<th>선택</th>
+				<th>번호</th>
+				<th>제목</th>
+                <th>작성자</th>
+				<th>작성일</th>
+				<th>조회수</th>
+			</tr>
+			<c:forEach items="${list }" var="n">
+				<tr>
+					<td><input type="checkbox" name="chk"></td>
+					<td>${n.noticeNo }</td>
+					<c:when test="${n.noticeEnroll eq sdf.format(nowTime) }">
+						<td>${n.noticeTitle }<span>new</span></td>
+					</c:when>
+					<c:otherwise>
+						<td>${n.noticeTitle }</td>
+					</c:otherwise>
+					<td>${n.noticeWriter }</td>
+					<td>${n.noticeEnroll }</td>
+					<td>${n.noticeCount }</td>
+				</tr>
+			</c:forEach>
+		</table>
+		<input type="checkbox" name="allchk" id="allchk"><label for="allchk">전체 선택</label>
+        <button id="delete">삭제</button>
+        <form action="/notice/find.sool" method="post">
+            <select name="date">
+                <option value="week">일주일</option>
+                <option value="month">한달</option>
+                <option value="all">전체</option>
+            </select>
+            <select name="type">
+                <option value="title">제목</option>
+                <option value="content">내용</option>
+                <option value="writer">작성자</option>
+            </select>
+            <input type="text" name="search">
+            <input type="submit" value="찾기">
+        </form>
+            <div class="page">
+            </div>
+	</section>
 	
+	<script>
+		function noticeFrm(){
+			location.href="/notice/form.sool";
+		}
+		$(function(){
+			$("#allchk").click(function(){
+				var chk = $("[name=chk]");
+                if($(this).is(":checked")){
+                    for(var i=0;i<chk.length;i++){
+                        chk[i].checked = true;
+                    }
+                }else{
+                    for(var i=0;i<chk.length;i++){
+                        chk[i].checked = false;
+                    }
+                }
+			});
+			$("#delete").click(function(){
+				var chk = $("[type=checkbox]:checked");
+				var noticeNo = new Array();
+				chk.each(function(index, item){
+					noticeNo.push($(item).parent().next().html());
+				});
+				location.href="/notice/delete.sool?noticeNo="+noticeNo.join("/");
+			});
+		});
+	</script>
 </body>
 </html>

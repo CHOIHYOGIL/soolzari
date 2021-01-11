@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.soolzari.shop.admin.model.service.NoticeService;
 import com.soolzari.shop.admin.model.vo.Notice;
+import com.soolzari.shop.admin.model.vo.NoticePage;
 
 @RequestMapping("/notice")
 @Controller
@@ -17,9 +18,25 @@ public class NoticeController {
 	private NoticeService service;
 	
 	@RequestMapping("/list.sool")
-	public String noticeList(Model model) {
-		ArrayList<Notice> list = service.selectAllNotice();
-		model.addAttribute("list", list);
+	public String noticeList(int reqPage, Model model) {
+		NoticePage np = service.selectAllNotice(reqPage);
+		model.addAttribute("list", np.getList());
+		model.addAttribute("page", np.getPage());
 		return "admin/noticeList";
+	}
+	
+	@RequestMapping("/form.sool")
+	public String noticeFrm() {
+		return "admin/noticeFrm";
+	}
+	
+	@RequestMapping("/find.sool")
+	public String findNotice(String date, String type, String search) {
+		
+	}
+	
+	@RequestMapping("/delete.sool")
+	public String deleteNotice(String noticeNo) {
+		int result = service.deleteNotice(noticeNo);
 	}
 }
