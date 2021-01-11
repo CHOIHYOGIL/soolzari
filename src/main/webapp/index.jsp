@@ -126,7 +126,7 @@
                                     <span class="img_emoti">좋아요</span>
                                     <span class="ani_heart_m"></span>
                                 </button>
-                            </div>
+                           </div>
                             <div class="text-box" style="padding: 20px; box-sizing: border-box;">
                                 <div>
                                     <span>

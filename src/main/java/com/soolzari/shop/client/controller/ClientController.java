@@ -26,6 +26,7 @@ import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.soolzari.shop.client.model.service.ClientService;
 import com.soolzari.shop.client.model.vo.Class_List;
 import com.soolzari.shop.client.model.vo.Client;
+import com.soolzari.shop.client.model.vo.Goods;
 import com.soolzari.shop.client.model.vo.KakaoAccessToken;
 import com.soolzari.shop.client.model.vo.KakaoUserInfo;
 import com.soolzari.shop.client.model.vo.NaverLoginBO;
@@ -49,11 +50,7 @@ public class ClientController {
 	@Autowired
 	ClientService service;
 	
-	@RequestMapping("/basicSool.sool")
-	public String basicSool() {
-		System.out.println("hihi");
-		return "client/takju";
-	}
+	
 	
 	@RequestMapping("/login")
 	public String login(Model model, HttpSession session) {
@@ -252,7 +249,34 @@ public class ClientController {
 		return list;
 		
 	}
+	@ResponseBody
+	@RequestMapping("/fastSearch.sool")
+	public ArrayList<Goods> fastSearch(Model model,String searchWord) {
+		
+		System.out.println("fastSearch");
+		System.out.println("검색어 : "+searchWord);
+		ArrayList<Goods> list=service.fastSearch(searchWord);
+		
+		System.out.println("list : "+list);
+		
 	
+		return list;
+	}
+
+	@RequestMapping("/basicSool.sool")
+	public String basicSool(Model model, String searchWord) {
+		System.out.println("hihi");
+		System.out.println(searchWord);
+		ArrayList<Goods> list=service.getGoods(searchWord);
+		
+		System.out.println("goodslist : "+list );
+		
+	
+		model.addAttribute("list",list);
+	
+		return "client/takju";
+		
+	}
 	@ResponseBody
 	@RequestMapping("/setClassListDB.sool")
 	public String setClassList(Model model, int eventDB, int session){

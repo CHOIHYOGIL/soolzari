@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.soolzari.shop.client.model.vo.Class_List;
 import com.soolzari.shop.client.model.vo.Client;
+import com.soolzari.shop.client.model.vo.Goods;
 import com.soolzari.shop.client.model.vo.Reservation;
 
 @Repository
@@ -59,6 +60,17 @@ public class ClientDao {
 		System.out.println(session);
 		System.out.println(eventDB);
 		return sqlSession.insert("client.setClass_list",map);
+	}
+
+	public ArrayList<Goods> getGoods(String searchWord) {
+		System.out.println("searchdAO" +searchWord);
+		List<Goods> list =sqlSession.selectList("client.getGoods",searchWord);
+		return (ArrayList<Goods>)list;
+	}
+
+	public ArrayList<Goods> fastSearch(String searchWord) {
+		List<Goods> list =sqlSession.selectList("client.searchWord",searchWord);
+		return (ArrayList<Goods>)list;
 	}
 
 }
