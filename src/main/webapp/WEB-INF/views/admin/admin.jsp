@@ -17,7 +17,7 @@
                         <a href="#">홈</a>
                     </li>
                     <li>
-                        <a href="/notice/list.sool">공지사항</a>
+                        <a href="/notice/list.sool?reqPage=1">공지사항</a>
                     </li>
                     <li>
                         <a href="/faq.sool">자주 묻는 질문</a>

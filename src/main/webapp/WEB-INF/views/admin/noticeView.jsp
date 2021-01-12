@@ -4,48 +4,51 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공지사항 작성</title>
-	<link href="/resources/css/noticeFrm.css" rel="stylesheet" type="text/css">
-	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+<title>공지사항 상세보기</title>
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+<link href="/resources/css/noticeView.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	<section>
-        <div class="wrap">
-            <h2>공지사항</h2>
-            <form action="/notice/insert.sool" method="post" enctype="multipart/form-data">
-                <table class="notice">
-                    <tr>
-                        <td>제목</td>
-                        <td><input type="text" name="noticeTitle" placeholder="제목을 작성해주세요"></td>
-                    </tr>
-                    <tr>
-                        <td>작성자</td>
-                        <td><input type="text" name="noticeWriter" readonly value="${SessionScope.login}"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><textarea name="noticeContent" id="summernote" style="resize: none"></textarea></td>
-                    </tr>
-                </table>
-                <div class="btnwrap">
-                    <button type="button" id="list">목록</button>
-                    <div class="inputbtn">
-                        <button type="submit">등록</button>
-                        <button type="button"><a href="javascript:history.go(-1)">취소</a></button>
-                    </div>
+        <h1>공지사항</h1>
+        <form action="/notice/update.sool" method="post">
+            <table class="notice">
+                <tr>
+                    <th>제목</th>
+                    <td colspan="3"><input type="text" name="noticeTitle" value="${n.noticeTitle}"></td>
+                </tr>
+                <tr>
+                    <th>작성자</th>
+                    <td><input type="text" name="noticeWriter" value="${n.noticeWriter}" readonly></td>
+                    <th>작성일</th>
+                    <td><input type="text" name="noticeEnroll" value="${n.noticeEnroll}" readonly></td>
+                </tr>
+                <tr>
+                    <td><textarea name="noticeContent" id="summernote">${n.noticeContent}</textarea></td>
+                </tr>
+            </table>
+            <div class="btns">
+                <button type="button" id="list">목록</button>
+                <div class="btn2">
+                    <button type="submit">수정</button>
+                    <button type="button" id="delete" value="${n.noticeNo}">삭제</button>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </section>
     
     <script>
         $(document).ready(function() {
             $("#list").click(function(){
                location.href="/notice/list.sool?reqPage=1"; 
+            });
+            $("#delete").click(function(){
+                var noticeNo = $(this).val();
+                location.href="/notice/delete.sool?noticeNo="+noticeNo;
             });
             $('#summernote').summernote({
                 height: 300, // set editor height
@@ -69,17 +72,16 @@
                 disableResize: true,
                 disableResizeEditor: true,
                 codeviewFilter: false,
-                placeholder: "* 관리자만 공지사항 작성 *",
                 callbacks: {
-                    onImageUpload: function(files, editor, welEditable) {
+                	onImageUpload: function(files, editor, welEditable) {
                         for (var i = files.length - 1; i >= 0; i--) {
                             imageUpload(files[i], this);
                         }
                     }
                 }
             });
-            function imageUpload(file, editor) {
-                var form_data = new FormData();
+            function imageUpload(file, el) {
+            	var form_data = new FormData();
                 form_data.append('file', file);
                 $.ajax({
                     data: form_data,

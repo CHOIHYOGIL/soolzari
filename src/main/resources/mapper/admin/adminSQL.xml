@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="admin">
   <select id="selectAllNotice" parameterType="map" resultType="n">
+		select * from (select rownum as rnum, n.* from (
 		select
 			notice_no as noticeNo,
 			notice_title as noticeTitle,
@@ -9,6 +10,54 @@
 			notice_content as noticeContent,
 			notice_enroll as noticeEnroll,
 			notice_count as noticeCount
-		from notice_db order by 1 desc
+		from notice_db order by 1 desc)n) where rnum between #{start} and #{end}
+	</select>
+	<select id="totalCount" resultType="_int">
+		select count(*) from notice_db
+	</select>
+	<insert id="insertNotice" parameterType="n">
+		insert into notice_db values(notice_seq.nextval, #{noticeTitle}, #{noticeWriter}, #{noticeContent}, to_char(sysdate,'yyyy-mm-dd'), 0)
+	</insert>
+	<delete id="deleteNotice" parameterType="_int">
+		delete from notice_db where notice_no = #{_parameter}
+	</delete>
+	<select id="findNotice" parameterType="map" resultType="n">
+		select
+			notice_no as noticeNo,
+			notice_title as noticeTitle,
+			notice_writer as noticeWriter,
+			notice_content as noticeContent,
+			notice_enroll as noticeEnroll,
+			notice_count as noticeCount
+		from notice_db order by 1 desc where
+		<choose>
+			<when test="type.equals('title')">
+				notice_title like '%#{search}%'
+			</when>
+			<when test="type.equals('content')">
+				notice_content like '%#{search}%'
+			</when>
+			<when test="type.equals('writer')">
+				notice_writer like '%#{search}%'
+			</when>
+		</choose>
+		<choose>
+			<when test="week != null">
+				and notice_enroll between to_date('#{week}') and sysdate
+			</when>
+			<when test="month != null">
+				and notice_enroll between to_date('#{month}') and sysdate
+			</when>
+		</choose>
+	</select>
+	<select id="selectOneNotice" parameterType="_int" resultType="n">
+		select
+			notice_no as noticeNo,
+			notice_title as noticeTitle,
+			notice_writer as noticeWriter,
+			notice_content as noticeContent,
+			notice_enroll as noticeEnroll,
+			notice_count as noticeCount
+		from notice_db where notice_no = #{_parameter}
 	</select>
 </mapper>

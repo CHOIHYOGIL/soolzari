@@ -1,12 +1,6 @@
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-    <%
-    	Date nowTime = new Date();
-    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,11 +23,11 @@
 				<th>조회수</th>
 			</tr>
 			<c:forEach items="${list }" var="n">
-				<tr>
+				<tr id="content">
 					<td><input type="checkbox" name="chk"></td>
 					<td>${n.noticeNo }</td>
-					<c:when test="${n.noticeEnroll eq sdf.format(nowTime) }">
-						<td>${n.noticeTitle }<span>new</span></td>
+					<c:when test="${n.noticeEnroll eq today }">
+						<td>${n.noticeTitle }<span>new !</span></td>
 					</c:when>
 					<c:otherwise>
 						<td>${n.noticeTitle }</td>
@@ -61,6 +55,7 @@
             <input type="submit" value="찾기">
         </form>
             <div class="page">
+            	${page }
             </div>
 	</section>
 	
@@ -89,6 +84,10 @@
 				});
 				location.href="/notice/delete.sool?noticeNo="+noticeNo.join("/");
 			});
+			$("#content").click(function(){
+                var noticeNo = $(this).children().eq(1).html();
+                location.href="/notice/view.sool?noticeNo"+noticeNo;
+            });
 		});
 	</script>
 </body>

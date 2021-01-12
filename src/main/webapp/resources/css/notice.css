@@ -19,7 +19,7 @@
 
 .notice th,
 td {
-    width: 100px;
+    width: 150px;
     box-sizing: border-box;
     height: 40px;
     line-height: 40px;
@@ -74,7 +74,7 @@ a {
 }
 
 .page a:hover {
-    color: darkgray;
+    color: #bca0c9;
 }
 
 .num:hover {
@@ -82,6 +82,37 @@ a {
 }
 
 .page {
-    width: 310px;
+    margin: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+section {
+    width: 1200px;
     margin: 0 auto;
+}
+
+.sel {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: small;
+    color: #bca0c9;
+    font-weight: bold;
+    border-bottom: 3px solid #4d5075;
+}
+
+.wrap {
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+h1{
+    text-align: center;
+}
+.notice span{
+    font-size: small;
+    margin-left: 10px;
+    color: #bca0c9;
 }
