@@ -12,6 +12,7 @@
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 <link href="/resources/css/noticeView.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.js"></script>
 </head>
 <body>
 	<section>
@@ -30,10 +31,10 @@
                 </tr>
                 <tr>
                 <th>첨부파일</th>
-	                <c:if test="">
+	                <c:if test="${image.filename != null }">
 	                    <td>
-	                        <img src="/img/file.png" width="16px">
-	                        <a href="#">${filename}</a>
+	                        <img src="/resources/image/file.png" width="16px">
+	                        <a href="#">${image.filename}</a>
 	                    </td>
 	                </c:if>
 	            </tr>

@@ -17,7 +17,7 @@
 		
 		
 		<typeAlias type="com.soolzari.shop.admin.model.vo.Notice" alias="n"/>
-
+		<typeAlias type="com.soolzari.shop.image.model.vo.Image" alias="i"/>
 	</typeAliases>
 
 </configuration>

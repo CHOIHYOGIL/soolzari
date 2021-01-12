@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.soolzari.shop.admin.model.vo.Notice;
+import com.soolzari.shop.image.model.vo.Image;
 
 @Repository
 public class NoticeDao {
@@ -39,5 +40,9 @@ public class NoticeDao {
 
 	public Notice selectOneNotice(int noticeNo) {
 		return session.selectOne("admin.selectOneNotice", noticeNo);
+	}
+
+	public Image selectOneImage(int noticeNo) {
+		return session.selectOne("admin.selectOneImage", noticeNo);
 	}
 }

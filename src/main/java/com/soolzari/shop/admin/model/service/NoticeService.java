@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.soolzari.shop.admin.model.dao.NoticeDao;
 import com.soolzari.shop.admin.model.vo.Notice;
 import com.soolzari.shop.admin.model.vo.NoticePage;
+import com.soolzari.shop.image.model.vo.Image;
 
 @Service
 public class NoticeService {
@@ -110,5 +111,9 @@ public class NoticeService {
 
 	public Notice selectOneNotice(int noticeNo) {
 		return dao.selectOneNotice(noticeNo);
+	}
+
+	public Image selectOneImage(int noticeNo) {
+		return dao.selectOneImage(noticeNo);
 	}
 }

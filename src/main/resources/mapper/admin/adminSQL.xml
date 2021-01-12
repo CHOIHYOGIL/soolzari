@@ -60,4 +60,13 @@
 			notice_count as noticeCount
 		from notice_db where notice_no = #{_parameter}
 	</select>
+	<select id="selectOneImage" parameterType="_int" resultType="i">
+		select
+			img_no as imgNo,
+			filename,
+			filepath,
+			img_type as imgType,
+			type_no as typeNo
+		from img_db where imgType = 'n' and type_no = #{_parameter}
+	</select>
 </mapper>

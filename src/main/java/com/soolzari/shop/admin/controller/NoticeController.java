@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.soolzari.shop.admin.model.service.NoticeService;
 import com.soolzari.shop.admin.model.vo.Notice;
 import com.soolzari.shop.admin.model.vo.NoticePage;
+import com.soolzari.shop.image.model.vo.Image;
 
 @RequestMapping("/notice")
 @Controller
@@ -91,7 +92,7 @@ public class NoticeController {
 	
 	@ResponseBody
 	@RequestMapping("/insertImage.sool")
-	public void insertImage(MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
+	public void insertImage(MultipartFile file, HttpServletRequest request, HttpServletResponse response, int noticeNo) {
 		response.setContentType("text/html;charset=utf-8");
 		try {
 			PrintWriter out = response.getWriter();
@@ -108,7 +109,7 @@ public class NoticeController {
 			file.transferTo(f);
 			out.println("insertImage/"+filepath);
 			out.close();
-			service.insertImage();
+			service.insertImage(filename, filepath, noticeNo);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -118,12 +119,19 @@ public class NoticeController {
 	@RequestMapping("/view.sool")//이미지 보내줘야함
 	public String noticeView(int noticeNo, Model model) {
 		Notice n = service.selectOneNotice(noticeNo);
+		Image image = service.selectOneImage(noticeNo);
 		model.addAttribute("n", n);
+		model.addAttribute("image", image);
 		return "admin/noticeView";
 	}
 	
 	@RequestMapping("/update.sool")
 	public String updateNotice(Notice n) {
+		
+	}
+	
+	@RequestMapping("/download.sool")
+	public String download() {
 		
 	}
 }

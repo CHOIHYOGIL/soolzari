@@ -1,0 +1,81 @@
+@charset "utf-8";
+
+@font-face {
+    font-family: 'S-CoreDream-3Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    font-family: 'S-CoreDream-3Light';
+}
+
+section,
+.notice {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.notice tr {
+    display: block;
+    border-top: 1px solid lightgray;
+}
+
+.notice th,
+td {
+    width: 150px;
+    box-sizing: border-box;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+}
+
+.notice tr:last-child {
+    height: 300px;
+    border-bottom: 1px solid lightgray;
+    padding: 50px;
+    margin-bottom: 20px;
+}
+
+button {
+    width: 70px;
+    height: 31px;
+    background: #4d5075;
+    color: white;
+    border: 1px solid #4d5075;
+    box-sizing: border-box;
+    line-height: 27px;
+    cursor: pointer;
+}
+
+#prev {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#next {
+    display: flex;
+    align-items: center;
+}
+
+#prev > span,
+#next > span {
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+#prev > a,
+#next > a {
+    margin-left: 50px;
+}

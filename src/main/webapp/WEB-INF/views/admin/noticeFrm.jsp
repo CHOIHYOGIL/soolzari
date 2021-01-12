@@ -11,6 +11,7 @@
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.js"></script>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
@@ -81,7 +82,7 @@
             function imageUpload(file, editor) {
                 var form_data = new FormData();
                 form_data.append('file', file);
-                $.ajax({
+                $.ajax({//noticeNo 어떻게 넘겨줄지
                     data: form_data,
                     type: "POST",
                     url: '/notice/insertImage.sool',
