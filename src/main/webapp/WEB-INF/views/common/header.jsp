@@ -107,7 +107,29 @@
 </html>
 <script>
 
+/* keyup delay 줌*/
+function delay(callback, ms) {
+	  var timer = 0;
+	  return function() {
+	    var context = this, args = arguments;
+	    clearTimeout(timer);
+	    timer = setTimeout(function () {
+	      callback.apply(context, args);
+	    }, ms || 0);
+	  };
+	}
+	/* 빠른 검색*/
+	$(".search_input").keyup(delay(function(e){
+		
+		console.log($(this).val());
+		var searchWord=$(this).val();
+		location.href='/basicSool.sool?searchWord='+searchWord;
+	},500));
+
+
  /* 헤더 */
+ 
+
  $(function(){
 	 $(document).on('mouseover','.gnb li a', function(){
          if($(window).width()>1200){
@@ -142,6 +164,8 @@
        
 
     })
+    
+    
     
           $(function() {
     $('header .open').on('click', function() {

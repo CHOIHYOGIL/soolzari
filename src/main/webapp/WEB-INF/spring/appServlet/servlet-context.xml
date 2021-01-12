@@ -39,9 +39,9 @@
 	<beans:bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 		<beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
 		<!-- <beans:property name="url" value="jdbc:oracle:thin:@1.220.236.74:15213:xe"/> -->
-		<beans:property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:xe"/>
+		<beans:property name="url" value="jdbc:oracle:thin:@1.220.236.74:15213:xe"/>
 		<!-- <beans:property name="username" value="SOOLZARI"/> -->
-		<beans:property name="username" value="sool"/>
+		<beans:property name="username" value="soolzari"/>
 		<beans:property name="password" value="1234"/>
 	</beans:bean>
 	

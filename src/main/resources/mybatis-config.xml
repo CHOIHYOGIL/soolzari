@@ -13,7 +13,9 @@
 		<typeAlias type="com.soolzari.shop.client.model.vo.Reservation" alias="r"/>
 
 		<typeAlias type="com.soolzari.shop.client.model.vo.Class_List" alias="cl"/>
-
+		<typeAlias type="com.soolzari.shop.client.model.vo.Goods" alias="g"/>
+		
+		
 		<typeAlias type="com.soolzari.shop.admin.model.vo.Notice" alias="n"/>
 
 	</typeAliases>
