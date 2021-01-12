@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,6 +28,15 @@
                     <th>작성일</th>
                     <td><input type="text" name="noticeEnroll" value="${n.noticeEnroll}" readonly></td>
                 </tr>
+                <tr>
+                <th>첨부파일</th>
+	                <c:if test="">
+	                    <td>
+	                        <img src="/img/file.png" width="16px">
+	                        <a href="#">${filename}</a>
+	                    </td>
+	                </c:if>
+	            </tr>
                 <tr>
                     <td><textarea name="noticeContent" id="summernote">${n.noticeContent}</textarea></td>
                 </tr>

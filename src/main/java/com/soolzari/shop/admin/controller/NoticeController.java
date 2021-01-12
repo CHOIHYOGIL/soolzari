@@ -1,9 +1,13 @@
 package com.soolzari.shop.admin.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.soolzari.shop.admin.model.service.NoticeService;
@@ -60,7 +65,7 @@ public class NoticeController {
 		return "common/msg";
 	}
 	
-	@RequestMapping("/delete.sool")
+	@RequestMapping("/delete.sool")//이미지 지워줘야함
 	public String deleteNotice(int noticeNo, Model model) {
 		int result = service.deleteNotice(noticeNo);
 		if(result>0) {
@@ -84,15 +89,41 @@ public class NoticeController {
 		return "common/msg";
 	}
 	
+	@ResponseBody
 	@RequestMapping("/insertImage.sool")
-	public String insertImage(MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
-		
+	public void insertImage(MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
+		response.setContentType("text/html;charset=utf-8");
+		try {
+			PrintWriter out = response.getWriter();
+			String root = request.getSession().getServletContext().getRealPath("/");
+			String path = root+"resources/upload/";
+			UUID uuid = UUID.randomUUID();
+			String filename = file.getOriginalFilename();
+			String extension = filename.substring(filename.lastIndexOf("."));
+			String filepath = uuid+extension;
+			File f = new File(path+filepath);
+			if (!f.exists()) {
+				f.mkdirs();
+			}
+			file.transferTo(f);
+			out.println("insertImage/"+filepath);
+			out.close();
+			service.insertImage();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
-	@RequestMapping("/view.sool")
+	@RequestMapping("/view.sool")//이미지 보내줘야함
 	public String noticeView(int noticeNo, Model model) {
 		Notice n = service.selectOneNotice(noticeNo);
 		model.addAttribute("n", n);
 		return "admin/noticeView";
+	}
+	
+	@RequestMapping("/update.sool")
+	public String updateNotice(Notice n) {
+		
 	}
 }
