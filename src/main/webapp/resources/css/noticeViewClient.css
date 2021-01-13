@@ -53,15 +53,17 @@ button {
     cursor: pointer;
 }
 
-#prev {
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
-}
-
 #next {
     display: flex;
     align-items: center;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+#prev {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
 }
 
 #prev > span,

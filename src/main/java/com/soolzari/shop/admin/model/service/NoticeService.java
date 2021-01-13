@@ -112,8 +112,8 @@ public class NoticeService {
 	public Notice selectOneNotice(int noticeNo) {
 		return dao.selectOneNotice(noticeNo);
 	}
-
-	public Image selectOneImage(int noticeNo) {
-		return dao.selectOneImage(noticeNo);
+	
+	public int updateNotice(Notice n) {
+		return dao.updateNotice(n);
 	}
 }

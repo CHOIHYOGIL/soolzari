@@ -66,7 +66,7 @@ public class NoticeController {
 		return "common/msg";
 	}
 	
-	@RequestMapping("/delete.sool")//이미지 지워줘야함
+	@RequestMapping("/deleteNo.sool")//이미지 지워줘야함
 	public String deleteNotice(int noticeNo, Model model) {
 		int result = service.deleteNotice(noticeNo);
 		if(result>0) {
@@ -91,8 +91,8 @@ public class NoticeController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/insertImage.sool")
-	public void insertImage(MultipartFile file, HttpServletRequest request, HttpServletResponse response, int noticeNo) {
+	@RequestMapping("/imageUpload.sool")
+	public void insertImage(MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
 		response.setContentType("text/html;charset=utf-8");
 		try {
 			PrintWriter out = response.getWriter();
@@ -107,31 +107,42 @@ public class NoticeController {
 				f.mkdirs();
 			}
 			file.transferTo(f);
-			out.println("insertImage/"+filepath);
+			out.println("/resources/upload/"+filepath);
 			out.close();
-			service.insertImage(filename, filepath, noticeNo);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	@RequestMapping("/view.sool")//이미지 보내줘야함
+	@RequestMapping("/view.sool")
 	public String noticeView(int noticeNo, Model model) {
 		Notice n = service.selectOneNotice(noticeNo);
-		Image image = service.selectOneImage(noticeNo);
 		model.addAttribute("n", n);
-		model.addAttribute("image", image);
 		return "admin/noticeView";
 	}
 	
-	@RequestMapping("/update.sool")
-	public String updateNotice(Notice n) {
-		
+	@RequestMapping("/viewClient.sool")
+	public String noticeClient(int noticeNo, Model model) {
+		Notice n = service.selectOneNotice(noticeNo);
+		Notice prev = service.selectOneNotice(noticeNo-1);
+		Notice next = service.selectOneNotice(noticeNo+1);
+		model.addAttribute("n", n);
+		model.addAttribute("prev", prev);
+		model.addAttribute("next", next);
+		return "client/noticeViewC";
 	}
 	
-	@RequestMapping("/download.sool")
-	public String download() {
-		
+	@RequestMapping("/update.sool")
+	public String updateNotice(Notice n, Model model) {
+		int result = service.updateNotice(n);
+		if(result>0) {
+			model.addAttribute("msg", "공지사항 수정 성공");
+		}else {
+			model.addAttribute("msg", "공지사항 수정 실패");
+		}
+		model.addAttribute("loc", "/notice/list.sool?reqPage=1");
+		return "common/msg";
 	}
+	
 }

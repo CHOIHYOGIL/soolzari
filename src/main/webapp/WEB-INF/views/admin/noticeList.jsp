@@ -12,7 +12,6 @@
 <body>
 	<section>
 		<h1>공지사항</h1>
-		<button onclick="noticeFrm();">글쓰기</button>
 		<table class="notice">
 			<tr>
 				<th>선택</th>
@@ -38,8 +37,11 @@
 				</tr>
 			</c:forEach>
 		</table>
-		<input type="checkbox" name="allchk" id="allchk"><label for="allchk">전체 선택</label>
-        <button id="delete">삭제</button>
+		<div class="wrap">
+            <input type="checkbox" name="allchk" id="allchk"><label for="allchk">전체 선택</label>
+            <button id="delete">삭제</button>
+            <button onclick="noticeFrm();">글쓰기</button>
+        </div>
         <form action="/notice/find.sool" method="post">
             <select name="date">
                 <option value="week">일주일</option>

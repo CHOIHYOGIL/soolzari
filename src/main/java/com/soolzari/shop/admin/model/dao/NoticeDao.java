@@ -42,7 +42,7 @@ public class NoticeDao {
 		return session.selectOne("admin.selectOneNotice", noticeNo);
 	}
 
-	public Image selectOneImage(int noticeNo) {
-		return session.selectOne("admin.selectOneImage", noticeNo);
+	public int updateNotice(Notice n) {
+		return session.update("admin.updateNotice", n);
 	}
 }
