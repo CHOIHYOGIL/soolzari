@@ -8,4 +8,6 @@ public class Class_List {
 	public int classListNo;
 	public int clientNo;
 	public int classNo;
+	public int classPerson;
+	public int classCheck;
 }

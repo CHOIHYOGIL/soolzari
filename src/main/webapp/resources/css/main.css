@@ -174,7 +174,11 @@ width: 100%;
     
   
 }
-
+.carousel-indicators li{
+	background-clip:inherit !important ;
+	border-top:0px !important;
+	border-bottom:0px !important;
+}
 
 .carousel-inner > .item > img{
     width:80%;
