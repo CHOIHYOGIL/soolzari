@@ -18,6 +18,10 @@ address, em, i {font-style: normal;}
      font-style: normal;
 }
 
+* {
+    font-family: 'S-CoreDream-3Light';
+}
+
 .wrap{
 	width:100vw;
 
