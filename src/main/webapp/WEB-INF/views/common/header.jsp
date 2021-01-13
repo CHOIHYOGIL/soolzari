@@ -70,8 +70,8 @@
                         </li>
                         <li><a href="#">고객센터</a>
                             <ul class="sub">
-                                <li id="nop"><a href="/notice/listClient.sool">공지사항</a></li>
-                                <li id="nop"><a href="/faq.sool">Q&A</a></li>
+                                <li id="nop"><a href="/notice/listClient.sool?reqPage=1">공지사항</a></li>
+                                <li id="nop"><a href="/faq.sool">자주 묻는 질문</a></li>
                             </ul>
                         </li>
                     </ul>
