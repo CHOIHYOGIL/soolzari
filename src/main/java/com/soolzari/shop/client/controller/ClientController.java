@@ -15,6 +15,7 @@ import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +32,7 @@ import com.soolzari.shop.client.model.vo.KakaoAccessToken;
 import com.soolzari.shop.client.model.vo.KakaoUserInfo;
 import com.soolzari.shop.client.model.vo.NaverLoginBO;
 import com.soolzari.shop.client.model.vo.Reservation;
+import com.soolzari.shop.client.model.vo.Subscribe;
 
 
 @Controller
@@ -216,6 +218,8 @@ public class ClientController {
 			session.setAttribute("sessionEmail", client.getClientEmail());
 			session.setAttribute("sessionPhone", client.getClientTel());
 			session.setAttribute("sessionAddr", client.getClientAddr());
+			session.setAttribute("sessionPoint", client.getClientPoint());
+			session.setAttribute("sessionSubscribe", client.getClientRank());
 		
 			model.addAttribute("msg","로그인 성공");
 		}else {
@@ -249,28 +253,19 @@ public class ClientController {
 		return list;
 		
 	}
-	@ResponseBody
-	@RequestMapping("/fastSearch.sool")
-	public ArrayList<Goods> fastSearch(Model model,String searchWord) {
-		
-		System.out.println("fastSearch");
-		System.out.println("검색어 : "+searchWord);
-		ArrayList<Goods> list=service.fastSearch(searchWord);
-		
-		System.out.println("list : "+list);
-		
-	
-		return list;
-	}
 
 	@RequestMapping("/basicSool.sool")
 	public String basicSool(Model model, String searchWord) {
+		
+		
+		
 		System.out.println("hihi");
 		System.out.println(searchWord);
 		ArrayList<Goods> list=service.getGoods(searchWord);
 		
 		System.out.println("goodslist : "+list );
-		
+	
+
 	
 		model.addAttribute("list",list);
 	
@@ -297,6 +292,32 @@ public class ClientController {
 		}
 
 		return "common/msg";
+	}
+	
+	@RequestMapping("/subscribe.sool")
+	public String subscribe(Model model) {
+		System.out.println("subscribe");
+		return "client/subscribe";
+	}
+	
+	
+	@RequestMapping("/setSubscribe.sool")
+	public String setSubscribe(Model model, String name, int price, Subscribe sub) {
+		System.out.println("setSubscribe");
+		System.out.println("name:"+name);
+	
+		sub.setSubscribeName(name);
+		sub.setSubscribePrice(price);
+		
+		if(name.equals("술자리 구독세트 A")) {
+			sub.setSubscribeDept("4인이 적당");
+		}else {
+			sub.setSubscribeDept("8인이 적당");
+		}
+		ArrayList<Subscribe> list=service.setSubscribe(sub);
+		
+		model.addAttribute("list",list);
+		return "client/subscribe";
 	}
 //	@RequestMapping("/classRegister.sool")
 //	public String classRegister(Reservation r,Model model ) {

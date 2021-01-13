@@ -257,7 +257,7 @@ body {
         .btnGroup{
             text-align: center;
             padding-bottom:20px;
-            
+                   line-height:20px !important;
             
         }
         .btnGroup input{
@@ -266,7 +266,8 @@ body {
         	    font-family: 'S-CoreDream-3Light';
             font-size:17px;
             width:100px;
-        
+            background-color:orange;
+            color:white;
         }
         
 

@@ -55,8 +55,11 @@
                                 <li id="nop"><a href="#">과실주</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">펀딩</a>
-                            <ul class="sub"></ul>
+                        <li><a href="#">구독/펀딩</a>
+                            <ul class="sub">
+                                <li id="nop"><a href="/subscribe.sool">구독</a></li>
+                                <li id="nop"><a href="/reservation.sool">펀딩</a></li>
+                            </ul>
                         </li>
 
                         <li><a href="/reservation_intro.sool">클래스</a>
@@ -124,7 +127,7 @@ function delay(callback, ms) {
 		console.log($(this).val());
 		var searchWord=$(this).val();
 		location.href='/basicSool.sool?searchWord='+searchWord;
-	},500));
+	},1000));
 
 
  /* 헤더 */

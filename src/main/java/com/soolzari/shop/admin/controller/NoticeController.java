@@ -30,13 +30,5 @@ public class NoticeController {
 		return "admin/noticeFrm";
 	}
 	
-	@RequestMapping("/find.sool")
-	public String findNotice(String date, String type, String search) {
-		
-	}
 	
-	@RequestMapping("/delete.sool")
-	public String deleteNotice(String noticeNo) {
-		int result = service.deleteNotice(noticeNo);
-	}
 }

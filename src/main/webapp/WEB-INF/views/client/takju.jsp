@@ -108,14 +108,7 @@
                                         </li>
                                     </ul>
                                     
-                                    <div class="choice_num_view">
-                                        <select class="chosen-select" name="pageNum">
-                                            <option value="10">10개씩보기</option>
-                                            <option value="10">20개씩보기</option>
-                                            <option value="10">30개씩보기</option>
-                                        </select>
-                                        
-                                    </div>
+                                 
                                 </div>
                             </form>
                         </div>
@@ -169,7 +162,7 @@
 		<div id="page-navi" >
 			<div>
 				<c:choose>
-					<c:when test="${list.size()%12 !=0 }">
+					<c:when test="${list.size()% 12 !=0 }">
 						<c:forEach items="${list}" begin="1" end="${list.size()+1 }" step="12" varStatus="status">
 	    					<span class="page-num">${status.count}</span>
 	    				</c:forEach> 
@@ -230,6 +223,7 @@
         })
         
     })
+ 
     
     /* 정렬 */
       var recent=$(".product-li").html();
