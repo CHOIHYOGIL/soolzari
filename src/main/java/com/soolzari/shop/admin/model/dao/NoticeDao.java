@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.soolzari.shop.admin.model.vo.Notice;
-import com.soolzari.shop.image.model.vo.Image;
+
 
 @Repository
 public class NoticeDao {

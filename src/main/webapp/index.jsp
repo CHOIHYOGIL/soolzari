@@ -79,7 +79,10 @@
         <section class="new_product">
 
             <span>
-                <h2 style="text-align: center; margin: 80px;"> 오늘의 신상품 <span><a style="float:right; cursor: pointer; text-decoration: none;  font-size:20px; margin-top:65px;">더보기 </a></span></h2>
+                <h2 style="text-align: center; margin: 80px;"> 오늘의 신상품 <span>
+                <a href="/basicSool.sool" style="float:right; cursor: pointer; text-decoration: none;  font-size:20px; margin-top:65px; ">더보기 </a>
+                </span>
+                </h2>
             </span>
 
             <div class="new-Plist">
@@ -219,7 +222,7 @@
         <section class="best_product">
 
             <span>
-                <h2 style="text-align: center; margin: 80px;"> 베스트 상품 <span><a style="float:right;  font-size:20px; margin-top:35px;cursor: pointer; text-decoration: none; margin-top:65px;">더보기 </a></span></h2>
+                <h2 style="text-align: center; margin: 80px;"> 베스트 상품 <span><a  href="/basicSool.sool"  style="float:right;  font-size:20px; margin-top:35px;cursor: pointer; text-decoration: none; margin-top:65px;" >더보기 </a></span></h2>
             </span>
             <div class="best-Plist">
                 <ul class="bList">
@@ -358,7 +361,7 @@
                     지금 바로 구독신청하고 <br>전국각지 양조장의 다양한
                     전통주를 경험하세요
                 </span>
-                <button type="button" id="subs_button" class="btn btn-danger btn-lg">구독하기</button>
+                <button type="button" id="subs_button" class="btn btn-danger btn-lg" onclick="location.href='/subscribe.sool'">구독하기</button>
             </div>
 
 
@@ -394,6 +397,7 @@
     
  
 
+   
     /* 좋아요*/
 
     

@@ -22,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.soolzari.shop.admin.model.service.NoticeService;
 import com.soolzari.shop.admin.model.vo.Notice;
 import com.soolzari.shop.admin.model.vo.NoticePage;
-import com.soolzari.shop.image.model.vo.Image;
+
 
 @RequestMapping("/notice")
 @Controller
@@ -47,6 +47,7 @@ public class NoticeController {
 		return "admin/noticeFrm";
 	}
 	
+
 	@RequestMapping("/find.sool")//나중에 페이징 처리
 	public String findNotice(String date, String type, String search, Model model) {
 		ArrayList<Notice> list = service.findNotice(date, type, search);
@@ -144,5 +145,4 @@ public class NoticeController {
 		model.addAttribute("loc", "/notice/list.sool?reqPage=1");
 		return "common/msg";
 	}
-	
 }

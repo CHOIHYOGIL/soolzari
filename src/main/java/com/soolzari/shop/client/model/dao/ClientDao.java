@@ -14,6 +14,7 @@ import com.soolzari.shop.client.model.vo.Class_List;
 import com.soolzari.shop.client.model.vo.Client;
 import com.soolzari.shop.client.model.vo.Goods;
 import com.soolzari.shop.client.model.vo.Reservation;
+import com.soolzari.shop.client.model.vo.Subscribe;
 
 @Repository
 public class ClientDao {
@@ -71,6 +72,11 @@ public class ClientDao {
 	public ArrayList<Goods> fastSearch(String searchWord) {
 		List<Goods> list =sqlSession.selectList("client.searchWord",searchWord);
 		return (ArrayList<Goods>)list;
+	}
+
+	public ArrayList<Subscribe> setSubscribe(Subscribe sub) {
+		List<Subscribe> list =sqlSession.selectList("client.setSubscribe",sub);
+		return (ArrayList<Subscribe>)list;
 	}
 
 }

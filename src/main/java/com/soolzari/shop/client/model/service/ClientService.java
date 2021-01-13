@@ -11,6 +11,7 @@ import com.soolzari.shop.client.model.vo.Class_List;
 import com.soolzari.shop.client.model.vo.Client;
 import com.soolzari.shop.client.model.vo.Goods;
 import com.soolzari.shop.client.model.vo.Reservation;
+import com.soolzari.shop.client.model.vo.Subscribe;
 
 @Service
 public class ClientService {
@@ -40,8 +41,9 @@ public class ClientService {
 	public ArrayList<Goods> getGoods(String searchWord) {
 		return dao.getGoods(searchWord);
 	}
-	public ArrayList<Goods> fastSearch(String searchWord) {
-		return dao.fastSearch(searchWord);
+	
+	public ArrayList<Subscribe> setSubscribe(Subscribe sub) {
+		return dao.setSubscribe(sub);
 	}
 	
 	

@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.soolzari.shop.admin.model.dao.NoticeDao;
 import com.soolzari.shop.admin.model.vo.Notice;
 import com.soolzari.shop.admin.model.vo.NoticePage;
-import com.soolzari.shop.image.model.vo.Image;
+
 
 @Service
 public class NoticeService {

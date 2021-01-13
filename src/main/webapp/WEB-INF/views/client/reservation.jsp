@@ -10,6 +10,10 @@
 <link rel="stylesheet" href="resources/css/reservation.css">
 
    
+ <!-- 모달창 드래그 -->
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+   
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 
@@ -320,7 +324,14 @@ $(function(){
  	
  	
  </script>
- 
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script>
+  $(function () {
+    $(".modal").draggable({
+    	handle:".modal-top"
+    });
+  });
+</script>
 <script>
 
 	

@@ -9,5 +9,5 @@ public class Image {
 	public String imgPath;
 	public String imgName;
 	public String imgType;
-	public String imgRoot;
+	public int imgRoot;
 }
