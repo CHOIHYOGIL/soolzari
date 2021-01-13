@@ -42,6 +42,18 @@ public class NoticeController {
 		return "admin/noticeList";
 	}
 	
+	@RequestMapping("/listClient.sool")
+	public String noticeListClient(int reqPage, Model model) {
+		NoticePage np = service.selectAllNotice(reqPage);
+		Date date = new Date();
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    	String today = sdf.format(date);
+		model.addAttribute("list", np.getList());
+		model.addAttribute("page", np.getPage());
+		model.addAttribute("today", today);
+		return "client/noticeListC";
+	}
+	
 	@RequestMapping("/form.sool")
 	public String noticeFrm() {
 		return "admin/noticeFrm";
@@ -67,11 +79,7 @@ public class NoticeController {
 		return "common/msg";
 	}
 	
-
-	
-
 	@RequestMapping("/deleteNo.sool")//이미지 지워줘야함
-
 	public String deleteNotice(int noticeNo, Model model) {
 		int result = service.deleteNotice(noticeNo);
 		if(result>0) {
