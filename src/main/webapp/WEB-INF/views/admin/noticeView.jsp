@@ -29,15 +29,15 @@
                     <th>작성일</th>
                     <td><input type="text" name="noticeEnroll" value="${n.noticeEnroll}" readonly></td>
                 </tr>
-                <tr>
-                <th>첨부파일</th>
+                <%-- <tr>
+                	<th>첨부파일</th>
 	                <c:if test="${image.filename != null }">
 	                    <td>
 	                        <img src="/resources/image/file.png" width="16px">
 	                        <a href="#">${image.filename}</a>
 	                    </td>
 	                </c:if>
-	            </tr>
+	            </tr> --%>
                 <tr>
                     <td><textarea name="noticeContent" id="summernote">${n.noticeContent}</textarea></td>
                 </tr>
@@ -59,7 +59,7 @@
             });
             $("#delete").click(function(){
                 var noticeNo = $(this).val();
-                location.href="/notice/delete.sool?noticeNo="+noticeNo;
+                location.href="/notice/deleteNo.sool?noticeNo="+noticeNo;
             });
             $('#summernote').summernote({
                 height: 300, // set editor height
@@ -91,19 +91,20 @@
                     }
                 }
             });
-            function imageUpload(file, el) {
-            	var form_data = new FormData();
+            function imageUpload(file, editor) {
+                var form_data = new FormData();
                 form_data.append('file', file);
                 $.ajax({
                     data: form_data,
                     type: "POST",
-                    url: '/notice/insertImage.sool',
+                    url: '/notice/imageUpload.sool',
                     cache: false,
                     contentType: false,
                     enctype: 'multipart/form-data',
                     processData: false,
                     success: function(data) {
-                        $(editor).summernote('insertImage', data);
+                    	console.log(data);
+                        $(editor).summernote('editor.insertImage', data);
                     }
                 });
             }

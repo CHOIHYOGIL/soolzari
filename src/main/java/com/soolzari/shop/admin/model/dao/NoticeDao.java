@@ -42,5 +42,7 @@ public class NoticeDao {
 		return session.selectOne("admin.selectOneNotice", noticeNo);
 	}
 
-
+	public int updateNotice(Notice n) {
+		return session.update("admin.updateNotice", n);
+	}
 }

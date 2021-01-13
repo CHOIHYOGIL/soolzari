@@ -56,8 +56,8 @@
 	<script>
 		$(function(){
 			$("#content").click(function(){
-                var noticeNo = $(this).children().eq(1).html();
-                location.href="/notice/view.sool?noticeNo"+noticeNo;
+                var noticeNo = $(this).children().eq(0).html();
+                location.href="/notice/viewClient.sool?noticeNo"+noticeNo;
             });
 		});
 	</script>

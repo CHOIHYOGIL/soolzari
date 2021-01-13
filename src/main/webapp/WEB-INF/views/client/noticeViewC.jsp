@@ -22,7 +22,7 @@
                 <th>작성일</th>
                 <td>${n.noticeEnroll}</td>
             </tr>
-            <tr>
+<%--             <tr>
                 <th>첨부파일</th>
                 <c:if>
                     <td>
@@ -30,16 +30,18 @@
                         <a href="#">${filename}</a>
                     </td>
                 </c:if>
-            </tr>
+            </tr> --%>
             <tr>
                 <td colspan="4">${n.noticeContent}</td>
             </tr>
         </table>
         <button id="list">목록</button>
-        <!--  
-        <div id="prev"><img src="/resources/image/arrowu/png"><span>prev</span><a href="#">${ }</a></div>
-        <div id="next"><img src="/resources/image/arrowd.png"><span>next</span><a href="#">${ }</a></div>
-        -->
+
+   
+
+        <div id="next"><img src="/resources/image/arrowu/png"><span>next</span><a href="/notice/viewClient.sool?noticeNo=${next.noticeNo }">${next.noticeTitle }</a></div>
+        <div id="prev"><img src="/resources/image/arrowd.png"><span>prev</span><a href="/notice/viewClient.sool?noticeNo=${prev.noticeNo }">${prev.noticeTitle }</a></div>
+
     </section>
     
     <script>
@@ -47,10 +49,10 @@
             location.href="/notice/list.sool?reqPage=1";
         });
         $("#prev").click(function(){
-        	location.href="";
+        	location.href="/notice/viewClient.sool?noticeNo=${prev.noticeNo }";
         });
         $("#next").click(function(){
-        	location.href="";
+        	location.href="/notice/viewClient.sool?noticeNo=${next.noticeNo }";
         });
     </script>
 </body>

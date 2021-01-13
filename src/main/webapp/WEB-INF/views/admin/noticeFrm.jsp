@@ -11,10 +11,8 @@
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.js"></script>
 </head>
 <body>
-	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	<section>
         <div class="wrap">
             <h2>공지사항</h2>
@@ -36,7 +34,7 @@
                     <button type="button" id="list">목록</button>
                     <div class="inputbtn">
                         <button type="submit">등록</button>
-                        <button type="button"><a href="javascript:history.go(-1)">취소</a></button>
+                        <button type="button"><a href="javascript:history.go(-1)" style="text-decoration:none; color:white">취소</a></button>
                     </div>
                 </div>
             </form>
@@ -49,7 +47,7 @@
                location.href="/notice/list.sool?reqPage=1"; 
             });
             $('#summernote').summernote({
-                height: 300, // set editor height
+                height: 500, // set editor height
                 width: 1000,
                 focus: true,
                 lang: "ko-KR",
@@ -82,16 +80,17 @@
             function imageUpload(file, editor) {
                 var form_data = new FormData();
                 form_data.append('file', file);
-                $.ajax({//noticeNo 어떻게 넘겨줄지
+                $.ajax({
                     data: form_data,
                     type: "POST",
-                    url: '/notice/insertImage.sool',
+                    url: '/notice/imageUpload.sool',
                     cache: false,
                     contentType: false,
                     enctype: 'multipart/form-data',
                     processData: false,
                     success: function(data) {
-                        $(editor).summernote('insertImage', data);
+                    	console.log(data);
+                        $(editor).summernote('editor.insertImage', data);
                     }
                 });
             }

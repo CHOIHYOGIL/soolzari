@@ -108,112 +108,14 @@ section {
     margin-top: 10px;
     margin-bottom: 30px;
 }
-
-@font-face {
-    font-family: 'S-CoreDream-3Light';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-* {
-    font-family: 'S-CoreDream-3Light';
-}
-
-.notice tr {
-    display: block;
-    border-top: 1px solid lightgray;
+h1{
     text-align: center;
 }
-
-.notice th,
-td {
-    width: 150px;
-    box-sizing: border-box;
-    height: 40px;
-    line-height: 40px;
+.notice span{
+    font-size: small;
+    margin-left: 10px;
+    color: #bca0c9;
 }
-
-.notice th:nth-child(3),
-td:nth-child(3) {
-    width: 500px;
-}
-
-.notice tr:last-child {
-    border-bottom: 1px solid lightgray;
-}
-
-select {
-    border: 1px solid lightgray;
-    height: 30px;
-    outline: none;
-}
-
-input[type="text"] {
-    border: 1px solid lightgray;
-    height: 27px;
-    width: 300px;
-    outline: none;
-}
-
-input[type="submit"],
-button {
-    width: 70px;
-    height: 31px;
-    background: #4d5075;
-    color: white;
-    border: 1px solid #4d5075;
-    box-sizing: border-box;
-    line-height: 27px;
+#content{
     cursor: pointer;
-}
-
-a {
-    text-decoration: none;
-    color: black;
-}
-
-.page a {
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    font-size: small;
-}
-
-.page a:hover {
-    color: #bca0c9;
-}
-
-.num:hover {
-    border-bottom: 3px solid #4d5075;
-}
-
-.page {
-    margin: 50px;
-    display: flex;
-    justify-content: center;
-}
-
-section {
-    width: 1200px;
-    margin: 0 auto;
-}
-
-.sel {
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    font-size: small;
-    color: #bca0c9;
-    font-weight: bold;
-    border-bottom: 3px solid #4d5075;
-}
-
-.wrap {
-    margin-top: 10px;
-    margin-bottom: 30px;
 }

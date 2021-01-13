@@ -116,3 +116,6 @@ h1{
     margin-left: 10px;
     color: #bca0c9;
 }
+#content{
+    cursor: pointer;
+}
