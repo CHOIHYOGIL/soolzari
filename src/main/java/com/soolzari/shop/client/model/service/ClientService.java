@@ -45,6 +45,9 @@ public class ClientService {
 	public ArrayList<Subscribe> setSubscribe(Subscribe sub) {
 		return dao.setSubscribe(sub);
 	}
+	public int setUsergrade(String id) {
+	return dao.setUsergrade(id);
+	}
 	
 	
 	

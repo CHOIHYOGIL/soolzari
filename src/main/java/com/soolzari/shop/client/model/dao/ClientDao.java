@@ -79,4 +79,8 @@ public class ClientDao {
 		return (ArrayList<Subscribe>)list;
 	}
 
+	public int setUsergrade(String id) {
+		return sqlSession.update("client.setUsergrade",id);
+	}
+
 }

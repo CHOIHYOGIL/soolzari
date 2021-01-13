@@ -482,13 +482,13 @@ var i=0;
     
     	eventClick:function(info){
     		
-    		
-    		alert("event : "+info.event.title);
+    	
     		
     		console.log("content :"+info.event.start);
     		console.log("event Session:"+session);
     		if(session=='null'){
     			alert('로그인 후 예약가능합니다');
+    			location.href="/login.sool";
     		}else{
     			$('.modal').modal("show");
         		getInput(info);

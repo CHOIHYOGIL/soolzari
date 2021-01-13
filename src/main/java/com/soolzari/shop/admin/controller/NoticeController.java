@@ -67,6 +67,7 @@ public class NoticeController {
 		return "common/msg";
 	}
 	
+	/*
 	@RequestMapping("/delete.sool")//이미지 지워줘야함
 	public String deleteNotice(int noticeNo, Model model) {
 		int result = service.deleteNotice(noticeNo);
@@ -78,6 +79,7 @@ public class NoticeController {
 		model.addAttribute("loc", "/notice/list.sool?reqPage=1");
 		return "common/msg";
 	}
+	*/
 	
 	@RequestMapping("/insert.sool")//이미지 넣어야함
 	public String insertNotice(Notice n, Model model) {
@@ -136,5 +138,5 @@ public class NoticeController {
 	public String download() {
 		
 	}
-*/
+	*/
 }

@@ -54,7 +54,7 @@ public class ClientController {
 	
 	
 	
-	@RequestMapping("/login")
+	@RequestMapping("/login.sool")
 	public String login(Model model, HttpSession session) {
 		
 		System.out.println("로그인 컨트롤러");
@@ -318,6 +318,23 @@ public class ClientController {
 		
 		model.addAttribute("list",list);
 		return "client/subscribe";
+	}
+	
+	@RequestMapping("/setUsergrade.sool")
+	public String setUsergrade(String id, Model model) {
+		
+		System.out.println("name : "+id);
+		int result=service.setUsergrade(id);
+		if(result>0) {
+		
+			model.addAttribute("msg","구독 신청 성공");
+		}else {
+			model.addAttribute("msg","구독 신청 실패");
+		}
+		model.addAttribute("loc","/");
+		return "common/msg";
+		
+		
 	}
 //	@RequestMapping("/classRegister.sool")
 //	public String classRegister(Reservation r,Model model ) {

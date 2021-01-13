@@ -266,6 +266,7 @@
 	
 			if(sessionName=='null'){
 				alert('로그인 후 이용가능합니다.');
+				location.href="/login.sool";
 			}else{
 				
 				
@@ -335,6 +336,27 @@
 								{
 									name :subName,
 									price:subPrice
+								},
+							success:function(data){
+							console.log("data : "+data) //이런식으로 하면 안뜬다. 왜냐하면 "data :" 를 붙이면 javascrtip에서 string형으로 변환시킴
+								console.log(data);
+								console.log(data.length);
+								
+							},
+							error:function(error){
+								console.log(error);
+							}
+					
+						}),
+						$.ajax({
+							url:"setUsergrade.sool",
+							type:"POST",
+							//dateType:'json',
+							async:false,
+							data:
+								{
+									id :id,
+								
 								},
 							success:function(data){
 							console.log("data : "+data) //이런식으로 하면 안뜬다. 왜냐하면 "data :" 를 붙이면 javascrtip에서 string형으로 변환시킴

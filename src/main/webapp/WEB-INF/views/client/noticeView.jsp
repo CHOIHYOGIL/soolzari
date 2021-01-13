@@ -36,8 +36,10 @@
             </tr>
         </table>
         <button id="list">목록</button>
+        <!--  
         <div id="prev"><img src="/resources/image/arrowu/png"><span>prev</span><a href="#">${ }</a></div>
         <div id="next"><img src="/resources/image/arrowd.png"><span>next</span><a href="#">${ }</a></div>
+        -->
     </section>
     
     <script>

@@ -43,5 +43,9 @@ order by g.gds_no DESC
  	<insert id="setSubscribe" parameterType="s">
  		insert into subscribe_db values(subscribe_db_seq.nextval, #{subscribeName}, #{subscribeDept},#{subscribePrice})
  	</insert>
+ 	
+ 	<update id="setUsergrade" parameterType="string">
+ 		update client_db set cli_rank =1 where cli_id=#{id}
+ 	</update>
 
 </mapper>
