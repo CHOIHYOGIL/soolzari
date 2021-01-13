@@ -27,7 +27,7 @@
  	
  	<insert id="setClass_list" parameterType="map">
  		
- 		insert into class_list_db (cls_l_no, cls_cli_no, cls_class_no, class_person, class_check) select class_list_db_seq.nextval, #{clientNo}, #{classNo}, #{classPerson}, 0 from dual where not exists(select cls_class_no as classNo from class_list_db where cls_cli_no=#{clientNo} and cls_class_no=#{classNo})
+ 		insert into class_list_db (cls_l_no, cls_cli_no, cls_class_no, class_person, class_check, class_payment) select class_list_db_seq.nextval, #{clientNo}, #{classNo}, #{classPerson}, 0, #{classPayment} from dual where not exists(select cls_class_no as classNo from class_list_db where cls_cli_no=#{clientNo} and cls_class_no=#{classNo})
  	</insert>
  	
  	<select id="getGoods" parameterType="string" resultType="g">
@@ -48,7 +48,7 @@ order by g.gds_no DESC
  		update client_db set cli_rank =1 where cli_id=#{id}
  	</update>
  	
- 	<select id="checkUser" parameterType="map" resultType="cl">
+ 	<select id="checkUser" parameterType="cl" resultType="cl">
  		select cls_l_no as classListNo from class_list_db where cls_cli_no=#{clientNo} and cls_class_no=#{classNo}
  	</select>
 

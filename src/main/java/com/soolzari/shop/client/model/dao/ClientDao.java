@@ -53,16 +53,7 @@ public class ClientDao {
 
 
 
-	public int setClassList(int session, int eventDB, int person) {
-		HashMap <String, Integer> map = new HashMap<String,Integer>();
-		map.put("clientNo", session);
-		map.put("classNo", eventDB);
-		map.put("classPerson",person);
-		System.out.println("setClassDao");
-		System.out.println(session);
-		System.out.println(eventDB);
-		return sqlSession.insert("client.setClass_list",map);
-	}
+
 
 	public ArrayList<Goods> getGoods(String searchWord) {
 		System.out.println("searchdAO" +searchWord);
@@ -90,6 +81,11 @@ public class ClientDao {
 		System.out.println(classNo);
 		List<Class_List> list=  sqlSession.selectList("client.checkUser",map);
 		return (ArrayList<Class_List>)list;
+	}
+
+	public int setClassList(Class_List c) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("client.setClass_list",c);
 	}
 
 }

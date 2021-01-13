@@ -41,7 +41,7 @@
 
         <section class="carousel">
 
-            <div id="carousel-example-generic" class="carousel slide">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
 
                     <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>

@@ -62,7 +62,7 @@
  <%@include file="/WEB-INF/views/common/header.jsp" %>
  <section class="carousel">
 
-            <div id="carousel-example-generic" class="carousel slide">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
 
                     <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
@@ -214,12 +214,15 @@
 				var msg='클래스 예약 결제가 완료되었습니다';
 			        msg += '결제 금액 : ' + rsp.paid_amount;
 			        var eventDB=getEvents();
-			  ;
-			        
+			  
+			  	console.log("title : "+title);
+
 			        for(var i=0; i<eventDB.length; i++){
-			        	console.log(eventDB[i].id);
-			        if(eventDB[i].title==title){
-			        	
+			        	console.log("hey");
+			        	console.log(eventDB[i].title);
+			      	  console.log("start :"+eventDB[i].date);
+			        if(eventDB[i].title==title && eventDB[i].id==k){
+			        	console.log("success");
 			          	setClassDB(eventDB[i].id,person);
 			        }
 			      
@@ -285,7 +288,7 @@ $(function(){
 		console.log("getInput");
 		  var session='<%=session.getAttribute("sessionNo")%>';
 	
-
+			console.log("k : "+k);
 		var person=$('input[name=classPerson]').val();
 		
  		var today=dateFormat(info.event.start);
@@ -316,7 +319,9 @@ $(function(){
  		
  		var yyyy=data.getFullYear();
  		var MM=data.getMonth()+1;
+ 		MM = MM >= 10 ? MM : '0' + MM;  //month 두자리로 저장
  		var dd=data.getDate();
+ 		dd = dd >= 10 ? dd : '0' + dd;          //day 두자리로 저장
  		var rtnDate=yyyy+'-'+MM+'-'+dd;
  		return rtnDate;
  	}
@@ -348,7 +353,9 @@ var i=0;
 		console.log("session: "+session);
 	  console.log("setClass");
 	  var realClassNo;
-	  
+	  var date = new Date();
+		var today=dateFormat(date);
+		console.log(today);
 	  console.log(eventDB);
 		$.ajax({
 			url:"setClassListDB.sool",
@@ -359,7 +366,8 @@ var i=0;
 				{
 				eventDB:eventDB,
 				session:session,
-				person:person
+				person:person,
+				today:today
 				},
 			success:function(data){
 			console.log("data : "+data) //이런식으로 하면 안뜬다. 왜냐하면 "data :" 를 붙이면 javascrtip에서 string형으로 변환시킴
@@ -403,7 +411,8 @@ var i=0;
 						
 							title:data[i].className,
 							id:data[i].classNo,
-						
+							date:data[i].classDate,
+							time:data[i].classStartTime,
 							color:'#e5e5e5',
 							start:data[i].classDate+"T"+data[i].classStartTime,
 							}
@@ -427,7 +436,7 @@ var i=0;
 
 
 		
-	
+	var k=0;
   document.addEventListener('DOMContentLoaded', function() {
 	
 	  var eventDB=getEvents();
@@ -495,7 +504,10 @@ var i=0;
     			  var classNo=0;
     			
     				classNo=info.event.id;
-    			
+    				k=info.event.id;
+    			console.log("df");
+    		
+    			console.log(info.event.start);
     				console.log("classNo:"+classNo);
     			$.ajax({
     				url:"checkUser.sool",

@@ -10,4 +10,5 @@ public class Class_List {
 	public int classNo;
 	public int classPerson;
 	public int classCheck;
+	public String classPayment;
 }

@@ -68,7 +68,7 @@ header .logo{
 
 header nav{
  
-	width:66%;
+	width:64%;
     height: 100%;
 	float:left;
   
@@ -93,7 +93,7 @@ header nav .gnb li{
     text-align: center;
     box-sizing: border-box;
 	display: inline-block; /* li는 블록속성이기에 inline 속성을 이루도록*/
-	margin-left:80px;
+	margin-left:70px;
     float:left;
 	
 }
@@ -105,7 +105,7 @@ header nav .gnb li a{
     text-decoration: none;
 	font-weight:bold;
 	display:block;
-	font-size:18px;
+	font-size:17px;
 	position:relative;
 	
 }
@@ -122,7 +122,7 @@ header nav .gnb li:hover .sub{
 */
 header nav .gnb li:hover .sub{
     
-    border-top: 5px solid green;
+    border-top: 5px solid #bca0c9;
 }
 header nav .gnb li a:hover + #nop a{
     border-bottom: 0px solid white;
@@ -202,7 +202,7 @@ width: 100%;
         font-family: 'S-CoreDream-3Light';
     text-decoration: none;
     color:black;
-    font-size:12px;
+    font-size:15px;
 }
 
 
@@ -259,7 +259,7 @@ header nav .gnb .sub li a{
 }
 header nav .gnb .sub li a:hover{
   width:100%;
-   background-color:lightpink;
+   background-color: #ffd0bf;
 }
 
 header nav .gnb .sub li a:after{

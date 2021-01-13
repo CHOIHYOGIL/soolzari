@@ -296,15 +296,15 @@ public class ClientController {
 	
 	@ResponseBody
 	@RequestMapping("/setClassListDB.sool")
-	public String setClassList(Model model, int eventDB, int session,int person){
+	public String setClassList(Model model, int eventDB, int session,int person, String today,Class_List c){
 		System.out.println("setClassDB");
-	
-		System.out.println("clinetNo :"+session);
-		System.out.println("classNo:"+eventDB);
-		System.out.println("classPerson : "+person );
 
+		c.setClassNo(eventDB);
+		c.setClassPayment(today);
+		c.setClassPerson(person);
+		c.setClientNo(session);
 		
-			int result = service.setClassList(session,eventDB,person);
+			int result = service.setClassList(c);
 			
 			if(result>0) {
 				model.addAttribute("msg","클래스 리스트 삽입 성공");
