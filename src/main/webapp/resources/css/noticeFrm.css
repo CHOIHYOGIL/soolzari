@@ -1,0 +1,70 @@
+@charset "utf-8";
+
+@font-face {
+    font-family: 'S-CoreDream-3Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+*{
+    font-family: 'S-CoreDream-3Light';
+}
+
+.notice tr {
+    border-top: 1px solid lightgray;
+    text-align: center;
+    height: 60px;
+    line-height: 60px;
+}
+input[type="text"]{
+    border: none;
+    outline: none;
+    width: 100%;
+    text-align: center;
+    border: 1px solid lightgray;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 40px;
+    box-sizing: border-box;
+}
+input[type="submit"],
+.btnwrap button {
+    width: 70px;
+    height: 31px;
+    background: #4d5075;
+    color: white;
+    border: 1px solid #4d5075;
+    box-sizing: border-box;
+    line-height: 27px;
+    cursor: pointer;
+}
+.notice>tr>td:first-child{
+    border-right: 1px solid lightgray;
+}
+.notice tr:last-child{
+    text-align: left;
+}
+.wrap>h2{
+    margin: 50px;
+    text-align: center;
+}
+form{
+    width: 1000px;
+    margin: 0 auto;
+}
+.inputbtn{
+    width: 1000px;
+    display: flex;
+    justify-content: flex-end;
+}
+.inputbtn>button{
+    margin-left: 10px;
+}
+.btnwrap{
+    display: flex;
+}
+a{
+    text-decoration: none;
+    color: white;
+}
