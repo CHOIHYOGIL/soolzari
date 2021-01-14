@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mypage">
+	<update id="mInfoUpdate" parameterType="c2">
+		update client_db set 
+			cli_name = #{cliName},
+			<if test="cliPw!=null">
+				cli_pw = #{cliPw},
+			</if>
+			cli_email = #{cliEmail},
+			cli_tel = #{cliTel},
+			cli_age = #{cliAge},
+			cli_addr = #{cliAddr}
+		where cli_no = #{cliNo}
+	</update>
+	
+	<select id="mInfoCheckPw" parameterType="c2" resultType="c2">
+		select 
+			cli_no as cliNo,
+			cli_id as cliId,
+			cli_pw as cliPw,
+			cli_name as cliName,
+			cli_tel as cliTel,
+			cli_addr as cliAddr,
+			cli_email as cliEmail,
+			cli_rank as cliRank,
+			cli_enroll as cliEnroll,
+			cli_point as cliPoint,
+			cli_age as cliAge
+		 from client_db where cli_id=#{cliId} and cli_pw=#{cliPw}
+	</select>
+	
+	<select id="totalCountPage" parameterType="map" resultType="_int">
+		select count(*) from purchase_db where CLI_NO=#{cliNo} and TO_DATE(pur_date,'YYYYMMDDHH24MISS') between add_months(sysdate,-#{period}) and sysdate
+	</select>
+	
+	<select id="orderListSelect" parameterType="map" resultType="orderListData">
+		select *
+       	from (select 
+                rownum as rnum, n.* 
+            from (select 
+                    glData.pur_no as purNo,
+                    p.pur_date as purDate, 
+                    p.pur_ttp as purTtp, 
+                    p.pur_get as purGet,
+                    glData.gds_no as gdsNo,
+                    glData.gds_name as gdsName,
+                    glData.gds_l_price as gdsLPrice,
+                    glData.gds_l_cnt as gdsLCnt,
+                    glData.gds_d_status as gdsDStatus
+                 from purchase_db p, (select 
+                                        gl.pur_no, 
+                                        g.gds_no, 
+                                        g.gds_name, 
+                                        gl.gds_l_price, 
+                                        gl.gds_l_cnt, 
+                                        gl.gds_d_status 
+                                     from goods_db g, goods_list_db gl 
+                                     where g.gds_no=gl.gds_no) glData 
+                where CLI_NO=#{cliNo} and glData.pur_no=p.pur_no order by p.pur_no desc) n)
+        where rnum between #{start} and #{end}
+	</select>
+	
+	<select id="purchasePageSelect" parameterType="map" resultType="purchase">
+		select 
+        	pur_no as purNo,
+            pur_date as purDate, 
+            pur_ttp as purTtp, 
+            pur_get as purGet
+       	from (select 
+            rownum as rnum, n.* 
+            from (select * from purchase_db where cli_no=#{cliNo} and TO_DATE(pur_date,'YYYYMMDDHH24MISS') between add_months(sysdate,-#{period}) and sysdate order by pur_no desc) n)
+        where rnum between #{start} and #{end}
+	</select>
+	<select id="orderListDataSelect" parameterType="list" resultType="orderListData">
+		select 
+            gl.pur_no as purNo, 
+            g.gds_no as gdsNo, 
+            g.gds_name as gdsName, 
+            gl.gds_l_price as gdsLPrice, 
+            gl.gds_l_cnt as gdsLCnt, 
+            gl.gds_d_status as gdsDStatus
+        from goods_db g, goods_list_db gl 
+        where g.gds_no=gl.gds_no and pur_no in
+        <foreach collection="list" item="pur" open="(" close=")" separator=",">
+			#{pur.purNo}
+		</foreach>
+	</select>
+	
+	<!-- 마이페이제 - 클래스 -->
+	
+	<select id="totalCountExperience" parameterType="map" resultType="_int">
+		select count(*)
+                    from class_list_db cl, class_db c, seller_db s 
+                    where CL.CLS_CLASS_NO=C.CLS_NO 
+                    	and s.sel_no=c.sel_no 
+                    	and cl.cls_cli_no=#{cliNo}
+						and to_date(cl.class_payment,'YYYY-MM-DD') between add_months(sysdate,-#{period}) and sysdate
+	</select>
+	<select id="experienceListDataPageSelect" parameterType="map" resultType="experienceListData">
+		select 
+		    sel_name as selName,
+		    sel_tel as selTel,
+		    class_person as classPerson,
+		    class_check as classCheck,
+		    cls_no as clsNo,
+		    cls_l_no as clsLNo,
+		    cls_name as clsName,
+		    cls_price as clsPrice,
+		    class_enroll as classEnroll,
+		    classstarttime as classStartTime,
+    		class_payment as classPayment
+		from (select 
+           	 		rownum as rnum, n.* 
+            	from (select 
+                    s.sel_name,
+                    s.sel_tel,
+                    cl.class_person,
+                    cl.class_check,
+                    c.cls_no,
+                    cl.cls_l_no,
+                    c.cls_name,
+                    c.cls_price,
+                    c.class_enroll,
+                    c.classstarttime,
+                    cl.class_payment
+                    from class_list_db cl, class_db c, seller_db s 
+                    where 
+                    	CL.CLS_CLASS_NO=C.CLS_NO 
+                    	and s.sel_no=c.sel_no 
+                    	and cl.cls_cli_no=#{cliNo}
+						and to_date(cl.class_payment,'YYYY-MM-DD') between add_months(sysdate,-#{period}) and sysdate 
+						order by cl.cls_l_no desc) n)
+		where rnum between #{start} and #{end}
+	</select>
+	
+	<!-- 클래스 취소신청하기 -->
+	<update id="classCancel" parameterType="_int">
+		update class_list_db set class_check=1 where cls_l_no=#{_parameter}
+	</update>
+	
+	<!-- 마이페이지 - 문의하기 -->
+	<!-- 문의하기insert -->
+	<insert id="questionInsert" parameterType="qna">
+		insert into qna_db values(qna_seq.nextval,#{qnaName},42,#{qnaCon},to_char(sysdate,'yyyy-mm-dd'),0,0)
+	</insert>
+	<!-- 문의하기 조회하기 totalpage수(개월수별로 조회해야하니까 period사용) -->
+	<select id="totalCountQuestion" parameterType="map" resultType="_int">
+		select count(*)
+        from qna_db
+        where 
+        	qna_writer=#{cliNo}
+			and to_date(qna_enroll,'YYYY-MM-DD') between add_months(sysdate,-#{period}) and sysdate
+	</select>
+	<!-- 문의하기 내용 조회 -->
+	<select id="qnaDataPageSelect" parameterType="map" resultType="qna">
+		select
+		    qna_no as qnaNo,
+			qna_name as qnaName,
+			qna_writer as qnaWriter,
+			qna_con as qnaCon,
+		    qna_enroll as qnaEnroll,
+		    qna_cnt as qnaCnt,
+		    qna_ans as qnaAns
+		from (select rownum as rnum, n.* 
+		    	from (select * from qna_db
+		        	where 
+		        		qna_writer=#{cliNo}
+						and to_date(qna_enroll,'YYYY-MM-DD') between add_months(sysdate,-#{period}) and sysdate order by qna_no desc)n)
+		where rnum between #{start} and #{end}
+	</select>
+</mapper>
