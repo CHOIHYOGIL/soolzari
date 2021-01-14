@@ -26,7 +26,7 @@
                         <a href="#">문의</a>
                     </li>
                     <li>
-                        <a href="/accept.sool">클래스 / 펀딩 승인</a>
+                        <a href="/accept.sool">승인 관리</a>
                     </li>
                     <li>
                         <a href="#">관리</a>
