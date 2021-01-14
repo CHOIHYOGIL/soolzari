@@ -34,10 +34,7 @@ public class ClientService {
 	public ArrayList<Reservation> getClassInfo() {
 		return dao.getClassInfo();
 	}
-	public int setClassList(int session, int eventDB) {
-		
-		return dao.setClassList(session,eventDB);
-	}
+
 	public ArrayList<Goods> getGoods(String searchWord) {
 		return dao.getGoods(searchWord);
 	}
@@ -47,6 +44,14 @@ public class ClientService {
 	}
 	public int setUsergrade(String id) {
 	return dao.setUsergrade(id);
+	}
+	public ArrayList<Class_List> checkUser(int session, int classNo) {
+		
+		return dao.checkUser(session,classNo);
+	}
+	public int setClassList(Class_List c) {
+		// TODO Auto-generated method stub
+		return dao.setClassList(c);
 	}
 	
 	

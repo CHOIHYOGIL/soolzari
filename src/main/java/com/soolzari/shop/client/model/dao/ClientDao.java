@@ -53,15 +53,7 @@ public class ClientDao {
 
 
 
-	public int setClassList(int session, int eventDB) {
-		HashMap <String, Integer> map = new HashMap<String,Integer>();
-		map.put("clientNo", session);
-		map.put("classNo", eventDB);
-		System.out.println("setClassDao");
-		System.out.println(session);
-		System.out.println(eventDB);
-		return sqlSession.insert("client.setClass_list",map);
-	}
+
 
 	public ArrayList<Goods> getGoods(String searchWord) {
 		System.out.println("searchdAO" +searchWord);
@@ -69,10 +61,7 @@ public class ClientDao {
 		return (ArrayList<Goods>)list;
 	}
 
-	public ArrayList<Goods> fastSearch(String searchWord) {
-		List<Goods> list =sqlSession.selectList("client.searchWord",searchWord);
-		return (ArrayList<Goods>)list;
-	}
+	
 
 	public ArrayList<Subscribe> setSubscribe(Subscribe sub) {
 		List<Subscribe> list =sqlSession.selectList("client.setSubscribe",sub);
@@ -81,6 +70,22 @@ public class ClientDao {
 
 	public int setUsergrade(String id) {
 		return sqlSession.update("client.setUsergrade",id);
+	}
+
+	public ArrayList<Class_List> checkUser(int session, int classNo) {
+		HashMap <String, Integer> map = new HashMap<String,Integer>();
+		map.put("clientNo", session);
+		map.put("classNo", classNo);
+		System.out.println("dao");
+		System.out.println(session);
+		System.out.println(classNo);
+		List<Class_List> list=  sqlSession.selectList("client.checkUser",map);
+		return (ArrayList<Class_List>)list;
+	}
+
+	public int setClassList(Class_List c) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("client.setClass_list",c);
 	}
 
 }

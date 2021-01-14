@@ -62,7 +62,7 @@
  <%@include file="/WEB-INF/views/common/header.jsp" %>
  <section class="carousel">
 
-            <div id="carousel-example-generic" class="carousel slide">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
 
                     <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
@@ -184,6 +184,7 @@
 		console.log("pay");
 		console.log($('input[name=className]').val());
 		var title=$('input[name=className]').val();
+		var person=$('input[name=classPerson]').val();
 		var id='<%=session.getAttribute("sessionId")%>';
 		console.log("session: "+id);
 		var name='<%=session.getAttribute("sessionName")%>';
@@ -213,13 +214,16 @@
 				var msg='클래스 예약 결제가 완료되었습니다';
 			        msg += '결제 금액 : ' + rsp.paid_amount;
 			        var eventDB=getEvents();
-			        console.log("결제완료");
-			        console.log(eventDB);
-			        console.log(eventDB.length);
+			  
+			  	console.log("title : "+title);
+
 			        for(var i=0; i<eventDB.length; i++){
-			        	console.log(eventDB[i].id);
-			        if(eventDB[i].title==title){
-			          	setClassDB(eventDB[i].id);
+			        	console.log("hey");
+			        	console.log(eventDB[i].title);
+			      	  console.log("start :"+eventDB[i].date);
+			        if(eventDB[i].title==title && eventDB[i].id==k){
+			        	console.log("success");
+			          	setClassDB(eventDB[i].id,person);
 			        }
 			      
 			        }
@@ -282,7 +286,11 @@ $(function(){
  
  	function getInput(info){
 		console.log("getInput");
-
+		  var session='<%=session.getAttribute("sessionNo")%>';
+	
+			console.log("k : "+k);
+		var person=$('input[name=classPerson]').val();
+		
  		var today=dateFormat(info.event.start);
  		console.log(today);
  		var title=info.event.title;
@@ -311,7 +319,9 @@ $(function(){
  		
  		var yyyy=data.getFullYear();
  		var MM=data.getMonth()+1;
+ 		MM = MM >= 10 ? MM : '0' + MM;  //month 두자리로 저장
  		var dd=data.getDate();
+ 		dd = dd >= 10 ? dd : '0' + dd;          //day 두자리로 저장
  		var rtnDate=yyyy+'-'+MM+'-'+dd;
  		return rtnDate;
  	}
@@ -338,12 +348,14 @@ $(function(){
 var i=0;
 
 
-	function setClassDB(eventDB){
+	function setClassDB(eventDB, person){
 	  var session='<%=session.getAttribute("sessionNo")%>';
 		console.log("session: "+session);
 	  console.log("setClass");
 	  var realClassNo;
-	  
+	  var date = new Date();
+		var today=dateFormat(date);
+		console.log(today);
 	  console.log(eventDB);
 		$.ajax({
 			url:"setClassListDB.sool",
@@ -353,7 +365,9 @@ var i=0;
 			data:
 				{
 				eventDB:eventDB,
-				session:session
+				session:session,
+				person:person,
+				today:today
 				},
 			success:function(data){
 			console.log("data : "+data) //이런식으로 하면 안뜬다. 왜냐하면 "data :" 를 붙이면 javascrtip에서 string형으로 변환시킴
@@ -385,6 +399,7 @@ var i=0;
 						  //async:false를 통해서 동기식 방식으로 설정하면 이제 ajax를 호출하여 서버에서 응답을 기다렸다가 응답을 모두 완료한 후 다음 로직을 싱행하므로 undefined가 뜨지않고 객체를 return할수있다.
 			success:function(data){
 				//console.log("data : "+data) 이런식으로 하면 안뜬다. 왜냐하면 "data :" 를 붙이면 javascrtip에서 string형으로 변환시킴
+				
 				console.log(data);
 				console.log(data.length);
 				
@@ -396,7 +411,8 @@ var i=0;
 						
 							title:data[i].className,
 							id:data[i].classNo,
-						
+							date:data[i].classDate,
+							time:data[i].classStartTime,
 							color:'#e5e5e5',
 							start:data[i].classDate+"T"+data[i].classStartTime,
 							}
@@ -411,6 +427,7 @@ var i=0;
 			}
 	
 		})
+		console.log("sssssss");
 				console.log(classInfo);
 		return classInfo;
 	
@@ -419,7 +436,7 @@ var i=0;
 
 
 		
-	
+	var k=0;
   document.addEventListener('DOMContentLoaded', function() {
 	
 	  var eventDB=getEvents();
@@ -464,14 +481,6 @@ var i=0;
     	  if(clickDate <= myDate){
     		  
     		  alert("예약불가");
-    	  }else{
-    		 
-        	  alert('Date :'+info.dateStr);
-     
-        	    info.dayEl.style.backgroundColor = 'beige';
-        	  
-        	  //  $('.modal').modal("show");
-      
     	  }
     	
       },
@@ -485,13 +494,50 @@ var i=0;
     	
     		
     		console.log("content :"+info.event.start);
-    		console.log("event Session:"+session);
+
     		if(session=='null'){
     			alert('로그인 후 예약가능합니다');
     			location.href="/login.sool";
     		}else{
-    			$('.modal').modal("show");
-        		getInput(info);
+    			
+    			  var session='<%=session.getAttribute("sessionNo")%>';
+    			  var classNo=0;
+    			
+    				classNo=info.event.id;
+    				k=info.event.id;
+    			console.log("df");
+    		
+    			console.log(info.event.start);
+    				console.log("classNo:"+classNo);
+    			$.ajax({
+    				url:"checkUser.sool",
+    				type:"POST",
+    				//dateType:'json',
+    				async:false,
+    				data:
+    					{
+    					classNo:classNo,
+    					session:session,
+    					
+    					},
+    				success:function(data){
+    				console.log("data : "+data) //이런식으로 하면 안뜬다. 왜냐하면 "data :" 를 붙이면 javascrtip에서 string형으로 변환시킴
+    					console.log(data);
+    			
+    					alert(data.msg);
+    					if(data.msg=="예약 가능합니다."){
+    						console.log("hihihihii");
+    						$('.modal').modal("show");
+        	        		getInput(info);
+    					}
+    				},
+    				error:function(error){
+    				
+    					console.log(error);
+    				}
+    		
+    			})
+
     		}
     	
     	}

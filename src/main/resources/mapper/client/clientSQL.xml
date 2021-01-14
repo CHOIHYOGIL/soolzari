@@ -22,12 +22,12 @@
  	</insert>
  	
  	<select id="getClassInfo" parameterType="r" resultType="r">
- 		select cls_no as classNo, cls_name as className, sel_no as classCreator, cls_det as classDescription, cls_price as classPrice, class_person as classPerson, class_enroll as classDate, classStarttime as classStartTime from class_db  where class_enroll>TO_CHAR(SYSDATE,'yyyy-mm-dd')
+ 		select cls_no as classNo, cls_name as className, sel_no as classCreator, cls_det as classDescription, cls_price as classPrice, class_enroll as classDate, classStarttime as classStartTime from class_db  where class_enroll>TO_CHAR(SYSDATE,'yyyy-mm-dd')
  	</select>
  	
  	<insert id="setClass_list" parameterType="map">
  		
- 		insert into class_list_db (cls_l_no, cls_cli_no, cls_class_no) select class_list_db_seq.nextval, #{clientNo}, #{classNo} from dual where not exists(select cls_class_no as classNo from class_list_db where cls_cli_no=#{clientNo} and cls_class_no=#{classNo})
+ 		insert into class_list_db (cls_l_no, cls_cli_no, cls_class_no, class_person, class_check, class_payment) select class_list_db_seq.nextval, #{clientNo}, #{classNo}, #{classPerson}, 0, #{classPayment} from dual where not exists(select cls_class_no as classNo from class_list_db where cls_cli_no=#{clientNo} and cls_class_no=#{classNo})
  	</insert>
  	
  	<select id="getGoods" parameterType="string" resultType="g">
@@ -47,5 +47,9 @@ order by g.gds_no DESC
  	<update id="setUsergrade" parameterType="string">
  		update client_db set cli_rank =1 where cli_id=#{id}
  	</update>
+ 	
+ 	<select id="checkUser" parameterType="cl" resultType="cl">
+ 		select cls_l_no as classListNo from class_list_db where cls_cli_no=#{clientNo} and cls_class_no=#{classNo}
+ 	</select>
 
 </mapper>

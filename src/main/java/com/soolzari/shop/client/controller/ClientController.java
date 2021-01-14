@@ -24,6 +24,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.soolzari.shop.client.model.service.ClientService;
 import com.soolzari.shop.client.model.vo.Class_List;
 import com.soolzari.shop.client.model.vo.Client;
@@ -272,24 +274,47 @@ public class ClientController {
 		return "client/takju";
 		
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/checkUser.sool", produces="application/json;charset=utf-8")
+	public String checkUser(Model model, int classNo, int session) {
+		System.out.println("checkuser");
+		System.out.println("classNo : "+classNo);
+		System.out.println("clientNo" +session);
+		JsonObject obj = new JsonObject();
+		ArrayList<Class_List> list=service.checkUser(session,classNo);
+		System.out.println("list : "+list);
+		if(list.size()!=0) {
+			System.out.println("here");
+			obj.addProperty("msg", "이미 예약하신 클래스입니다");
+	
+		}else {
+			obj.addProperty("msg", "예약 가능합니다.");
+		}
+		return new Gson().toJson(obj);
+	}
+	
 	@ResponseBody
 	@RequestMapping("/setClassListDB.sool")
-	public String setClassList(Model model, int eventDB, int session){
+	public String setClassList(Model model, int eventDB, int session,int person, String today,Class_List c){
 		System.out.println("setClassDB");
-	
-		System.out.println("clinetNo :"+session);
-		System.out.println("classNo:"+eventDB);
 
-	
-		int result = service.setClassList(session,eventDB);
+		c.setClassNo(eventDB);
+		c.setClassPayment(today);
+		c.setClassPerson(person);
+		c.setClientNo(session);
 		
-		if(result>0) {
-			model.addAttribute("msg","클래스 리스트 삽입 성공");
-		
-		}else {
-			model.addAttribute("msg","클래스 리스트 삽입 실패");
+			int result = service.setClassList(c);
 			
-		}
+			if(result>0) {
+				model.addAttribute("msg","클래스 리스트 삽입 성공");
+			
+			}else {
+				model.addAttribute("msg","클래스 리스트 삽입 실패");
+				
+			}
+		
+		
 
 		return "common/msg";
 	}
