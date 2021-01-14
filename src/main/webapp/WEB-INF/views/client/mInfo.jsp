@@ -24,14 +24,14 @@
 	<div class="wrap" style="margin-top: 80px;">
 		<div class="sideNavi">
 			<ul class="sideNaviUl">
-				<a class="sideNaviTop" href="#">마이페이지</a>
-				<li><a class="sideNaviA a1" href="#">주문 내역</a></li>
-				<li><a class="sideNaviA a2" href="#">예약한 클래스</a></li>
+				<a class="sideNaviTop" href="/client/mOrderList.sool?reqPage=1&period=1">마이페이지</a>
+				<li><a class="sideNaviA a1" href="/client/mOrderList.sool?reqPage=1&period=1">주문 내역</a></li>
+				<li><a class="sideNaviA a2" href="/client/mExperience.sool?reqPage=1&period=1">예약한 클래스</a></li>
 				<li><a class="sideNaviA a3" href="#">후원한 펀딩</a></li>
 				<li><a class="sideNaviA a4" href="#">선물함</a></li>
 				<li><a class="sideNaviA a5" href="#">내가 쓴 리뷰</a></li>
-				<li><a class="sideNaviA a6" href="#">1:1 문의</a></li>
-				<li><a class="sideNaviA a7" href="#">내 정보 수정</a></li>
+				<li><a class="sideNaviA a6" href="/client/mQuestion.sool?reqPage=1&period=1">1:1 문의</a></li>
+				<li><a class="sideNaviA a7" href="/client/mInfo.sool">내 정보 수정</a></li>
 			</ul>
 		</div>
 		<div class="content">
@@ -40,7 +40,7 @@
 			</div>
 			<div class="mainContent">
 				<form action="/client/mInfoUpdate.sool" method="post">
-				<input type="hidden" name="cliNo" value="${sessionScope.sessionClient.cliNo }">
+				<input type="hidden" name="cliNo" value="${sessionScope.sessionClient.clientNo }">
 				<h2 class="contentTitle">회원정보 수정</h2>
 				<hr class="hrMargin">
 				<div class="allInfoDiv">
@@ -165,7 +165,7 @@
 			if($(this).parent().prev().find('.detailAddr').val()==''){
 				alert("상세주소를 입력해주세요");
 			}else{
-				var cliNo = ${sessionScope.sessionClient.cliNo};
+				var cliNo = ${sessionScope.sessionClient.clientNo};
 				$(".newAddr").val($(".newAddr").val()+" "+$(".detailAddr").val());
 				console.log($(".newAddr").val());
 				
