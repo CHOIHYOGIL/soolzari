@@ -15,17 +15,17 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <link rel="stylesheet" type="text/css" href="/resources/css/mypageFrm.css">
 <link rel="stylesheet" type="text/css" href="/resources/css/mchkPw.css">
-	<div class="wrap" style="margin-top: 80px;">
+	<div class="wrap2" style="margin-top: 80px;">
 		<div class="sideNavi">
 			<ul class="sideNaviUl">
-				<a class="sideNaviTop" href="#">마이페이지</a>
-				<li><a class="sideNaviA a1" href="#">주문 내역</a></li>
-				<li><a class="sideNaviA a2" href="#">예약한 클래스</a></li>
+				<a class="sideNaviTop" href="/client/mOrderList.sool?reqPage=1&period=1">마이페이지</a>
+				<li><a class="sideNaviA a1" href="/client/mOrderList.sool?reqPage=1&period=1">주문 내역</a></li>
+				<li><a class="sideNaviA a2" href="/client/mExperience.sool?reqPage=1&period=1">예약한 클래스</a></li>
 				<li><a class="sideNaviA a3" href="#">후원한 펀딩</a></li>
 				<li><a class="sideNaviA a4" href="#">선물함</a></li>
 				<li><a class="sideNaviA a5" href="#">내가 쓴 리뷰</a></li>
-				<li><a class="sideNaviA a6" href="#">1:1 문의</a></li>
-				<li><a class="sideNaviA a7" href="#">내 정보 수정</a></li>
+				<li><a class="sideNaviA a6" href="/client/mQuestion.sool?reqPage=1&period=1">1:1 문의</a></li>
+				<li><a class="sideNaviA a7" href="/client/mchkPw.sool">내 정보 수정</a></li>
 			</ul>
 		</div>
 		<div class="content">
@@ -34,17 +34,17 @@
 			</div>
 			<div class="mainContent">
 				<form action="/client/mInfoCheckPw.sool" method="post">
-				<input type="hidden" name="cliNo" value="${sessionScope.sessionClient.cliNo }">
-				<h2 class="contentTitle">회원정보 수정</h2>
+				<input type="hidden" name="cliNo" value="${sessionScope.sessionClient.clientNo }">
+				<h3 class="contentTitle">회원정보 수정</h3>
 				<hr class="hrMargin">
 				<div class="allInfoDiv">
 					<div class="infoDiv">
-						<h3>비밀번호 확인</h3>
+						<h4>비밀번호 확인</h4>
 						<table class="table">
 						  <tbody>
 						    <tr>
 						      <th scope="row">아이디</th>
-						      <td class="td2"><input type="text" name="cliId" value="${sessionScope.sessionClient.cliId }" readonly="readonly"></td>
+						      <td class="td2"><input type="text" name="cliId" value="${sessionScope.sessionClient.clientId }" readonly="readonly"></td>
 						    </tr>
 						    <tr>
 						      <th scope="row">비밀번호</th>

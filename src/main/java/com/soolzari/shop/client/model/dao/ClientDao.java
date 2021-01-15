@@ -15,6 +15,7 @@ import com.soolzari.shop.client.model.vo.Client;
 import com.soolzari.shop.client.model.vo.Goods;
 import com.soolzari.shop.client.model.vo.Reservation;
 import com.soolzari.shop.client.model.vo.Subscribe;
+import com.soolzari.shop.seller.model.vo.Seller;
 
 @Repository
 public class ClientDao {
@@ -76,7 +77,9 @@ public class ClientDao {
 		HashMap <String, Integer> map = new HashMap<String,Integer>();
 		map.put("clientNo", session);
 		map.put("classNo", classNo);
+		
 		System.out.println("dao");
+	
 		System.out.println(session);
 		System.out.println(classNo);
 		List<Class_List> list=  sqlSession.selectList("client.checkUser",map);
@@ -86,6 +89,32 @@ public class ClientDao {
 	public int setClassList(Class_List c) {
 		// TODO Auto-generated method stub
 		return sqlSession.insert("client.setClass_list",c);
+	}
+
+	public String findSeller(int selNo) {
+		
+		return sqlSession.selectOne("client.findSeller",selNo);
+	}
+
+
+
+	public int getClassNo(String title, String date) {
+		HashMap <String, String> map = new HashMap<String,String>();
+		map.put("title", title);
+		map.put("date", date);
+		
+		int person= sqlSession.selectOne("client.getClassNo",map);
+		return person;
+	}
+
+	public int sumPerson(int classNo) {
+		System.out.println("sumPersonDao : "+classNo);
+		return sqlSession.selectOne("client.sumPerson",classNo);
+	}
+
+	public String getEnrollClass(int classNo) {
+		
+		return sqlSession.selectOne("client.getEnroll",classNo);
 	}
 
 }

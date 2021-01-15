@@ -136,6 +136,7 @@ public class ClientService2 {
 		return dao.mInfoCheckPw(client);
 	}
 	
+	//결제insert
 	@Transactional
 	public int paymentInsert(Client2 client, String gdsNoStr, String gdsLCntStr, Purchase pur) {
 		System.out.println("service");
@@ -224,12 +225,12 @@ public class ClientService2 {
 		System.out.println(reqPage);
 		String pageNavi = "";
 		if(reqPage>1) {//이전버튼
-			pageNavi += "<a id='prev1' href='/client/mOrderList.sool?reqPage="+(pageIdx-1)+"'><</a>";
+			pageNavi += "<a id='prev1' href='/client/mOrderList.sool?reqPage="+(pageIdx-1)+"&period="+period+"'><</a>";
 		}
 		
 		for(int i = 0;i<pageAllIdx;i++) {
 			if(pageIdx!=reqPage) {//a태그잇게
-				pageNavi += "<a class='pageA' href='/client/mOrderList.sool?reqPage="+pageIdx+"'>"+pageIdx+"</a>";
+				pageNavi += "<a class='pageA' href='/client/mOrderList.sool?reqPage="+pageIdx+"&period="+period+"'>"+pageIdx+"</a>";
 			}else {//a태그없게
 				pageNavi += "<span class='selectedPage'>"+pageIdx+"</span>";
 			}
@@ -239,12 +240,18 @@ public class ClientService2 {
 			}
 		}
 		if(pageIdx<=totalPage) {//다음버튼
-			pageNavi += "<a id='next1' href='/client/mOrderList.sool?reqPage="+pageIdx+"'>></a>";
+			pageNavi += "<a id='next1' href='/client/mOrderList.sool?reqPage="+pageIdx+"&period="+period+"'>></a>";
 		}
 		OrderPageData opd = new OrderPageData(pList, olDataList, pageNavi);
 		return opd;
 	}
-
+	
+	//주문내역 배송관리(취소신청/수취확인)
+	@Transactional
+	public int orderDeliveryStatus(int gdsLNo,int deliveryStatus) {
+		return dao.orderDeliveryStatus(gdsLNo,deliveryStatus);
+	}
+	
 	//클래스 예약 내역 페이징
 	public ExperiencePageData mExperiencePaging(int reqPage, int period, int cliNo) {
 		int totalPage = dao.totalCountExperience(cliNo, period); //총개수(예약된 클래스(class_list_db)에서 저장된)
@@ -264,12 +271,12 @@ public class ClientService2 {
 		System.out.println(reqPage);
 		String pageNavi = "";
 		if(reqPage>1) {//이전버튼
-			pageNavi += "<a id='prev1' href='/client/mOrderList.sool?reqPage="+(pageIdx-1)+"'><</a>";
+			pageNavi += "<a id='prev1' href='/client/mExperience.sool?reqPage="+(pageIdx-1)+"&period="+period+"'><</a>";
 		}
 		
 		for(int i = 0;i<pageAllIdx;i++) {
 			if(pageIdx!=reqPage) {//a태그잇게
-				pageNavi += "<a class='pageA' href='/client/mOrderList.sool?reqPage="+pageIdx+"'>"+pageIdx+"</a>";
+				pageNavi += "<a class='pageA' href='/client/mExperience.sool?reqPage="+pageIdx+"&period="+period+"'>"+pageIdx+"</a>";
 			}else {//a태그없게
 				pageNavi += "<span class='selectedPage'>"+pageIdx+"</span>";
 			}
@@ -279,7 +286,7 @@ public class ClientService2 {
 			}
 		}
 		if(pageIdx<=totalPage) {//다음버튼
-			pageNavi += "<a id='next1' href='/client/mOrderList.sool?reqPage="+pageIdx+"'>></a>";
+			pageNavi += "<a id='next1' href='/client/mExperience.sool?reqPage="+pageIdx+"&period="+period+"'>></a>";
 		}
 		ExperiencePageData epd = new ExperiencePageData(eList, pageNavi);
 		return epd;
@@ -313,12 +320,12 @@ public class ClientService2 {
 		System.out.println(reqPage);
 		String pageNavi = "";
 		if(reqPage>1) {//이전버튼
-			pageNavi += "<a id='prev1' href='/client/mOrderList.sool?reqPage="+(pageIdx-1)+"'><</a>";
+			pageNavi += "<a id='prev1' href='/client/mQuestion.sool?reqPage="+(pageIdx-1)+"&period="+period+"'><</a>";
 		}
 		
 		for(int i = 0;i<pageAllIdx;i++) {
 			if(pageIdx!=reqPage) {//a태그잇게
-				pageNavi += "<a class='pageA' href='/client/mOrderList.sool?reqPage="+pageIdx+"'>"+pageIdx+"</a>";
+				pageNavi += "<a class='pageA' href='/client/mQuestion.sool?reqPage="+pageIdx+"&period="+period+"'>"+pageIdx+"</a>";
 			}else {//a태그없게
 				pageNavi += "<span class='selectedPage'>"+pageIdx+"</span>";
 			}
@@ -328,7 +335,7 @@ public class ClientService2 {
 			}
 		}
 		if(pageIdx<=totalPage) {//다음버튼
-			pageNavi += "<a id='next1' href='/client/mOrderList.sool?reqPage="+pageIdx+"'>></a>";
+			pageNavi += "<a id='next1' href='/client/mQuestion.sool?reqPage="+pageIdx+"&period="+period+"'>></a>";
 		}
 		QnaPageData qpd = new QnaPageData(list, pageNavi);
 		return qpd;
@@ -338,6 +345,17 @@ public class ClientService2 {
 	public int questionInsert(Qna question) {
 		return dao.questionInsert(question);
 	}
+	
+	//클래스체험다음날0시가 되면 체험완료로 변경(스케줄러/scheduler)
+	@Transactional
+	public void classCheckUpdate() {
+		System.out.println("스케줄러!!!");
+		dao.classCheckUpdate();
+	}
+
+	
+
+	
 
 	
 

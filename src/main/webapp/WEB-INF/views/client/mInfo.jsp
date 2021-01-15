@@ -21,7 +21,7 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/mypageFrm.css">
 <link rel="stylesheet" type="text/css" href="/resources/css/mInfo.css">
 
-	<div class="wrap" style="margin-top: 80px;">
+	<div class="wrap2" style="margin-top: 80px;">
 		<div class="sideNavi">
 			<ul class="sideNaviUl">
 				<a class="sideNaviTop" href="/client/mOrderList.sool?reqPage=1&period=1">마이페이지</a>
@@ -41,11 +41,11 @@
 			<div class="mainContent">
 				<form action="/client/mInfoUpdate.sool" method="post">
 				<input type="hidden" name="cliNo" value="${sessionScope.sessionClient.clientNo }">
-				<h2 class="contentTitle">회원정보 수정</h2>
+				<h3 class="contentTitle">회원정보 수정</h3>
 				<hr class="hrMargin">
 				<div class="allInfoDiv">
 					<div class="infoDiv">
-						<h3>기본 정보</h3>
+						<h4>기본 정보</h4>
 						<table class="table">
 						  <tbody>
 						    <tr>
@@ -72,7 +72,7 @@
 						</table>
 					</div>
 					<div class="addrDiv">
-						<h3>배송지</h3>
+						<h4>배송지</h4>
 						<div class="addrDiv2">
 							<input type="hidden" class="newAddr" name="cliAddr" value="${client.cliAddr }"><!-- 여기에 값이 들어가면 수정됐으니까 주소 업데이트해야함 -->
 							<table class="table">

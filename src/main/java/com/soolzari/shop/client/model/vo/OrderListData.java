@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class OrderListData {
 	private int purNo;
+	private int gdsLNo;
 	private int gdsNo;
 	private String gdsName;
 	private int gdsLPrice;

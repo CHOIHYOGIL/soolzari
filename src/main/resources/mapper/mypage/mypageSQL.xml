@@ -75,6 +75,7 @@
 	<select id="orderListDataSelect" parameterType="list" resultType="orderListData">
 		select 
             gl.pur_no as purNo, 
+            gl.gds_l_no as gdsLNo,
             g.gds_no as gdsNo, 
             g.gds_name as gdsName, 
             gl.gds_l_price as gdsLPrice, 
@@ -86,6 +87,11 @@
 			#{pur.purNo}
 		</foreach>
 	</select>
+	
+	<!-- 주문내역 배송관리(취소신청) -->
+	<update id="orderDeliveryStatus" parameterType="map">
+		update goods_list_db set gds_d_status=#{deliveryStatus} where gds_l_no=#{gdsLNo}
+	</update>
 	
 	<!-- 마이페이제 - 클래스 -->
 	
@@ -169,4 +175,9 @@
 						and to_date(qna_enroll,'YYYY-MM-DD') between add_months(sysdate,-#{period}) and sysdate order by qna_no desc)n)
 		where rnum between #{start} and #{end}
 	</select>
+	
+	<!-- 스케줄러로 매일밤 체험기간이 지난 클래스들은 체험완료로보이게함 -->
+	<update id="classCheckUpdate">
+		update class_list_db set class_check=4 where cls_class_no in (select cls_no from class_db where (to_date(class_enroll,'yyyy-mm-dd')+1)=to_char(sysdate,'yyyy-mm-dd')) and class_check=0
+	</update>
 </mapper>
