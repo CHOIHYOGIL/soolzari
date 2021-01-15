@@ -22,6 +22,7 @@
 		delete from notice_db where notice_no = #{_parameter}
 	</delete>
 	<select id="findNotice" parameterType="map" resultType="n">
+		select * from (select rownum as rnum, n.* from (
 		select
 			notice_no as noticeNo,
 			notice_title as noticeTitle,
@@ -49,6 +50,7 @@
 				and notice_enroll between to_date(#{month}) and sysdate
 			</when>
 		</choose>
+		order by 1 desc)n) where rnum between #{start} and #{end}
 	</select>
 	<select id="selectOneNotice" parameterType="_int" resultType="n">
 		select
@@ -159,5 +161,47 @@
 			</otherwise>
 		</choose>
 		)g) where rnum between #{start} and #{end}
+	</select>
+	<select id="searchFunding" parameterType="map" resultType="a">
+		select * from (select rownum as rnum, f.* from (
+		select
+			fund_no as acceptNo,
+			fund_name as acceptName,
+			fund_det as acceptDet,
+			fund_money as acceptPrice,
+			fund_date as acceptDate,
+			sel_name as seller,
+			status
+		from funding_db join seller_db using (sel_no) where fund_name like '%'||#{search}||'%' and status=0 and fund_date
+		<choose>
+			<when test="startDate.equals(endDate)">
+				= #{endDate}
+			</when>
+			<otherwise>
+				between to_date(#{startDate}) and to_date(#{endDate})
+			</otherwise>
+		</choose>
+		)f) where rnum between #{start} and #{end}
+	</select>
+	<select id="searchClass" parameterType="map" resultType="a">
+		select * from (select rownum as rnum, c.* from (
+		select
+			cls_no as acceptNo,
+			cls_name as acceptName,
+			cls_det as acceptDet,
+			cls_price as acceptPrice,
+			class_date as acceptDate,
+			sel_name as seller,
+			status
+		from class_db join seller_db using (sel_no) where cls_name like '%'||#{search}||'%' and status=0 and class_date
+		<choose>
+			<when test="startDate.equals(endDate)">
+				= #{endDate}
+			</when>
+			<otherwise>
+				between to_date(#{startDate}) and to_date(#{endDate})
+			</otherwise>
+		</choose>
+		)c) where rnum between #{start} and #{end}
 	</select>
 </mapper>

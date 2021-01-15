@@ -59,11 +59,28 @@ public class NoticeController {
 		return "admin/noticeFrm";
 	}
 	
+	@RequestMapping("/find.sool")
+	public String findNotice(String date, String type, String search, Model model, int reqPage) {
+		NoticePage np = service.findNotice(date, type, search, reqPage);
+		Date d = new Date();
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    	String today = sdf.format(d);
+		model.addAttribute("list", np.getList());
+		model.addAttribute("page", np.getPage());
+		model.addAttribute("today", today);
+		return "admin/noticeList";
+	}
+	
 
-	@RequestMapping("/find.sool")//나중에 페이징 처리
-	public String findNotice(String date, String type, String search, Model model) {
-		ArrayList<Notice> list = service.findNotice(date, type, search);
-		model.addAttribute("list", list);
+	@RequestMapping("/findC.sool")
+	public String findNoticeClient(String date, String type, String search, Model model, int reqPage) {
+		NoticePage np = service.findNotice(date, type, search, reqPage);
+		Date d = new Date();
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    	String today = sdf.format(d);
+		model.addAttribute("list", np.getList());
+		model.addAttribute("page", np.getPage());
+		model.addAttribute("today", today);
 		return "client/noticeListC";
 	}
 	
