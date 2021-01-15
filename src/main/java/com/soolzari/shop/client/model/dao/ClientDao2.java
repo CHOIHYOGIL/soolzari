@@ -124,6 +124,14 @@ public class ClientDao2 {
 		return (ArrayList<OrderListData>)list;
 	}
 	
+	//주문내역 배송관리(취소신청/수취확인)
+	public int orderDeliveryStatus(int gdsLNo, int deliveryStatus) {
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("gdsLNo", gdsLNo);
+		map.put("deliveryStatus", deliveryStatus);
+		return sqlSession.update("mypage.orderDeliveryStatus",map);
+	}
+	
 	//마이페이지 - 클래스 예약현황-------------------------------
 
 	public int totalCountExperience(int cliNo, int period) {
@@ -170,10 +178,18 @@ public class ClientDao2 {
 		return (ArrayList<Qna>)list;
 	}
 
+	//구매완료 시 장바구니에서 상품삭제
 	public int basketGoodsDelete(Client2 client, ArrayList<Integer> gdsNoList) {
 		BasketDel bd = new BasketDel(gdsNoList,client.getCliNo());
 		return sqlSession.delete("order.basketGoodsDelete",bd);
 	}
+
+	//클래스체험다음날0시가 되면 체험완료로 변경(스케줄러/scheduler)
+	public void classCheckUpdate() {
+		sqlSession.update("mypage.classCheckUpdate");
+	}
+
+	
 
 	
 }

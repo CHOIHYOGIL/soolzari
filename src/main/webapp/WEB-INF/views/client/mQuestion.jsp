@@ -13,7 +13,7 @@
 <jsp:include page="/WEB-INF/views/client/mypageFrm.jsp"/>
 <link rel="stylesheet" type="text/css" href="/resources/css/mQuestion.css">
 
-<div class="wrap">
+<div class="wrap2">
 	<div class="sideNavi"></div>
 	<div class="content">
 		<div class="mainContent">
@@ -45,6 +45,9 @@
 							</td>
 						</tr>
 					</c:forEach>
+					<tr>
+						<td colspan="4" style="text-align: center;" id="pageNavi">${pageNavi }</td>
+					</tr>
 				</table>
 			</div>
 		</div>
@@ -94,6 +97,18 @@
 
 	$(function(){
 		$(".giftSel").remove();//선물함 선택 안보이게
+		//조회기간별 조회(1,3,6,12개월)
+		$(".searchA").eq(0).attr("href","/client/mQuestion.sool?reqPage=1&period=1");
+		$(".searchA").eq(1).attr("href","/client/mQuestion.sool?reqPage=1&period=3");
+		$(".searchA").eq(2).attr("href","/client/mQuestion.sool?reqPage=1&period=6");
+		$(".searchA").eq(3).attr("href","/client/mQuestion.sool?reqPage=1&period=12");
+		$(".searchA").each(function(){
+			console.log($(this).attr("id"));
+			console.log("m${period}");
+			if($(this).attr("id")==("m${period}")){
+				$(this).addClass("sA1");
+			}
+		});
 	});
 </script>
 </body>

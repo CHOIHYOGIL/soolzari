@@ -14,7 +14,7 @@
 <jsp:include page="/WEB-INF/views/client/mypageFrm.jsp"/>
 <link rel="stylesheet" type="text/css" href="/resources/css/mOrderList.css">
 
-<div class="wrap">
+<div class="wrap2">
 	<div class="sideNavi"></div>
 	<div class="content">
 		<div class="mainContent">
@@ -32,20 +32,40 @@
 						<c:if test="${purchase.purNo eq olData.purNo}">
 						<tr>
 							<td class="rowSpan">
+								<span class="gdsLNo" style="display: none;">${olData.gdsLNo }</span><!-- 배송관리 update할때전달해줄값 -->
 								<p class="purNoRow">${purchase.purNo }</p>
 								<p>${purchase.purDate }</p>
 							</td>
 							<td>
 								<p>${olData.gdsName }</p>
 								<p>개수 : ${olData.gdsLCnt }</p>
-								<p>가격 : ${olData.gdsLPrice*olData.gdsLCnt }</p>
+								<p>가격 : <span class="comma">${olData.gdsLPrice}</span>*${olData.gdsLCnt }=<span class="comma">${olData.gdsLPrice*olData.gdsLCnt }</span></p>
 								<p>배송지 : ${purchase.purGet }</p>
 							</td>
 							<td>
-								<p>${purchase.purTtp }</p>
+								<p><span class="comma">${purchase.purTtp }</span></p>
 							</td>
 							<td>
-								<p>${olData.gdsDStatus }</p>
+								<c:if test="${olData.gdsDStatus==0}">
+									<p>결제완료</p>
+									<button type="button" class="btn btn-outline-secondary btn-sm cancelBtn">취소신청</button>
+								</c:if>
+								<c:if test="${olData.gdsDStatus==1}">
+									<p>취소신청<br>승인대기중</p>
+								</c:if>
+								<c:if test="${olData.gdsDStatus==2}">
+									<p>취소완료</p>
+								</c:if>
+								<c:if test="${olData.gdsDStatus==3}">
+									<p>배송중</p>
+								</c:if>
+								<c:if test="${olData.gdsDStatus==4}">
+									<p>배송완료</p>
+									<button type="button" class="btn btn-outline-secondary btn-sm completeBtn">수취확인</button>
+								</c:if>
+								<c:if test="${olData.gdsDStatus==5}">
+									<p>수취확인완료</p>
+								</c:if>
 							</td>
 							<td>
 								<p>리뷰작성</p>
@@ -86,16 +106,40 @@
 		$(".searchA").eq(3).attr("href","/client/mOrderList.sool?reqPage=1&period=12");
 		$(".searchA").each(function(){
 			console.log($(this).attr("id"));
-			console.log("m"+${period});
-			if($(this).attr("id")==("m"+${period})){
+			console.log("m${period}");
+			if($(this).attr("id")==("m${period}")){
 				$(this).addClass("sA1");
 			}
 		});
+		
+		//가격에 콤마
+		$(".comma").each(function(){
+			$(this).html(commaSet($(this).html()));
+		})
 	});
 	
-	$(".searchA").click(function(){
-		
-	});
+	//취소신청
+	$(".cancelBtn").click(function(){
+		if(confirm("취소신청 하시겠습니까?\n판매자가 취소승인이후 환불이 진행됩니다.\n이미 배송이 진행됐을 경우 환불이 불가능할 수 있습니다.")){
+			var gdsLNo = $(this).parent().parent().find(".gdsLNo").html();
+			location.href="/client/orderDeliveryStatus.sool?gdsLNo="+gdsLNo+"&deliveryStatus="+1+"&reqPage="+${reqPage}+"&period="+${period};
+		}
+	})
+	//수취확인
+	$(".completeBtn").click(function(){
+		if(confirm("상품을 확인하셨습니까?\n수취확인이후 환불이 불가능합니다.")){
+			var gdsLNo = $(this).parent().parent().find(".gdsLNo").html();
+			location.href="/client/orderDeliveryStatus.sool?gdsLNo="+gdsLNo+"&deliveryStatus="+5+"&reqPage="+${reqPage}+"&period="+${period};
+		}
+	})
+	
+	//금액단위 콤마 구분
+	function commaSet(price) {
+		var str = String(price);
+		let price1 = str.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		return price1;
+	}
+	
 	
 	
 	//주문번호가 같으면 rowspan으로 행합치게

@@ -271,12 +271,36 @@ public class ClientController2 {
 			model.addAttribute("olDataList",opd.getOlDataList());
 			model.addAttribute("pageNavi",opd.getPageNavi());
 			model.addAttribute("period",period);
+			model.addAttribute("reqPage",reqPage);
+			System.out.println("price:"+opd.getOlDataList().get(0).getGdsLPrice());
+			System.out.println("price:"+opd.getOlDataList().get(1).getGdsLPrice());
 			return "client/mOrderList";
 		}else {
 			model.addAttribute("msg","로그인 후 이용해주세요");
 			model.addAttribute("loc","/");
 			return "common/msg";
 		}
+	}
+	
+	//마이페이지 - 주문내역 배송관리(취소신청)
+	@RequestMapping("/orderDeliveryStatus.sool")
+	public String orderDeliveryStatus(int gdsLNo, int deliveryStatus, int reqPage, int period, Model model) {
+		int result = service.orderDeliveryStatus(gdsLNo,deliveryStatus);
+		if(result>0) {
+			if(deliveryStatus==1) {
+				model.addAttribute("msg","취소신청이 완료되었습니다");
+			}else if(deliveryStatus==5){
+				model.addAttribute("msg","수취확인이 완료되었습니다");
+			}
+		}else {
+			if(deliveryStatus==1) {
+				model.addAttribute("msg","취소신청에 실패하였습니다");
+			}else if(deliveryStatus==5){
+				model.addAttribute("msg","수취확인에 실패하였습니다");
+			}
+		}
+		model.addAttribute("loc","/client/mOrderList.sool?reqPage="+reqPage+"&period="+period);
+		return "common/msg";
 	}
 	
 	//마이페이지 - 클래스예약현황
@@ -287,6 +311,7 @@ public class ClientController2 {
 			model.addAttribute("eList",epd.getEList());
 			model.addAttribute("pageNavi",epd.getPageNavi());
 			model.addAttribute("period",period);
+			model.addAttribute("reqPage",reqPage);
 			return "client/mExperience";
 		}else {
 			model.addAttribute("msg","로그인 후 이용해주세요");
@@ -297,14 +322,14 @@ public class ClientController2 {
 	
 	//마이페이지 - 클래스취소신청(class_list_db에 classCheck컬럼을 update -> 0:결제완료,1:취소신청중,2:취소완료)
 	@RequestMapping("/classCancel.sool")
-	public String classCancel(int clsLNo, Model model) {
+	public String classCancel(int clsLNo,int reqPage, int period, Model model) {
 		int result = service.classCancel(clsLNo);
 		if(result>0) {
 			model.addAttribute("msg","취소신청이 완료되었습니다");
 		}else {
 			model.addAttribute("msg","취소신청에 실패하였습니다");
 		}
-		model.addAttribute("loc","/client/mExperience.sool?reqPage=1&period=1");
+		model.addAttribute("loc","/client/mExperience.sool?reqPage="+reqPage+"&period="+period);
 		return "common/msg";
 	}
 	

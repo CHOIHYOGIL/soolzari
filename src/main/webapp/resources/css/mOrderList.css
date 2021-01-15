@@ -29,44 +29,5 @@
 	background-color: rgb(77, 80, 117);
 	color: white;
 }
-.sA1{
-	background-color: rgb(77, 80, 117);
-	color: white;
-}
 
-/* 페이징 호버----------------------------------------- */
 
-#pageNavi>*{
-		margin: 10px;
-	}
-#pageNavi .pageA{
-	display: inline-block;
-	width: 30px;
-	height: 30px;
-	line-height: 27px;
-	text-decoration: none;
-	color: rgb(77, 80, 117);
-	border: 1px solid rgb(77, 80, 117);
-}
-#pageNavi span{
-	display: inline-block;
-	width: 30px;
-	height: 30px;
-	line-height: 27px;
-	color: white;
-	border: 1px solid rgb(77, 80, 117);
-	background-color: rgb(77, 80, 117);
-}
-#prev1,#next1{
-	display: inline-block;
-	width: 30px;
-	height: 30px;
-	line-height: 27px;
-	text-decoration: none;
-	color: rgb(77, 80, 117);
-}
-#pageNavi .pageA:hover{
-	color: white;
-	border: 1px solid rgb(77, 80, 117);
-	background-color: rgb(77, 80, 117);
-}

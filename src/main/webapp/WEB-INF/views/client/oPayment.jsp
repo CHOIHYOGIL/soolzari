@@ -223,19 +223,14 @@
 		}
 		totalPriceSet();
 	});
-	//포인트 직접입력시 보유포인트를 넘어갈때 더이상 안써지게 막음
-	$("input[name=usePoint]").keydown(function(event){
-		if(48<=event.keyCode<=57 && 96<=event.keyCode<=105){//숫자만 입력가능하게
-			console.log("2");
-		}else{
-			event.preventDefault();
-		}
-		
-		console.log(event.keyCode);
-		
-		/* if(Number($(this).val())>=Number($(".myPoint").html())){
-			$(this).val($(this).val().substring(0,$(this).val().length-1));
-		} */
+	
+	//포인트 입력 시 숫자만 가능하게 정규표현식
+	$("input[name=usePoint]").keyup(function(event){
+		var point = $(this).val()
+		var pointReg = /^[0-9]{1,}$/;
+        if (!pointReg.test($(this).val())) {
+        	$(this).val($(this).val().substring(0,$(this).val().length-1));
+        }
 	});
 	
 	$(document).on("click", ".addrUpdate", function(){

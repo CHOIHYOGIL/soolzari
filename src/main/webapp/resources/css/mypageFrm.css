@@ -2,7 +2,7 @@
 body a{
 	text-decoration: none;
 }
-body .wrap{
+body .wrap2{
 	overflow: hidden;
 	width: 1200px;
 	margin: 0 auto;
@@ -187,6 +187,10 @@ a:hover{
 .searchWrap{
 	margin-bottom: 50px;
 }
+.sA1{
+	background-color: rgb(77, 80, 117);
+	color: white;
+}
 
 /* 테이블----------------------------------------- */
 /* body .th1,.th2,.th3,.th4,.th5{
@@ -196,6 +200,42 @@ body .listTable{
 	text-align: center;
 }
 
+/* 페이징 호버----------------------------------------- */
+
+#pageNavi>*{
+		margin: 10px;
+	}
+#pageNavi .pageA{
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	line-height: 27px;
+	text-decoration: none;
+	color: rgb(77, 80, 117);
+	border: 1px solid rgb(77, 80, 117);
+}
+#pageNavi span{
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	line-height: 27px;
+	color: white;
+	border: 1px solid rgb(77, 80, 117);
+	background-color: rgb(77, 80, 117);
+}
+#prev1,#next1{
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	line-height: 27px;
+	text-decoration: none;
+	color: rgb(77, 80, 117);
+}
+#pageNavi .pageA:hover{
+	color: white;
+	border: 1px solid rgb(77, 80, 117);
+	background-color: rgb(77, 80, 117);
+}
 
 /* 받은 선물함 / 보낸 선물함----------------------------------------- */
 .giftSel{
@@ -215,6 +255,8 @@ body .listTable{
 	background-color: rgb(77, 80, 117);
 	color: white;
 }
+
+
 
 
 

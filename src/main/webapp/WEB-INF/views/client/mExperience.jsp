@@ -14,7 +14,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <jsp:include page="/WEB-INF/views/client/mypageFrm.jsp"/>
 <link rel="stylesheet" type="text/css" href="/resources/css/mExperience.css">
-<div class="wrap">
+<div class="wrap2">
 	<div class="sideNavi"></div>
 	<div class="content">
 		<div class="mainContent">
@@ -63,15 +63,21 @@
 											<c:when test="${eld.classCheck==1 }">
 												<p>취소승인<br> 대기중</p>
 											</c:when>
-											<c:otherwise>
+											<c:when test="${eld.classCheck==3 }">
 												<p>취소완료</p>
-											</c:otherwise>
+											</c:when>
+											<c:when test="${eld.classCheck==4 }">
+												<p>체험완료</p>
+											</c:when>
 										</c:choose>
 									</td>
 								</tr>
 							</c:forEach>
 						</c:otherwise>
 					</c:choose>
+					<tr>
+						<td colspan="4" style="text-align: center;" id="pageNavi">${pageNavi }</td>
+					</tr>
 				</table>
 			</div>
 		</div>
@@ -100,10 +106,10 @@
 		$(".searchA").eq(3).attr("href","/client/mExperience.sool?reqPage=1&period=12");
 		$(".searchA").each(function(){
 			console.log($(this).attr("id"));
-			console.log("m"+${period});
-			if($(this).attr("id")==("m"+${period})){
+			console.log("m${period}");
+			if($(this).attr("id")==("m${period}")){
 				
-				$(this).addClass("a1");
+				$(this).addClass("sA1");
 			}
 		});
 	})
@@ -111,7 +117,7 @@
 	$(".cancelBtn").click(function(){
 		if(confirm("취소신청 하시겠습니까?\n판매자가 취소승인이후 환불이 진행됩니다.")){
 			var clsLNo = $(this).parent().parent().find(".clsLNo").html();
-			location.href="/client/classCancel.sool?clsLNo="+clsLNo;
+			location.href="/client/classCancel.sool?clsLNo="+clsLNo+"&reqPage="+${reqPage}+"&period="+${period};
 		}
 	})
 </script>
