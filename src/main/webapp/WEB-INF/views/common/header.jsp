@@ -72,8 +72,9 @@
 				   <div>
                     <ul class="login">
                         <li> <input class="search_input" type="text" placeholder="search"></li>
-                        <li><a href="#">${sessionId}님</a>
                         <li><a href="/logout.sool">로그아웃</a>
+                        <li><a href="/client/basketList.sool">장바구니</a>
+                        <li><a href="/client/mOrderList.sool?reqPage=1&period=1">${sessionId}님</a>
                     </ul>
                 </div>
 			</c:when>

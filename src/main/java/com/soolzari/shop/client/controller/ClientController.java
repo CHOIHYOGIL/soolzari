@@ -224,6 +224,7 @@ public class ClientController {
 			session.setAttribute("sessionAddr", client.getClientAddr());
 			session.setAttribute("sessionPoint", client.getClientPoint());
 			session.setAttribute("sessionSubscribe", client.getClientRank());
+			session.setAttribute("sessionClient", client);
 		
 			model.addAttribute("msg","로그인 성공");
 			model.addAttribute("loc","/");
