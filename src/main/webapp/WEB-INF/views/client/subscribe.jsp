@@ -6,7 +6,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
  <link rel="stylesheet" href="/resources/css/subscribe.css">
-
+    <!-- script -->
+     <script src="/resources/js/jquery-3.3.1.min.js"></script>
     <!-- Bootstrap cdn 설정 -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
@@ -15,14 +16,11 @@
 
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 
-    <!-- script -->
-     <script src="/resources/js/jquery-3.3.1.min.js"></script>
+
  
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
- <!-- 모달창 드래그 -->
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 
     <!-- 반응형 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0, maximum-scale=1.0">
@@ -34,7 +32,7 @@
    <%@include file="/WEB-INF/views/common/header.jsp" %>
     <section class="carousel">
 
-            <div id="carousel-example-generic" class="carousel slide">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
 
                     <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
@@ -75,7 +73,7 @@
 
             <img src="/resources/image/loginLogo.png" alt="">
         </div>
-        <h2 class="fw300 fs34 f_scd text-center mb40" style="background:#f4f4f4;">술자리 &nbsp;<span style="font-size: 30px;">구독 </span>안내 </h2><br><br>
+        <h2 class="fw300 fs34 f_scd text-center mb40" style="background:#f4f4f4; font-size:25px;">술자리 <span>구독 </span>안내 </h2><br><br>
 
         <div class="choiceBtn">
             <ul class>

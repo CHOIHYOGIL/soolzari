@@ -21,8 +21,7 @@
     <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
     <!-- script -->
 
-<link rel="stylesheet" href="/resources/css/bootstrap.min.css">
-   <script src="/resources/js/bootstrap.min.js"></script>
+
 
 
     <!-- 반응형 -->

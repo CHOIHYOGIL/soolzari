@@ -22,7 +22,7 @@ address, em, i {font-style: normal;}
 
 #container{
 	     font-family: 'S-CoreDream-3Light';
-	margin-top:100px;
+	
 
 }
 #contents{
@@ -35,10 +35,11 @@ address, em, i {font-style: normal;}
 .sub_content{
 	     font-family: 'S-CoreDream-3Light';
     padding-bottom:100px;
-    
+    	margin-top:170px;
 }
 
 .sub_content .content{
+
          font-family: 'S-CoreDream-3Light';
     width:100%;
     min-height: 500px;
@@ -73,7 +74,7 @@ address, em, i {font-style: normal;}
     content: "\e900";
 }
 .local_home{
-    color:#777777;
+    
     float:left;
     height: 50px;
     line-height: 50px;
@@ -81,6 +82,18 @@ address, em, i {font-style: normal;}
     border-right: 1px solid #ddd;
 }
 
+.local_home a{
+	
+	text-decoration:none;
+	color:black;
+	font-size:15px;
+}
+.local_home a:hover{
+	
+	text-decoration:none;
+	color:black;
+	font-size:15px;
+}
 .location_cont .location_select{
     float: left;
 }
@@ -103,6 +116,7 @@ address, em, i {font-style: normal;}
     text-align: left;
     font-size: 14px;
     min-width: 120px;
+    color:black;
 }
 
 .location_select ul{
@@ -115,17 +129,18 @@ address, em, i {font-style: normal;}
          font-family: 'S-CoreDream-3Light';
     font-size: 0;
     border:1px solid #ddd;
-   
+   text-align:left;
     background: #ffffff;
 }
 
 .location_select ul li a{
     display: block;
-    padding:0px 5px 0px 20px;
+
     font-size: 14px;
     border-bottom: 1px solid #ddd;
     color:black;
     text-decoration: none;
+    text-align:center;
          font-family: 'S-CoreDream-3Light';
 }
 
@@ -212,10 +227,10 @@ address, em, i {font-style: normal;}
 .list_item_category li:nth-child(1) a{
     display: block;
     padding: 15px 10px 15px 10px;
-    color:black;
+    color:white;
     border:1px solid #ddd;
     border-left: 0;
-    background:orange;
+    background:#4d5075;
     font-size: 16px;
     text-decoration: none;
          font-family: 'S-CoreDream-3Light';
@@ -251,7 +266,7 @@ address, em, i {font-style: normal;}
     font-weight: 300;
 }
 .goods_pick_list .pick_list_num strong{
-    color:#189fdb;
+   color:#4d5075;
 }
 
 .fw500{
@@ -291,7 +306,7 @@ input[type="radio"] {
 }
 
 .goods_pick_list .pick_list_box .pick_list label.on {
-    color: #189fdb;
+    color: #f7b8b4;
     font-weight: 500;
 }
 
@@ -304,7 +319,7 @@ input[type="radio"] {
     line-height: 60px;
     font-size: 15px;
     font-weight: 300;
-    color:black;
+    color:#4d5075;
     padding: 0px 20px;
          font-family: 'S-CoreDream-3Light';
 }
@@ -315,7 +330,7 @@ input[type="radio"] {
     bottom: -9px;
     z-index: 2;
     width: 100%;
-    border-top: 1px solid #189fdb;
+    border-top: 1px solid #f7b8b4;
 }
 
 .choice_num_view {
@@ -406,6 +421,9 @@ select {
     padding: 0;
 }
 
+.item_tit_box a{
+	color:#4d5075;
+}
 .item_money_box {
     padding: 5px 0 0 0;
     line-height: 1;

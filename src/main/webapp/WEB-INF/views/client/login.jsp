@@ -10,10 +10,7 @@
 <title>술자리 로그인</title>
 <link rel="stylesheet" href="/resources/css/login.css">
 
-   <!-- Bootstrap cdn 설정 -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
-
+      <script src="/resources/js/jquery-3.3.1.min.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 
@@ -25,10 +22,7 @@
 
     <!-- icon 사용-->
     <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
-    <!-- script -->
-    <script src="/resources/js/jquery-3.3.1.min.js"></script>
-  
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 
 
     <!-- 반응형 -->
@@ -82,6 +76,10 @@
 <!--        buttons -->
 <!--      button LogIn -->
       <button class="log-in"> 로그인</button>
+      <button class="btn submits sign-up">회원가입
+<!--         Sign Up font icon -->
+      <i class="fa fa-user-plus" aria-hidden="true"></i>
+      </button>
    </div>
   
 <!--   other buttons -->
@@ -89,21 +87,18 @@
 <!--      Forgot Password button-->
  
       <ul class="sns">
-                <li><a href="/loginNaver.sool"><img src="/resources/image/naver.png" alt="" width="30px;" height="30px;"></a></li>
-                <li><a href="#"><img src="/resources/image/facebook.png" alt=""></a></li>
+                <li><a href="/loginNaver.sool"><img src="/resources/image/naver.png" alt="" width="35px;" height="35px;"></a></li>
+                <li><a href="#"><img src="/resources/image/facebook.png" alt="" width="20px;" height="30px;"></a></li>
                 <li><a href="https://kauth.kakao.com/oauth/authorize?client_id=0c76ad817787e78834bb9cae58d232f0&redirect_uri=http://localhost:8000/kakaologin.sool&response_type=code
 
-"  ><img src="/resources/image/kakao.png" alt="" width="30px;" height="30px;"></a></li>
-                <li><a href="#"><img src="/resources/image/blog.png" alt=""></a></li>
+"  ><img src="/resources/image/kakao.png" alt="" width="35px;" height="35px;"></a></li>
+                <li><a href="#"><img src="/resources/image/blog.png" alt="" width="40px;" height="30px;"></a></li>
             </ul>
 <!--     Sign Up button -->
-      <button class="btn submits sign-up">회원가입
-<!--         Sign Up font icon -->
-      <i class="fa fa-user-plus" aria-hidden="true"></i>
-      </button>
+      
       
           <ul class="find">
-              <li><a href="#">아이디찾기</a></li>
+              <li><a href="#" >아이디찾기</a></li>
               <li><a href="#">비밀번호찾기</a></li>
           </ul>
 

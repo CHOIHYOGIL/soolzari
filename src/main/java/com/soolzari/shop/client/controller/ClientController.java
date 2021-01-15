@@ -35,6 +35,7 @@ import com.soolzari.shop.client.model.vo.KakaoUserInfo;
 import com.soolzari.shop.client.model.vo.NaverLoginBO;
 import com.soolzari.shop.client.model.vo.Reservation;
 import com.soolzari.shop.client.model.vo.Subscribe;
+import com.soolzari.shop.seller.model.vo.Seller;
 
 
 @Controller
@@ -211,9 +212,10 @@ public class ClientController {
 		System.out.println(c.getClientId());
 		System.out.println(c.getClientPw());
 		Client client=service.selectOneClient(c);
-		System.out.println("no : "+client.getClientNo());
+
 		System.out.println("Controller : "+client);
 		if(client!=null) {
+			session.setAttribute("sessionClient", client);
 			session.setAttribute("sessionId", client.getClientId());
 			session.setAttribute("sessionNo", client.getClientNo());
 			session.setAttribute("sessionName", client.getClientName());
@@ -225,10 +227,12 @@ public class ClientController {
 			session.setAttribute("sessionClient", client);
 		
 			model.addAttribute("msg","로그인 성공");
+			model.addAttribute("loc","/");
 		}else {
 			model.addAttribute("msg","아이디 또는 비밀번호를 확인해주세요");
+			model.addAttribute("loc","/login.sool");
 		}
-		model.addAttribute("loc","/");
+
 		return "common/msg";
 	}
 	
@@ -246,6 +250,8 @@ public class ClientController {
 		
 	}
 	
+	
+	/* 등록되어 있는 클래스들 가져옴*/
 	@ResponseBody
 	@RequestMapping("/getClassDB.sool")
 	public ArrayList<Reservation> getClassInfo(Model model) {
@@ -256,7 +262,32 @@ public class ClientController {
 		return list;
 		
 	}
-
+	
+	@ResponseBody
+	@RequestMapping(value="/findSeller.sool" ,produces = "application/text; charset=UTF-8" )
+	public String findSeller(int selNo){
+		
+		System.out.println("findSeller");
+		System.out.println(selNo);
+		String seller=service.findSeller(selNo);
+		
+		System.out.println("seller : "+seller);
+		return seller;
+		
+	}
+	
+//	@ResponseBody
+//	@RequestMapping(value="/checkPerson.sool" ,produces = "application/text; charset=UTF-8" )
+//	public String checkPerson(int person){
+//		
+//		System.out.println("checkPerson");
+//		System.out.println(person);
+//		String seller=service.checkPerson(person);
+//		
+//		System.out.println("seller : "+seller);
+//		return seller;
+//		
+//	}
 	@RequestMapping("/basicSool.sool")
 	public String basicSool(Model model, String searchWord) {
 		
@@ -276,15 +307,18 @@ public class ClientController {
 		
 	}
 	
+	/* 이미 예약해서 예약불가능 한지 아니면 예약가능한지 판별*/
 	@ResponseBody
-	@RequestMapping(value="/checkUser.sool", produces="application/json;charset=utf-8")
+	@RequestMapping(value="/checkUser.sool", produces="application/json;charset=utf-8", method=RequestMethod.POST)
 	public String checkUser(Model model, int classNo, int session) {
 		System.out.println("checkuser");
 		System.out.println("classNo : "+classNo);
 		System.out.println("clientNo" +session);
+	
 		JsonObject obj = new JsonObject();
 		ArrayList<Class_List> list=service.checkUser(session,classNo);
 		System.out.println("list : "+list);
+		
 		if(list.size()!=0) {
 			System.out.println("here");
 			obj.addProperty("msg", "이미 예약하신 클래스입니다");
@@ -292,6 +326,37 @@ public class ClientController {
 		}else {
 			obj.addProperty("msg", "예약 가능합니다.");
 		}
+		return new Gson().toJson(obj);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/checkPerson.sool",  produces="application/json;charset=utf-8",method=RequestMethod.POST)
+	public String checkPerson(Model model, int person,int sessionNo,String title,int classNo) {
+		System.out.println("checkNum");
+		System.out.println(person);
+		System.out.println(title);
+		System.out.println("클래스번호 :"+classNo);
+		JsonObject obj = new JsonObject();
+		String date=service.getEnrollClass(classNo);
+		System.out.println(date);
+		int person1=service.getClassNo(title,date);
+		System.out.println("person1:"+person1);
+		int result=service.sumPerson(classNo);
+		System.out.println("클래스 이미 등록한 사람 수 sum : "+result);
+		int resultPerson=person+result;  //이미 클래스 등록한 사람수 + 예약하려고 하는 사람수
+		System.out.println("resultPerson : "+resultPerson);
+		int okPerson=person1-result;
+		System.out.println("가능한 인원 : "+okPerson);
+		if(resultPerson>person1) {
+			System.out.println("here");
+			
+			obj.addProperty("person", okPerson);
+			obj.addProperty("msg", "가능 인원이 초과입니다.");
+	
+		}else {
+			obj.addProperty("msg", "가능합니다.");
+		}
+		
 		return new Gson().toJson(obj);
 	}
 	
@@ -362,6 +427,8 @@ public class ClientController {
 		
 		
 	}
+	
+	
 //	@RequestMapping("/classRegister.sool")
 //	public String classRegister(Reservation r,Model model ) {
 //		

@@ -6,15 +6,14 @@
 <head>
 <meta charset="UTF-8">
 <title>술자리 메인페이지</title>
- <link rel="stylesheet" href="resources/css/main.css">
-    <link rel="stylesheet" href="resources/css/slick.css">
-    <!-- Bootstrap cdn 설정 -->
+ <link rel="stylesheet" href="/resources/css/main.css">
+ <!-- script -->
+    <script src="/resources/js/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
-
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <!--font-->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
@@ -22,12 +21,10 @@
 
     <!-- icon 사용-->
     <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
-    <!-- script -->
-    <script src="resources/js/jquery-3.3.1.min.js"></script>
-    <script src="resources/js/scrolla.jquery.min.js"></script>
-    <script src="resources/js/script.js"></script> <!-- script.js 파일 적용 -->
-    <script src="resources/js/slick.min.js"></script> <!-- slick.min.js 파일적용-->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    
+   
+
+	
 
 
     <!-- 반응형 -->
@@ -48,14 +45,13 @@
                     <li data-target="#carousel-example-generic" data-slide-to="1"></li>
                     <li data-target="#carousel-example-generic" data-slide-to="2"></li>
                 </ol>
-
                 <div class="carousel-inner">
                     <div class="item active">
                         <img src="resources/image/carousel1.PNG" alt="" style="width:100%;">
                     </div>
 
                     <div class="item">
-                        <img src="resources/image/carousel2.jpg" alt="" style="width:100%;">
+                        <img src="resources/image/carousel2.PNG" alt="" style="width:100%;">
                     </div>
 
                     <div class="item">
@@ -79,7 +75,7 @@
         <section class="new_product">
 
             <span>
-                <h2 style="text-align: center; margin: 80px;"> 오늘의 신상품 <span>
+                <h2 style="text-align: center; margin: 80px; font-size:30px;"> 오늘의 신상품 <span>
                 <a href="/basicSool.sool" style="float:right; cursor: pointer; text-decoration: none;  font-size:20px; margin-top:65px; ">더보기 </a>
                 </span>
                 </h2>
@@ -125,10 +121,11 @@
 
 
                                 <img src="resources/image/product.jpg" style="width: 100%;">
-                                <button type="button" class="btn_like">
-                                    <span class="img_emoti">좋아요</span>
-                                    <span class="ani_heart_m"></span>
-                                </button>
+                                <!--  
+                                    <button type="button" class="btn_like">
+                                        <span class="img_emoti">좋아요</span>
+                                        <span class="ani_heart_m"></span>
+                                    </button>-->
                            </div>
                             <div class="text-box" style="padding: 20px; box-sizing: border-box;">
                                 <div>
@@ -203,10 +200,11 @@
                                         </span>
 
                                     </div>
+                                    <!--  
                                     <button type="button" class="btn_like">
                                         <span class="img_emoti">좋아요</span>
                                         <span class="ani_heart_m"></span>
-                                    </button>
+                                    </button>-->
                                 </div>
                                 <div class="gray"><span class="price">10000원</span></div>
 
@@ -222,7 +220,7 @@
         <section class="best_product">
 
             <span>
-                <h2 style="text-align: center; margin: 80px;"> 베스트 상품 <span><a  href="/basicSool.sool"  style="float:right;  font-size:20px; margin-top:35px;cursor: pointer; text-decoration: none; margin-top:65px;" >더보기 </a></span></h2>
+                <h2 style="text-align: center; margin: 80px; font-size:30px;"> 베스트 상품 <span><a  href="/basicSool.sool"  style="float:right;  font-size:20px; margin-top:35px;cursor: pointer; text-decoration: none; margin-top:65px;" >더보기 </a></span></h2>
             </span>
             <div class="best-Plist">
                 <ul class="bList">
@@ -378,22 +376,7 @@
     
   
     
-    /* 캐러셀 */
-       $(function(){
-        // 이미지 슬라이드 컨트롤를 사용하기 위해서는 carousel를 실행해야한다.
-        $('#carousel-example-generic').carousel({
-        // 슬리아딩 자동 순환 지연 시간
-        // false면 자동 순환하지 않는다.
-        interval: 5000,
-        // hover를 설정하면 마우스를 가져대면 자동 순환이 멈춘다.
-        pause: "hover",
-        // 순환 설정, true면 1 -> 2가면 다시 1로 돌아가서 반복
-        wrap: true,
-        // 키보드 이벤트 설정 여부(?)
-        keyboard : true
-        });
-        });
-       
+
     
  
 
