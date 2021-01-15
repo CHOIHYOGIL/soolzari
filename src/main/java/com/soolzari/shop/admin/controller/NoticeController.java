@@ -64,7 +64,7 @@ public class NoticeController {
 	public String findNotice(String date, String type, String search, Model model) {
 		ArrayList<Notice> list = service.findNotice(date, type, search);
 		model.addAttribute("list", list);
-		return "admin/noticeList";
+		return "client/noticeListC";
 	}
 	
 	@RequestMapping("/delete.sool")
@@ -92,7 +92,7 @@ public class NoticeController {
 	}
 	
 	
-	@RequestMapping("/insert.sool")//이미지 넣어야함
+	@RequestMapping("/insert.sool")
 	public String insertNotice(Notice n, Model model) {
 		int result = service.insertNotice(n);
 		if(result>0) {
@@ -136,7 +136,7 @@ public class NoticeController {
 		return "admin/noticeView";
 	}
 	
-	@RequestMapping("/viewClient.sool")
+	@RequestMapping("/viewClient.sool")//조회수 해야함
 	public String noticeClient(int noticeNo, Model model) {
 		Notice n = service.selectOneNotice(noticeNo);
 		Notice prev = service.selectOneNotice(noticeNo-1);

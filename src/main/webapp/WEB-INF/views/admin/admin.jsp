@@ -23,13 +23,13 @@
                         <a href="/faq.sool">자주 묻는 질문</a>
                     </li>
                     <li>
-                        <a href="#">문의</a>
+                        <a href="/qna.sool">1:1 문의</a>
                     </li>
                     <li>
-                        <a href="/accept.sool">승인 관리</a>
+                        <a href="/accept.sool?type=goods&reqPage=1">승인 관리</a>
                     </li>
                     <li>
-                        <a href="#">관리</a>
+                        <a href="#">사용자 관리</a>
                     </li>
                 </ul>
             </div>
