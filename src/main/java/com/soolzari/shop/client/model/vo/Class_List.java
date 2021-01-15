@@ -9,6 +9,7 @@ public class Class_List {
 	public int clientNo;
 	public int classNo;
 	public int classPerson;
-	public int classCheck;
-	public String classPayment;
+	public int classCheck; //클래스 취소 신청 여부 0이 기본 
+	public String classPayment;   //결제일
+
 }

@@ -12,6 +12,7 @@ import com.soolzari.shop.client.model.vo.Client;
 import com.soolzari.shop.client.model.vo.Goods;
 import com.soolzari.shop.client.model.vo.Reservation;
 import com.soolzari.shop.client.model.vo.Subscribe;
+import com.soolzari.shop.seller.model.vo.Seller;
 
 @Service
 public class ClientService {
@@ -53,6 +54,23 @@ public class ClientService {
 		// TODO Auto-generated method stub
 		return dao.setClassList(c);
 	}
+	public String findSeller(int selNo) {
+		return dao.findSeller(selNo);
+	}
+
+	public int getClassNo(String title, String date) {
+		
+		return dao.getClassNo(title,date);
+	}
+	public int sumPerson(int classNo) {
+		
+		return dao.sumPerson(classNo);
+	}
+	public String getEnrollClass(int classNo) {
+		
+		return dao.getEnrollClass(classNo);
+	}
+
 	
 	
 	

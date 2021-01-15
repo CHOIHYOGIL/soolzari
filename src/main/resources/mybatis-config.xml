@@ -4,7 +4,8 @@
 	<settings>
 		<!-- null값이 발생하는 경우 빈칸잉 아닌 null로 처리 -->
 		<setting name="jdbcTypeForNull" value="NULL"/>
-		<setting name="mapUnderscoreToCamelCase" value="true"/> 
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+		       <setting name="callSettersOnNulls" value="true"/> 
 	</settings>
 	
 	<!-- mapper위치  등록-->
@@ -16,6 +17,7 @@
 		<typeAlias type="com.soolzari.shop.client.model.vo.Goods" alias="g"/>
 		<typeAlias type="com.soolzari.shop.client.model.vo.Subscribe" alias="s"/>
 		
+		<typeAlias type="com.soolzari.shop.seller.model.vo.Seller" alias="sl"/>
 		<typeAlias type="com.soolzari.shop.admin.model.vo.Notice" alias="n"/>
 		<typeAlias type="com.soolzari.shop.image.model.vo.Image" alias="i"/>
 	</typeAliases>

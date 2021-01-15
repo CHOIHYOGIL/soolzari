@@ -8,19 +8,18 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
     <link rel="stylesheet" href="/resources/css/takju.css">
-
-    <!-- Bootstrap cdn 설정 -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
-
+    <!-- script -->
+     <script src="/resources/js/jquery-3.3.1.min.js"></script>
+  
+<link rel="stylesheet" href="/resources/css/bootstrap.min.css">
+   <script src="/resources/js/bootstrap.min.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
 
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 
-    <!-- script -->
-     <script src="/resources/js/jquery-3.3.1.min.js"></script>
+
  
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 
 
     <!-- 반응형 -->
@@ -33,11 +32,11 @@
             <div class="sub_content">
                 <div class="content">
 						
-                    <!-- 위 홈메뉴-->
+                    <!-- 위 홈메뉴
                     <div class="location_wrap mb60">
                         <div class="location_cont clearfix">
                             <div class="local_home">
-                                <a href="/index.jsp">
+                                <a href="/index.jsp" >
                                     <i class="fas fa-home"></i>
                                     HOME
                                 </a>
@@ -61,7 +60,7 @@
                         </div>
 
                     </div>
-
+-->
                     <!-- 아이텀 컨테이너-->
                     <div class="goods_list_item container">
                         

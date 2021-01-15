@@ -22,8 +22,23 @@
  	</insert>
  	
  	<select id="getClassInfo" parameterType="r" resultType="r">
- 		select cls_no as classNo, cls_name as className, sel_no as classCreator, cls_det as classDescription, cls_price as classPrice, class_enroll as classDate, classStarttime as classStartTime from class_db  where class_enroll>TO_CHAR(SYSDATE,'yyyy-mm-dd')
+ 		select cls_no as classNo, cls_name as className, sel_no as classCreator, cls_det as classDescription, cls_price as classPrice, class_person as classPerson, class_enroll as classDate, classStarttime as classStartTime from class_db  where class_enroll>TO_CHAR(SYSDATE,'yyyy-mm-dd')
  	</select>
+ 	
+ 	<select id="getClassNo" parameterType="map" resultType="Integer">
+ 		select  class_person as classPerson from class_db where cls_name=#{title} and class_enroll=#{date}
+ 	</select>
+ 	
+ 	<select id="sumPerson" parameterType="Integer" resultType="Integer">
+ 	<!-- null일경우 NVL 함수 사용 -->
+ 		select NVL(sum(class_person),0)as classPerson from class_list_db where cls_class_no=#{classNo}
+ 	</select>
+ 	
+ 	<select id="getEnroll" parameterType="Integer" resultType="string">
+ 		select class_enroll as classDate from class_db where cls_no=#{classNo}
+ 	</select>
+ 	
+ 	
  	
  	<insert id="setClass_list" parameterType="map">
  		
@@ -49,7 +64,11 @@ order by g.gds_no DESC
  	</update>
  	
  	<select id="checkUser" parameterType="cl" resultType="cl">
- 		select cls_l_no as classListNo from class_list_db where cls_cli_no=#{clientNo} and cls_class_no=#{classNo}
+ 		select cls_l_no as classListNo  from class_list_db where cls_cli_no=#{clientNo} and cls_class_no=#{classNo}
+ 	</select>
+ 	
+ 	<select id="findSeller" parameterType="Integer" resultType="string">
+ 		select sel_name as selName from seller_db where sel_no=#{selNo}
  	</select>
 
 </mapper>
