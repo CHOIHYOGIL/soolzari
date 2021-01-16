@@ -451,10 +451,8 @@ var i=0;
 			
 			
 	
-		}),
+		})
 
-		console.log("sssssss");
-				console.log(classInfo);
 		return classInfo;
 	
 	}
@@ -522,7 +520,8 @@ var i=0;
     					session:session,
     					},
     				success:function(data){
-    		
+    					console.log("data : "+data) //이런식으로 하면 안뜬다. 왜냐하면 "data :" 를 붙이면 javascript에서 string형으로 변환시킴
+    					console.log(data);
  
     					if(data.msg=="예약 가능합니다."){
     						console.log("hihihihii");
@@ -534,8 +533,7 @@ var i=0;
     				
     					console.log(error);
     				}
-    				console.log("data : "+data) //이런식으로 하면 안뜬다. 왜냐하면 "data :" 를 붙이면 javascrtip에서 string형으로 변환시킴
-					console.log(data);
+    			
     			})
 
     		}
