@@ -60,7 +60,7 @@
 <body>
  <%@include file="/WEB-INF/views/common/header.jsp" %>
  
- 
+ 	<div style="height:80px; width:100%;"></div>
  <section class="carousel">
 
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
@@ -102,7 +102,7 @@
          <div class="soolzari_container">
            
           
-            <h2 class="fw300 fs34 f_scd text-center mb40" style="background:#f4f4f4; font-size:25px;">술자리<span>양조장 체험</span>프로그램 </h2><br><br>
+            <h2 class="fw300 fs34 f_scd text-center mb40" style="background:#f4f4f4; font-size:25px;">술자리<span>&nbsp;양조장 체험</span>프로그램 </h2><br><br>
            
             <div class="choiceBtn">
                 <ul class>
@@ -182,9 +182,7 @@
 		var person=$('input[name=classPerson]').val();
 		var title=$('input[name=className]').val();
 		  var sessionNo='<%=session.getAttribute("sessionNo")%>';
-		  console.log("예약 : "+title);
-	
-		  console.log(person);
+		  
 		$.ajax({
 				
 				url:"checkPerson.sool",
@@ -196,10 +194,9 @@
 					person:person,
 					title:title,
 					classNo:k
-					
 				},
 				success:function(data){
-					console.log("checkPerson");
+			
 					if(data.msg=="가능 인원이 초과입니다."){
 						alert(data.msg+data.person+"명 만 가능합니다.");
 						location.href="/reservation.sool"
@@ -229,8 +226,8 @@
 		var date = d.getFullYear() + '' + (d.getMonth() + 1)
 				+ '' + d.getDate() + '' + d.getHours() + ''
 				+ d.getMinutes() + '' + d.getSeconds();
-		IMP.init('imp16593684');
 		
+		IMP.init('imp16593684');
 		IMP.request_pay({
 			merchant_uid : 'soolZari' + date,//상점거래ID
 			name : name+"-"+'클래스 결제', //결제이름
@@ -245,15 +242,10 @@
 				var msg='클래스 예약 결제가 완료되었습니다';
 			        msg += '결제 금액 : ' + rsp.paid_amount;
 			        var eventDB=getEvents();
-			  
-			  	console.log("title : "+title);
-
+		
 			        for(var i=0; i<eventDB.length; i++){
-			        	console.log("hey");
-			        	console.log(eventDB[i].title);
-			      	  console.log("start :"+eventDB[i].date);
+			        
 			        if(eventDB[i].title==title && eventDB[i].id==k){
-			        	console.log("success");
 			          	setClassDB(eventDB[i].id,person);
 			        }
 			      
@@ -419,37 +411,23 @@ var i=0;
 }
 	function getEvents(){
 		
-		var title;
-		var start;
-		var classDate;
+		var title ,start , classDate;
 		var classInfo=[];
-		var classNo;
-		var classStart;
-		var price;
-		var description;
-		var person;
-		var creator;
-		
-		var selNo;
+		var classNo, classStart, price;
+		var description, person, creator ,selNo;
 		$.ajax({
 			url:"getClassDB.sool",
 			type:"POST",
-			dateType:'json',
-			async:false,  //이렇게 하면 객체를 return 하면 다른곳에서 받을수있다. 동기식으로 처리되는ㄴ 자바스크립트라면 반드시 이 getEvents()가 끝나고 classInfo를 리턴하고 다음 로직을 처리했을텐데
-						  //하지만 Ajax는 기본적으로 비동기식 처리방식이므로 Ajax 호출이 서버에서 응답받는데에 아무리 빨리 받아도 다음로직을 실행하기 전에 받을수 있다고 확신x 
-						  //async:false를 통해서 동기식 방식으로 설정하면 이제 ajax를 호출하여 서버에서 응답을 기다렸다가 응답을 모두 완료한 후 다음 로직을 싱행하므로 undefined가 뜨지않고 객체를 return할수있다.
+			dateType:'json', //이렇게 하면 객체를 return 하면 다른곳에서 받을수있다. 동기식으로 처리되는ㄴ 자바스크립트라면 반드시 이 getEvents()가 끝나고 classInfo를 리턴하고 다음 로직을 처리했을텐데
+			  //하지만 Ajax는 기본적으로 비동기식 처리방식이므로 Ajax 호출이 서버에서 응답받는데에 아무리 빨리 받아도 다음로직을 실행하기 전에 받을수 있다고 확신x 
+			  //async:false를 통해서 동기식 방식으로 설정하면 이제 ajax를 호출하여 서버에서 응답을 기다렸다가 응답을 모두 완료한 후 다음 로직을 싱행하므로 undefined가 뜨지않고 객체를 return할수있다.
+			async:false, 
 			success:function(data){
 				//console.log("data : "+data) 이런식으로 하면 안뜬다. 왜냐하면 "data :" 를 붙이면 javascrtip에서 string형으로 변환시킴
 				
-				console.log(data);
-				console.log(data.length);
-				
-			
+			console.log(data);
 					for(var i=0; i<data.length; i++){
 					classInfo[i]={
-							
-								
-						
 							title:data[i].className,
 							id:data[i].classNo,
 							person:data[i].classPerson,
@@ -458,7 +436,7 @@ var i=0;
 							description:data[i].classDescription,
 							creator:data[i].classCreator,
 							price:data[i].classPrice,
-							color:'#e5e5e5',
+							color:'#4d5075',
 							start:data[i].classDate+"T"+data[i].classStartTime,
 							}
 				
@@ -470,6 +448,8 @@ var i=0;
 			error:function(error){
 				console.log(error);
 			}
+			
+			
 	
 		}),
 
@@ -483,14 +463,7 @@ var i=0;
 
 	var k=0;
   document.addEventListener('DOMContentLoaded', function() {
-	
 	  var eventDB=getEvents();
-	  console.log('hi');
-	
-		
-	  
-	  console.log(eventDB);
-
     var calendarEl = document.getElementById('calendar');
 
     var date = new Date();
@@ -516,46 +489,28 @@ var i=0;
       selectable:true,
       //hiddenDays:[ 0, 6 ],
  
-      
       dateClick:function(info){
     	  var myDate= moment().format('YYYY-MM-DD');
     	  var clickDate=info.dateStr;
-    	
-    	  
     	  if(clickDate <= myDate){
     		  
     		  alert("예약불가");
     	  }
     	
       },
-      
-   
-
     	events:eventDB,
-    
     	eventClick:function(info){
     		 var session='<%=session.getAttribute("sessionId")%>';
-    			console.log("session: "+session);
-    	
-    		
-    		console.log("content :"+info.event.start);
-		
+   
     		if(session=="null"){
     			alert('로그인 후 예약가능합니다');
     			location.href="/login.sool";
     		}else{
-    			
     			  var session='<%=session.getAttribute("sessionNo")%>';
     			  var classNo=0;
-    				
-    				
-    		
     				classNo=info.event.id;
     				k=info.event.id;
-    			console.log("df");
-    		
-    			console.log(info.event.start);
-    				console.log("classNo:"+classNo);
+   
     			$.ajax({
     				url:"checkUser.sool",
     				type:"POST",
@@ -565,14 +520,10 @@ var i=0;
     					{
     					classNo:classNo,
     					session:session,
-    				
-    					
     					},
     				success:function(data){
-    				console.log("data : "+data) //이런식으로 하면 안뜬다. 왜냐하면 "data :" 를 붙이면 javascrtip에서 string형으로 변환시킴
-    					console.log(data);
-    			
-    					alert(data.msg);
+    		
+ 
     					if(data.msg=="예약 가능합니다."){
     						console.log("hihihihii");
     						$('.modal').modal("show");
@@ -583,7 +534,8 @@ var i=0;
     				
     					console.log(error);
     				}
-    		
+    				console.log("data : "+data) //이런식으로 하면 안뜬다. 왜냐하면 "data :" 를 붙이면 javascrtip에서 string형으로 변환시킴
+					console.log(data);
     			})
 
     		}

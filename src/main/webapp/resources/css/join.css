@@ -110,10 +110,14 @@ i {
 
 /* 조인 */
 @font-face {
-    font-family: 'Jal_Onuel';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/Jal_Onuel.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+     font-family: 'S-CoreDream-3Light';
+     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+     font-weight: normal;
+     font-style: normal;
+}
+
+* {
+    font-family: 'S-CoreDream-3Light';
 }
 
 .wrapper {
@@ -134,7 +138,7 @@ body {
 }
 
 .title {
-    font-family: 'Jal_Onuel';
+        font-family: 'S-CoreDream-3Light';
 
     margin-top: 70px;
     left: 50%;
@@ -145,11 +149,11 @@ body {
 }
 
 .join {
-    font-family: 'Jal_Onuel';
+     font-family: 'S-CoreDream-3Light';
     height: 100%;
-    width: 80%;
+    width: 65%;
     margin: 0 auto;
-    background-color: #f8b24f;
+	border:1px solid lightgray;
     margin-bottom:100px;
     box-sizing:border-box;
 }
@@ -167,16 +171,19 @@ label {
     width: 200px;
 }
 
+
 .input-eye, .input-eye1 {
-    border-color: black;
-    border-left: none;
+
+   
     background: #fff;
     color: #333;
-    padding: 7px 3px 7px 4px;
+    padding: 4px 3px 5.5px 4px;
     border-radius: 0px 5px 5px 0px;
     margin-left: -10px;
     cursor: pointer;
     z-index: 5;
+    border:1px solid lightgray;
+     border-left: none;
 
 }
 
@@ -191,7 +198,7 @@ label {
 #useraddr2,#userage {
     height: 40px;
     width: 350px;
-    border: none;
+   border:1px solid lightgray;
     margin-top: 10px;
     outline: none;
     border-radius: 5px 5px 5px 5px;
@@ -200,10 +207,11 @@ label {
 
 #userpwre,
 #userpw {
+	   border:1px solid lightgray;
     margin-top: 10px;
     border-radius: 5px 5px 5px 5px;
     outline: none;
-    border: none;
+    
     height: 30px;
     width: 320px;
     padding:20px 32px 20px 0px;
@@ -237,10 +245,13 @@ td:nth-last-child(1) {
 
 #idchk,
 #addrchk {
+	margin-top:9px;
     font-size: 12px;
     border-radius: 5px 5px 5px 5px;
     margin-left: 15px;
     height: 35px;
+    background:#4d5075;
+    color:white;
     width: 70px;
 }
 
@@ -249,17 +260,17 @@ td:nth-last-child(1) {
 }
 
 .btnBox input {
-    color: white;
-    background-color: #2E64FE;
+    background:#4d5075;
+    color:white;
     font-size: 15px;
     border-radius: 10px;
     width: 200px;
-    height: 30px;
+    height: 40px;
 }
 
 .test {
     margin: 0 auto;
-    border: 1px solid black;
+    border: 1px solid lightgray;
     width: 80%;
     height: 75%;
 }

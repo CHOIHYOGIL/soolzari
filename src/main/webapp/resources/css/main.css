@@ -126,7 +126,6 @@ header nav .gnb li:hover .sub{
     
  
 }
-
 */
 header nav .gnb li:hover .sub{
     
@@ -271,13 +270,7 @@ header nav .gnb .sub li a:after{
     height: 0%;
 }
 
-/* 상품 */
-@font-face {
-      font-family: 'S-CoreDream-3Light';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/Jal_Onuel.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
+
 
 .new_product, .best_product{
     width:75%;
@@ -301,6 +294,8 @@ header nav .gnb .sub li a:after{
 .nList a{
     color:#111;
 }
+
+
 
 
 .nList li, .bList li{
@@ -471,7 +466,11 @@ header nav .gnb .sub li a:after{
 }
 .price{
        font-family: 'S-CoreDream-3Light';
-    font-size:22px;
+    font-size:19px;
+}
+.rateNum{
+	
+	font-size:15px;
 }
 
 /* 구독 */
@@ -734,4 +733,3 @@ header .open, header .close{
         text-align: center;
     }
 }
-

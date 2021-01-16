@@ -29,9 +29,9 @@
  		select  class_person as classPerson from class_db where cls_name=#{title} and class_enroll=#{date}
  	</select>
  	
- 	<select id="sumPerson" parameterType="Integer" resultType="Integer">
+ 	<select id="sumPerson" parameterType="map" resultType="r">
  	<!-- null일경우 NVL 함수 사용 -->
- 		select NVL(sum(class_person),0)as classPerson from class_list_db where cls_class_no=#{classNo}
+ 		select NVL(sum(class_person),0)as classPerson from class_list_db where cls_class_no=#{classNo} and cls_
  	</select>
  	
  	<select id="getEnroll" parameterType="Integer" resultType="string">
