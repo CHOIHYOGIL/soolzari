@@ -11,7 +11,7 @@
 <jsp:include page="/views/client/orderFrm.jsp"/>
 <link rel="stylesheet" type="text/css" href="/resources/css/oSuccess.css">
 
-<div class="wrap">
+<div class="wrap2">
 	<div class="blankDiv">
 		<div class="content">
 			<div class="comment">

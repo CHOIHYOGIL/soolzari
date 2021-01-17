@@ -14,6 +14,7 @@ import com.soolzari.shop.client.model.vo.Client2;
 import com.soolzari.shop.client.model.vo.ExperienceListData;
 import com.soolzari.shop.client.model.vo.Goods2;
 import com.soolzari.shop.client.model.vo.GoodsList;
+import com.soolzari.shop.client.model.vo.GoodsSellerDetail;
 import com.soolzari.shop.client.model.vo.OrderListData;
 import com.soolzari.shop.client.model.vo.Purchase;
 import com.soolzari.shop.client.model.vo.Qna;
@@ -187,6 +188,12 @@ public class ClientDao2 {
 	//클래스체험다음날0시가 되면 체험완료로 변경(스케줄러/scheduler)
 	public void classCheckUpdate() {
 		sqlSession.update("mypage.classCheckUpdate");
+	}
+
+	
+	//상품상세페이지
+	public GoodsSellerDetail oGoodsDetail(int gdsNo) {
+		return sqlSession.selectOne("order.oGoodsDetail",gdsNo);
 	}
 
 	

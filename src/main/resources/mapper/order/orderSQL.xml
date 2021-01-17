@@ -101,4 +101,20 @@
 				#{gdsNo}
 			</foreach>
 	</delete>
+	
+	<!-- 상품상세페이지 -->
+	<select id="oGoodsDetail" parameterType="_int" resultType="GoodsSellerDetail">
+		select 
+		    g.gds_no as gdsNo,
+		    g.gds_name as gdsName,
+		    g.gds_pri as gdsPri,
+		    g.gds_bcnt as gdsBcnt,
+		    g.goods_date as goodsDate,
+		    s.sel_no as selNo,
+		    s.sel_name as selName,
+		    s.sel_tel as selTel,
+		    s.sel_addr as selAddr
+		from goods_db g,seller_db s 
+		where g.sel_no=s.sel_no and g.gds_no=#{_parameter}
+	</select>
 </mapper>

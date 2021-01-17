@@ -122,14 +122,14 @@
                                         <li style="width:25%;" data-price=${g.goodsPrice } data-count=${g.goodsCount }>
                                             <div class="item_cont">
                                                 <div class="item_photo_box">
-                                                    <a href="#">
+                                                    <a href="/client/oGoodsDetail.sool?gdsNo=${g.goodsNo}">
                                                         <img src="/resources/upload/${g.imagePath }" alt="전통주 짱맛있어" width="240" class="middle">
                                                     </a>
                                                 </div>
                                                 
                                                 <div class="item_info_cont">
                                                   <div class="item_tit_box">
-                                                      <a href="#">
+                                                      <a href="/client/oGoodsDetail.sool?gdsNo=${g.goodsNo}">
                                                           <strong class="item_name" style="font-size:20px;">${g.goodsName }</strong>
                                                       </a>
                                                   </div>

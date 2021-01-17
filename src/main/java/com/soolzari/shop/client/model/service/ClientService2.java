@@ -16,6 +16,7 @@ import com.soolzari.shop.client.model.vo.ExperienceListData;
 import com.soolzari.shop.client.model.vo.ExperiencePageData;
 import com.soolzari.shop.client.model.vo.Goods2;
 import com.soolzari.shop.client.model.vo.GoodsList;
+import com.soolzari.shop.client.model.vo.GoodsSellerDetail;
 import com.soolzari.shop.client.model.vo.OrderListData;
 import com.soolzari.shop.client.model.vo.OrderPageData;
 import com.soolzari.shop.client.model.vo.Purchase;
@@ -351,6 +352,11 @@ public class ClientService2 {
 	public void classCheckUpdate() {
 		System.out.println("스케줄러!!!");
 		dao.classCheckUpdate();
+	}
+	
+	//상품상세페이지
+	public GoodsSellerDetail oGoodsDetail(int gdsNo) {
+		return dao.oGoodsDetail(gdsNo);
 	}
 
 	

@@ -11,7 +11,7 @@
 <body>
 <jsp:include page="/views/client/orderFrm.jsp"/>
 <link rel="stylesheet" type="text/css" href="/resources/css/oBasket.css">
-<div class="wrap">
+<div class="wrap2">
 	<div class="blankDiv">
 		<div class="content">
 			<table class="table">
@@ -136,8 +136,6 @@
 		}else{
 			basCnt = $(btnType).prev().html();
 		}
-		console.log(basCnt>1);
-		
 		if((basCnt>1 || chk==1) && (basCnt<99 || chk==0)){
 			$.ajax({
 				url:"/client/basketPlusMinusUpdate.sool",

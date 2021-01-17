@@ -33,6 +33,7 @@
 		<typeAlias type="com.soolzari.shop.client.model.vo.ExperienceListData" alias="experienceListData"/>
 		<typeAlias type="com.soolzari.shop.client.model.vo.Qna" alias="qna"/>
 		<typeAlias type="com.soolzari.shop.client.model.vo.BasketDel" alias="BasketDel"/>
+		<typeAlias type="com.soolzari.shop.client.model.vo.GoodsSellerDetail" alias="GoodsSellerDetail"/>
 		
 	</typeAliases>
 
