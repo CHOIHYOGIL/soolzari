@@ -14,7 +14,7 @@
 <title>장바구니</title>
 </head>
 <body>
-	<div class="wrap" style="margin-top: 80px;">
+	<div class="wrap2" style="margin-top: 80px;">
 		<div class="blankDiv">
 			<div class="banner">
 				<div class="bTDiv1">

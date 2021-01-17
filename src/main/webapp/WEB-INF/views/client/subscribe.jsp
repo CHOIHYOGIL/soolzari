@@ -30,6 +30,7 @@
 </head>
 <body>
    <%@include file="/WEB-INF/views/common/header.jsp" %>
+   	<div style="height:80px; width:100%;"></div>
     <section class="carousel">
 
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
@@ -164,7 +165,7 @@
                                     <p style="text-align: left;">
                                         <span style="font-size:16px;">
                                             <img src="https://cdn.imweb.me/upload/S201805235b04d0e324735/5b3a4252955b4.png" alt="">
-                                            가격 : 43000원
+                                            가격 : 63000원
                                         </span>
                                     </p>
                                     <p style="text-align: left;">

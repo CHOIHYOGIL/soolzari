@@ -122,21 +122,24 @@
                                         <li style="width:25%;" data-price=${g.goodsPrice } data-count=${g.goodsCount }>
                                             <div class="item_cont">
                                                 <div class="item_photo_box">
-                                                    <a href="#">
+                                                    <a href="/client/oGoodsDetail.sool?gdsNo=${g.goodsNo}">
                                                         <img src="/resources/upload/${g.imagePath }" alt="전통주 짱맛있어" width="240" class="middle">
                                                     </a>
                                                 </div>
                                                 
                                                 <div class="item_info_cont">
                                                   <div class="item_tit_box">
-                                                      <a href="#">
+                                                      <a href="/client/oGoodsDetail.sool?gdsNo=${g.goodsNo}">
                                                           <strong class="item_name" style="font-size:20px;">${g.goodsName }</strong>
                                                       </a>
                                                   </div>
-                                              
+                                                      <div class="rate">
+                                        <span><i class="fas fa-star" style="color:orange;"></i></span>
+                                         <span class="rateNum">4.5/5.0</span>
+                                    </div>
                                                   
                                                   <div class="item_money_box">
-                                                      <strong class="item_price" style="font-size:12px;">
+                                                      <strong class="item_price" style="font-size:16px;">
                                                           <span>${g.goodsPrice }원</span>
                                                       </strong>
                                                   </div>
@@ -161,13 +164,13 @@
 		<div id="page-navi" >
 			<div>
 				<c:choose>
-					<c:when test="${list.size()% 12 !=0 }">
-						<c:forEach items="${list}" begin="1" end="${list.size()+1 }" step="12" varStatus="status">
+					<c:when test="${list.size()% 8 !=0 }">
+						<c:forEach items="${list}" begin="1" end="${list.size()+1 }" step="8" varStatus="status">
 	    					<span class="page-num">${status.count}</span>
 	    				</c:forEach> 
 					</c:when>
 					<c:otherwise>
-	    				<c:forEach items="${list}" begin="1" end="${list.size() }" step="12" varStatus="status">
+	    				<c:forEach items="${list}" begin="1" end="${list.size() }" step="8" varStatus="status">
 	    					<span class="page-num">${status.count}</span>
 	    				</c:forEach> 
 	    			</c:otherwise>
@@ -280,20 +283,20 @@
     	console.log(page);
 		var a = $(".product-li li");
 		a.hide();
-		var s = 1+(12*(page-1));
+		var s = 1+(8*(page-1));
 		console.log(a.length);
-		for(var i=s;i<=page*12;i++){
+		for(var i=s;i<=page*8;i++){
 			$(a).eq(i-1).show();
 		}
 	}
 	$(function(){
 		paging(1);
-		$(".page-num").eq(0).css({color:'#fac60e'});
+		$(".page-num").eq(0).css({color:'black'});
 	})
 	
 	$(".page-num").click(function(){
 		$(".page-num").css({color:'darkgray'});
-		$(this).css({color:'#fac60e'});
+		$(this).css({color:'black'});
 		paging(parseInt($(this).html()));
 	});
   

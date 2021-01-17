@@ -41,6 +41,7 @@
 </head>
 <body>
  <%@include file="/WEB-INF/views/common/header.jsp" %>
+ 	<div style="height:80px; width:100%;"></div>
 <section class="carousel">
 
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">

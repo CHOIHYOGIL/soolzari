@@ -96,7 +96,6 @@
 </body>
 </html>
 <script>
-
 /* keyup delay 줌*/
 function delay(callback, ms) {
 	  var timer = 0;
@@ -115,11 +114,8 @@ function delay(callback, ms) {
 		var searchWord=$(this).val();
 		location.href='/basicSool.sool?searchWord='+searchWord;
 	},1000));
-
-
  /* 헤더 */
  
-
  $(function(){
 	 $(document).on('mouseover','.gnb li a', function(){
          if($(window).width()>1200){
@@ -130,7 +126,6 @@ function delay(callback, ms) {
          }
     });
     
-
     $('.sub').on({
         mouseover:function(){
       
@@ -152,7 +147,6 @@ function delay(callback, ms) {
              $('header').css('height','80px');
         }  
        
-
     })
     
     

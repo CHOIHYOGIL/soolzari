@@ -13,6 +13,7 @@ address, em, i {font-style: normal;}
 /*layout*/@charset "utf-8";
 
 /* 상품 */
+/*layout*/@charset "utf-8";
 @font-face {
      font-family: 'S-CoreDream-3Light';
      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
@@ -20,6 +21,9 @@ address, em, i {font-style: normal;}
      font-style: normal;
 }
 
+* {
+    font-family: 'S-CoreDream-3Light';
+}
 .lead{
 	font-size:2.2rem !important;
 	font-weigh:300;
@@ -33,7 +37,7 @@ address, em, i {font-style: normal;}
 .introduce{
     font-size: 45px;
     font-weight: bold;
-       font-family: 'S-CoreDream-3Light';
+  
 
        background-position: center center;
     background-image: url('/resources/image/introduce_main.jpg');
@@ -50,14 +54,13 @@ address, em, i {font-style: normal;}
 
 .soolzari_container{
      
-  font-family: 'S-CoreDream-3Light';
+
     margin: 0 auto;
         position: relative;
 }
 
 .soolzari_container h2 span{
-	
-	  font-family: 'S-CoreDream-3Light';
+
 }
 
 .contents{
@@ -72,13 +75,13 @@ address, em, i {font-style: normal;}
     position: fixed;
     right: 0;
     top:100px;
-    width:120px;
+    width:140px;
     padding-top:15%;
     font-weight:  bold;
     z-index: 400;
 }
 .row{
-      font-family: 'S-CoreDream-3Light';
+          font-family: 'S-CoreDream-3Light !important';
 }
 .video_wrap{
     
@@ -106,17 +109,17 @@ address, em, i {font-style: normal;}
 
 
 
-.sool_promise1{s
+.sool_promise1{
     height: 480px;
     color:black;
     font-weight: bold;
-    background: #fde8cd;
+
 }
 .sool_promise2{
 
     height: 480px;
     color:white;
-    background: #e7e7de;
+  
 }
 
 .promise{

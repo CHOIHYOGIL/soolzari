@@ -35,6 +35,7 @@
 </head>
 <body>
    <%@include file="/WEB-INF/views/common/header.jsp" %>
+   	<div style="height:40px; width:100%;"></div>
  <div class="wrapper">
            <div class="introduce">
             <h2 style="font-size:36px; color:white; "><br><br><br>술자리 소개</h2>

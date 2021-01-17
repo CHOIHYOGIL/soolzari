@@ -19,7 +19,9 @@ import com.soolzari.shop.client.model.vo.BasketList;
 import com.soolzari.shop.client.model.vo.Client;
 import com.soolzari.shop.client.model.vo.Client2;
 import com.soolzari.shop.client.model.vo.ExperiencePageData;
+import com.soolzari.shop.client.model.vo.Goods2;
 import com.soolzari.shop.client.model.vo.GoodsList;
+import com.soolzari.shop.client.model.vo.GoodsSellerDetail;
 import com.soolzari.shop.client.model.vo.OrderPageData;
 import com.soolzari.shop.client.model.vo.Purchase;
 import com.soolzari.shop.client.model.vo.Qna;
@@ -58,6 +60,7 @@ public class ClientController2 {
 		int result = service.basketInsert(cliNo,gdsNo,basCnt);
 		if(result>0) {
 			model.addAttribute("msg","장바구니에 담겼습니다");
+			model.addAttribute("loc","/client/oGoodsDetail.sool?gdsNo="+gdsNo);
 		}else {
 			model.addAttribute("msg","장바구니 오류");
 		}
@@ -371,5 +374,20 @@ public class ClientController2 {
 			return "common/msg";
 		}
 	}
+	
+	//상품상세페이지
+	@RequestMapping("oGoodsDetail.sool")
+	public String oGoodsDetail (int gdsNo, Model model){
+		GoodsSellerDetail gsd = service.oGoodsDetail(gdsNo);
+		if(gsd!=null) {//상품이 없을 경우
+			model.addAttribute("gsd",gsd);//상품정보 전달
+			return "client/oGoodsDetail";
+		}else {
+			model.addAttribute("msg","상품을 불러오는데 실패했습니다");
+			model.addAttribute("loc","/");//상품리스트 경로수정
+			return "common/msg";
+		}
+	}
+	
 	
 }

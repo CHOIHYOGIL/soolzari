@@ -15,7 +15,7 @@
 <jsp:include page="/views/client/orderFrm.jsp"/>
 <link rel="stylesheet" type="text/css" href="/resources/css/oPayment.css">
 
-<div class="wrap">
+<div class="wrap2">
 	<div class="blankDiv">
 		<div class="content">
 		<form action="/client/oComplete.sool" method="post">
