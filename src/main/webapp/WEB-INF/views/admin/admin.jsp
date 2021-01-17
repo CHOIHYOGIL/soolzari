@@ -6,38 +6,37 @@
 <meta charset="EUC-KR">
 <title>관리자</title>
 <link href="/resources/css/admin.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.js"></script>
 </head>
 <body>
 	<section>
 		<div class="wrapper">
-            <div class="navi">
-                <h1>관리자</h1>
-                <ul>
-                    <li>
-                        <a href="#">홈</a>
-                    </li>
-                    <li>
-                        <a href="/notice/list.sool?reqPage=1">공지사항</a>
-                    </li>
-                    <li>
-                        <a href="/faq.sool">자주 묻는 질문</a>
-                    </li>
-                    <li>
-                        <a href="/qna.sool">1:1 문의</a>
-                    </li>
-                    <li>
-                        <a href="/accept.sool?type=goods&reqPage=1">승인 관리</a>
-                    </li>
-                    <li>
-                        <a href="#">사용자 관리</a>
-                    </li>
-                </ul>
-            </div>
+            <div><jsp:include page="/WEB-INF/views/admin/navi.jsp"/></div>
             <div class="main">
                 <h1>술자리</h1>
                 <div class="stat">통계</div>
             </div>
         </div>
 	</section>
+	
+	<script>
+        $(function() {
+            $(".sub").hide();
+            $(".sub").prev().prepend('<span class="more">+</span>');
+            $(".more").click(function(event) {
+                $(this).parent().next().slideToggle();                
+                if ($(this).attr("class") == "more") {
+                    $(this).addClass("active");
+                } else {
+                    $(this).removeClass("active");
+                }
+                event.stopPropagation();
+
+            });
+            $(".more").parent().click(function() {
+                $(this).children().last().click();
+            });
+        })
+    </script>
 </body>
 </html>

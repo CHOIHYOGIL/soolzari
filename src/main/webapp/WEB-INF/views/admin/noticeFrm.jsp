@@ -14,6 +14,7 @@
 </head>
 <body>
 	<section>
+		<jsp:include page="/WEB-INF/views/admin/navi.jsp"/>
         <div class="wrap">
             <h2>공지사항</h2>
             <form action="/notice/insert.sool" method="post" enctype="multipart/form-data">

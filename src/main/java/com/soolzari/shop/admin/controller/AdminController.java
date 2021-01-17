@@ -9,4 +9,9 @@ public class AdminController {
 	public String faq() {
 		return "admin/faq";
 	}
+	
+	@RequestMapping("/admin.sool")
+	public String admin() {
+		return "admin/admin";
+	}
 }

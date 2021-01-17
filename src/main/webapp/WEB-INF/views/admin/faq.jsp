@@ -10,6 +10,7 @@
 </head>
 <body>
 	<section>
+		<div><jsp:include page="/WEB-INF/views/admin/navi.jsp"/></div>
         <div class="faq">
             <div>
                 <h1>자주 묻는 질문</h1>
@@ -133,9 +134,9 @@
                     $(".que>div").eq(index-1).show();
                 }
             });
-            $(".ask").click(function(){
-                $(".content").hide();
+            $(".ask").click(function(event){
                 $(this).find($(".content")).slideToggle(500);
+                event.stopPropagation();
             });
             $(".navi a").eq(0).click();
             $("#qna").click(function(){
