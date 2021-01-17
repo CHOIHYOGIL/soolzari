@@ -53,6 +53,7 @@
                 <option value="content">내용</option>
                 <option value="writer">작성자</option>
             </select>
+            <input type="hidden" name="reqPage" value=1>
             <input type="text" name="search">
             <input type="submit" value="찾기">
         </form>

@@ -51,6 +51,7 @@ button {
     box-sizing: border-box;
     line-height: 27px;
     cursor: pointer;
+    outline: none;
 }
 
 #next {

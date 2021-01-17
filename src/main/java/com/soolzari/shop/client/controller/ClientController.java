@@ -332,21 +332,16 @@ public class ClientController {
 	@ResponseBody
 	@RequestMapping(value="/checkPerson.sool",  produces="application/json;charset=utf-8",method=RequestMethod.POST)
 	public String checkPerson(Model model, int person,int sessionNo,String title,int classNo) {
-		System.out.println("checkNum");
-		System.out.println(person);
-		System.out.println(title);
-		System.out.println("클래스번호 :"+classNo);
+	
 		JsonObject obj = new JsonObject();
-		String date=service.getEnrollClass(classNo);
-		System.out.println(date);
-		int person1=service.getClassNo(title,date);
-		System.out.println("person1:"+person1);
-		int result=service.sumPerson(classNo);
-		System.out.println("클래스 이미 등록한 사람 수 sum : "+result);
+		String date=service.getEnrollClass(classNo); // 해당클래스의 날짜를 가져온다
+		int person1=service.getClassNo(title,date); //클래스 허용인원
+		int result=service.sumPerson(classNo); //클래스 예약한 인원
 		int resultPerson=person+result;  //이미 클래스 등록한 사람수 + 예약하려고 하는 사람수
-		System.out.println("resultPerson : "+resultPerson);
-		int okPerson=person1-result;
-		System.out.println("가능한 인원 : "+okPerson);
+		int okPerson=person1-result;  //예약 가능한인원
+		System.out.println(person1);
+		System.out.println(result);
+		System.out.println(okPerson);
 		if(resultPerson>person1) {
 			System.out.println("here");
 			

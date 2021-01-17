@@ -22,7 +22,17 @@
 /* End body rules */
 
 /* Start form  attributes */
+/*layout*/@charset "utf-8";
+@font-face {
+     font-family: 'S-CoreDream-3Light';
+     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+     font-weight: normal;
+     font-style: normal;
+}
 
+* {
+    font-family: 'S-CoreDream-3Light';
+}
 .wrapper{
 	height:100vh;
 	weight:100vh;
@@ -34,9 +44,7 @@
 	width:100%;
 
 }
-* {
-    font-family: 'S-CoreDream-3Light';
-}
+
 form {
      
     width: 520px;
@@ -79,7 +87,7 @@ form .con {
 .input-item {
     background: #fff;
     color: #333;
-    padding: 16px 5px 16px 9px;
+    padding: 13px 5px 16px 9px;
     border-radius: 5px 0px 0px 5px;
 }
 .input-eye{
@@ -126,7 +134,7 @@ input[class="form-input"]{
     padding: 25px;
    
     font-size: 16px;
-    font-family: 'Abel', sans-serif;
+ 
     color: #5E6472;
   
     outline: none;

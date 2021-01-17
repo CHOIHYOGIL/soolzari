@@ -59,12 +59,29 @@ public class NoticeController {
 		return "admin/noticeFrm";
 	}
 	
-
-	@RequestMapping("/find.sool")//나중에 페이징 처리
-	public String findNotice(String date, String type, String search, Model model) {
-		ArrayList<Notice> list = service.findNotice(date, type, search);
-		model.addAttribute("list", list);
+	@RequestMapping("/find.sool")
+	public String findNotice(String date, String type, String search, Model model, int reqPage) {
+		NoticePage np = service.findNotice(date, type, search, reqPage);
+		Date d = new Date();
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    	String today = sdf.format(d);
+		model.addAttribute("list", np.getList());
+		model.addAttribute("page", np.getPage());
+		model.addAttribute("today", today);
 		return "admin/noticeList";
+	}
+	
+
+	@RequestMapping("/findC.sool")
+	public String findNoticeClient(String date, String type, String search, Model model, int reqPage) {
+		NoticePage np = service.findNotice(date, type, search, reqPage);
+		Date d = new Date();
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    	String today = sdf.format(d);
+		model.addAttribute("list", np.getList());
+		model.addAttribute("page", np.getPage());
+		model.addAttribute("today", today);
+		return "client/noticeListC";
 	}
 	
 	@RequestMapping("/delete.sool")
@@ -92,7 +109,7 @@ public class NoticeController {
 	}
 	
 	
-	@RequestMapping("/insert.sool")//이미지 넣어야함
+	@RequestMapping("/insert.sool")
 	public String insertNotice(Notice n, Model model) {
 		int result = service.insertNotice(n);
 		if(result>0) {
@@ -136,7 +153,7 @@ public class NoticeController {
 		return "admin/noticeView";
 	}
 	
-	@RequestMapping("/viewClient.sool")
+	@RequestMapping("/viewClient.sool")//조회수 해야함
 	public String noticeClient(int noticeNo, Model model) {
 		Notice n = service.selectOneNotice(noticeNo);
 		Notice prev = service.selectOneNotice(noticeNo-1);

@@ -33,7 +33,7 @@ public class NoticeDao {
 		return session.delete("admin.deleteNotice", noticeNo);
 	}
 
-	public ArrayList<Notice> findNotice(HashMap<String, String> map) {
+	public ArrayList<Notice> findNotice(HashMap<String, Object> map) {
 		List<Notice> list = session.selectList("admin.findNotice", map);
 		return (ArrayList<Notice>)list;
 	}

@@ -34,7 +34,7 @@
 				</tr>
 			</c:forEach>
 		</table>
-        <form action="/notice/find.sool" method="post">
+        <form action="/notice/findC.sool" method="post">
             <select name="date">
                 <option value="week">일주일</option>
                 <option value="month">한달</option>
@@ -45,6 +45,7 @@
                 <option value="content">내용</option>
                 <option value="writer">작성자</option>
             </select>
+            <input type="hidden" name="reqPage" value=1>
             <input type="text" name="search">
             <input type="submit" value="찾기">
         </form>

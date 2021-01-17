@@ -280,20 +280,17 @@ select {
 
 
 /* 모달 */
-.modal{
+ .modal{
             background-color: #fff;
-            width: 60vw;
-            height: 40vh;
-
-           transform:translateY(25%);
+            width: 600px;
+            height: 660px;
+			padding:0 !important;
+         
                 margin-left:35%;
-            max-width: 600px;
-            min-width: 380px;
-            min-height: 440px;
-            overflow:hidden;
+                text-align:center;
+               
+         
         }
-        
-        
         .modal-top>h1{
         padding-top:10px;
         font-size:33px;
@@ -301,13 +298,15 @@ select {
                 font-family: 'S-CoreDream-3Light';
         }
         
+     
         .modal-content>form{
-        margin:0 auto;
+      	  margin:0 auto;
+      	  margin-left:5px;
         
-        	height:600px;
+ 
         }
         
-        .modal-content>form>div {
+        .modal-content>form>div{
         	line-height:60px;
         	width:500px;
         	height:60px;
@@ -326,6 +325,7 @@ select {
         	height:660px;
         	width:700px;
         }
+        
         
           
         .first{
@@ -362,6 +362,7 @@ select {
             text-align: center;
             padding-bottom:20px;
             line-height:20px !important;
+            margin:0 auto;
             
             
         }
