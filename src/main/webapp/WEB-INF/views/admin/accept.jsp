@@ -11,6 +11,7 @@
 </head>
 <body>
 	<section>
+		<jsp:include page="/WEB-INF/views/admin/navi.jsp"/>
         <h1>승인 관리</h1>
         <div class="navi">
             <ul>

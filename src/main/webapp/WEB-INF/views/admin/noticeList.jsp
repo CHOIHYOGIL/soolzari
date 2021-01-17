@@ -11,7 +11,8 @@
 </head>
 <body>
 	<section>
-		<h1>공지사항</h1>
+		<jsp:include page="/WEB-INF/views/admin/navi.jsp"/>
+		<h1 class="noticetitle">공지사항</h1>
 		<table class="notice">
 			<tr>
 				<th>선택</th>
