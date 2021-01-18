@@ -367,6 +367,7 @@ public class ClientController2 {
 			model.addAttribute("list",qpd.getList());
 			model.addAttribute("pageNavi",qpd.getPageNavi());
 			model.addAttribute("period",period);
+	
 			return "client/mQuestion";
 		}else {
 			model.addAttribute("msg","로그인 후 이용해주세요");
