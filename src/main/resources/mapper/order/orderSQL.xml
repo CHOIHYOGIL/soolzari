@@ -117,4 +117,35 @@
 		from goods_db g,seller_db s 
 		where g.sel_no=s.sel_no and g.gds_no=#{_parameter}
 	</select>
+	
+	<!-- 펀딩상세페이지 - 펀딩정보 -->
+	<select id="fundingSelect" parameterType="_int" resultType="funding">
+		SELECT 
+		    fund_no as fundNo,
+		    fund_name as fundName,
+		    fund_money as fundMoney,
+		    fund_chk as fundChk,
+		    fund_det as fundDet,
+		    status,
+		    fund_date as fundDate,
+		    sel_no as selNo,
+		   	fund_enrollDate as fundEnrollDate,
+		    fund_enddate as fundEndDate,
+		    (select sum(fnd_d_price) from FND_DET_DB where fund_no=#{_parameter}) as fundTotalMoney
+		FROM FUNDING_DB where fund_no=#{_parameter}
+	</select>
+	
+	<select id="fundingGoodsSelect" parameterType="_int" resultType="fundingGoods">
+		SELECT 
+			fund_no as fundNo,
+		    fnd_g_no as fndGNo,
+		    fnd_g_name as fndGName,
+		    fnd_g_con as fndGCon,
+		    fnd_g_pri as fndGPri
+		FROM fnd_gds_db where fund_no=#{_parameter}
+	</select>
+	
+	<insert id="fundReservationInsert" parameterType="fundDetailDB">
+		insert into fnd_det_db values(FND_DET_DB_SEQ.NEXTVAL,#{fundNo},#{fndDCli},#{fndDPrice},#{fndGNo},0,null,to_char(sysdate,'yyyymmddhh24miss'))
+	</insert>
 </mapper>

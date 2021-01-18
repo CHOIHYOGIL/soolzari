@@ -14,6 +14,10 @@ import com.soolzari.shop.client.model.vo.BasketList;
 import com.soolzari.shop.client.model.vo.Client2;
 import com.soolzari.shop.client.model.vo.ExperienceListData;
 import com.soolzari.shop.client.model.vo.ExperiencePageData;
+import com.soolzari.shop.client.model.vo.FundDetail;
+import com.soolzari.shop.client.model.vo.FundDetailDB;
+import com.soolzari.shop.client.model.vo.Funding;
+import com.soolzari.shop.client.model.vo.FundingGoods;
 import com.soolzari.shop.client.model.vo.Goods2;
 import com.soolzari.shop.client.model.vo.GoodsList;
 import com.soolzari.shop.client.model.vo.GoodsSellerDetail;
@@ -357,6 +361,20 @@ public class ClientService2 {
 	//상품상세페이지
 	public GoodsSellerDetail oGoodsDetail(int gdsNo) {
 		return dao.oGoodsDetail(gdsNo);
+	}
+	
+	//펀딩상세페이지
+	public FundDetail oFundingDetail(int fundNo) {
+		Funding fund = dao.fundingSelect(fundNo);
+		ArrayList<FundingGoods> fundGoodsList = dao.fundingGoodsSelect(fundNo);
+		FundDetail fd = new FundDetail(fund, fundGoodsList);
+		return fd;
+	}
+	
+	//펀딩후원(예약)하기 - fnd_det_db에 insert
+	@Transactional
+	public int fundReservationInsert(FundDetailDB fd) {
+		return dao.fundReservationInsert(fd);
 	}
 
 	

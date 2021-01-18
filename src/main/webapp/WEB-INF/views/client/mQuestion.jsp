@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/functions"  prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,29 +26,41 @@
 						<th class="th2">작성일자</th>
 						<th class="th3">답변여부</th>
 					</tr>
-					<c:if test="${list==null}">비엇다!!!!</c:if>
-					<c:forEach items="${list }" var="qna">
+					<c:choose>
+					<c:when test="${fn:length(list) eq 0}">
 						<tr>
-							<td>
-								<p>${qna.qnaName }</p>
-							</td>
-							<td>
-								<p>${qna.qnaEnroll }</p>
-							</td>
-							<td>
-							
-								<c:if test="${qna.qnaAns==0 }">
-									<p>답변대기</p>
-								</c:if>
-								<c:if test="${qna.qnaAns==1 }">
-									<p>답변완료</p>
-								</c:if>
+							<td colspan="3">
+								<br><br><br>
+								<h4>작성한 문의사항이 없습니다.</h4>
+								<br><br><br>
 							</td>
 						</tr>
-					</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<c:forEach items="${list }" var="qna">
+							<tr>
+								<td>
+									<p>${qna.qnaName }</p>
+								</td>
+								<td>
+									<p>${qna.qnaEnroll }</p>
+								</td>
+								<td>
+								
+									<c:if test="${qna.qnaAns==0 }">
+										<p>답변대기</p>
+									</c:if>
+									<c:if test="${qna.qnaAns==1 }">
+										<p>답변완료</p>
+									</c:if>
+								</td>
+							</tr>
+						</c:forEach>
 					<tr>
 						<td colspan="4" style="text-align: center;" id="pageNavi">${pageNavi }</td>
 					</tr>
+					</c:otherwise>
+					</c:choose>
 				</table>
 			</div>
 		</div>
