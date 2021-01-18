@@ -60,7 +60,7 @@
 		                    <th>상품명</th>
 		                    <th>판매자</th>
 		                    <th>가격</th>
-		                    <th>신청일자</th>
+		                    <th>신청일</th>
 		                    <th colspan="2">승인</th>
 		                </tr>
 		                <c:forEach items="${list }" var="a">
@@ -87,7 +87,7 @@
 		                    <th>신청자</th>
 		                    <th>펀딩 설명</th>
 		                    <th>목표 금액</th>
-		                    <th>신청일자</th>
+		                    <th>신청일</th>
 		                    <th colspan="2">승인</th>
 		                </tr>
 		                <c:forEach items="${list }" var="a">
@@ -115,7 +115,7 @@
 		                    <th>개설자</th>
 		                    <th>클래스 설명</th>
 		                    <th>참가비</th>
-		                    <th>신청일자</th>
+		                    <th>신청일</th>
 		                    <th colspan="2">승인</th>
 		                </tr>
 		                <c:forEach items="${list }" var="a">

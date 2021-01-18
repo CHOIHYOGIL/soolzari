@@ -24,7 +24,7 @@
             text-decoration: none;
             color: black;
             display: inline-block;
-            width: 400px;
+            width: 700px;
             height: 50px;
             line-height: 50px;
             border-top: 1px solid lightgray;
@@ -47,7 +47,7 @@
             cursor: pointer;
             outline: none;
         }
-        .reject, #allre, #partre{
+        .delete, #partde{
             width: 80px;
             height: 31px;
             background: #F16B6F;
@@ -58,12 +58,12 @@
             cursor: pointer;
             outline: none;
         }
-        .accept, #partac, #allac{
+        .change, #partch{
             width: 80px;
             height: 31px;
-            background: #4F86C6;
+            background: #4d5075;
             color: white;
-            border: 1px solid #4F86C6;
+            border: 1px solid #4d5075;
             box-sizing: border-box;
             line-height: 27px;
             cursor: pointer;
@@ -76,6 +76,16 @@
             margin-bottom: 5px;
             height: 30px;
             box-sizing: border-box;
+        }
+        select{
+        	border: none;
+            outline: none;
+            border: 1px solid lightgray;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            height: 30px;
+            box-sizing: border-box;
+            width: 100px;
         }
         input[type="text"]{
             border: none;
@@ -92,12 +102,20 @@
             margin-top: 30px;
             margin-bottom: 30px;
         }
-        th, td {
+        .client th, .client td {
             box-sizing: border-box;
             height: 40px;
             line-height: 40px;
             border-bottom: 1px solid lightgray;
-            width: 200px;
+            width: 90px;
+            text-align: center;
+        }
+        .seller th, .seller td {
+            box-sizing: border-box;
+            height: 40px;
+            line-height: 40px;
+            border-bottom: 1px solid lightgray;
+            width: 160px;
             text-align: center;
         }
         th{
@@ -107,10 +125,26 @@
             border-bottom: 3px solid #4d5075;
         }
         th:first-child, td:first-child{
-            width: 70px;
+            width: 50px;
+        }
+        .client th:nth-child(6), .client td:nth-child(6){
+        	width: 200px;
+        }
+        .client th:nth-child(7), .client td:nth-child(7){
+        	width: 300px;
+        }
+        .client th:nth-child(8), .client td:nth-child(8), .client th:nth-child(9), .client td:nth-child(9), .client th:last-child, .client td:last-child{
+        	width: 120px;
+        }
+        .seller th:nth-child(6), .seller td:nth-child(6){
+        	width: 300px;
+        }
+        .seller th:nth-child(5), .seller td:nth-child(5){
+        	width: 200px;
         }
         .searchbox tr:first-child>th, .searchbox tr:first-child>td{
             border-top: 3px solid #4d5075;
+            border-bottom: 1px solid lightgray;
         }
         .searchbox tr:last-child>th, .searchbox tr:last-child>td{
             border-bottom: 3px solid #4d5075;
@@ -120,6 +154,7 @@
         }
         .searchbox th{
             border-top: none;
+            width: 130px;
         }
         a{
             text-decoration: none;
@@ -145,7 +180,7 @@
             justify-content: center;
         }
         section{
-            width: 1200px;
+        	width: 1200px;
             margin: 0 auto;
         }
         .sel{
@@ -164,6 +199,8 @@
             border-right: 1px solid lightgray;
             padding: 30px;
             border-bottom: 1px solid lightgray;
+            width: 1400px;
+            box-sizing: border-box;
         }
         .navi .select{
         	border-top: 3px solid #4d5075;

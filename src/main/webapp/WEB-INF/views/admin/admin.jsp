@@ -18,25 +18,5 @@
             </div>
         </div>
 	</section>
-	
-	<script>
-        $(function() {
-            $(".sub").hide();
-            $(".sub").prev().prepend('<span class="more">+</span>');
-            $(".more").click(function(event) {
-                $(this).parent().next().slideToggle();                
-                if ($(this).attr("class") == "more") {
-                    $(this).addClass("active");
-                } else {
-                    $(this).removeClass("active");
-                }
-                event.stopPropagation();
-
-            });
-            $(".more").parent().click(function() {
-                $(this).children().last().click();
-            });
-        })
-    </script>
 </body>
 </html>

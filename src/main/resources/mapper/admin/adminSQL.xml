@@ -204,4 +204,108 @@
 		</choose>
 		)c) where rnum between #{start} and #{end}
 	</select>
+	<select id="searchTotal" parameterType="map" resultType="_int">
+		select count(*) from 
+		<choose>
+			<when test="type == 1">
+				goods_db join seller_db using (sel_no) where gds_name
+			</when>
+			<when test="type == 2">
+				funding_db join seller_db using (sel_no) where fund_name
+			</when>
+			<when test="type == 3">
+				class_db join seller_db using (sel_no) where cls_name
+			</when>
+		</choose>
+		like '%'||#{search}||'%' and status=0 and goods_date
+		<choose>
+			<when test="startDate.equals(endDate)">
+				= #{endDate}
+			</when>
+			<otherwise>
+				between to_date(#{startDate}) and to_date(#{endDate})
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="selectAllClient" parameterType="map" resultType="u">
+		select * from (select rownum as rnum, c.* from (
+		select
+			cli_no as userNo,
+			cli_id as userId,
+			cli_name as userName,
+			cli_tel as userPhone,
+			cli_addr as userAddr,
+			cli_email as userEmail,
+			cli_rank as status,
+			cli_enroll as userEnroll,
+			cli_point as point
+		from client_db)c) where rnum between #{start} and #{end}
+	</select>
+	<select id="totalClient" resultType="_int">
+		select count(*) from client_db
+	</select>
+	<select id="selectAllSeller" parameterType="map" resultType="u">
+		select * from (select rownum as rnum, s.* from (
+		select
+			sel_no as userNo,
+			sel_id as userId,
+			sel_name as userName,
+			sel_tel as userPhone,
+			sel_addr as userAddr,
+			sel_enroll as userEnroll
+		from seller_db)s) where rnum between #{start} and #{end}
+	</select>
+	<select id="totalSeller" resultType="_int">
+		select count(*) from seller_db
+	</select>
+	<update id="updateGrade" parameterType="map">
+		update client_db set cli_rank=#{grade} where cli_no=#{userNo}
+	</update>
+	<delete id="deleteUser" parameterType="map">
+		delete from
+		<choose>
+			<when test="type == 1">
+				client_db where cli_no = #{userNo}
+			</when>
+			<otherwise>
+				seller_db where seller_no = #{userNo}
+			</otherwise>
+		</choose>
+	</delete>
+	<select id="searchClient" parameterType="map" resultType="u">
+		select * from (select rownum as rnum, c.* from (
+		select
+			cli_no as userNo,
+			cli_id as userId,
+			cli_name as userName,
+			cli_tel as userPhone,
+			cli_addr as userAddr,
+			cli_email as userEmail,
+			cli_rank as status,
+			cli_enroll as userEnroll
+		from client_db where
+		<choose>
+			<when test="searchType.equals('id')">
+				cli_id like '%'||#{search}||'%'
+			</when>
+			<otherwise>
+				cli_name like '%'||#{search}||'%'
+			</otherwise>
+		</choose>
+		<if test="startDate != '' and endDate != ''">
+			<choose>
+				<when test="startDate.equals(endDate)">
+					and cli_enroll = #{startDate}
+				</when>
+				<otherwise>
+					and cli_enroll between to_date(#{startDate}) and to_date(#{endDate})
+				</otherwise>
+			</choose>
+		</if>
+		)c) where rnum between #{start} and #{end}
+	</select>
+	<select id="searchSeller" parameterType="map" resultType="u">
+	
+	</select>
 </mapper>

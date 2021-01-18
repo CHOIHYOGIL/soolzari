@@ -40,7 +40,7 @@ public class NoticeService {
 		}
 		int pageNaviSize = 5;
 		String page = "";
-		int pageStart = (reqPage-1)/pageNaviSize+1;
+		int pageStart = ((reqPage-1)/pageNaviSize)*pageNaviSize + 1;
 		if(pageStart>1) {
 			page += "<a href='/notice/list.sool?reqPage=1'><<</a>";
 			page += "<a href='/notice/list.sool?reqPage="+(pageStart-1)+"'><</a>";
@@ -124,7 +124,7 @@ public class NoticeService {
 		}
 		int pageNaviSize = 5;
 		String page = "";
-		int pageStart = (reqPage-1)/pageNaviSize+1;
+		int pageStart = ((reqPage-1)/pageNaviSize)*pageNaviSize + 1;
 		if(pageStart>1) {
 			page += "<a href='/notice/find.sool?reqPage=1&date="+date+"&type="+type+"&search"+search+"'><<</a>";
 			page += "<a href='/notice/find.sool?reqPage="+(pageStart-1)+"&date="+date+"&type="+type+"&search"+search+"'><</a>";

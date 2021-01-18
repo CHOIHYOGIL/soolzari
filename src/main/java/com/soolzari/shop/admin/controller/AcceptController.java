@@ -83,7 +83,7 @@ public class AcceptController {
 	}
 	
 	@RequestMapping("/searchAccept.sool")
-	public String findAccept(String startDate, String endDate, int type, int reqPage, String search, Model model) {
+	public String searchAccept(String startDate, String endDate, int type, int reqPage, String search, Model model) {
 		AcceptPage ap = service.searchAccept(startDate, endDate, type, search, reqPage);
 		model.addAttribute("list", ap.getList());
 		model.addAttribute("page", ap.getPage());

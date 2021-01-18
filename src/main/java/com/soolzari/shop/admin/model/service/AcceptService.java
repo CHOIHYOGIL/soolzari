@@ -46,7 +46,7 @@ public class AcceptService {
 		}
 		int pageNaviSize = 5;
 		String page = "";
-		int pageNo = (reqPage-1)/pageNaviSize+1;
+		int pageNo = ((reqPage-1)/pageNaviSize)*pageNaviSize+1;
 		if(pageNo>1) {
 			page += "<a href='/accept.sool?type="+type+"&reqPage=1'><<</a>";
 			page += "<a href='/accept.sool?type="+type+"&reqPage="+(pageNo-1)+"'><</a>";
@@ -129,17 +129,18 @@ public class AcceptService {
 		map.put("startDate", startDate);
 		map.put("endDate", endDate);
 		map.put("search", search);
+		map.put("type", type);
 		ArrayList<Accept> list = new ArrayList<Accept>();
 		int totalCount = 0;
 		if(type == 1) {
 			list = dao.searchGoods(map);
-			totalCount = dao.totalGoods();
+			totalCount = dao.searchTotal(map);
 		}else if(type == 2) {
 			list = dao.searchFunding(map);
-			totalCount = dao.totalFunding();
+			totalCount = dao.searchTotal(map);
 		}else {
 			list = dao.searchClass(map);
-			totalCount = dao.totalClass();
+			totalCount = dao.searchTotal(map);
 		}
 		int totalPage = 0;
 		if(totalCount%numPerPage==0) {
@@ -149,7 +150,7 @@ public class AcceptService {
 		}
 		int pageNaviSize = 5;
 		String page = "";
-		int pageNo = (reqPage-1)/pageNaviSize+1;
+		int pageNo = ((reqPage-1)/pageNaviSize)*pageNaviSize + 1;
 		if(pageNo>1) {
 			page += "<a href='/searchAccept.sool?type="+type+"&reqPage=1&startDate="+startDate+"&endDate="+endDate+"&search="+search+"'><<</a>";
 			page += "<a href='/searchAccept.sool?type="+type+"&reqPage="+(pageNo-1)+"&startDate="+startDate+"&endDate="+endDate+"&search="+search+"'><</a>";

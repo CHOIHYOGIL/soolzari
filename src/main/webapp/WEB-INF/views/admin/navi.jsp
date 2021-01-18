@@ -5,7 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.js"></script>
 <style>
 	@font-face {
         font-family: 'S-CoreDream-3Light';
@@ -27,10 +26,14 @@
         margin: 20px;
     }
 
-    .navis ul,
-    h1 {
+    .navis ul{
         padding: 0;
         margin: 0;
+    }
+    
+    .navis h1{
+    	padding: 0;
+        font-size: 2em;
     }
 
     .navis {
@@ -57,10 +60,6 @@
     
     .navis li:hover>a{
         color: lightgray;
-    }
-
-    section {
-        overflow: hidden;
     }
     
     .logout{
@@ -119,12 +118,12 @@
 	            <li>
 	                <a href="javascript:void(0)">사용자 관리</a>
 	                <ul class="sub">
-	                    <li><a href="#">고객</a></li>
-	                    <li><a href="#">판매자</a></li>
+	                    <li><a href="/user.sool?type=1&reqPage=1">고객</a></li>
+	                    <li><a href="/user.sool?type=2&reqPage=1">판매자</a></li>
 	                </ul>
 	            </li>
 	            <li class="logout">
-	                <img src="/resources/image/logout.png"><a href="">로그아웃</a>
+	                <img src="/resources/image/logout.png"><a href="/logout.sool">로그아웃</a>
 	            </li>
 	        </ul>
 	    </div>
