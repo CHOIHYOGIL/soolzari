@@ -32,7 +32,7 @@
             border-left: 1px solid lightgray;
             box-sizing: border-box;
         }
-        .navi li:last-child{
+        .navi a:last-child{
             border-right: 1px solid lightgray;
             box-sizing: border-box;
         }

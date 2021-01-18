@@ -21,6 +21,8 @@
 		<typeAlias type="com.soolzari.shop.admin.model.vo.Notice" alias="n"/>
 		<typeAlias type="com.soolzari.shop.image.model.vo.Image" alias="i"/>
 		<typeAlias type="com.soolzari.shop.admin.model.vo.Accept" alias="a"/>
+		<typeAlias type="com.soolzari.shop.admin.model.vo.User" alias="u"/>
+		<typeAlias type="com.soolzari.shop.admin.model.vo.Qrv" alias="qrv"/>
 		
 		<typeAlias type="com.soolzari.shop.client.model.vo.Client2" alias="c2"/>
 		<typeAlias type="com.soolzari.shop.client.model.vo.Goods2" alias="g2"/>

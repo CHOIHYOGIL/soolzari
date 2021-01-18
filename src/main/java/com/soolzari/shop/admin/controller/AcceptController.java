@@ -35,8 +35,8 @@ public class AcceptController {
 	}
 	
 	@RequestMapping("/acceptAll.sool")
-	public String acceptAll(int type, String acceptNo, Model model) {
-		int result = service.acceptAll(type, acceptNo);
+	public String acceptAll(int type, Model model) {
+		int result = service.acceptAll(type);
 		if(result>0) {
 			model.addAttribute("msg", "승인 성공");
 		}else {
@@ -59,8 +59,8 @@ public class AcceptController {
 	}
 	
 	@RequestMapping("/rejectAll.sool")
-	public String rejectAll(int type, String acceptNo, Model model) {
-		int result = service.rejectAll(type, acceptNo);
+	public String rejectAll(int type, Model model) {
+		int result = service.rejectAll(type);
 		if(result>0) {
 			model.addAttribute("msg", "거절 성공");
 		}else {
@@ -83,7 +83,7 @@ public class AcceptController {
 	}
 	
 	@RequestMapping("/searchAccept.sool")
-	public String findAccept(String startDate, String endDate, int type, int reqPage, String search, Model model) {
+	public String searchAccept(String startDate, String endDate, int type, int reqPage, String search, Model model) {
 		AcceptPage ap = service.searchAccept(startDate, endDate, type, search, reqPage);
 		model.addAttribute("list", ap.getList());
 		model.addAttribute("page", ap.getPage());

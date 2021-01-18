@@ -76,7 +76,7 @@
 <!--        buttons -->
 <!--      button LogIn -->
       <button class="log-in"> 로그인</button>
-      <button class="btn submits sign-up">회원가입
+      <button class="btn submits sign-up" >회원가입
 <!--         Sign Up font icon -->
       <i class="fa fa-user-plus" aria-hidden="true"></i>
       </button>
@@ -121,6 +121,12 @@
 </html>
 
 <script>
+$(function(){
+	
+	$(".sign-up").click(function(){
+		$(location).attr('href','/views/client/join.jsp');
+	})
+})
 
 
 

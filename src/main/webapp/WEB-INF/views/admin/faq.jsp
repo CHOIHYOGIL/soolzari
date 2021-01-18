@@ -140,7 +140,7 @@
             });
             $(".navi a").eq(0).click();
             $("#qna").click(function(){
-               location.href="/qna.sool"; 
+               location.href="/qna.sool?reqPage=1"; 
             });
         });
     </script>

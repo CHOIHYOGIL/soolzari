@@ -12,10 +12,10 @@
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 <link href="/resources/css/noticeView.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.js"></script>
 </head>
 <body>
 	<section>
+		<jsp:include page="/WEB-INF/views/admin/navi.jsp"/>
         <h1>공지사항</h1>
         <form action="/notice/update.sool" method="post">
             <table class="notice">

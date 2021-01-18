@@ -45,4 +45,8 @@ public class NoticeDao {
 	public int updateNotice(Notice n) {
 		return session.update("admin.updateNotice", n);
 	}
+
+	public int totalNoticeSearch(HashMap<String, Object> map) {
+		return session.selectOne("admin.totalNoticeSearch", map);
+	}
 }

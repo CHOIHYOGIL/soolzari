@@ -11,26 +11,34 @@
     font-family: 'S-CoreDream-3Light';
 }
 
-.notice tr {
-    display: block;
-    border-top: 1px solid lightgray;
-    text-align: center;
+.notice{
+	border-spacing: 0;
+	text-align: center;
 }
 
-.notice th,
-td {
+.notice th{
+    background: #4d5075;
+    color: white;
     width: 150px;
     box-sizing: border-box;
     height: 40px;
     line-height: 40px;
 }
 
+.notice td {
+    width: 150px;
+    box-sizing: border-box;
+    height: 40px;
+    line-height: 40px;
+    border-top: 1px solid lightgray;
+}
+
 .notice th:nth-child(2),
-td:nth-child(2) {
+.notice td:nth-child(2) {
     width: 500px;
 }
 
-.notice tr:last-child {
+.notice tr:last-child>td {
     border-bottom: 1px solid lightgray;
 }
 
@@ -38,6 +46,7 @@ select {
     border: 1px solid lightgray;
     height: 30px;
     outline: none;
+    width: 70px;
 }
 
 input[type="text"] {

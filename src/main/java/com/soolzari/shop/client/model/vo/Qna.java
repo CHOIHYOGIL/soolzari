@@ -6,8 +6,9 @@ import lombok.Data;
 public class Qna {
 	private int qnaNo;
 	private String qnaName;
-	private int qnsWriter;
+	private int qnaWriter;
 	private String qnaCon;
 	private String qnaEnroll;
 	private int qnaAns;
+	private String qnaId;
 }

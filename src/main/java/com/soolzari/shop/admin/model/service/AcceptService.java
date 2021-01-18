@@ -46,7 +46,7 @@ public class AcceptService {
 		}
 		int pageNaviSize = 5;
 		String page = "";
-		int pageNo = (reqPage-1)/pageNaviSize+1;
+		int pageNo = ((reqPage-1)/pageNaviSize)*pageNaviSize+1;
 		if(pageNo>1) {
 			page += "<a href='/accept.sool?type="+type+"&reqPage=1'><<</a>";
 			page += "<a href='/accept.sool?type="+type+"&reqPage="+(pageNo-1)+"'><</a>";
@@ -73,20 +73,10 @@ public class AcceptService {
 	}
 
 	@Transactional
-	public int acceptAll(int type, String acceptNo) {
-		StringTokenizer st = new StringTokenizer(acceptNo, "/");
-		int result = 0;
-		while(st.hasMoreTokens()) {
-			int accNo = Integer.parseInt(st.nextToken());
-			HashMap<String, Integer> map = new HashMap<String, Integer>();
-			map.put("type", type);
-			map.put("acceptNo", accNo);
-			result = dao.accept(map);
-			if(result == 0) {
-				break;
-			}
-		}
-		return result;
+	public int acceptAll(int type) {
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("type", type);
+		return dao.accept(map);
 	}
 
 	public int acceptOne(int type, int acceptNo) {
@@ -96,20 +86,10 @@ public class AcceptService {
 		return dao.accept(map);
 	}
 
-	public int rejectAll(int type, String acceptNo) {
-		StringTokenizer st = new StringTokenizer(acceptNo, "/");
-		int result = 0;
-		while(st.hasMoreTokens()) {
-			int accNo = Integer.parseInt(st.nextToken());
-			HashMap<String, Integer> map = new HashMap<String, Integer>();
-			map.put("type", type);
-			map.put("acceptNo", accNo);
-			result = dao.reject(map);
-			if(result == 0) {
-				break;
-			}
-		}
-		return result;
+	public int rejectAll(int type) {
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("type", type);
+		return dao.reject(map);
 	}
 
 	public int rejectOne(int type, int acceptNo) {
@@ -129,17 +109,18 @@ public class AcceptService {
 		map.put("startDate", startDate);
 		map.put("endDate", endDate);
 		map.put("search", search);
+		map.put("type", type);
 		ArrayList<Accept> list = new ArrayList<Accept>();
 		int totalCount = 0;
 		if(type == 1) {
 			list = dao.searchGoods(map);
-			totalCount = dao.totalGoods();
+			totalCount = dao.searchTotal(map);
 		}else if(type == 2) {
 			list = dao.searchFunding(map);
-			totalCount = dao.totalFunding();
+			totalCount = dao.searchTotal(map);
 		}else {
 			list = dao.searchClass(map);
-			totalCount = dao.totalClass();
+			totalCount = dao.searchTotal(map);
 		}
 		int totalPage = 0;
 		if(totalCount%numPerPage==0) {
@@ -149,7 +130,7 @@ public class AcceptService {
 		}
 		int pageNaviSize = 5;
 		String page = "";
-		int pageNo = (reqPage-1)/pageNaviSize+1;
+		int pageNo = ((reqPage-1)/pageNaviSize)*pageNaviSize + 1;
 		if(pageNo>1) {
 			page += "<a href='/searchAccept.sool?type="+type+"&reqPage=1&startDate="+startDate+"&endDate="+endDate+"&search="+search+"'><<</a>";
 			page += "<a href='/searchAccept.sool?type="+type+"&reqPage="+(pageNo-1)+"&startDate="+startDate+"&endDate="+endDate+"&search="+search+"'><</a>";

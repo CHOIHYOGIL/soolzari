@@ -65,4 +65,8 @@ public class AcceptDao {
 		return (ArrayList<Accept>)list;
 	}
 
+	public int searchTotal(HashMap<String, Object> map) {
+		return session.selectOne("admin.searchTotal", map);
+	}
+
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,12 +23,14 @@
 			<c:forEach items="${list }" var="n">
 				<tr id="content">
 					<td>${n.noticeNo }</td>
-					<c:when test="${n.noticeEnroll eq today }">
-						<td>${n.noticeTitle }<span>new !</span></td>
-					</c:when>
-					<c:otherwise>
-						<td>${n.noticeTitle }</td>
-					</c:otherwise>
+					<c:choose>
+						<c:when test="${n.noticeEnroll eq today }">
+							<td>${n.noticeTitle }<span>new !</span></td>
+						</c:when>
+						<c:otherwise>
+							<td>${n.noticeTitle }</td>
+						</c:otherwise>
+					</c:choose>
 					<td>${n.noticeWriter }</td>
 					<td>${n.noticeEnroll }</td>
 					<td>${n.noticeCount }</td>
