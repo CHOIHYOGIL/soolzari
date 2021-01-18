@@ -117,4 +117,29 @@ public class ClientDao {
 		return sqlSession.selectOne("client.getEnroll",classNo);
 	}
 
+	public ArrayList<Goods> getTakju() {
+		List<Goods> list =sqlSession.selectList("client.getTakju");
+		return (ArrayList<Goods>)list;
+	}
+
+	public ArrayList<Goods> getChoengju() {
+		List<Goods> list =sqlSession.selectList("client.getCheongju");
+		return (ArrayList<Goods>)list;
+	}
+
+	public ArrayList<Goods> getSpirits() {
+		List<Goods> list =sqlSession.selectList("client.getSpirits");
+		return (ArrayList<Goods>)list;
+	}
+
+	public ArrayList<Goods> getWine() {
+		List<Goods> list =sqlSession.selectList("client.getWine");
+		return (ArrayList<Goods>)list;
+	}
+
+	public ArrayList<Goods> getFruit() {
+		List<Goods> list =sqlSession.selectList("client.getFruit");
+		return (ArrayList<Goods>)list;
+	}
+
 }

@@ -2,9 +2,10 @@ package com.soolzari.shop.client.controller;
 
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,7 +16,6 @@ import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,7 +35,6 @@ import com.soolzari.shop.client.model.vo.KakaoUserInfo;
 import com.soolzari.shop.client.model.vo.NaverLoginBO;
 import com.soolzari.shop.client.model.vo.Reservation;
 import com.soolzari.shop.client.model.vo.Subscribe;
-import com.soolzari.shop.seller.model.vo.Seller;
 
 
 @Controller
@@ -94,7 +93,7 @@ public class ClientController {
 	
 	//네이버 로그인 성공시 callback호출 메소드
 	@RequestMapping(value = "/callback", method = { RequestMethod.GET, RequestMethod.POST })
-	public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session) throws IOException, ParseException {
+	public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session, Client c) throws IOException, ParseException {
 	System.out.println("여기는 callback");
 	OAuth2AccessToken oauthToken;
 	oauthToken = naverLoginBO.getAccessToken(session, code, state);
@@ -112,18 +111,48 @@ public class ClientController {
 	//3. 데이터 파싱
 	//Top레벨 단계 _response 파싱
 	JSONObject response_obj = (JSONObject)jsonObj.get("response");
+	System.out.println(response_obj);
 	//response의 nickname값 파싱
 	String nickname = (String)response_obj.get("nickname");
 	String name=(String)response_obj.get("name");
+	String id=(String)response_obj.get("id");
+	String mobile=(String)response_obj.get("mobile");
+	String birthYear=(String)response_obj.get("birthyear");
+	String birthday=(String)response_obj.get("birthday");
+	String email=(String)response_obj.get("email");
 	System.out.println("이름 : "+name);
 	System.out.println(nickname);
+	System.out.println(id);
+	System.out.println(mobile);
+	String birthday1=birthday.replace('-',' ').replaceAll(" ","");
+	System.out.println(birthYear+birthday1);
+	System.out.println(email);
+	c.setClientAge(birthYear+birthday1);
+	c.setClientName(name);
+	c.setClientId(email);
+	c.setClientEmail(email);
+	c.setClientTel(mobile);
+
 	//4.파싱 닉네임 세션으로 저장
 	if(name!=null) {
+		Calendar cal = Calendar.getInstance();
+		int year=cal.get(Calendar.YEAR);
+		int adultYear=year-20;
 		model.addAttribute("msg","네이버 로그인 성공");
-		session.setAttribute("sessionId",name); //세션 생성
-		model.addAttribute("result", apiResult);
-		model.addAttribute("name",name);
-		model.addAttribute("loc","/");
+
+		if(Integer.parseInt(birthYear)>adultYear) {
+			model.addAttribute("msg","성인만 가입가능합니다.");
+			model.addAttribute("loc","/");
+		}else {
+			int result = service.insertClient(c);
+			session.setAttribute("sessionClient", c);
+			session.setAttribute("sessionId",name); //세션 생성
+			model.addAttribute("result", apiResult);
+			model.addAttribute("name",name);
+			model.addAttribute("loc","/");
+		}
+
+
 	}else {
 		model.addAttribute("msg","네이버 로그인 실패");
 		model.addAttribute("loc","client/login");
@@ -145,7 +174,7 @@ public class ClientController {
 	
 	@RequestMapping(value="/kakaologin", produces="application/json", method=RequestMethod.GET)
 	  public String kakaologin(@RequestParam("code") String code, RedirectAttributes ra, HttpSession session, Model model,
-			  HttpServletResponse response) throws IOException{
+			  HttpServletResponse response, Client c) throws IOException{
 		
 		System.out.println("kakao code: "+code);
 		  JsonNode accessToken;
@@ -164,21 +193,40 @@ public class ClientController {
 	        String id = userInfo.path("id").asText();
 	        String name = null;
 	        String email = null;
-	 
+	 System.out.println("userInfo : "+userInfo);
 	        // 유저정보 카카오에서 가져오기 Get properties
 	        JsonNode properties = userInfo.path("properties");
 	        JsonNode kakao_account = userInfo.path("kakao_account");
-	        
+	  
+	        String age_range=kakao_account.path("age_range").asText();
 	        name = properties.path("nickname").asText();
 	        email = kakao_account.path("email").asText();
-	 
+	        System.out.println("properties :"+properties);
+	        System.out.println("kakao account:"+kakao_account);
 	        System.out.println("id : " + id);
+	        System.out.println(kakao_account.findPath("birthday").asText());
+	        age_range=age_range.substring(0,2);
+	        System.out.println(age_range);
+	        c.setClientId(email);
+	        c.setClientEmail(email);
+	        c.setClientName(name);
+	        c.setClientAge(age_range+"대");
 	        System.out.println("name : " + name);
 	        System.out.println("email : " + email);
+	        System.out.println("age : "+age_range);
 	        if(name!=null && email!=null) {
 	        	  model.addAttribute("msg","카카오 로그인 성공");
-	        		model.addAttribute("loc","/");
-	        		session.setAttribute("sessionId",name); //세션 생성
+	        	  if(Integer.parseInt(age_range)>=20) {
+	        			int result = service.insertClient(c);
+	        			model.addAttribute("loc","/");
+	        			session.setAttribute("sessionClient", c);
+		        		session.setAttribute("sessionId",name); //세션 생성
+	        	  }else {
+	        		  model.addAttribute("msg","성인만 가입가능합니다.");
+	        		  model.addAttribute("loc","/");
+	        	  }
+	        
+	        		
 	        }else {
 	        	  model.addAttribute("msg","카카오 로그인 실패");
 	        		model.addAttribute("loc","/");
@@ -307,6 +355,51 @@ public class ClientController {
 		
 	}
 	
+	@RequestMapping("/takju.sool")
+	public String takju(Model model) {
+		System.out.println("takju");
+		ArrayList<Goods> list=service.getTakju();
+		System.out.println(list);
+		model.addAttribute("list",list);
+		
+		return "client/takju";
+	}
+	@RequestMapping("/cheongju.sool")
+	public String cheongju(Model model) {
+		System.out.println("cheongju");
+		ArrayList<Goods> list=service.getChoengju();
+		System.out.println(list);
+		model.addAttribute("list",list);
+		
+		return "client/cheongju";
+	}
+	@RequestMapping("/spirits.sool")
+	public String spirits(Model model) {
+		System.out.println("spirits");
+		ArrayList<Goods> list=service.getSpirits();
+		System.out.println(list);
+		model.addAttribute("list",list);
+		
+		return "client/spirits";
+	}
+	@RequestMapping("/wine.sool")
+	public String wine(Model model) {
+		System.out.println("wine");
+		ArrayList<Goods> list=service.getWine();
+		System.out.println(list);
+		model.addAttribute("list",list);
+		
+		return "client/wine";
+	}
+	@RequestMapping("/fruit.sool")
+	public String fruit(Model model) {
+		System.out.println("fruit");
+		ArrayList<Goods> list=service.getFruit();
+		System.out.println(list);
+		model.addAttribute("list",list);
+		
+		return "client/fruit";
+	}
 	/* 이미 예약해서 예약불가능 한지 아니면 예약가능한지 판별*/
 	@ResponseBody
 	@RequestMapping(value="/checkUser.sool", produces="application/json;charset=utf-8", method=RequestMethod.POST)

@@ -275,8 +275,7 @@ public class ClientController2 {
 			model.addAttribute("pageNavi",opd.getPageNavi());
 			model.addAttribute("period",period);
 			model.addAttribute("reqPage",reqPage);
-			System.out.println("price:"+opd.getOlDataList().get(0).getGdsLPrice());
-			System.out.println("price:"+opd.getOlDataList().get(1).getGdsLPrice());
+		
 			return "client/mOrderList";
 		}else {
 			model.addAttribute("msg","로그인 후 이용해주세요");
