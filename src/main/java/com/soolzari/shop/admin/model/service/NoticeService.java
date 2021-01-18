@@ -106,7 +106,6 @@ public class NoticeService {
     	}
 		map.put("type", type);//title, content, writer
 		map.put("search", search);
-		
 		int numPerPage = 10;
 		int start = (reqPage-1)*numPerPage+1;
 		int end = reqPage*numPerPage;
@@ -115,7 +114,7 @@ public class NoticeService {
 		ArrayList<Notice> list = dao.findNotice(map);
 		NoticePage np = new NoticePage();
 		np.setList(list);
-		int totalCount = dao.totalCount();//총 게시물 수
+		int totalCount = dao.totalNoticeSearch(map);//총 게시물 수
 		int totalPage = 0;
 		if(totalCount%numPerPage==0) {
 			totalPage = totalCount/numPerPage;

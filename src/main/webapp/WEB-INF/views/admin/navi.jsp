@@ -105,7 +105,7 @@
 	                <a href="/faq.sool">자주 묻는 질문</a>
 	            </li>
 	            <li>
-	                <a href="/qna.sool">1:1 문의</a>
+	                <a href="/qna.sool?reqPage=1">1:1 문의</a>
 	            </li>
 	            <li>
 	                <a href="javascript:void(0)">승인 관리</a>

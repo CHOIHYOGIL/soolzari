@@ -11,12 +11,12 @@
     font-family: 'S-CoreDream-3Light';
 }
 
-.notice{
+.qna{
 	border-spacing: 0;
 	text-align: center;
 }
 
-.notice th{
+.qna th{
     background: #4d5075;
     color: white;
     width: 150px;
@@ -25,7 +25,7 @@
     line-height: 40px;
 }
 
-.notice td {
+.qna td {
     width: 150px;
     box-sizing: border-box;
     height: 40px;
@@ -33,12 +33,12 @@
     border-top: 1px solid lightgray;
 }
 
-.notice th:nth-child(2),
-.notice td:nth-child(2) {
+.qna th:nth-child(3),
+.qna td:nth-child(3) {
     width: 500px;
 }
 
-.notice tr:last-child>td {
+.qna tr:last-child>td {
     border-bottom: 1px solid lightgray;
 }
 
@@ -117,14 +117,17 @@ section {
     margin-top: 10px;
     margin-bottom: 30px;
 }
-h1{
+.qnatitle{
     text-align: center;
 }
-.notice span{
+.qna span{
     font-size: small;
     margin-left: 10px;
     color: #bca0c9;
 }
 #content{
     cursor: pointer;
+}
+.wrap label{
+	width: 100px;
 }

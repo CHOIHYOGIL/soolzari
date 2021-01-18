@@ -26,12 +26,14 @@
 				<tr id="content">
 					<td><input type="checkbox" name="chk"></td>
 					<td>${n.noticeNo }</td>
-					<c:when test="${n.noticeEnroll eq today }">
-						<td>${n.noticeTitle }<span>new !</span></td>
-					</c:when>
-					<c:otherwise>
-						<td>${n.noticeTitle }</td>
-					</c:otherwise>
+					<c:choose>
+						<c:when test="${n.noticeEnroll eq today }">
+							<td>${n.noticeTitle }<span>new !</span></td>
+						</c:when>
+						<c:otherwise>
+							<td>${n.noticeTitle }</td>
+						</c:otherwise>
+					</c:choose>
 					<td>${n.noticeWriter }</td>
 					<td>${n.noticeEnroll }</td>
 					<td>${n.noticeCount }</td>
@@ -41,7 +43,9 @@
 		<div class="wrap">
             <input type="checkbox" name="allchk" id="allchk"><label for="allchk">전체 선택</label>
             <button id="delete">삭제</button>
-            <button onclick="noticeFrm();">글쓰기</button>
+            <div class="write">
+                <button onclick="noticeFrm();">글쓰기</button>
+            </div>
         </div>
         <form action="/notice/find.sool" method="post">
             <select name="date">

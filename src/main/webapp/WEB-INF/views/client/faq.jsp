@@ -9,8 +9,8 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.js"></script>
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	<section>
-		<div><jsp:include page="/WEB-INF/views/admin/navi.jsp"/></div>
         <div class="faq">
             <div>
                 <h1>자주 묻는 질문</h1>
@@ -140,7 +140,7 @@
             });
             $(".navi a").eq(0).click();
             $("#qna").click(function(){
-               location.href="/qna.sool?reqPage=1"; 
+               location.href="";//문의하기 작성하는 페이지 
             });
         });
     </script>

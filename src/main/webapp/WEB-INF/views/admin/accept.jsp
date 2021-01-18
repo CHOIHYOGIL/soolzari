@@ -156,20 +156,10 @@
             });
             $(".navi a").eq(type-1).addClass('select');
             $("#allac").click(function(){//모두 승인
-            	var inputs = $("[type=hidden]");
-            	var acceptNo = new Array();
-            	inputs.each(function(index, item){
-            		acceptNo.push($(item).val());
-            	});
-                location.href="/acceptAll.sool?type="+type+"&acceptNo="+acceptNo.join("/");
+                location.href="/acceptAll.sool?type="+type;
             });
             $("#allre").click(function(){//모두 거절
-            	var inputs = $("[type=hidden]");
-            	var acceptNo = new Array();
-            	inputs.each(function(index, item){
-            		acceptNo.push($(item).val());
-            	});
-                location.href="/rejectAll.sool?type="+type+"&acceptNo="+acceptNo.join("/");
+                location.href="/rejectAll.sool?type="+type;
             });
             $("#partac").click(function(){//선택 승인
             	var inputs = $("[type=checkbox]:checked");

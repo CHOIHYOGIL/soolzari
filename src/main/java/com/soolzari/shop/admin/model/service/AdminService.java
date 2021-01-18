@@ -1,6 +1,9 @@
 package com.soolzari.shop.admin.model.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
@@ -9,8 +12,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.soolzari.shop.admin.model.dao.AdminDao;
+import com.soolzari.shop.admin.model.vo.Qrv;
 import com.soolzari.shop.admin.model.vo.User;
 import com.soolzari.shop.admin.model.vo.UserPage;
+import com.soolzari.shop.client.model.vo.Qna;
+import com.soolzari.shop.client.model.vo.QnaPageData;
 
 @Service
 public class AdminService {
@@ -131,14 +137,15 @@ public class AdminService {
 		map.put("endDate", endDate);
 		map.put("search", search);
 		map.put("searchType", searchType);//id, name
+		map.put("type", type);
 		ArrayList<User> list = new ArrayList<User>();
 		int totalCount = 0;
 		if(type == 1) {
 			list = dao.searchClient(map);
-			totalCount = dao.totalClient();
+			totalCount = dao.totalSearch(map);
 		}else if(type == 2) {
 			list = dao.searchSeller(map);
-			totalCount = dao.totalSeller();
+			totalCount = dao.totalSearch(map);
 		}
 		int totalPage = 0;
 		if(totalCount%numPerPage==0) {
@@ -172,6 +179,130 @@ public class AdminService {
 		up.setList(list);
 		up.setPage(page);
 		return up;
+	}
+
+	public QnaPageData selectAllQna(int reqPage) {
+		int numPerPage = 10;
+		int start = (reqPage-1)*numPerPage+1;
+		int end = reqPage*numPerPage;
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("start", start);
+		map.put("end", end);
+		ArrayList<Qna> list = dao.selectAllQna(map);
+		int totalCount = dao.totalQna();
+		int totalPage = 0;
+		if(totalCount%numPerPage==0) {
+			totalPage = totalCount/numPerPage;
+		}else {
+			totalPage = (totalCount/numPerPage)+1;
+		}
+		int pageNaviSize = 5;
+		String page = "";
+		int pageNo = ((reqPage-1)/pageNaviSize)*pageNaviSize + 1;
+		if(pageNo>1) {
+			page += "<a href='/qna.sool?reqPage=1'><<</a>";
+			page += "<a href='/qna.sool?reqPage="+(pageNo-1)+"'><</a>";
+		}
+		for(int i=0;i<pageNaviSize;i++) {
+			if(reqPage != pageNo) {
+				page += "<a href='/qna.sool?reqPage="+pageNo+"' class='num'>"+pageNo+"</a>";
+			}else {
+				page += "<span class='sel'>"+pageNo+"</span>";
+			}
+			pageNo++;
+			if(pageNo>totalPage) {
+				break;
+			}
+		}
+		if(pageNo<=totalPage) {
+			page += "<a href='/qna.sool?reqPage="+pageNo+"'>></a>";
+			page += "<a href='/qna.sool?reqPage="+totalPage+"'>>></a>";
+		}
+		QnaPageData qpd = new QnaPageData();
+		qpd.setList(list);
+		qpd.setPageNavi(page);
+		return qpd;
+	}
+
+	public Qna selectOneQna(int qnaNo) {
+		return dao.selectOneQna(qnaNo);
+	}
+
+	public Qrv selectOneQrv(int qnaNo) {
+		return dao.selectOneQrv(qnaNo);
+	}
+
+	@Transactional
+	public int deleteQna(String qnaNo) {
+		StringTokenizer st = new StringTokenizer(qnaNo,"/");
+		int result = 0;
+		while(st.hasMoreTokens()) {
+			int qna = Integer.parseInt(st.nextToken());
+			result = dao.deleteQna(qna);
+			if(result == 0) {
+				break;
+			}
+		}
+		return result;
+	}
+
+	public QnaPageData searchQna(String date, String type, String search, int reqPage) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		Date d = new Date();
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    	String today = sdf.format(d);
+    	Calendar cal = Calendar.getInstance();
+    	cal.setTime(d);
+    	if(date.equals("week")) {
+        	cal.add(Calendar.DATE, -7);
+        	String week = sdf.format(cal.getTime());
+        	map.put("week", week);
+    	}else if(date.equals("month")) {
+    		cal.add(Calendar.MONTH, -1);
+        	String month = sdf.format(cal.getTime());
+        	map.put("month", month);
+    	}
+		map.put("type", type);//title, content, writer
+		map.put("search", search);
+		int numPerPage = 10;
+		int start = (reqPage-1)*numPerPage+1;
+		int end = reqPage*numPerPage;
+		map.put("start", start);
+		map.put("end", end);
+		ArrayList<Qna> list = dao.searchQna(map);
+		QnaPageData qpd = new QnaPageData();
+		qpd.setList(list);
+		int totalCount = dao.totalQnaSearch(map);//총 게시물 수
+		int totalPage = 0;
+		if(totalCount%numPerPage==0) {
+			totalPage = totalCount/numPerPage;
+		}else {
+			totalPage = (totalCount/numPerPage)+1;
+		}
+		int pageNaviSize = 5;
+		String page = "";
+		int pageStart = ((reqPage-1)/pageNaviSize)*pageNaviSize + 1;
+		if(pageStart>1) {
+			page += "<a href='/searchQna.sool?reqPage=1&date="+date+"&type="+type+"&search"+search+"'><<</a>";
+			page += "<a href='/searchQna.sool?reqPage="+(pageStart-1)+"&date="+date+"&type="+type+"&search"+search+"'><</a>";
+		}
+		for(int i=0;i<pageNaviSize;i++) {
+			if(reqPage != pageStart) {
+				page += "<a href='/searchQna.sool?reqPage="+pageStart+"&date="+date+"&type="+type+"&search"+search+"' class='num'>"+pageStart+"</a>";
+			}else {
+				page += "<span class='sel'>"+pageStart+"</span>";
+			}
+			pageStart++;
+			if(pageStart>totalPage) {
+				break;
+			}
+		}
+		if(pageStart<=totalPage) {
+			page += "<a href='/searchQna.sool?reqPage="+pageStart+"&date="+date+"&type="+type+"&search"+search+"'>></a>";
+			page += "<a href='/searchQna.sool?reqPage="+totalPage+"&date="+date+"&type="+type+"&search"+search+"'>>></a>";
+		}
+		qpd.setPageNavi(page);
+		return qpd;
 	}
 
 }

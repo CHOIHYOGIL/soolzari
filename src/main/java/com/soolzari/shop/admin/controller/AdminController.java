@@ -1,12 +1,19 @@
 package com.soolzari.shop.admin.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.soolzari.shop.admin.model.service.AdminService;
+import com.soolzari.shop.admin.model.vo.Qrv;
 import com.soolzari.shop.admin.model.vo.UserPage;
+import com.soolzari.shop.client.model.vo.Qna;
+import com.soolzari.shop.client.model.vo.QnaPageData;
 
 @Controller
 public class AdminController {
@@ -16,6 +23,11 @@ public class AdminController {
 	@RequestMapping("/faq.sool")
 	public String faq() {
 		return "admin/faq";
+	}
+	
+	@RequestMapping("/faqClient.sool")
+	public String faqClient() {
+		return "client/faq";
 	}
 	
 	@RequestMapping("/admin.sool")
@@ -89,5 +101,52 @@ public class AdminController {
 		model.addAttribute("search", search);
 		model.addAttribute("searchType", searchType);
 		return "admin/user";
+	}
+	
+	@RequestMapping("/qna.sool")
+	public String qna(int reqPage, Model model) {
+		QnaPageData qpd = service.selectAllQna(reqPage);
+		model.addAttribute("list", qpd.getList());
+		model.addAttribute("page", qpd.getPageNavi());
+		Date date = new Date();
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    	String today = sdf.format(date);
+		model.addAttribute("today", today);
+		return "admin/qna";
+	}
+	
+	@RequestMapping("qnaView.sool")
+	public String qnaView(int qnaNo, int qnaAns, Model model) {
+		Qna qna = service.selectOneQna(qnaNo);
+		if(qnaAns == 1) {//답변 있는 상태
+			Qrv qrv = service.selectOneQrv(qnaNo);
+			model.addAttribute("qrv", qrv);
+		}
+		model.addAttribute("qna", qna);
+		return "admin/qnaView";
+	}
+	
+	@RequestMapping("deleteQna.sool")
+	public String deleteQna(String qnaNo, Model model) {
+		int result = service.deleteQna(qnaNo);
+		if(result>0) {
+			model.addAttribute("msg", "삭제 성공");
+		}else {
+			model.addAttribute("msg", "삭제 실패");
+		}
+		model.addAttribute("loc", "/qna.sool?reqPage=1");
+		return "common/msg";
+	}
+	
+	@RequestMapping("/searchQna.sool")
+	public String searchQna(String date, String type, int reqPage, String search, Model model) {
+		QnaPageData qpd = service.searchQna(date, type, search, reqPage);
+		Date d = new Date();
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    	String today = sdf.format(d);
+		model.addAttribute("list", qpd.getList());
+		model.addAttribute("page", qpd.getPageNavi());
+		model.addAttribute("today", today);
+		return "admin/qna";
 	}
 }

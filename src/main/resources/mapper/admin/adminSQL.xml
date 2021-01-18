@@ -30,7 +30,7 @@
 			notice_content as noticeContent,
 			notice_enroll as noticeEnroll,
 			notice_count as noticeCount
-		from notice_db order by 1 desc where
+		from notice_db where
 		<choose>
 			<when test="type.equals('title')">
 				notice_title like '%'||#{search}||'%'
@@ -65,6 +65,29 @@
 	<update id="updateNotice" parameterType="n">
 		update notice_db set notice_title = ${noticeTitle}, notice_content = ${noticeContent} where notice_no = ${noticeNo}
 	</update>
+	<select id="totalNoticeSearch" parameterType="map" resultType="_int">
+		select count(*) from notice_db where
+		<choose>
+			<when test="type.equals('title')">
+				notice_title like '%'||#{search}||'%'
+			</when>
+			<when test="type.equals('content')">
+				notice_content like '%'||#{search}||'%'
+			</when>
+			<when test="type.equals('writer')">
+				notice_writer like '%'||#{search}||'%'
+			</when>
+		</choose>
+		<choose>
+			<when test="week != null">
+				and notice_enroll between to_date(#{week}) and sysdate
+			</when>
+			<when test="month != null">
+				and notice_enroll between to_date(#{month}) and sysdate
+			</when>
+		</choose>
+		order by 1 desc)n) where rnum between #{start} and #{end}
+	</select>
 	
 	<select id="selectAllGoods" parameterType="map" resultType="a">
 		select * from (select rownum as rnum, g.* from (
@@ -117,13 +140,22 @@
 		update
 		<choose>
 			<when test="type == 1">
-				goods_db set status=1 where gds_no=${acceptNo}
+				goods_db set status=1
+				<if test="acceptNo != null">
+					where gds_no=${acceptNo}
+				</if>
 			</when>
 			<when test="type == 2">
-				funding_db set status=1 where fund_no=${acceptNo}
+				funding_db set status=1
+				<if test="acceptNo != null">
+					where fund_no=${acceptNo}
+				</if>
 			</when>
 			<when test="type == 3">
-				class_db set status=1 where cls_no=${acceptNo}
+				class_db set status=1
+				<if test="acceptNo != null">
+					where cls_no=${acceptNo}
+				</if>
 			</when>
 		</choose>
 	</update>
@@ -131,13 +163,22 @@
 		update
 		<choose>
 			<when test="type == 1">
-				goods_db set status=3 where gds_no=${acceptNo}
+				goods_db set status=3
+				<if test="acceptNo != null">
+					where gds_no=${acceptNo}
+				</if>
 			</when>
 			<when test="type == 2">
-				funding_db set status=3 where fund_no=${acceptNo}
+				funding_db set status=3
+				<if test="acceptNo != null">
+					where fund_no=${acceptNo}
+				</if>
 			</when>
 			<when test="type == 3">
-				class_db set status=3 where cls_no=${acceptNo}
+				class_db set status=3
+				<if test="acceptNo != null">
+					where cls_no=${acceptNo}
+				</if>
 			</when>
 		</choose>
 	</update>
@@ -306,6 +347,171 @@
 		)c) where rnum between #{start} and #{end}
 	</select>
 	<select id="searchSeller" parameterType="map" resultType="u">
+		select * from (select rownum as rnum, s.* from (
+		select
+			sel_no as userNo,
+			sel_id as userId,
+			sel_name as userName,
+			sel_tel as userPhone,
+			sel_addr as userAddr,
+			sel_enroll as userEnroll
+		from seller_db where
+		<choose>
+			<when test="searchType.equals('id')">
+				sel_id like '%'||#{search}||'%'
+			</when>
+			<otherwise>
+				sel_name like '%'||#{search}||'%'
+			</otherwise>
+		</choose>
+		<if test="startDate != '' and endDate != ''">
+			<choose>
+				<when test="startDate.equals(endDate)">
+					and sel_enroll = #{startDate}
+				</when>
+				<otherwise>
+					and sel_enroll between to_date(#{startDate}) and to_date(#{endDate})
+				</otherwise>
+			</choose>
+		</if>
+		)s) where rnum between #{start} and #{end}
+	</select>
+	<select id="totalSearch" parameterType="map" resultType="_int">
+		select count(*) from
+		<choose>
+			<when test="type == 1">
+				client_db where
+				<choose>
+					<when test="searchType.equals('id')">
+						cli_id like '%'||#{search}||'%'
+					</when>
+					<otherwise>
+						cli_name like '%'||#{search}||'%'
+					</otherwise>
+				</choose>
+				<if test="startDate != '' and endDate != ''">
+					<choose>
+						<when test="startDate.equals(endDate)">
+							and cli_enroll = #{startDate}
+						</when>
+						<otherwise>
+							and cli_enroll between to_date(#{startDate}) and to_date(#{endDate})
+						</otherwise>
+					</choose>
+				</if>
+			</when>
+			<otherwise>
+				seller_db where
+				<choose>
+					<when test="searchType.equals('id')">
+						sel_id like '%'||#{search}||'%'
+					</when>
+					<otherwise>
+						sel_name like '%'||#{search}||'%'
+					</otherwise>
+				</choose>
+				<if test="startDate != '' and endDate != ''">
+					<choose>
+						<when test="startDate.equals(endDate)">
+							and sel_enroll = #{startDate}
+						</when>
+						<otherwise>
+							and sel_enroll between to_date(#{startDate}) and to_date(#{endDate})
+						</otherwise>
+					</choose>
+				</if>
+			</otherwise>
+		</choose>
+	</select>
 	
+	<select id="selectAllQna" parameterType="map" resultType="qna">
+		select * from (select rownum as rnum, q.* from
+		(select
+			qna_no as qnaNo,
+			qna_name as qnaName,
+			cli_id as qnaWriter,
+			qna_con as qnaCon,
+			qna_enroll as qnaEnroll,
+			qna_ans qnaAns
+		from qna_db join client_db on (cli_no = qna_writer) order by qna_ans)q) where rnum between #{start} and #{end}
+	</select>
+	<select id="totalQna" resultType="_int">
+		select count(*) from qna_db
+	</select>
+	<select id="selectOneQna" parameterType="_int" resultType="qna">
+		select
+			qna_no as qnaNo,
+			qna_name as qnaName,
+			cli_id as qnaWriter,
+			qna_con as qnaCon,
+			qna_enroll as qnaEnroll,
+			qna_ans qnaAns
+		from qna_db join client_db on (cli_no = qna_writer) where qna_no = #{_parameter}
+	</select>
+	<select id="selectOneQrv" parameterType="_int" resultType="qrv">
+		select
+			qrv_no as qrvNo,
+			qna_no as qnaNo,
+			qrv_writer as qrvWriter,
+			qrv_content as qrvContent,
+			qrv_enroll as qrvEnroll
+		from qrv_db join client_db on (cli_no = qrv_writer) where qna_no = #{_parameter}
+	</select>
+	<delete id="deleteQna" parameterType="_int">
+		delete from qna_db where qna_no = #{_parameter}
+	</delete>
+	<select id="searchQna" parameterType="map" resultType="u">
+		select * from (select rownum as rnum, q.* from (
+		select
+			qna_no as qnaNo,
+			qna_name as qnaName,
+			cli_id as qnaWriter,
+			qna_con as qnaCon,
+			qna_enroll as qnaEnroll,
+			qna_ans qnaAns
+		from qna_db join client_db on (cli_no = qna_writer) where
+		<choose>
+			<when test="type.equals('title')">
+				qna_name like '%'||#{search}||'%'
+			</when>
+			<when test="type.equals('content')">
+				qna_con like '%'||#{search}||'%'
+			</when>
+			<when test="type.equals('writer')">
+				cli_id like '%'||#{search}||'%'
+			</when>
+		</choose>
+		<choose>
+			<when test="week != null">
+				and qna_enroll between to_date(#{week}) and sysdate
+			</when>
+			<when test="month != null">
+				and qna_enroll between to_date(#{month}) and sysdate
+			</when>
+		</choose>
+		order by qna_ans)q) where rnum between #{start} and #{end}
+	</select>
+	<select id="totalQnaSearch" parameterType="map" resultType="_int">
+		select count(*) from qna_db where
+		<choose>
+			<when test="type.equals('title')">
+				qna_name like '%'||#{search}||'%'
+			</when>
+			<when test="type.equals('content')">
+				qna_con like '%'||#{search}||'%'
+			</when>
+			<when test="type.equals('writer')">
+				cli_id like '%'||#{search}||'%'
+			</when>
+		</choose>
+		<choose>
+			<when test="week != null">
+				and qna_enroll between to_date(#{week}) and sysdate
+			</when>
+			<when test="month != null">
+				and qna_enroll between to_date(#{month}) and sysdate
+			</when>
+		</choose>
+		order by qna_ans)q) where rnum between #{start} and #{end}
 	</select>
 </mapper>
