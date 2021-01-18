@@ -11,4 +11,5 @@ public class Goods {
 	public int sellerNo;
 	public String imagePath;
 	public String searchWord;
+	public double reviewScore;
 }

@@ -248,8 +248,9 @@ address, em, i {font-style: normal;}
          font-family: 'S-CoreDream-3Light';
     
 }
-.list_item_category li.on a{
+.list_item_category li.on{
     color:#fff;
+      background:#4d5075;
     font-weight: 500;
          font-family: 'S-CoreDream-3Light';
 }

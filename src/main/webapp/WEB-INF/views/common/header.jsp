@@ -32,9 +32,9 @@
                                 <li id="nop"><a href="/views/client/introduce.jsp">이용안내</a></li>
                             </ul>
                         </li>
-                        <li><a href="/basicSool.sool">전통주</a>
+                        <li><a href="/takju.sool">전통주</a>
                             <ul class="sub">
-                                <li id="nop"><a href="/basicSool.sool">탁주</a></li>
+                                <li id="nop"><a href="/takju.sool">탁주</a></li>
                                 <li id="nop"><a href="#">청주</a></li>
                                 <li id="nop"><a href="#">증류주</a></li>
                                 <li id="nop"><a href="#">와인</a></li>

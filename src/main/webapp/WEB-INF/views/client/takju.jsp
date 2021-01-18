@@ -71,11 +71,11 @@
                         
                         <div class="list_item_category mb60">
                             <ul>
-                                <li><a href="/basicSool.sool"><span>탁주</span></a></li>
-                                <li><a href="#"><span>청주</span></a></li>
-                                <li><a href="#"><span>증류주</span></a></li>
-                                <li><a href="#"><span>와인</span></a></li>
-                                <li><a href="#"><span>과실주</span></a></li>
+                                <li><a href="/takju.sool"><span>탁주</span></a></li>
+                                <li><a href="/cheongju.sool"><span>청주</span></a></li>
+                                <li><a href="/spirits.sool"><span>증류주</span></a></li>
+                                <li><a href="/wine.sool"><span>와인</span></a></li>
+                                <li><a href="/fruit.sool"><span>과실주</span></a></li>
                            
                             </ul>
                         </div>
@@ -105,6 +105,10 @@
                                             <input type="radio" id="sort4" class="radio" name="sort" value="recommend">
                                             <label for="sort4" >인기순</label>
                                         </li>
+                                        <li>
+                                            <input type="radio" id="sort5" class="radio" name="sort" value="review">
+                                            <label for="sort5" >평점순</label>
+                                        </li>
                                     </ul>
                                     
                                  
@@ -119,7 +123,7 @@
                                     <ul class="product-li">
                                     
                                   	<c:forEach items="${list }" var="g">
-                                        <li style="width:25%;" data-price=${g.goodsPrice } data-count=${g.goodsCount }>
+                                        <li style="width:25%;" data-price=${g.goodsPrice } data-count=${g.goodsCount } data-review=${g.reviewScore }>
                                             <div class="item_cont">
                                                 <div class="item_photo_box">
                                                     <a href="/client/oGoodsDetail.sool?gdsNo=${g.goodsNo}">
@@ -135,7 +139,7 @@
                                                   </div>
                                                       <div class="rate">
                                         <span><i class="fas fa-star" style="color:orange;"></i></span>
-                                         <span class="rateNum">4.5/5.0</span>
+                                         <span class="rateNum">${g.reviewScore }/5.0</span>
                                     </div>
                                                   
                                                   <div class="item_money_box">
@@ -164,13 +168,13 @@
 		<div id="page-navi" >
 			<div>
 				<c:choose>
-					<c:when test="${list.size()% 8 !=0 }">
-						<c:forEach items="${list}" begin="1" end="${list.size()+1 }" step="8" varStatus="status">
+					<c:when test="${list.size()% 12 !=0 }">
+						<c:forEach items="${list}" begin="1" end="${list.size()+1 }" step="12" varStatus="status">
 	    					<span class="page-num">${status.count}</span>
 	    				</c:forEach> 
 					</c:when>
 					<c:otherwise>
-	    				<c:forEach items="${list}" begin="1" end="${list.size() }" step="8" varStatus="status">
+	    				<c:forEach items="${list}" begin="1" end="${list.size() }" step="12" varStatus="status">
 	    					<span class="page-num">${status.count}</span>
 	    				</c:forEach> 
 	    			</c:otherwise>
@@ -206,16 +210,7 @@
               $(this).children('span').css("color","black");
         })
         
-        /* 윗부분 탁주 청주 증류주 이벤트
-        
-        $(".list_item_category ul li a").hover(function(){
-            $(this).css("background-color","blue");
-               $(this).children('span').css("color","white");
-        }, function(){
-                    $(this).css("background-color","white");
-            $(this).children('span').css("color","black");
-        })
-        */
+   
         $(".pick_list li label").click(function(){
         
         	
@@ -223,6 +218,8 @@
             $(this).addClass('on');
        
         })
+        
+        
         
     })
  
@@ -270,7 +267,16 @@
     					return $(b).data("count") - $(a).data("count"); 
     				})
     		)
-    	}else{
+    	}else if(sortVal="review"){
+    		console.log("평점순");
+    		$(".product-li").html(
+        		
+    				$(".product-li li").sort(function(a,b){
+    					return $(b).data("review") - $(a).data("review"); 
+    				})
+    		)
+    	}
+    	else{
     		console.log("최신순");
     		$(".product-li").html(recent);
     	}
@@ -283,9 +289,9 @@
     	console.log(page);
 		var a = $(".product-li li");
 		a.hide();
-		var s = 1+(8*(page-1));
+		var s = 1+(12*(page-1));
 		console.log(a.length);
-		for(var i=s;i<=page*8;i++){
+		for(var i=s;i<=page*12;i++){
 			$(a).eq(i-1).show();
 		}
 	}

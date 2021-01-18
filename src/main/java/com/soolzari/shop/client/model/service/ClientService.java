@@ -70,6 +70,24 @@ public class ClientService {
 		
 		return dao.getEnrollClass(classNo);
 	}
+	public ArrayList<Goods> getTakju() {
+		return dao.getTakju();
+	}
+	public ArrayList<Goods> getChoengju() {
+		return dao.getChoengju();
+	}
+	public ArrayList<Goods> getSpirits() {
+		// TODO Auto-generated method stub
+		return dao.getSpirits();
+	}
+	public ArrayList<Goods> getWine() {
+		// TODO Auto-generated method stub
+		return dao.getWine();
+	}
+	public ArrayList<Goods> getFruit() {
+		// TODO Auto-generated method stub
+		return dao.getFruit();
+	}
 
 	
 	
