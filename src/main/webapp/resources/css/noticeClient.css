@@ -46,6 +46,7 @@ select {
     border: 1px solid lightgray;
     height: 30px;
     outline: none;
+    width: 70px;
 }
 
 input[type="text"] {

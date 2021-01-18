@@ -24,7 +24,6 @@
 			</tr>
 			<c:forEach items="${list }" var="q">
 				<tr id="content">
-					<input type="hidden" value="${q.qnaAns }">
 					<td><input type="checkbox" name="chk"></td>
 					<td>${q.qnaNo }</td>
 					<c:choose>
@@ -45,6 +44,7 @@
 							<td>답변 완료</td>
 						</c:otherwise>
 					</c:choose>
+					<input type="hidden" value="${q.qnaAns }">
 				</tr>
 			</c:forEach>
 		</table>
