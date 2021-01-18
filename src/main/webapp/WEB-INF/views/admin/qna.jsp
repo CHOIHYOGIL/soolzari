@@ -97,7 +97,7 @@
 		$("#content").click(function(){
             var qnaNo = $(this).children().eq(1).html();
             var qnaAns = $(this).find($("[type=hidden]")).val();
-            location.href="/qnaView.sool?qnaNo"+qnaNo+"&qnaAns="+qnaAns;
+            location.href="/qnaView.sool?qnaNo="+qnaNo+"&qnaAns="+qnaAns;
         });
 	});
 	</script>

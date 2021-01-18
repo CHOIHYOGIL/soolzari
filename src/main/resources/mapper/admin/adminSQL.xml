@@ -429,10 +429,11 @@
 		(select
 			qna_no as qnaNo,
 			qna_name as qnaName,
-			cli_id as qnaWriter,
+			qna_writer as qnaWriter,
 			qna_con as qnaCon,
 			qna_enroll as qnaEnroll,
-			qna_ans qnaAns
+			qna_ans qnaAns,
+			cli_id as qnaId
 		from qna_db join client_db on (cli_no = qna_writer) order by qna_ans)q) where rnum between #{start} and #{end}
 	</select>
 	<select id="totalQna" resultType="_int">
@@ -442,10 +443,11 @@
 		select
 			qna_no as qnaNo,
 			qna_name as qnaName,
-			cli_id as qnaWriter,
+			qna_writer as qnaWriter,
 			qna_con as qnaCon,
 			qna_enroll as qnaEnroll,
-			qna_ans qnaAns
+			qna_ans qnaAns,
+			cli_id as qnaId
 		from qna_db join client_db on (cli_no = qna_writer) where qna_no = #{_parameter}
 	</select>
 	<select id="selectOneQrv" parameterType="_int" resultType="qrv">
@@ -465,10 +467,11 @@
 		select
 			qna_no as qnaNo,
 			qna_name as qnaName,
-			cli_id as qnaWriter,
+			qna_writer as qnaWriter,
 			qna_con as qnaCon,
 			qna_enroll as qnaEnroll,
-			qna_ans qnaAns
+			qna_ans qnaAns,
+			cli_id as qnaId,
 		from qna_db join client_db on (cli_no = qna_writer) where
 		<choose>
 			<when test="type.equals('title')">
