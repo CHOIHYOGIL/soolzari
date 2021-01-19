@@ -2,10 +2,8 @@ package com.soolzari.shop.client.controller;
 
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -29,6 +27,7 @@ import com.google.gson.JsonObject;
 import com.soolzari.shop.client.model.service.ClientService;
 import com.soolzari.shop.client.model.vo.Class_List;
 import com.soolzari.shop.client.model.vo.Client;
+import com.soolzari.shop.client.model.vo.Fund;
 import com.soolzari.shop.client.model.vo.Goods;
 import com.soolzari.shop.client.model.vo.KakaoAccessToken;
 import com.soolzari.shop.client.model.vo.KakaoUserInfo;
@@ -273,7 +272,10 @@ public class ClientController {
 			session.setAttribute("sessionPoint", client.getClientPoint());
 			session.setAttribute("sessionSubscribe", client.getClientRank());
 			session.setAttribute("sessionClient", client);
-		
+			System.out.println(client.getClientRank());
+			if(client.getClientRank()==10) {
+				return "redirect:/admin.sool";
+			}
 			model.addAttribute("msg","로그인 성공");
 			model.addAttribute("loc","/");
 		}else {
@@ -296,6 +298,63 @@ public class ClientController {
 			return 1;
 		}
 		
+	}
+
+	@RequestMapping("/searchId.sool")
+	public String searchId(Model model, String userName, String useremail) {
+		
+		System.out.println(userName);
+		System.out.println(useremail);
+		String id=service.searchId(userName,useremail);
+		System.out.println(id);
+		if(id!=null) {
+			model.addAttribute("result",true);
+		}else {
+			model.addAttribute("result",false);
+		}
+		
+		model.addAttribute("id",id);
+		return "client/resultSearchId";
+		
+	}
+	
+	@RequestMapping("/searchPw.sool")
+	public String searchPw(Model model, String userId, String useremail) {
+		
+		System.out.println(userId);
+		System.out.println(useremail);
+		String pw=service.searchPw(userId,useremail);
+		
+		System.out.println(pw);
+		if(pw!=null) {
+			
+			model.addAttribute("result",true);
+		}else {
+			model.addAttribute("result",false);
+		}
+		model.addAttribute("id",userId);
+	
+		return "client/resultSearchPw";
+		
+	}
+	
+	@RequestMapping("/setPw.sool")
+	public String setPw(Model model, String userPw, String userId, Client c) {
+		
+		System.out.println(userPw);
+		System.out.println(userId);
+		c.setClientPw(userPw);
+		c.setClientId(userId);
+		int result=service.updateClient(c);
+		
+		if(result>0) {
+			model.addAttribute("msg","비밀번호 재설정 완료되었습니다.");
+		}else {
+
+			model.addAttribute("msg","비밀번호 재설정 실패했습니다.");
+		}
+		model.addAttribute("loc","/");
+		return "common/msg";
 	}
 	
 	
@@ -479,6 +538,21 @@ public class ClientController {
 		return "client/subscribe";
 	}
 	
+	@RequestMapping("/fund.sool")
+	public String fund(Model model) {
+		
+		
+
+		ArrayList<Fund> list=service.getFund();
+		
+		System.out.println("fundlist : "+list );
+		
+
+		System.out.println(list.size());
+		model.addAttribute("list",list);
+	
+		return "client/fund";
+	}
 	
 	@RequestMapping("/setSubscribe.sool")
 	public String setSubscribe(Model model, String name, int price, Subscribe sub) {
@@ -498,20 +572,47 @@ public class ClientController {
 		model.addAttribute("list",list);
 		return "client/subscribe";
 	}
-	
-	@RequestMapping("/setUsergrade.sool")
-	public String setUsergrade(String id, Model model) {
+	@ResponseBody
+	@RequestMapping(value="/checkUsergrade.sool",produces="application/json;charset=utf-8",method=RequestMethod.POST)
+	public String checkUsergrade(String id) {
+		JsonObject obj = new JsonObject();
+		int result=service.checkUsergrade(id);
 		
+		System.out.println(result);
+		if(result==1) {
+			obj.addProperty("msg", "구독 A세트 신청중입니다. 취소하시고 다시 신청해주세요.");
+		}else if(result==2){
+			obj.addProperty("msg", "구독 B세트 신청중입니다. 취소하시고 다시 신청해주세요.");
+		}else {
+			obj.addProperty("msg", "신청가능합니다.");
+		}
+		return new Gson().toJson(obj);
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/setUsergrade.sool",produces="application/json;charset=utf-8",method=RequestMethod.POST)
+	public String setUsergrade(String id, Model model,String name) {
+		JsonObject obj = new JsonObject();
 		System.out.println("name : "+id);
-		int result=service.setUsergrade(id);
+		System.out.println("subsname:"+name);
+		int grade=0;
+		if(name.equals("술자리 구독세트 A")) {
+			grade=1;
+		}else {
+			grade=2;
+		}
+		System.out.println(grade);
+		
+		int result=service.setUsergrade(id,grade);
+		System.out.println(result);
 		if(result>0) {
 		
-			model.addAttribute("msg","구독 신청 성공");
+			obj.addProperty("msg", "구독 신청 완료되었습니다.");
 		}else {
-			model.addAttribute("msg","구독 신청 실패");
+			obj.addProperty("msg","구독 신청 실패했습니다.");
 		}
-		model.addAttribute("loc","/");
-		return "common/msg";
+		return new Gson().toJson(obj);
 		
 		
 	}

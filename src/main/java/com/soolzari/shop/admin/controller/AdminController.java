@@ -32,6 +32,7 @@ public class AdminController {
 	
 	@RequestMapping("/admin.sool")
 	public String admin() {
+
 		return "admin/admin";
 	}
 	
