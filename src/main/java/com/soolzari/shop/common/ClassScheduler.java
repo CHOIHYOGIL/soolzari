@@ -13,7 +13,7 @@ public class ClassScheduler {
 	private ClientService2 service;
 	
 	//클래스체험하는날 다음날0시에 체험완료로 보이게 update
-	@Scheduled(cron = "* * 0 * * *")
+	@Scheduled(cron = "0 0 0 * * *")
 	public void classCheckUpdate() {
 		service.classCheckUpdate();
 	}

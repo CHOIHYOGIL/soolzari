@@ -166,7 +166,6 @@
 			qna_writer as qnaWriter,
 			qna_con as qnaCon,
 		    qna_enroll as qnaEnroll,
-		    qna_cnt as qnaCnt,
 		    qna_ans as qnaAns
 		from (select rownum as rnum, n.* 
 		    	from (select * from qna_db

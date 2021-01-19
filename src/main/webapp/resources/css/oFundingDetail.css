@@ -17,7 +17,7 @@ body .wrap2{
 	margin: 10px;
 	margin-top: 0;
 	width: 350px;
-	height: 530px;
+	height: auto;
 	border: 1px solid lightgray;
 	padding: 10px;
 	position: fixed;
@@ -66,14 +66,11 @@ body .wrap2{
 .btnDiv{
 	text-align: center;
 }
-.basketBtn{
-	border: 1px solid rgb(77, 80, 117);
-	color: rgb(77, 80, 117);
-}
-.paymentBtn{
+.btnDiv .paymentBtn{
 	border: 1px solid rgb(232, 154, 173);
 	color: white;
 	background-color: rgb(232, 154, 173);
+	width: 100%;
 }
 .paymentBtn:hover{
 	color: white;
@@ -101,4 +98,25 @@ body .wrap2{
 	color: rgb(77, 80, 117);
 	text-decoration: none;
 }
-
+/* 후원 상세보기----------------------------------------- */
+.detail .detailBtn{
+	text-align: right; 
+	display: inline-block; 
+	width: 10%; 
+	font-weight: bold;
+}
+.fndGName{
+	display: inline-block; 
+	width: 80%;
+}
+/* 추가 후원하기----------------------------------------- */
+.goodsList input:focus{
+	outline: none;
+	border: 1px solid lightgray;
+}
+.goodsList input{
+	border: 1px solid lightgray;
+}
+.addFundSel{
+	width: 23%;
+}

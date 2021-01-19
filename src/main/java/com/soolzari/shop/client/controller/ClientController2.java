@@ -19,6 +19,8 @@ import com.soolzari.shop.client.model.vo.BasketList;
 import com.soolzari.shop.client.model.vo.Client;
 import com.soolzari.shop.client.model.vo.Client2;
 import com.soolzari.shop.client.model.vo.ExperiencePageData;
+import com.soolzari.shop.client.model.vo.FundDetail;
+import com.soolzari.shop.client.model.vo.FundDetailDB;
 import com.soolzari.shop.client.model.vo.Goods2;
 import com.soolzari.shop.client.model.vo.GoodsList;
 import com.soolzari.shop.client.model.vo.GoodsSellerDetail;
@@ -212,9 +214,11 @@ public class ClientController2 {
 	//마이페이지 - 내정보수정페이지 이동전에 비밀번호확인 페이지
 	@RequestMapping("/mchkPw.sool")
 	public String mchkPw(Model model, @SessionAttribute(required=false) Client sessionClient) {
-		if(sessionClient!=null) {
+		if(sessionClient!=null) {//일반회원일경우
 			return "client/mchkPw";
-		}else {
+		}else if(sessionClient!=null && sessionClient.getClientPw()=="sns") {//sns로 로그인한 회원일경우
+			return "redirect:/client/mInfo.sool";
+		}else {//로그인을 안한경우
 			model.addAttribute("msg","로그인 후 이용해주세요");
 			model.addAttribute("loc","/");
 			return "common/msg";
@@ -275,7 +279,6 @@ public class ClientController2 {
 			model.addAttribute("pageNavi",opd.getPageNavi());
 			model.addAttribute("period",period);
 			model.addAttribute("reqPage",reqPage);
-		
 			return "client/mOrderList";
 		}else {
 			model.addAttribute("msg","로그인 후 이용해주세요");
@@ -361,8 +364,6 @@ public class ClientController2 {
 	public String mQuestion (int reqPage, int period, Model model, @SessionAttribute(required=false) Client sessionClient) {
 		if(sessionClient!=null) {//로그인된사용자만 접근가능하게
 			QnaPageData qpd = service.mQuestionPaging(reqPage,period,sessionClient.getClientNo());
-			System.out.println(qpd.getList().size());
-			System.out.println(qpd.getList().get(0).getQnaNo());
 			model.addAttribute("list",qpd.getList());
 			model.addAttribute("pageNavi",qpd.getPageNavi());
 			model.addAttribute("period",period);
@@ -376,10 +377,10 @@ public class ClientController2 {
 	}
 	
 	//상품상세페이지
-	@RequestMapping("oGoodsDetail.sool")
+	@RequestMapping("/oGoodsDetail.sool")
 	public String oGoodsDetail (int gdsNo, Model model){
 		GoodsSellerDetail gsd = service.oGoodsDetail(gdsNo);
-		if(gsd!=null) {//상품이 없을 경우
+		if(gsd!=null) {//상품이 있을 경우
 			model.addAttribute("gsd",gsd);//상품정보 전달
 			return "client/oGoodsDetail";
 		}else {
@@ -387,6 +388,40 @@ public class ClientController2 {
 			model.addAttribute("loc","/");//상품리스트 경로수정
 			return "common/msg";
 		}
+	}
+	
+	//펀딩상세페이지
+	@RequestMapping("/oFundingDetail.sool")
+	public String oFundingDetail (int fundNo, Model model){
+		FundDetail fd = service.oFundingDetail(fundNo);
+		if(fd!=null) {//펀딩이 있을 경우
+			model.addAttribute("fund",fd.getFund());//펀딩정보
+			model.addAttribute("fundGoodsList",fd.getFundGoodsList());//펀딩상품정보
+			return "client/oFundingDetail";
+		}else {
+			model.addAttribute("msg","상품을 불러오는데 실패했습니다");
+			model.addAttribute("loc","/");//상품리스트 경로수정
+			return "common/msg";
+		}
+	}
+	
+	//펀딩후원(예약)하기 - fnd_det_db에 insert
+	@RequestMapping("/fundReservationInsert.sool")
+	public String fundReservationInsert(FundDetailDB fd, Model model, @SessionAttribute(required=false) Client sessionClient) {
+		if(sessionClient!=null) {//로그인된사용자만 접근가능하게
+			System.out.println("펀딩후원insert");
+			int result = service.fundReservationInsert(fd);
+			if(result>0) {
+				model.addAttribute("msg","후원하기가 완료되었습니다\n펀딩종료일에 메일로 결제안내를 드립니다\n확인하시고 결제 부탁드립니다");
+			}else {
+				model.addAttribute("msg","후원하기에 실패하였습니다");
+			}
+			model.addAttribute("loc","/oFundingDetail.sool?fundNo="+fd.getFundNo());
+		}else {
+			model.addAttribute("msg","로그인 후 이용해주세요");
+			model.addAttribute("loc","/");
+		}
+		return "common/msg";
 	}
 	
 	

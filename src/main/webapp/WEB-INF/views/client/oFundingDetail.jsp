@@ -77,48 +77,63 @@
 	</div>
 	<div class="fixContent">
 		<form action="/client/basketInsert.sool" method="post">
-			<h4><p>${gsd.gdsName }</p></h4>
-			<h4 class="gh4"><span class="goodsPrice comma">${gsd.gdsPri }</span> 원</h4>
+			<h4><p>${fund.fundName }</p></h4>
+			목표 금액 달성률<br>
+			<h5 class="gh3"><span class="goodsPrice comma">${fund.fundTotalMoney }</span> 원 </h5><h4 class="gh4"><span>${fund.fundTotalMoney/fund.fundMoney*100 }</span>%</h4>
 			<table class="table fixTable">
 				<tr>
 					<th>등록일</th>
-					<td>${gsd.goodsDate }</td>
+					<td>${fund.fundEnrolldate }</td>
 				</tr>
 				<tr>
-					<th>평점</th>
-					<td></td>
-				</tr>
-				<tr>
-					<th>총판매수량</th>
-					<td>${gsd.gdsBcnt }</td>
-				</tr>
-				<tr>
-					<th>배송비</th>
-					<td>2,500원</td>
-				</tr>
-				<tr>
-					<th>수량</th>
-					<td>
-						<button type="button" class="btn btn-outline-secondary btn-sm mi" onclick="plusMinusBtn(this,0);">-</button>
-						<span class="basCnt">1</span>
-						<button type="button" class="btn btn-outline-secondary btn-sm pl"  onclick="plusMinusBtn(this,1);">+</button>
-					</td>
+					<th>목표 금액</th>
+					<td><span class="money">${fund.fundMoney }</span></td>
 				</tr>
 			</table>
 			<hr style="width: 90%;">
-			<div class="totalWrap">
-				<div class="totalDiv1">총 상품금액</div>
-				<div class="totalDiv2"><h3 class="totalPrice comma">0</h3>원</div>
+			<div class="goodsList">
+				<c:forEach items="${fundGoodsList }" var="fg">
+					<form action="/client/fundReservationInsert.sool" method="post">
+						<input type="hidden" name="fundNo" value="${fund.fundNo }">
+						<div class="detail">
+							<h6 class="fndGName">${fg.fndGName }</h6>
+							<div class="detailBtn">
+								<button type="button" class="btn toggleBtn" data-toggle="collapse" data-target="#detail_page${fg.fndGNo }">+</button>
+							</div>
+							<br>
+							<p>가격 : <span class="price">${fg.fndGPri }</span></p>
+				        </div>
+				        <div id="detail_page${fg.fndGNo }" class="collapse">
+				           	<p>구성 : <span>${fg.fndGCon }</span></p>
+							<p>추가 후원금 : <input type="text" name="addFund" value="0"></p>
+							<div style="text-align: center;">
+								<button type="button" class="btn btn-outline-secondary btn-sm addFundSel">+5,000</button>
+								<button type="button" class="btn btn-outline-secondary btn-sm addFundSel">+10,000</button>
+								<button type="button" class="btn btn-outline-secondary btn-sm addFundSel">+50,000</button>
+								<button type="button" class="btn btn-outline-secondary btn-sm addFundSel">+100,000</button>
+							</div>
+							<input type="hidden" name="fndDCli" value="${sessionScope.sessionClient.clientNo }">
+							<input type="hidden" name="fndGNo" value="${fg.fndGNo }">
+							<input type="hidden" name="fndDStatus" value="0">
+							<input type="hidden" name="fndDPrice"><!-- 가격과 추가후원금을 합한 값을 hidden으로 전달 -->
+							<br>
+							<div class="totalWrap">
+								<div class="totalDiv1">총 후원금액</div>
+								<div class="totalDiv2"><h3 class="totalPrice comma">0</h3>원</div>
+							</div>
+							<div class="btnDiv">
+								<button type="button" class="btn btn-sm paymentBtn">후원하기</button>
+							</div> 
+				        </div>
+						<hr style="width: 90%;">
+					</form>
+				</c:forEach>
 			</div>
-			<div class="btnDiv">
-				<button type="button" class="btn btn-lg basketBtn">장바구니 담기</button> 
-				<button type="button" class="btn btn-lg paymentBtn">구매하기</button> 
-			</div>
+			
 			<div class="aTarget">
 				<a href="#mainGo" class="mainGo at">상품 상세</a> / 
 				<a href="#reviewGo" class="reviewGo at">상품 후기 보기</a>
 			</div>
-			
 		</form>
 	</div>
 </div>
@@ -128,38 +143,84 @@
 	$(function(){
 		$(".goodsPrice").html(commaSet($(".goodsPrice").html()));
 		$(".totalPrice").html($(".goodsPrice").html());
-	})
-
-	//플러스 마이너스 버튼
-	function plusMinusBtn(btnType,chk){
-		//마이너스버튼을 눌렀는지 플러스버튼을 눌렀는지 체크
-		var basCnt = null;
-		if(chk==0){
-			basCnt = $(btnType).next().html();
+		$(".money").html(commaSet($(".money").html()));
+		
+		//고정된 장바구니에 상품이 많으면 스크롤생기도록
+		console.log($(".fixContent").height());
+		var autoHeight = $(".fixContent").height();
+		console.log(window.innerHeight);
+		
+		if(autoHeight>window.innerHeight){
+			$(".fixContent").css("height",window.innerHeight);
+			$(".fixContent").css("overflow",'scroll');
+			$(".fixContent").css("overflow-x",'hidden');
 		}else{
-			basCnt = $(btnType).prev().html();
+			$(".fixContent").css("height","auto");
+			$(".fixContent").css("overflow",'hidden');
 		}
-		console.log(basCnt);
-		if((basCnt>1 || chk==1) && (basCnt<99 || chk==0)){
-			if(chk==0){
-				$(btnType).next().html($(btnType).next().html()-1);
-				totalPrice();//수량이 변할때마다 총상품금액 변동
+		//고정된 장바구니에 상품이 많으면 스크롤생기도록(리사이즈될때)
+		$(window).resize(function(){
+			if(autoHeight>window.innerHeight){
+				$(".fixContent").css("height",window.innerHeight);
+				$(".fixContent").css("overflow",'scroll');
+				$(".fixContent").css("overflow-x",'hidden');
 			}else{
-				$(btnType).prev().html(Number($(btnType).prev().html())+1);
-				totalPrice();//수량이 변할때마다 총상품금액 변동
+				$(".fixContent").css("height","auto");
+				$(".fixContent").css("overflow",'hidden');
 			}
-		}else if(basCnt<=1){
-			alert("최소 1개 이상 구매가 가능합니다");
-		}else if(basCnt>=99){
-			alert("최대 99개까지 구매가 가능합니다");
-		}
-	}
+		});
+		
+		//가격 콤마처리
+		$(".price").each(function(){
+			$(this).html(commaSet($(this).html()));
+		});
+		
+		
+		//처음에 총 후원금액 세팅
+		totalPriceSet();
+	})
 	
-	//수량이 변할때마다 총상품금액 변동
-	function totalPrice(){
-		var goodsPrice = Number("${gsd.gdsPri }");
-		var basCnt = Number($(".basCnt").html());
-		$(".totalPrice").html(commaSet(goodsPrice*basCnt));
+	
+	//키다운될때마다 콤마처리
+	$(".price").each(function(){
+		$(this).html(commaSet($(this).html()));
+	});
+
+	//플러스 버튼 눌렀을 다른 토글들 접히게
+	$(".toggleBtn").click(function(){
+		var thisClick = $(this).attr("data-target");
+		$(".toggleBtn").each(function(){
+			if($(this).attr("data-target")!=thisClick){
+				$(this).parent().parent().next().removeClass('show');
+			}
+		});	
+	});
+	
+	//추가 후원금에 5000/10000/~~버튼 들 클릭했을때 input에 들어가도록
+	$(".addFundSel").click(function(){
+		var addfundBtn = Number(commaReset($(this).html().substring(1,$(this).html().length)));//버튼의 금액을 숫자로 변환
+		var addfund = Number(commaReset($(this).parent().prev().children().val()));//input값을 숫자로 변환
+		var appendPrice = commaSet(addfundBtn+addfund);
+		$(this).parent().prev().children().val(appendPrice);
+		totalPriceSet();//총 후원금액 계산
+	});
+	
+	//추가후원금 input에 keyup할때마다 콤마처리
+	$("input[name=addFund]").keyup(function(){
+		$(this).val(commaSet(commaReset($(this).val())));
+		totalPriceSet();//총 후원금액 계산
+	});
+	
+	
+	//총 후원금액 계산
+	function totalPriceSet(){
+		var goodsPrice = 0;
+		var addFund = 0;
+		$(".totalPrice").each(function(){
+			goodsPrice = Number(commaReset($(this).parent().parent().parent().prev().find(".price").html()));
+			addFund = Number(commaReset($(this).parent().parent().parent().find("input[name=addFund]").val()));
+			$(this).html(commaSet(goodsPrice+addFund));
+		});
 	}
 	
 	//금액단위 콤마 구분
@@ -174,15 +235,13 @@
 		let price1 = str.replace(/[^\d]+/g, "");
 		return price1;
 	}
-	
-	//장바구니에 담기 버튼
-	$(".basketBtn").click(function(){
-		location.href="/client/basketInsert.sool?cliNo=${sessionScope.sessionClient.clientNo}&gdsNo=${gsd.gdsNo}&basCnt="+$(".basCnt").html();
-	})
-	//바로 구매하기버튼
+	//후원하기 버튼
 	$(".paymentBtn").click(function(){
-		location.href="/client/paymentShow.sool?gdsNo=${gsd.gdsNo}&gdsLCnt="+Number($(".basCnt").html());
-	})
+		if(confirm("후원을 하시겠습니까?\n종료일날 메일로 결제안내를 드립니다")){
+			//확인 시 form태그 서브밋처리
+			$("form").eq($(this).index()).submit();//후원하기버튼에 있는 form실행하기위해 index를 구해서 실행시킴
+		}
+	});
 </script>
 </body>
 </html>
