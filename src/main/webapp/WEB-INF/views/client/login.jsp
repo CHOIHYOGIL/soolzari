@@ -98,8 +98,8 @@
       
       
           <ul class="find">
-              <li><a href="#" >아이디찾기</a></li>
-              <li><a href="#">비밀번호찾기</a></li>
+              <li><a href="#" onclick="window.open('/views/client/searchId.jsp', '아이디 찾기', 'width=500px,height=350px'); return false;">아이디찾기</a></li>
+              <li><a href="#" onclick="window.open('/views/client/searchPw.jsp', '비밀번호 재설정', 'width=500px,height=350px'); return false;">비밀번호 재설정</a></li>
           </ul>
 
 <!--      End Other the Division -->

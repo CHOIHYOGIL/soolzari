@@ -16,7 +16,7 @@ import com.soolzari.shop.client.model.vo.Client;
 public class LogAdvice {
 	@Autowired
 	private SHA256 sha256 ;
-	 @Pointcut("execution(* com.soolzari.shop.client.model.service.ClientService.*Client(com.soolzari.shop.client.model.vo.Client))")
+	 @Pointcut("execution(* com.soolzari.shop.client.model.service.ClientService.*Client(..))")
 
 	public void loginEncPw() {
 		

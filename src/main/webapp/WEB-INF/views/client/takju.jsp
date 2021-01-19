@@ -168,13 +168,13 @@
 		<div id="page-navi" >
 			<div>
 				<c:choose>
-					<c:when test="${list.size()% 12 !=0 }">
-						<c:forEach items="${list}" begin="1" end="${list.size()+1 }" step="12" varStatus="status">
+					<c:when test="${list.size()% 12!=0}">
+						<c:forEach items="${list}" begin="1" end="${list.size()+1}" step="12" varStatus="status">
 	    					<span class="page-num">${status.count}</span>
 	    				</c:forEach> 
 					</c:when>
 					<c:otherwise>
-	    				<c:forEach items="${list}" begin="1" end="${list.size() }" step="12" varStatus="status">
+	    				<c:forEach items="${list}" begin="1" end="${list.size()}" step="12" varStatus="status">
 	    					<span class="page-num">${status.count}</span>
 	    				</c:forEach> 
 	    			</c:otherwise>

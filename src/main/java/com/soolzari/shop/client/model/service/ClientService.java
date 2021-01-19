@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.soolzari.shop.client.model.dao.ClientDao;
 import com.soolzari.shop.client.model.vo.Class_List;
 import com.soolzari.shop.client.model.vo.Client;
+import com.soolzari.shop.client.model.vo.Fund;
 import com.soolzari.shop.client.model.vo.Goods;
 import com.soolzari.shop.client.model.vo.Reservation;
 import com.soolzari.shop.client.model.vo.Subscribe;
@@ -43,8 +44,8 @@ public class ClientService {
 	public ArrayList<Subscribe> setSubscribe(Subscribe sub) {
 		return dao.setSubscribe(sub);
 	}
-	public int setUsergrade(String id) {
-	return dao.setUsergrade(id);
+	public int setUsergrade(String id, int grade) {
+	return dao.setUsergrade(id,grade);
 	}
 	public ArrayList<Class_List> checkUser(int session, int classNo) {
 		
@@ -87,6 +88,24 @@ public class ClientService {
 	public ArrayList<Goods> getFruit() {
 		// TODO Auto-generated method stub
 		return dao.getFruit();
+	}
+	public int checkUsergrade(String id) {
+		
+		return dao.checkUsergrade(id);
+	}
+	public String searchId(String name, String email) {
+		return dao.searchId(name,email);
+	}
+	public String searchPw(String userId, String useremail) {
+		return dao.searchPw(userId,useremail);
+	}
+	public ArrayList<Fund> getFund() {
+		
+		return dao.getFund();
+	}
+	
+	public int updateClient(Client c) {
+		return dao.updateClient(c);
 	}
 
 	
