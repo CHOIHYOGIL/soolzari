@@ -140,7 +140,7 @@
             });
             $(".navi a").eq(0).click();
             $("#qna").click(function(){
-               location.href="";//문의하기 작성하는 페이지 
+               location.href="/client/mQuestion.sool?reqPage=1&period=1";//문의하기 작성하는 페이지 
             });
         });
     </script>

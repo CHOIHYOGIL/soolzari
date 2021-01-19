@@ -14,8 +14,6 @@
         <div class="faq">
             <div>
                 <h1>자주 묻는 질문</h1>
-                <span>찾으시는 질문이 없다면?</span>
-                <button id="qna">1:1 문의하기</button>
             </div>
             <div class="navi">
                 <ul>
@@ -139,9 +137,6 @@
                 event.stopPropagation();
             });
             $(".navi a").eq(0).click();
-            $("#qna").click(function(){
-               location.href="/qna.sool?reqPage=1"; 
-            });
         });
     </script>
 </body>

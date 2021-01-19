@@ -23,15 +23,15 @@
 				<th>조회수</th>
 			</tr>
 			<c:forEach items="${list }" var="n">
-				<tr id="content">
+				<tr>
 					<td><input type="checkbox" name="chk"></td>
 					<td>${n.noticeNo }</td>
 					<c:choose>
 						<c:when test="${n.noticeEnroll eq today }">
-							<td>${n.noticeTitle }<span>new !</span></td>
+							<td><a href="/notice/view.sool?noticeNo=${n.noticeNo }">${n.noticeTitle }<span>new !</span></a></td>
 						</c:when>
 						<c:otherwise>
-							<td>${n.noticeTitle }</td>
+							<td><a href="/notice/view.sool?noticeNo=${n.noticeNo }">${n.noticeTitle }</a></td>
 						</c:otherwise>
 					</c:choose>
 					<td>${n.noticeWriter }</td>
@@ -92,10 +92,6 @@
 				});
 				location.href="/notice/delete.sool?noticeNo="+noticeNo.join("/");
 			});
-			$("#content").click(function(){
-                var noticeNo = $(this).children().eq(1).html();
-                location.href="/notice/view.sool?noticeNo"+noticeNo;
-            });
 		});
 	</script>
 </body>

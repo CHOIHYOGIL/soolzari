@@ -14,8 +14,8 @@
 <link href="/resources/css/noticeView.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+	<jsp:include page="/WEB-INF/views/admin/navi.jsp"/>
 	<section>
-		<jsp:include page="/WEB-INF/views/admin/navi.jsp"/>
         <h1>공지사항</h1>
         <form action="/notice/update.sool" method="post">
             <table class="notice">

@@ -126,10 +126,7 @@ section {
 .notice span{
     font-size: small;
     margin-left: 10px;
-    color: #bca0c9;
-}
-#content{
-    cursor: pointer;
+    color: #f7b8b4;
 }
 .write{
     width: 1200px;

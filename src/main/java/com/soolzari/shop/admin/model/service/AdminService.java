@@ -305,4 +305,21 @@ public class AdminService {
 		return qpd;
 	}
 
+	@Transactional
+	public int insertQrv(Qrv qrv) {
+		return dao.insertQrv(qrv);
+	}
+
+	@Transactional
+	public int updateQrv(Qrv qrv) {
+		return dao.updateQrv(qrv);
+	}
+
+	@Transactional
+	public int deleteQrv(int qnaNo, int qrvNo) {
+		int result = dao.deleteQna(qnaNo);
+		result += dao.deleteQrv(qrvNo);
+		return result;
+	}
+
 }

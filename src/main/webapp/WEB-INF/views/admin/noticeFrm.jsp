@@ -25,7 +25,7 @@
                     </tr>
                     <tr>
                         <td>작성자</td>
-                        <td><input type="text" name="noticeWriter" readonly value="${SessionScope.sessionName}"></td>
+                        <td><input type="text" name="noticeWriter" readonly value="${SessionScope.sessionId}"></td>
                     </tr>
                     <tr>
                         <td colspan="2"><textarea name="noticeContent" id="summernote" style="resize: none"></textarea></td>
