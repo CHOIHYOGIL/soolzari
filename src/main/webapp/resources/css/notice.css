@@ -11,6 +11,10 @@
     font-family: 'S-CoreDream-3Light';
 }
 
+.noticeWrap{
+	margin-top: 100px;
+}
+
 .notice{
 	border-spacing: 0;
 	text-align: center;
@@ -114,7 +118,7 @@ section {
     border-bottom: 3px solid #4d5075;
 }
 
-.wrap {
+.btnwrap {
     margin-top: 10px;
     margin-bottom: 30px;
     display: flex;
@@ -133,6 +137,6 @@ section {
     display: flex;
     justify-content: flex-end;
 }
-.wrap label{
+.btnwrap label{
     width: 100px;
 }

@@ -9,6 +9,7 @@
 <link href="/resources/css/noticeClient.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	<section>
 		<h1>공지사항</h1>
 		<table class="notice">
@@ -51,9 +52,9 @@
             <input type="text" name="search">
             <input type="submit" value="찾기">
         </form>
-            <div class="page">
-            	${page }
-            </div>
+        <div class="page">
+        	${page }
+        </div>
 	</section>
 </body>
 </html>
