@@ -279,10 +279,6 @@ public class ClientController2 {
 			model.addAttribute("pageNavi",opd.getPageNavi());
 			model.addAttribute("period",period);
 			model.addAttribute("reqPage",reqPage);
-<<<<<<< HEAD
-=======
-		
->>>>>>> 17c4861b405a84d9d778cad74195636c4ea110bf
 			return "client/mOrderList";
 		}else {
 			model.addAttribute("msg","로그인 후 이용해주세요");
@@ -347,7 +343,7 @@ public class ClientController2 {
 	@RequestMapping("/mQuestionInsert.sool")
 	public String mQuestionInsert(Qna question, Model model, @SessionAttribute(required=false) Client sessionClient) {
 		if(sessionClient!=null) {//로그인된사용자만 접근가능하게
-			question.setQnsWriter(sessionClient.getClientNo());
+			question.setQnaWriter(sessionClient.getClientNo());
 			int result = service.questionInsert(question);
 			if(result>0) {
 				model.addAttribute("msg","문의사항 작성이 완료되었습니다");
