@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="resources/css/main.css">
+<link rel="stylesheet" href="/resources/css/main.css">
 
    
 
@@ -74,7 +74,7 @@
                         <li> <input class="search_input" type="text" placeholder="search"></li>
                         <li><a href="/logout.sool">로그아웃</a>
                         <li><a href="/client/basketList.sool">장바구니</a>
-                        <li><a href="/client/mOrderList.sool?reqPage=1&period=1">${sessionId}님</a>
+                        <li><a href="/client/mOrderList.sool?reqPage=1&period=1">${sessionName}님</a>
                     </ul>
                 </div>
 			</c:when>
