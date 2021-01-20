@@ -38,10 +38,10 @@
 					<td>${q.qnaEnroll }</td>
 					<c:choose>
 						<c:when test="${q.qnaAns == 0 }">
-							<td>답변 대기</td>
+							<td class="ansBefore">답변 대기</td>
 						</c:when>
 						<c:otherwise>
-							<td>답변 완료</td>
+							<td class="ansAfter">답변 완료</td>
 						</c:otherwise>
 					</c:choose>
 				</tr>
@@ -87,12 +87,22 @@
 		});
 		$("#delete").click(function(){
 			var chk = $("[type=checkbox]:checked");
-			var qnaNo = new Array();
-			chk.each(function(index, item){
-				qnaNo.push($(item).parent().next().html());
-			});
-			location.href="/deleteQna.sool?qnaNo="+qnaNo.join("/");
+			if(chk.length == 0){
+				alert("선택해주세요");
+			}else{
+				var qnaNo = new Array();
+				chk.each(function(index, item){
+					qnaNo.push($(item).parent().next().html());
+				});
+				location.href="/deleteQna.sool?qnaNo="+qnaNo.join("/");
+			}
 		});
+		$("[type=submit]").click(function(event){
+        	if($("[name=search]").val() == ""){
+        		alert("검색어를 입력해주세요");
+        		event.preventDefault();
+        	}
+        });
 	});
 	</script>
 </body>

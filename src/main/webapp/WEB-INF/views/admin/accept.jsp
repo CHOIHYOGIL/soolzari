@@ -10,9 +10,9 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.js"></script>
 </head>
 <body>
+	<jsp:include page="/WEB-INF/views/admin/navi.jsp"/>
 	<section>
-		<jsp:include page="/WEB-INF/views/admin/navi.jsp"/>
-        <h1>승인 관리</h1>
+        <h1 class="accepttitle">승인 관리</h1>
         <div class="navi">
             <ul>
                 <li><a href="javascript:void(0)">상품</a></li>
@@ -192,6 +192,12 @@
             $(".reject").click(function(){
             	var acceptNo = $(this).parent().prev().val();
             	location.href="/rejectOne.sool?type="+type+"&acceptNo="+acceptNo;
+            });
+            $("[type=submit]").click(function(event){
+            	if($("[name=search]").val() == ""){
+            		alert("검색어를 입력해주세요");
+            		event.preventDefault();
+            	}
             });
         });
     </script>

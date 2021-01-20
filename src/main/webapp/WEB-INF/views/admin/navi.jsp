@@ -37,7 +37,6 @@
     }
 
     .navis {
-        width: 250px;
         background-color: #4d5075;
         padding-right: 20px;
         float: left;
@@ -50,11 +49,11 @@
     .navis a {
         text-decoration: none;
         display: block;
-        width: 100%;
-        height: 40px;
+        width: 250px;
+        height: 50px;
         line-height: 40px;
         text-align: end;
-        font-size: 18px;
+        font-size: 20px;
         color: white;
     }
     
@@ -66,10 +65,13 @@
         display: flex;
         justify-content: center;
         margin-top: 100px;
+        width: 250px;
     }
     
     .logout>img{
         margin-left: 100px;
+        width: 40px;
+        height: 40px;
     }
     
     .logout a{
@@ -87,6 +89,9 @@
     }
     .active {
         transform: rotate(45deg);
+    }
+    .navis>ul{
+    	margin-top: 80px;
     }
 </style>
 </head>

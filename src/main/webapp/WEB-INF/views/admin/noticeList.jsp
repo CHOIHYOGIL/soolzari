@@ -88,12 +88,22 @@
 			});
 			$("#delete").click(function(){
 				var chk = $("[type=checkbox]:checked");
-				var noticeNo = new Array();
-				chk.each(function(index, item){
-					noticeNo.push($(item).parent().next().html());
-				});
-				location.href="/notice/delete.sool?noticeNo="+noticeNo.join("/");
+				if(chk.length == 0){
+					alert("선택해주세요");
+				}else{
+					var noticeNo = new Array();
+					chk.each(function(index, item){
+						noticeNo.push($(item).parent().next().html());
+					});
+					location.href="/notice/delete.sool?noticeNo="+noticeNo.join("/");
+				}
 			});
+			$("[type=submit]").click(function(event){
+	        	if($("[name=search]").val() == ""){
+	        		alert("검색어를 입력해주세요");
+	        		event.preventDefault();
+	        	}
+	        });
 		});
 	</script>
 </body>

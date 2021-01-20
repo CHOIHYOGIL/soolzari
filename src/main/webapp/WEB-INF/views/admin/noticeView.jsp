@@ -16,8 +16,9 @@
 <body>
 	<jsp:include page="/WEB-INF/views/admin/navi.jsp"/>
 	<section>
-        <h1>공지사항</h1>
+        <h1 class="noticetitle">공지사항</h1>
         <form action="/notice/update.sool" method="post">
+        	<input type="hidden" name="noticeNo" value="${n.noticeNo }">
             <table class="notice">
                 <tr>
                     <th>제목</th>
@@ -25,9 +26,9 @@
                 </tr>
                 <tr>
                     <th>작성자</th>
-                    <td><input type="text" name="noticeWriter" value="${n.noticeWriter}" readonly></td>
+                    <td><input type="text" name="noticeWriter" value="${n.noticeWriter}" class="readonly" readonly></td>
                     <th>작성일</th>
-                    <td><input type="text" name="noticeEnroll" value="${n.noticeEnroll}" readonly></td>
+                    <td><input type="text" name="noticeEnroll" value="${n.noticeEnroll}" class="readonly" readonly></td>
                 </tr>
                 <%-- <tr>
                 	<th>첨부파일</th>
@@ -46,7 +47,7 @@
                 <button type="button" id="list">목록</button>
                 <div class="btn2">
                     <button type="submit">수정</button>
-                    <button type="button" id="delete" value="${n.noticeNo}">삭제</button>
+                    <button type="button" id="delete">삭제</button>
                 </div>
             </div>
         </form>
@@ -58,12 +59,12 @@
                location.href="/notice/list.sool?reqPage=1"; 
             });
             $("#delete").click(function(){
-                var noticeNo = $(this).val();
+                var noticeNo = $("[name=noticeNo]").val();
                 location.href="/notice/deleteNo.sool?noticeNo="+noticeNo;
             });
             $('#summernote').summernote({
-                height: 300, // set editor height
-                width: 1000,
+                height: 500, // set editor height
+                width: 1200,
                 focus: true,
                 lang: "ko-KR",
                 toolbar: [

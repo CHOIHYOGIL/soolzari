@@ -47,8 +47,11 @@
 </textarea></td>
 					        </tr>
 					    </table>
-					    <div class="btns">
-				            <button type="submit">등록</button>
+					    <div class="btnwrap">
+					    	<button type="button" id="list">목록</button>
+					    	<div class="btns">
+					            <button type="submit">등록</button>
+						    </div>
 					    </div>
 					</form>
 				</c:when>
@@ -62,12 +65,15 @@
 					            <td class="qrvAfter">답변 완료<label>${qrv.qrvEnroll}</label></td>
 					        </tr>
 					        <tr>
-					            <td colspan="2"><textarea name="qrvContent">${qrv.qrvContentBr }</textarea></td>
+					            <td colspan="2"><textarea name="qrvContent">${qrv.qrvContent }</textarea></td>
 					        </tr>
 					    </table>
-					    <div class="btns">
-				            <button type="submit">수정</button>
-				            <button type="button" id="delete">삭제</button>
+					    <div class="btnwrap">
+					    	<button type="button">목록</button>
+					    	<div class="btns">
+					            <button type="submit">수정</button>
+					            <button type="button" id="delete">삭제</button>
+						    </div>
 					    </div>
 					</form>
 				</c:otherwise>
@@ -82,6 +88,9 @@
 				var qnaNo = $("[name=qnaNo]").val();
 				var qrvNo = $("[name=qrvNo]").val();
 				location.href="/deleteQrv.sool?qnaNo="+qnaNo+"&qrvNo="+qrvNo;
+			});
+			$("#list").click(function(){
+				location.href="/qna.sool?reqPage=1";
 			});
 		});
 	</script>

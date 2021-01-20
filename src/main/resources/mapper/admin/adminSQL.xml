@@ -457,7 +457,7 @@
 			qrv_writer as qrvWriter,
 			qrv_content as qrvContent,
 			qrv_enroll as qrvEnroll
-		from qrv_db join client_db on (cli_no = qrv_writer) where qna_no = #{_parameter}
+		from qrv_db where qna_no = #{_parameter}
 	</select>
 	<delete id="deleteQna" parameterType="_int">
 		delete from qna_db where qna_no = #{_parameter}
@@ -518,7 +518,7 @@
 		order by qna_ans)q) where rnum between #{start} and #{end}
 	</select>
 	<insert id="insertQrv" parameterType="qrv">
-		insert into qrv_db values(qrv_seq.nextval, #{qnaNo}, #{qrvWriter}, #{qnaContent}, to_char(sysdate, 'yyyy-mm-dd'))
+		insert into qrv_db values(qrv_seq.nextval, #{qnaNo}, #{qrvWriter}, #{qrvContent}, to_char(sysdate, 'yyyy-mm-dd'))
 	</insert>
 	<update id="updateQrv" parameterType="qrv">
 		update qrv_db set qrv_content = #{qrvContent} where qrv_no = #{qrvNo}

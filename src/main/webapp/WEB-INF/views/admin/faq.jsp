@@ -9,8 +9,8 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.js"></script>
 </head>
 <body>
+	<jsp:include page="/WEB-INF/views/admin/navi.jsp"/>
 	<section>
-		<div><jsp:include page="/WEB-INF/views/admin/navi.jsp"/></div>
         <div class="faq">
             <div>
                 <h1>자주 묻는 질문</h1>

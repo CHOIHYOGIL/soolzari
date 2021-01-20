@@ -116,7 +116,7 @@ public class AdminController {
 		return "admin/qna";
 	}
 	
-	@RequestMapping("qnaView.sool")
+	@RequestMapping("/qnaView.sool")
 	public String qnaView(int qnaNo, int qnaAns, Model model) {
 		Qna qna = service.selectOneQna(qnaNo);
 		if(qnaAns == 1) {//답변 있는 상태
@@ -125,6 +125,17 @@ public class AdminController {
 		}
 		model.addAttribute("qna", qna);
 		return "admin/qnaView";
+	}
+	
+	@RequestMapping("/qnaViewClient.sool")
+	public String qnaViewClient(int qnaNo, int qnaAns, Model model) {
+		Qna qna = service.selectOneQna(qnaNo);
+		if(qnaAns == 1) {//답변 있는 상태
+			Qrv qrv = service.selectOneQrv(qnaNo);
+			model.addAttribute("qrv", qrv);
+		}
+		model.addAttribute("qna", qna);
+		return "client/qnaViewC";
 	}
 	
 	@RequestMapping("deleteQna.sool")
