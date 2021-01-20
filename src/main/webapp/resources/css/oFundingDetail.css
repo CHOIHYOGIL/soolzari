@@ -67,9 +67,9 @@ body .wrap2{
 	text-align: center;
 }
 .btnDiv .paymentBtn{
-	border: 1px solid rgb(232, 154, 173);
+	border: 1px solid rgb(77, 80, 117);
 	color: white;
-	background-color: rgb(232, 154, 173);
+	background-color: rgb(77, 80, 117);
 	width: 100%;
 }
 .paymentBtn:hover{

@@ -18,7 +18,7 @@
 <div class="wrap2">
 	<div class="blankDiv">
 		<div class="content">
-		<form action="/client/oComplete.sool" method="post">
+			<form action="/client/oCompleteFunding.sool" method="post">
 			<div class="addrInfoDiv info">
 				<h4 class="subTitle">배송지 정보</h4>
 				<table class="table">
@@ -42,39 +42,34 @@
 									<span class="addr">${client.cliAddr }</span>
 								</p> 
 								<button type="button" class="btn btn-outline-secondary btn-sm addrUpdate">수정</button>
-								<input type="hidden" class="newAddr" name="cliAddr" value="${client.cliAddr }">
+								<input type="hidden" class="newAddr" name="fndDCliaddr" value="${client.cliAddr }">
 							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 			<div class="productListDiv info">
-				<h4 class="subTitle">주문상품 정보</h4>
+				<h4 class="subTitle">주문펀딩 정보</h4>
 				<table class="table productListTable">
 					<thead class="thead-light">
 					   	<tr>
-						    <th scope="col" class="th1">상품정보</th>
-						    <th scope="col" class="th2">상품금액</th>
+						    <th scope="col" class="th1">펀딩정보</th>
+						    <th scope="col" class="th2">후원금액</th>
 						    <th scope="col" class="th3">배송비</th>
 					    </tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${list }" var="bl">
-							<tr>
-								<td>
-									<span class="gdsNoStr" id="${bl.goods.gdsNo }"></span>
-									<span class="gdsLCntStr" id="${bl.basket.basCnt}"></span>
-									<p>${bl.goods.gdsName}</p>
-									<p> - 가격 : <span class="comma">${bl.goods.gdsPri}</span></p>
-									<p> - 수량 : <span class="basCnt">${bl.basket.basCnt}</span>
-								</td>
-								<td class="textRight"><p class="eachPrice comma eachGoodsPrice">${bl.goods.gdsPri*bl.basket.basCnt }</p><span>원</span></td>
-								<td class="textRight"><p class="eachPrice comma eachDeliPrice">2500</p><span>원</span></td>
-							</tr>
-						</c:forEach>
 						<tr>
-					      	<td colspan="3" class="btnTd"><button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='/client/basketList.sool'">상품 수정하기</button></td>
-					    </tr>
+							<td>
+								<p>${fd.fundName}</p>
+								<p class="indent">${fd.fndGName}</p>
+								<p class="indent">${fd.fndGCon}</p>
+								<p class="indent"> - 가격 : <span class="comma">${fd.fndGPri}</span></p>
+								<p class="indent"> - 후원한 금액 : <span class="comma">${fd.fndDPrice-fd.fndGPri}</span>
+							</td>
+							<td class="textRight"><p class="eachPrice comma eachGoodsPrice">${fd.fndDPrice }</p><span>원</span></td>
+							<td class="textRight"><p class="eachPrice comma eachDeliPrice">2500</p><span>원</span></td>
+						</tr>
 					</tbody>
 				</table>
 			</div>
@@ -114,7 +109,9 @@
 					    <tr>
 					      	<td colspan="2" class="totalTd">
 					      		<p class="totalPrice comma">0</p> 원
-					      		<input type="hidden" name="totalPrice"><!-- 총결제금액전달 -->
+					      		<input type="hidden" name="fndDTotalp"><!-- 총결제금액전달 -->
+					      		<input type="hidden" name="fndDPaydate"><!-- 결제일자전달 -->
+					      		<input type="hidden" name="fndDNo" value="${fd.fndDNo }"><!-- fndDNo전달 -->
 					      	</td>
 					    </tr>
 					</tbody>
@@ -122,9 +119,6 @@
 			</div>
 			<div class="btnDiv">
 				<button type="button" class="bt keepBtn" onclick="location.href='/client/basketList.sool'">취소하기</button>
-				<input type="hidden" name="gdsNoStr">
-				<input type="hidden" name="gdsLCntStr">
-				<input type="hidden" name="purDate">
 				<button type="button" class="bt orderBtn">결제하기</button>
 				<button type="submit" class="paymentBtn" style="display: none;"></button>
 			</div>
@@ -185,7 +179,7 @@
 		$(".totalPrice").html(commaSet(goodsPrice+deliPay-point));
 		//controller에 전달할 값
 		$("input[name=cliPoint]").val(point);
-		$("input[name=totalPrice]").val(goodsPrice+deliPay-point);
+		$("input[name=fndDTotalp]").val(goodsPrice+deliPay-point);
 		
 	};
 	
@@ -232,7 +226,6 @@
         if (!pointReg.test($(this).val())) {
         	$(this).val($(this).val().substring(0,$(this).val().length-1));
         }
-        
 	});
 	
 	$(document).on("click", ".addrUpdate", function(){
@@ -337,13 +330,14 @@
 		var temp = 0;
 		var price = commaReset($(".totalPrice").html());
 		var d = new Date();
-		function az(n){
+		function az(n){//9월이면 9로 저장되니까 09로 되게 만듦
 			if(n<10){
 				return "0"+n;
 			}
 			return n;
 		}
 		var date=d.getFullYear()+''+az(d.getMonth()+1)+''+az(d.getDate())+''+az(d.getHours())+''+az(d.getMinutes())+''+az(d.getSeconds());
+		
 		IMP.init("imp54844867");
 		IMP.request_pay({//결제를 위해 전달해주는 정보
 			merchant_uid : "${client.cliId}"+date,//상점거래ID(필수)
@@ -356,11 +350,12 @@
 		},function(rsp){//위의 값을 가지고 결제모듈을 진행
 			if(rsp.success){	//결제가 성공한 경우(결제정보를 디비에 저장해놔야지)
 				//$("input[name=purDate]").val(rsp.merchant_uid);//성공시 상점거래아이디 넘기기
-				$("form").submit();//성공시 결제완료 페이지이동
+				$("input[name=fndDPaydate]").val(date);//결제일자
+				$("form").submit();//포인트 결제일자 총결제금액 fndDNo 4개를 넘김
 			}else{				//결제 실패한 경우
 				//$("input[name=resultMsg]").val(rsp.error_msg);//실패할경우 에러메세지
 				alert("결제에 실패했습니다\n결제 실패사유 : "+rsp.error_msg);
-				location.href='/client/basketList.sool';//실패 후 장바구니페이지로 이동
+				location.href="/client/mFunding.sool?reqPage=1&period=1";//실패 후 장바구니페이지로 이동
 			}
 		})
 	});

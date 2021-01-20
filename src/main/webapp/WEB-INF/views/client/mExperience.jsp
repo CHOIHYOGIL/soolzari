@@ -45,7 +45,7 @@
 									<td>
 										<p>${eld.clsName }</p>
 										<p>인원 : ${eld.classPerson }</p>
-										<p>가격 : ${eld.clsPrice }</p>
+										<p>가격 : <span class="comma">${eld.clsPrice }</span></p>
 									</td>
 									<td>
 										<p>${eld.selName }</p>
@@ -73,11 +73,11 @@
 									</td>
 								</tr>
 							</c:forEach>
+							<tr>
+								<td colspan="5" style="text-align: center;" id="pageNavi">${pageNavi }</td>
+							</tr>
 						</c:otherwise>
 					</c:choose>
-					<tr>
-						<td colspan="4" style="text-align: center;" id="pageNavi">${pageNavi }</td>
-					</tr>
 				</table>
 			</div>
 		</div>
@@ -112,6 +112,11 @@
 				$(this).addClass("sA1");
 			}
 		});
+		
+		//가격에 콤마
+		$(".comma").each(function(){
+			$(this).html(commaSet($(this).html()));
+		})
 	})
 	
 	$(".cancelBtn").click(function(){
@@ -120,5 +125,12 @@
 			location.href="/client/classCancel.sool?clsLNo="+clsLNo+"&reqPage="+${reqPage}+"&period="+${period};
 		}
 	})
+	
+	//금액단위 콤마 구분
+	function commaSet(price) {
+		var str = String(price);
+		let price1 = str.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		return price1;
+	}
 </script>
 </html>

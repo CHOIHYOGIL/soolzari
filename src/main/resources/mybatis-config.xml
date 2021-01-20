@@ -39,7 +39,7 @@
 		<typeAlias type="com.soolzari.shop.client.model.vo.Funding" alias="funding"/>
 		<typeAlias type="com.soolzari.shop.client.model.vo.FundingGoods" alias="fundingGoods"/>
 		<typeAlias type="com.soolzari.shop.client.model.vo.FundDetailDB" alias="fundDetailDB"/>
-		
+		<typeAlias type="com.soolzari.shop.client.model.vo.FundingListData" alias="fundingListData"/>
 	</typeAliases>
 
 </configuration>

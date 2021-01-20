@@ -36,7 +36,7 @@
 							</tr>
 							<tr>
 								<th scope="row">결제 금액</th>
-								<td class="payTd"><p class="totalPrice">${pur.purTtp }</p> 원</td>
+								<td class="payTd"><p class="totalPrice">${pur.purTtp }${fd.fndDTotalp }</p> 원</td>
 							</tr>
 						</tbody>
 					</table>

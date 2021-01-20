@@ -76,7 +76,6 @@
 		
 	</div>
 	<div class="fixContent">
-		<form action="/client/basketInsert.sool" method="post">
 			<h4><p>${fund.fundName }</p></h4>
 			목표 금액 달성률<br>
 			<h5 class="gh3"><span class="goodsPrice comma">${fund.fundTotalMoney }</span> 원 </h5><h4 class="gh4"><span>${fund.fundTotalMoney/fund.fundMoney*100 }</span>%</h4>
@@ -84,6 +83,10 @@
 				<tr>
 					<th>등록일</th>
 					<td>${fund.fundEnrolldate }</td>
+				</tr>
+				<tr>
+					<th>종료일</th>
+					<td>${fund.fundEnddate }</td>
 				</tr>
 				<tr>
 					<th>목표 금액</th>
@@ -105,16 +108,14 @@
 				        </div>
 				        <div id="detail_page${fg.fndGNo }" class="collapse">
 				           	<p>구성 : <span>${fg.fndGCon }</span></p>
-							<p>추가 후원금 : <input type="text" name="addFund" value="0"></p>
+							<p>추가 후원금 : <input type="text" name="addFund"></p>
 							<div style="text-align: center;">
 								<button type="button" class="btn btn-outline-secondary btn-sm addFundSel">+5,000</button>
 								<button type="button" class="btn btn-outline-secondary btn-sm addFundSel">+10,000</button>
 								<button type="button" class="btn btn-outline-secondary btn-sm addFundSel">+50,000</button>
 								<button type="button" class="btn btn-outline-secondary btn-sm addFundSel">+100,000</button>
 							</div>
-							<input type="hidden" name="fndDCli" value="${sessionScope.sessionClient.clientNo }">
 							<input type="hidden" name="fndGNo" value="${fg.fndGNo }">
-							<input type="hidden" name="fndDStatus" value="0">
 							<input type="hidden" name="fndDPrice"><!-- 가격과 추가후원금을 합한 값을 hidden으로 전달 -->
 							<br>
 							<div class="totalWrap">
@@ -134,7 +135,6 @@
 				<a href="#mainGo" class="mainGo at">상품 상세</a> / 
 				<a href="#reviewGo" class="reviewGo at">상품 후기 보기</a>
 			</div>
-		</form>
 	</div>
 </div>
 
@@ -220,6 +220,8 @@
 			goodsPrice = Number(commaReset($(this).parent().parent().parent().prev().find(".price").html()));
 			addFund = Number(commaReset($(this).parent().parent().parent().find("input[name=addFund]").val()));
 			$(this).html(commaSet(goodsPrice+addFund));
+			//console.log($(this).parent().parent().prev().prev().val());
+			$(this).parent().parent().prev().prev().val(goodsPrice+addFund);//input hidden타입에 합한값 넣어서 넘겨주기
 		});
 	}
 	
@@ -237,10 +239,16 @@
 	}
 	//후원하기 버튼
 	$(".paymentBtn").click(function(){
-		if(confirm("후원을 하시겠습니까?\n종료일날 메일로 결제안내를 드립니다")){
-			//확인 시 form태그 서브밋처리
-			$("form").eq($(this).index()).submit();//후원하기버튼에 있는 form실행하기위해 index를 구해서 실행시킴
+		var login = "${sessionScope.sessionClient.clientNo }";
+		if(login.length>0){//로그인 된 상태일때만 후원가능하게
+			if(confirm("후원을 하시겠습니까?\n종료일날 메일로 결제안내를 드립니다")){
+				$("form").eq($(this).index()).submit();//후원하기버튼에 있는 form실행하기위해 index를 구해서 실행시킴
+			}
+		}else{//로그인된 상태가 아니면
+			alert("로그인 이후 후원이 가능합니다");
+			location.href="/login.sool";
 		}
+		
 	});
 </script>
 </body>

@@ -7,10 +7,10 @@
 	width: 15%;
 }
 .th2 {
-	width: 50%;
+	width: 45%;
 }
 .th3 {
-	width: 10%;
+	width: 15%;
 }
 .th4 {
 	width: 15%;
@@ -18,9 +18,16 @@
 .th5 {
 	width: 10%;
 }
+.listTable{
+	text-align: left;
+}
 
 /* 사이드메뉴 고정----------------------------------------- */
 .a3{
 	background-color: rgb(77, 80, 117);
 	color: white;
+}
+
+.listTable tr>td:nth-child(2) {
+	text-align: left;
 }

@@ -75,7 +75,7 @@
 						</c:forEach>
 					</c:forEach>
 					<tr>
-						<td colspan="4" style="text-align: center;" id="pageNavi">${pageNavi }</td>
+						<td colspan="5" style="text-align: center;" id="pageNavi">${pageNavi }</td>
 					</tr>
 				</table>
 			</div>

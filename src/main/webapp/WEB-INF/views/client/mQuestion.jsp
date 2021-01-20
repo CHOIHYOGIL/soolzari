@@ -40,13 +40,12 @@
 						<c:forEach items="${list }" var="qna">
 							<tr>
 								<td>
-									<p>${qna.qnaName }</p>
+									<p><a href="/qnaViewClient.sool?qnaNo=${qna.qnaNo }&qnaAns=${qna.qnaAns }">${qna.qnaName }</a></p>
 								</td>
 								<td>
 									<p>${qna.qnaEnroll }</p>
 								</td>
 								<td>
-								
 									<c:if test="${qna.qnaAns==0 }">
 										<p>답변대기</p>
 									</c:if>
@@ -79,9 +78,9 @@
         </div>
         <form action="/client/mQuestionInsert.sool" method="post">
         <div class="modal-body">
-        	제목<br><textarea rows="1" cols="70" style="resize: none;" name="qnaName"></textarea>
+        	제목<br><textarea rows="1" cols="80" style="resize: none;" name="qnaName"></textarea><br>
 	       	내용<br>
-	        <textarea rows="12" cols="70" style="resize: none;" name="qnaCon"></textarea>
+	        <textarea rows="12" cols="80" style="resize: none;" name="qnaCon"></textarea>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-default ">문의하기</button>
@@ -122,6 +121,25 @@
 				$(this).addClass("sA1");
 			}
 		});
+	});
+	
+	//문의하기 줄 수 제한
+	$("textarea[name=qnaName]").keyup(function(){
+		 var rows = $(this).val().split('\n').length;
+	        var maxRows = 1;
+	        if( rows > maxRows){
+	            modifiedText = $(this).val().split("\n").slice(0, maxRows);
+	            $(this).val(modifiedText.join("\n"));
+	        }
+	});
+	//문의하기 줄 수 제한
+	$("textarea[name=qnaCon]").keyup(function(){
+		 var rows = $(this).val().split('\n').length;
+	        var maxRows = 10;
+	        if( rows > maxRows){
+	            modifiedText = $(this).val().split("\n").slice(0, maxRows);
+	            $(this).val(modifiedText.join("\n"));
+	        }
 	});
 </script>
 </body>

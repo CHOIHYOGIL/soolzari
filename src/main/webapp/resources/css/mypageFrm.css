@@ -199,7 +199,13 @@ a:hover{
 body .listTable{
 	text-align: center;
 }
-
+/* 테이블 border----------------------------------------- */
+.listTable tr:first-child>td, .listTable tr:first-child>th {
+	border-top: 1px solid gray;
+}
+.listTable tr>th, .listTable tr>td{
+	border-top: 1px solid lightgray;
+}
 /* 페이징 호버----------------------------------------- */
 
 #pageNavi>*{
