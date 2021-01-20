@@ -151,6 +151,11 @@
 		insert into fnd_det_db values(FUND_DET_SEQ.NEXTVAL,#{fundNo},#{fndDCli},#{fndDPrice},#{fndGNo},0,null,to_char(sysdate,'yyyymmddhh24miss'),0,null)
 	</insert>
 	
+	<!-- 같은펀딩을 후원했는지 안했는지 확인 -->
+	<select id="fundDetOverlapChk" parameterType="map" resultType="_int">
+		select count(*) from fnd_det_db where fnd_d_cli=#{cliNo} and fund_no=#{fundNo}
+	</select>
+	
 	<!-- 펀딩 상세->후원하기버튼클릭 시 목표달성 시 update -->
 	<update id="fundChkUpdate" parameterType="_int">
 	update funding_db set fund_chk=1 where fund_no=(select fund_no from funding_db where fund_money &lt; (select sum(fnd_d_price) as sumprice 

@@ -28,6 +28,7 @@ import com.soolzari.shop.client.model.vo.OrderPageData;
 import com.soolzari.shop.client.model.vo.Purchase;
 import com.soolzari.shop.client.model.vo.Qna;
 import com.soolzari.shop.client.model.vo.QnaPageData;
+import com.soolzari.shop.client.model.vo.Subscribe;
 import com.soolzari.shop.common.EmailSender;
 
 @Service
@@ -375,14 +376,24 @@ public class ClientService2 {
 		return fd;
 	}
 	
+	//같은펀딩을 후원했는지 안했는지 확인
+	public int fundDetOverlapChk(int fundNo, int cliNo) {
+		return dao.fundDetOverlapChk(fundNo,cliNo);
+	}
+	
 	//펀딩후원(예약)하기 - fnd_det_db에 insert
 	@Transactional
 	public int fundReservationInsert(FundDetailDB fd) {
 		int result = dao.fundReservationInsert(fd);
 		if(result>0) {//예약완료 후 목표달성률을 넘긴 펀딩이면 chk를 1로 업데이트
 			result = dao.fundChkUpdate(fd.getFundNo());
+			if(result>0) {
+				result=10;
+			}else {
+				result=1;
+			}
 		}
-		return result;
+		return result;//0:예약실패, 1:예약성공, 10:예약성공 및 목표달성
 	}
 
 	//마이페이지 - 펀딩(페이징)
@@ -455,28 +466,32 @@ public class ClientService2 {
 	//펀딩 종료일에 목표달성이 됐으면 fnd_d_status를 1로 update(결제하라는 버튼표시) + 결제알림 메일전송필요...
 	//펀딩 종료일에 목표미달성이 됐으면 fnd_d_status를 7로 update(미결제취소 표시)
 	@Transactional
-	public void fndDStatusUpdate() {
+	public HashMap<String, ArrayList<Client2>> fndDStatusUpdate() {
 		System.out.println("달성");
-		dao.fndDStatusYUpdate();
-		ArrayList<Client2> clientList = new ArrayList<Client2>();
-		clientList = dao.emailSelect(1);//1:달성한 펀딩
-		try {
-			//emailSender.sendEmail(clientList);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		dao.fndDStatusYUpdate();//달성 fnd_d_status를 1
 		System.out.println("미달성");
-		dao.fndDStatusNUpdate();
-		clientList = dao.emailSelect(0);//0:미달성한 펀딩
-		try {
-			//emailSender.sendEmail(clientList);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		dao.fndDStatusNUpdate();//미달성 fnd_d_status를 7
+		
+		ArrayList<Client2> clientYList = new ArrayList<Client2>();
+		clientYList = dao.emailSelect(1);//1:달성한 펀딩//사용자이메일 조회
+		System.out.println(clientYList.size());
+		ArrayList<Client2> clientNList = new ArrayList<Client2>();
+		clientNList = dao.emailSelect(0);//0:미달성한 펀딩//사용자이메일 조회
+		System.out.println(clientNList.size());
+		
+		HashMap<String, ArrayList<Client2>> map = new HashMap<String, ArrayList<Client2>>();
+		map.put("clientYList", clientYList);
+		map.put("clientNList", clientNList);
+		
+		return map;
 	}
+
+	//구독랭크 정보가져오기
+	public Subscribe subscribeSelect(int clientRank) {
+		return dao.subscribeSelect(clientRank);
+	}
+
+	
 
 	
 

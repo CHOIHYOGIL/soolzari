@@ -67,3 +67,14 @@ body .modal-dialog{
 	max-height: 600px;
 }
 
+.listTable .ans1{
+	color: rgb(77, 80, 117);
+}
+.listTable .ans2{
+	color: blue;
+}
+
+.listTable a:hover{
+	color: black;
+	font-weight: bold;
+}

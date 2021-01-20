@@ -24,7 +24,7 @@
 		<a name="mainGo"/>
 		<div class="mainImg">
 			메인이미지 올곳
-			<a href="/client/oFundingDetail.sool?fundNo=2">펀딩상세페이지(임시)</a>
+			<a href="/client/oFundingDetail.sool?fundNo=17">펀딩상세페이지(임시)</a>
 		</div>
 		<div class="detailContent">
 			<div>

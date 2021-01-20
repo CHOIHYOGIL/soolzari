@@ -22,6 +22,7 @@ import com.soolzari.shop.client.model.vo.GoodsSellerDetail;
 import com.soolzari.shop.client.model.vo.OrderListData;
 import com.soolzari.shop.client.model.vo.Purchase;
 import com.soolzari.shop.client.model.vo.Qna;
+import com.soolzari.shop.client.model.vo.Subscribe;
 
 @Repository
 public class ClientDao2 {
@@ -210,6 +211,14 @@ public class ClientDao2 {
 		List<FundingGoods> fundGoodsList =  sqlSession.selectList("order.fundingGoodsSelect",fundNo);
 		return (ArrayList<FundingGoods>)fundGoodsList;
 	}
+	
+	//같은펀딩을 후원했는지 안했는지 확인
+	public int fundDetOverlapChk(int fundNo, int cliNo) {
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("fundNo", fundNo);
+		map.put("cliNo", cliNo);
+		return sqlSession.selectOne("order.fundDetOverlapChk",map);
+	}
 
 	//펀딩후원(예약)하기 - fnd_det_db에 insert
 	public int fundReservationInsert(FundDetailDB fd) {
@@ -269,6 +278,13 @@ public class ClientDao2 {
 		List<Client2> list =  sqlSession.selectList("mypage.emailSelect",fundChk);
 		return (ArrayList<Client2>)list;
 	}
+
+	//구독랭크 정보가져오기
+	public Subscribe subscribeSelect(int clientRank) {
+		return sqlSession.selectOne("mypage.subscribeSelect",clientRank);
+	}
+
+	
 
 	
 

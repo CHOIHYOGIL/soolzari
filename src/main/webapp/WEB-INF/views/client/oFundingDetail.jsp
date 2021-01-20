@@ -78,7 +78,7 @@
 	<div class="fixContent">
 			<h4><p>${fund.fundName }</p></h4>
 			목표 금액 달성률<br>
-			<h5 class="gh3"><span class="goodsPrice comma">${fund.fundTotalMoney }</span> 원 </h5><h4 class="gh4"><span>${fund.fundTotalMoney/fund.fundMoney*100 }</span>%</h4>
+			<h5 class="gh3"><span class="goodsPrice comma">${fund.fundTotalMoney }</span> 원 </h5><h4 class="gh4"><span class="percent">${fund.fundTotalMoney/fund.fundMoney*100 }</span>%</h4>
 			<table class="table fixTable">
 				<tr>
 					<th>등록일</th>
@@ -178,6 +178,9 @@
 		
 		//처음에 총 후원금액 세팅
 		totalPriceSet();
+		
+		//달성률 퍼센트 소숫점없이
+		$(".percent").html(parseInt($(".percent").html()));
 	})
 	
 	
@@ -237,13 +240,27 @@
 		let price1 = str.replace(/[^\d]+/g, "");
 		return price1;
 	}
+	
 	//후원하기 버튼
 	$(".paymentBtn").click(function(){
-		var login = "${sessionScope.sessionClient.clientNo }";
-		if(login.length>0){//로그인 된 상태일때만 후원가능하게
-			if(confirm("후원을 하시겠습니까?\n종료일날 메일로 결제안내를 드립니다")){
-				$("form").eq($(this).index()).submit();//후원하기버튼에 있는 form실행하기위해 index를 구해서 실행시킴
-			}
+		var cliNo = "${sessionScope.sessionClient.clientNo }";
+		var paymentForm = $(this).parent().parent().parent("form");
+		if(cliNo.length>0){//로그인 된 상태일때만 후원가능하게
+			var fundNo = ${fund.fundNo};
+			$.ajax({
+				url:"/client/fundDetOverlapChk.sool",
+				data: {fundNo:fundNo,cliNo:cliNo},
+				type:"post",
+				success:function(data){
+					if(data=="0"){//0 : 후원한 펀딩이 아닐경우에만 가능하게
+						if(confirm("후원을 하시겠습니까?\n종료일날 메일로 결제안내를 드립니다")){
+							paymentForm.submit();//후원하기버튼에 있는 form실행하기위해 index를 구해서 실행시킴
+						}
+					}else{//1 : 후원한 펀딩이 아닐경우에만 가능하게
+						alert("이미 후원한 펀딩입니다");
+					}
+				}
+			});
 		}else{//로그인된 상태가 아니면
 			alert("로그인 이후 후원이 가능합니다");
 			location.href="/login.sool";

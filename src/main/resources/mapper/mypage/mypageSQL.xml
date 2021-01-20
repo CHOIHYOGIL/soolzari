@@ -215,7 +215,7 @@
 				            f.fund_enrolldate as fundEnrolldate,
 				            f.fund_enddate as fundEnddate
 				            from fnd_det_db d, fnd_gds_db g, funding_db f 
-				            where f.fund_no=g.fund_no and f.fund_no=d.fund_no 
+				            where d.fnd_g_no=g.fnd_g_no and f.fund_no=d.fund_no 
 				                and d.fnd_d_cli=#{cliNo} 
 				                and to_date(d.fnd_d_reserdate,'YYYYMMDDHH24MISS') between add_months(sysdate,-#{period}) and sysdate 
 				                order by d.fnd_d_no desc) n) 
@@ -247,7 +247,7 @@
             f.fund_enrolldate as fundEnrolldate,
             f.fund_enddate as fundEnddate
             from fnd_det_db d, fnd_gds_db g, funding_db f 
-            where f.fund_no=g.fund_no and f.fund_no=d.fund_no 
+            where d.fnd_g_no=g.fnd_g_no and f.fund_no=d.fund_no 
                 and d.fnd_d_no=#{_parameter}
 	</select>
 	
@@ -277,4 +277,33 @@
 	<update id="fundDeliveryStatus" parameterType="_int">
 		update fnd_det_db set fnd_d_status=5 where fnd_d_no=#{_parameter}
 	</update>
+	
+	<select id="emailSelect" parameterType="_int" resultType="c2">
+		select cli_no as cliNo,
+			cli_id as cliId,
+			cli_pw as cliPw,
+			cli_name as cliName,
+			cli_tel as cliTel,
+			cli_addr as cliAddr,
+			cli_email as cliEmail,
+			cli_rank as cliRank,
+			cli_enroll as cliEnroll,
+			cli_point as cliPoint,
+			cli_age as cliAge 
+		from client_db where cli_no in(select distinct(fnd_d_cli) from fnd_det_db where fund_no in(select 
+		   fund_no 
+		from funding_db 
+		where fund_enddate=to_char(sysdate-1,'yyyy-mm-dd') and fund_chk=#{_parameter}))
+	</select>
+	
+	<!-- 구독랭크 정보가져오기 -->
+	<select id="subscribeSelect" parameterType="_int" resultType="s">
+		select 
+			sub_no as subscribeNo,
+			sub_name as subscribeName,
+			sub_det as subscribeDept,
+			sub_price as subscribePrice
+		from subscribe_db where sub_no=#{_parameter}
+		
+	</select>
 </mapper>

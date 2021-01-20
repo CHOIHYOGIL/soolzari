@@ -4,19 +4,16 @@
 	width: 100%;
 }
 .th1 {
-	width: 15%;
+	width: 20%;
 }
 .th2 {
-	width: 45%;
+	width: 50%;
 }
 .th3 {
 	width: 15%;
 }
 .th4 {
 	width: 15%;
-}
-.th5 {
-	width: 10%;
 }
 .listTable{
 	text-align: left;
@@ -30,4 +27,21 @@
 
 .listTable tr>td:nth-child(2) {
 	text-align: left;
+}
+
+.indent{
+	text-indent: 20px;
+}
+
+.red{
+	color: red;
+}
+
+.textRight{
+	text-align: right;
+	font-weight: bold;
+}
+.listTable .linkGo:hover{
+	color: black;
+	font-weight: bold;
 }

@@ -19,21 +19,23 @@
 	<div class="sideNavi"></div>
 	<div class="content">
 		<div class="mainContent">
+			<div>
+				<span style="color: lightgray">*결제 금액은 포인트사용 후 금액입니다.</span>
+			</div>
 			<div class="listDiv">
 				<table class="listTable">
 					<tr>
 						<th class="th1">예약번호/예약일자</th>
 						<th class="th2">펀딩 정보</th>
-						<th class="th3">결제일자</th>
-						<th class="th3">후원관리</th>
-						<th class="th4">리뷰</th>
+						<th class="th3">결제 금액/일자</th>
+						<th class="th4">후원관리</th>
 					</tr>
 					<c:choose>
 					<c:when test="${fn:length(list) eq 0}">
 						<tr>
-							<td colspan="3">
+							<td colspan="4">
 								<br><br><br>
-								<h4>후원한 내역이 없습니다.</h4>
+								<h4>지난 ${period }개월 동안 후원한 내역이 없습니다.</h4>
 								<br><br><br>
 							</td>
 						</tr>
@@ -46,19 +48,22 @@
 									<p>${fund.fndDReserdate }</p>
 								</td>
 								<td>
-									<p><h6><span>${fund.fundName }</span></h6></p>
-									<%-- <p>상세 : <span>${fund.fundDet }</span></p> --%>
-									<p>후원한 상품 : <span>${fund.fndGName }</span></p>
-									<p>상품 구성 : <span>${fund.fndGCon }</span></p>
-									<p>가격 : <span class="comma">${fund.fndGPri }</span></p>
-									<p>추가 후원한 금액 : <span class="comma">${fund.fndDPrice-fund.fndGPri }</span></p>
-									<p>총 후원 금액 : <span class="comma">${fund.fndDPrice }</span></p>
+									<a class="linkGo" href="/client/oFundingDetail.sool?fundNo=${fund.fundNo }">
+										<p><h6><span>${fund.fundName }</span></h6></p>
+										<%-- <p>상세 : <span>${fund.fundDet }</span></p> --%>
+										<p class="indent">후원한 상품 : <span>${fund.fndGName }</span></p>
+										<p class="indent">상품 구성 : <span>${fund.fndGCon }</span></p>
+										<p class="indent">가격 : <span class="comma">${fund.fndGPri }</span></p>
+										<p class="indent">추가 후원한 금액 : <span class="comma">${fund.fndDPrice-fund.fndGPri }</span></p>
+										<p class="indent textRight">총 후원 금액 : <span class="comma red">${fund.fndDPrice }</span></p>
+									</a>
 								</td>
 								<td>
-									<c:if test="${fund.fndDStatus<=1}">
+									<c:if test="${fund.fndDStatus<=1 || fund.fndDStatus>=6}">
 										<p>-</p>
 									</c:if>
-									<c:if test="${fund.fndDStatus>1}">
+									<c:if test="${1<fund.fndDStatus && fund.fndDStatus<=5}">
+										<span class="comma">${fund.fndDTotalp }</span>원
 										<p>${fund.fndDPaydate }</p>
 									</c:if>
 								</td>
@@ -90,9 +95,6 @@
 										<p>펀딩목표<br>미달성취소</p>
 									</c:if>
 								</td>
-								<td>
-									<p>${qna.qnaEnroll }</p>
-								</td>
 							</tr>
 						</c:forEach>
 					<tr>
@@ -121,6 +123,7 @@
 	
 	//기간별 조회
 	$(function(){
+		$(".subTitle").html("펀딩 내역");
 		$(".giftSel").remove();//선물함 선택 안보이게
 		//조회기간별 조회(1,3,6,12개월)
 		$(".searchA").eq(0).attr("href","/client/mFunding.sool?reqPage=1&period=1");

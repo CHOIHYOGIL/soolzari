@@ -31,7 +31,7 @@
 						<c:when test="${fn:length(eList) eq null}">
 							<tr>
 								<td colspan="5">
-									<p>예약한 클래스가 없습니다.</p>
+									<p>지난 ${period }개월 동안 예약한 클래스가 없습니다.</p>
 								</td>
 							</tr>
 						</c:when>
@@ -44,8 +44,8 @@
 									</td>
 									<td>
 										<p>${eld.clsName }</p>
-										<p>인원 : ${eld.classPerson }</p>
-										<p>가격 : <span class="comma">${eld.clsPrice }</span></p>
+										<p class="indent">인원 : ${eld.classPerson }</p>
+										<p class="indent">가격 : <span class="comma">${eld.clsPrice }</span></p>
 									</td>
 									<td>
 										<p>${eld.selName }</p>
@@ -98,6 +98,7 @@
 	});
 	
 	$(function(){
+		$(".subTitle").html("예약 내역");
 		$(".giftSel").remove();//선물함 선택 안보이게
 		//조회기간별 조회(1,3,6,12개월)
 		$(".searchA").eq(0).attr("href","/client/mExperience.sool?reqPage=1&period=1");
