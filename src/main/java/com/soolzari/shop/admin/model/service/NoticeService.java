@@ -151,7 +151,13 @@ public class NoticeService {
 		return dao.selectOneNotice(noticeNo);
 	}
 	
+	@Transactional
 	public int updateNotice(Notice n) {
 		return dao.updateNotice(n);
+	}
+
+	@Transactional
+	public int updateCount(int noticeNo) {
+		return dao.updateCount(noticeNo);
 	}
 }
