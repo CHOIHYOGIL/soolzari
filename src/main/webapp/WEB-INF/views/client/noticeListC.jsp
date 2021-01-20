@@ -7,9 +7,15 @@
 <meta charset="UTF-8">
 <title>공지사항</title>
 <link href="/resources/css/noticeClient.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.js"></script>
+
 </head>
 <body>
+<<<<<<< Updated upstream
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+=======
+   <%@include file="/WEB-INF/views/common/header.jsp" %>
+>>>>>>> Stashed changes
 	<section>
 		<h1>공지사항</h1>
 		<table class="notice">
