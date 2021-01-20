@@ -87,4 +87,16 @@ public class AdminDao {
 		return session.selectOne("admin.totalQnaSearch", map);
 	}
 
+	public int insertQrv(Qrv qrv) {
+		return session.insert("admin.insertQrv", qrv);
+	}
+
+	public int updateQrv(Qrv qrv) {
+		return session.update("admin.updateQrv", qrv);
+	}
+
+	public int deleteQrv(int qrvNo) {
+		return session.delete("admin.deleteQrv", qrvNo);
+	}
+
 }

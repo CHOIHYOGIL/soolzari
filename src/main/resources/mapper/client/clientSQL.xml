@@ -43,7 +43,7 @@
  	</select>
  	
  	<select id="selectOneClient" parameterType="c" resultType="c">
- 		select CLI_ID as clientId, CLI_NO as clientNo, CLI_NAME as clientName, CLI_EMAIL as clientEmail, CLI_TEL as clientTel, CLI_ADDR as clientAddr from client_db where CLI_ID=#{clientId} and CLI_PW=#{clientPw}
+ 		select CLI_ID as clientId, CLI_NO as clientNo, CLI_NAME as clientName, CLI_EMAIL as clientEmail, CLI_TEL as clientTel, CLI_ADDR as clientAddr, CLI_RANK as clientRank from client_db where CLI_ID=#{clientId} and CLI_PW=#{clientPw}
  	</select>
  	
  	
@@ -78,7 +78,7 @@
  	<select id="getGoods" parameterType="string" resultType="g">
  		select g.gds_no as goodsNo, g.gds_name as goodsName, g.gds_pri as goodsPrice, g.GDS_BCNT as goodsCount, i.FILEPATH as imagePath, ROUND(AVG(NVL(r.rev_score,0)),1) as reviewScore
 from goods_db g, img_db i,review_db r
-where g.gds_no=i.TYPE_NO and i.IMG_TYPE='g' and r.rev_gdsno=g.gds_no
+where g.gds_no=i.TYPE_NO and i.IMG_TYPE='g' and r.rev_gdsno=g.gds_no and g.status=1
 <if test="value !=null">
 
 	and g.gds_name like '%'||#{value}||'%'
@@ -91,7 +91,7 @@ order by g.gds_no DESC
  	<select id="getTakju" resultType="g">
  	select g.gds_no as goodsNo, g.gds_name as goodsName, g.gds_pri as goodsPrice, g.GDS_BCNT as goodsCount, i.FILEPATH as imagePath, ROUND(AVG(NVL(r.rev_score,0)),1) as reviewScore
 from goods_db g, img_db i,review_db r
-where g.gds_no=i.TYPE_NO and i.IMG_TYPE='g' and r.rev_gdsno=g.gds_no and g.goods_type='t'
+where g.gds_no=i.TYPE_NO and i.IMG_TYPE='g' and r.rev_gdsno=g.gds_no and g.goods_type='t' and g.status=1
 
 group by g.gds_no, g.gds_name, g.gds_pri, g.GDS_BCNT, i.FILEPATH, r.rev_gdsno
 order by g.gds_no DESC
@@ -100,7 +100,7 @@ order by g.gds_no DESC
  	 	<select id="getCheongju" resultType="g">
  	select g.gds_no as goodsNo, g.gds_name as goodsName, g.gds_pri as goodsPrice, g.GDS_BCNT as goodsCount, i.FILEPATH as imagePath, ROUND(AVG(NVL(r.rev_score,0)),1) as reviewScore
 from goods_db g, img_db i,review_db r
-where g.gds_no=i.TYPE_NO and i.IMG_TYPE='g' and r.rev_gdsno=g.gds_no and g.goods_type='c'
+where g.gds_no=i.TYPE_NO and i.IMG_TYPE='g' and r.rev_gdsno=g.gds_no and g.goods_type='c' and g.status=1
 
 group by g.gds_no, g.gds_name, g.gds_pri, g.GDS_BCNT, i.FILEPATH, r.rev_gdsno
 order by g.gds_no DESC
@@ -108,7 +108,7 @@ order by g.gds_no DESC
  		<select id="getSpirits" resultType="g">
  	select g.gds_no as goodsNo, g.gds_name as goodsName, g.gds_pri as goodsPrice, g.GDS_BCNT as goodsCount, i.FILEPATH as imagePath, ROUND(AVG(NVL(r.rev_score,0)),1) as reviewScore
 from goods_db g, img_db i,review_db r
-where g.gds_no=i.TYPE_NO and i.IMG_TYPE='g' and r.rev_gdsno=g.gds_no and g.goods_type='s'
+where g.gds_no=i.TYPE_NO and i.IMG_TYPE='g' and r.rev_gdsno=g.gds_no and g.goods_type='s'and g.status=1
 
 group by g.gds_no, g.gds_name, g.gds_pri, g.GDS_BCNT, i.FILEPATH, r.rev_gdsno
 order by g.gds_no DESC
@@ -117,7 +117,7 @@ order by g.gds_no DESC
  	<select id="getWine" resultType="g">
  	select g.gds_no as goodsNo, g.gds_name as goodsName, g.gds_pri as goodsPrice, g.GDS_BCNT as goodsCount, i.FILEPATH as imagePath, ROUND(AVG(NVL(r.rev_score,0)),1) as reviewScore
 from goods_db g, img_db i,review_db r
-where g.gds_no=i.TYPE_NO and i.IMG_TYPE='g' and r.rev_gdsno=g.gds_no and g.goods_type='w'
+where g.gds_no=i.TYPE_NO and i.IMG_TYPE='g' and r.rev_gdsno=g.gds_no and g.goods_type='w' and g.status=1
 
 group by g.gds_no, g.gds_name, g.gds_pri, g.GDS_BCNT, i.FILEPATH, r.rev_gdsno
 order by g.gds_no DESC
@@ -125,18 +125,25 @@ order by g.gds_no DESC
  	<select id="getFruit" resultType="g">
  	select g.gds_no as goodsNo, g.gds_name as goodsName, g.gds_pri as goodsPrice, g.GDS_BCNT as goodsCount, i.FILEPATH as imagePath, ROUND(AVG(NVL(r.rev_score,0)),1) as reviewScore
 from goods_db g, img_db i,review_db r
-where g.gds_no=i.TYPE_NO and i.IMG_TYPE='g' and r.rev_gdsno=g.gds_no and g.goods_type='f'
+where g.gds_no=i.TYPE_NO and i.IMG_TYPE='g' and r.rev_gdsno=g.gds_no and g.goods_type='f' and g.status=1
 
 group by g.gds_no, g.gds_name, g.gds_pri, g.GDS_BCNT, i.FILEPATH, r.rev_gdsno
 order by g.gds_no DESC
  	</select>
  	
- 	<insert id="setSubscribe" parameterType="s">
- 		insert into subscribe_db values(subscribe_db_seq.nextval, #{subscribeName}, #{subscribeDept},#{subscribePrice})
- 	</insert>
+ 	<select id="getFund" resultType="f">
+ 		select f.fund_no as fundNo, f.fund_name as fundName , f.fund_money as fundMoney, f.fund_chk as fundChk, f.fund_det as fundDet, status, f.fund_Date as fundDate, f.sel_no as selNo, f.fund_enrolldate as fundEnrollDate , f.fund_enddate as fundEndDate, 
+i.FILEPATH as imagePath, d.fnd_d_price as fundMoneyNow, g.fnd_g_pri as fundPrice from funding_db f, img_db i, fnd_det_db d, fnd_gds_db g
+where i.IMG_TYPE='f' and f.fund_no=i.TYPE_NO and d.fund_no=f.fund_no and g.fund_no = f.fund_no and f.status=1
+order by f.fund_no DESC
+ 			</select>
  	
- 	<update id="setUsergrade" parameterType="string">
- 		update client_db set cli_rank =1 where cli_id=#{id}
+	<select id="checkUsergrade" parameterType="string" resultType="int">
+		select cli_rank from client_db where cli_id=#{id}
+	</select>
+ 	
+ 	<update id="setUsergrade" parameterType="map">
+ 		update client_db set cli_rank =#{grade} where cli_id=#{id}
  	</update>
  	
  	<select id="checkUser" parameterType="cl" resultType="cl">
@@ -146,5 +153,16 @@ order by g.gds_no DESC
  	<select id="findSeller" parameterType="Integer" resultType="string">
  		select sel_name as selName from seller_db where sel_no=#{selNo}
  	</select>
+ 	
+ 	<select id="searchId" parameterType="map" resultType="string">
+ 		select cli_id as clientId from client_db where cli_name=#{name} and cli_email=#{email}
+ 	</select>
 
+<select id="searchPw" parameterType="map" resultType="string">
+ 		select cli_pw as clientPw  from client_db where cli_id=#{id} and cli_email=#{email}
+ 	</select>
+ 	
+ 	<update id="setPw" parameterType="map">
+ 		update client_Db set cli_pw=#{pw} where cli_id=#{id}
+ 	</update>
 </mapper>

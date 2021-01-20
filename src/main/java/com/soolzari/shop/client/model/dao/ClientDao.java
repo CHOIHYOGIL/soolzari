@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.soolzari.shop.client.model.vo.Class_List;
 import com.soolzari.shop.client.model.vo.Client;
+import com.soolzari.shop.client.model.vo.Fund;
 import com.soolzari.shop.client.model.vo.Goods;
 import com.soolzari.shop.client.model.vo.Reservation;
 import com.soolzari.shop.client.model.vo.Subscribe;
@@ -69,8 +70,11 @@ public class ClientDao {
 		return (ArrayList<Subscribe>)list;
 	}
 
-	public int setUsergrade(String id) {
-		return sqlSession.update("client.setUsergrade",id);
+	public int setUsergrade(String id, int grade) {
+		HashMap<String, Object> map=new HashMap<String,Object>();
+		map.put("id",id);
+		map.put("grade",grade);
+		return sqlSession.update("client.setUsergrade",map);
 	}
 
 	public ArrayList<Class_List> checkUser(int session, int classNo) {
@@ -140,6 +144,42 @@ public class ClientDao {
 	public ArrayList<Goods> getFruit() {
 		List<Goods> list =sqlSession.selectList("client.getFruit");
 		return (ArrayList<Goods>)list;
+	}
+
+	public int checkUsergrade(String id) {
+		
+		return sqlSession.selectOne("client.checkUsergrade",id);
+	}
+
+	public String searchId(String name, String email) {
+			HashMap<String,Object> map=new HashMap<String ,Object>();
+			map.put("name",name);
+			map.put("email",email);
+		String id= sqlSession.selectOne("client.searchId",map);
+		return id;
+	}
+
+	public String searchPw(String userId, String useremail) {
+		HashMap<String,Object> map=new HashMap<String ,Object>();
+		map.put("id",userId);
+		map.put("email",useremail);
+	String pw= sqlSession.selectOne("client.searchPw",map);
+	return pw;
+	}
+
+	public ArrayList<Fund> getFund() {
+		List<Fund> list =sqlSession.selectList("client.getFund");
+		return (ArrayList<Fund>)list;
+	}
+
+
+
+	public int updateClient(Client c) {
+		HashMap<String,String> map=new HashMap<String,String>();
+		map.put("id",c.getClientId());
+		map.put("pw",c.getClientPw());
+		int result=sqlSession.update("client.setPw",map);
+		return result;
 	}
 
 }

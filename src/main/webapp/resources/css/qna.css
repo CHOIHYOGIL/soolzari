@@ -14,6 +14,7 @@
 .qna{
 	border-spacing: 0;
 	text-align: center;
+	
 }
 
 .qna th{
@@ -21,15 +22,15 @@
     color: white;
     width: 150px;
     box-sizing: border-box;
-    height: 40px;
-    line-height: 40px;
+    height: 50px;
+    line-height: 50px;
 }
 
 .qna td {
     width: 150px;
     box-sizing: border-box;
-    height: 40px;
-    line-height: 40px;
+    height: 50px;
+    line-height: 50px;
     border-top: 1px solid lightgray;
 }
 
@@ -100,6 +101,7 @@ a {
 section {
     width: 1200px;
     margin: 0 auto;
+    margin-top: 100px;
 }
 
 .sel {
@@ -120,16 +122,23 @@ section {
 }
 .qnatitle{
     text-align: center;
+    margin-bottom: 100px;
+    font-size: 2em;
 }
 .qna span{
     font-size: small;
     margin-left: 10px;
-    color: #bca0c9;
-}
-#content{
-    cursor: pointer;
+    color: #f7b8b4;
 }
 .wrap>label{
 	display: inline-block;
 	width: 80px;
+}
+.ansBefore{
+	color: #F16B6F;
+	font-weight: bold;
+}
+.ansAfter{
+	color: #4F86C6;
+	font-weight: bold;
 }

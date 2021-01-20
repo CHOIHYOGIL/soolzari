@@ -23,28 +23,27 @@
 				<th>답변 여부</th>
 			</tr>
 			<c:forEach items="${list }" var="q">
-				<tr id="content">
+				<tr>
 					<td><input type="checkbox" name="chk"></td>
 					<td>${q.qnaNo }</td>
 					<c:choose>
 						<c:when test="${q.qnaEnroll eq today }">
-							<td>${q.qnaName }<span>new !</span></td>
+							<td><a href="/qnaView.sool?qnaNo=${q.qnaNo }&qnaAns=${q.qnaAns}">${q.qnaName }<span>new !</span></a></td>
 						</c:when>
 						<c:otherwise>
-							<td>${q.qnaName }</td>
+							<td><a href="/qnaView.sool?qnaNo=${q.qnaNo }&qnaAns=${q.qnaAns}">${q.qnaName }</a></td>
 						</c:otherwise>
 					</c:choose>
 					<td>${q.qnaWriter }</td>
 					<td>${q.qnaEnroll }</td>
 					<c:choose>
 						<c:when test="${q.qnaAns == 0 }">
-							<td>답변 대기</td>
+							<td class="ansBefore">답변 대기</td>
 						</c:when>
 						<c:otherwise>
-							<td>답변 완료</td>
+							<td class="ansAfter">답변 완료</td>
 						</c:otherwise>
 					</c:choose>
-					<input type="hidden" value="${q.qnaAns }">
 				</tr>
 			</c:forEach>
 		</table>
@@ -88,16 +87,21 @@
 		});
 		$("#delete").click(function(){
 			var chk = $("[type=checkbox]:checked");
-			var qnaNo = new Array();
-			chk.each(function(index, item){
-				qnaNo.push($(item).parent().next().html());
-			});
-			location.href="/deleteQna.sool?qnaNo="+qnaNo.join("/");
+			if(chk.length == 0){
+				alert("선택해주세요");
+			}else{
+				var qnaNo = new Array();
+				chk.each(function(index, item){
+					qnaNo.push($(item).parent().next().html());
+				});
+				location.href="/deleteQna.sool?qnaNo="+qnaNo.join("/");
+			}
 		});
-		$("#content").click(function(){
-            var qnaNo = $(this).children().eq(1).html();
-            var qnaAns = $(this).find($("[type=hidden]")).val();
-            location.href="/qnaView.sool?qnaNo="+qnaNo+"&qnaAns="+qnaAns;
+		$("[type=submit]").click(function(event){
+        	if($("[name=search]").val() == ""){
+        		alert("검색어를 입력해주세요");
+        		event.preventDefault();
+        	}
         });
 	});
 	</script>

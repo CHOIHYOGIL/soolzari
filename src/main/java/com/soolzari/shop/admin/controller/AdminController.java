@@ -32,6 +32,7 @@ public class AdminController {
 	
 	@RequestMapping("/admin.sool")
 	public String admin() {
+
 		return "admin/admin";
 	}
 	
@@ -48,9 +49,9 @@ public class AdminController {
 	public String changeOne(int type, int userNo, int grade, Model model) {
 		int result = service.changeOne(userNo, grade);
 		if(result>0) {
-			model.addAttribute("msg", "변경 성공");
+			model.addAttribute("msg", "구독 등급 변경 성공");
 		}else {
-			model.addAttribute("msg", "변경 실패");
+			model.addAttribute("msg", "구독 등급 변경 실패");
 		}
 		model.addAttribute("loc", "/user.sool?type="+type+"&reqPage=1");
 		return "common/msg";
@@ -60,9 +61,9 @@ public class AdminController {
 	public String changeAll(int type, String userNo, String grade, Model model) {
 		int result = service.changeAll(type, userNo, grade);
 		if(result>0) {
-			model.addAttribute("msg", "변경 성공");
+			model.addAttribute("msg", "구독 등급 변경 성공");
 		}else {
-			model.addAttribute("msg", "변경 실패");
+			model.addAttribute("msg", "구독 등급 변경 실패");
 		}
 		model.addAttribute("loc", "/user.sool?type="+type+"&reqPage=1");
 		return "common/msg";
@@ -115,7 +116,7 @@ public class AdminController {
 		return "admin/qna";
 	}
 	
-	@RequestMapping("qnaView.sool")
+	@RequestMapping("/qnaView.sool")
 	public String qnaView(int qnaNo, int qnaAns, Model model) {
 		Qna qna = service.selectOneQna(qnaNo);
 		if(qnaAns == 1) {//답변 있는 상태
@@ -126,13 +127,24 @@ public class AdminController {
 		return "admin/qnaView";
 	}
 	
+	@RequestMapping("/qnaViewClient.sool")
+	public String qnaViewClient(int qnaNo, int qnaAns, Model model) {
+		Qna qna = service.selectOneQna(qnaNo);
+		if(qnaAns == 1) {//답변 있는 상태
+			Qrv qrv = service.selectOneQrv(qnaNo);
+			model.addAttribute("qrv", qrv);
+		}
+		model.addAttribute("qna", qna);
+		return "client/qnaViewC";
+	}
+	
 	@RequestMapping("deleteQna.sool")
 	public String deleteQna(String qnaNo, Model model) {
 		int result = service.deleteQna(qnaNo);
 		if(result>0) {
-			model.addAttribute("msg", "삭제 성공");
+			model.addAttribute("msg", "문의사항 삭제 성공");
 		}else {
-			model.addAttribute("msg", "삭제 실패");
+			model.addAttribute("msg", "문의사항 삭제 실패");
 		}
 		model.addAttribute("loc", "/qna.sool?reqPage=1");
 		return "common/msg";
@@ -148,5 +160,41 @@ public class AdminController {
 		model.addAttribute("page", qpd.getPageNavi());
 		model.addAttribute("today", today);
 		return "admin/qna";
+	}
+	
+	@RequestMapping("/insertQrv.sool")
+	public String insertQrv(Qrv qrv, Model model) {
+		int result = service.insertQrv(qrv);
+		if(result>0) {
+			model.addAttribute("msg", "답변 등록 성공");
+		}else {
+			model.addAttribute("msg", "답변 등록 실패");
+		}
+		model.addAttribute("loc", "/qna.sool?reqPage=1");
+		return "common/msg";
+	}
+	
+	@RequestMapping("/updateQrv.sool")
+	public String updateQrv(Qrv qrv, Model model) {
+		int result = service.updateQrv(qrv);
+		if(result>0) {
+			model.addAttribute("msg", "답변 수정 성공");
+		}else {
+			model.addAttribute("msg", "답변 수정 실패");
+		}
+		model.addAttribute("loc", "/qnaView.sool?qnaNo="+qrv.getQnaNo()+"&qnaAns=1");
+		return "common/msg";
+	}
+	
+	@RequestMapping("/deleteQrv.sool")
+	public String deleteQrv(int qnaNo, int qrvNo, Model model) {
+		int result = service.deleteQrv(qnaNo, qrvNo);
+		if(result>0) {
+			model.addAttribute("msg", "문의사항 삭제 성공");
+		}else {
+			model.addAttribute("msg", "문의사항 삭제 실패");
+		}
+		model.addAttribute("loc", "/qna.sool?reqPage=1");
+		return "common/msg";
 	}
 }

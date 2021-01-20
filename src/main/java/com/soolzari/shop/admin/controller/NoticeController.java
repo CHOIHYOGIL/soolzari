@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -156,6 +157,7 @@ public class NoticeController {
 	@RequestMapping("/viewClient.sool")//조회수 해야함
 	public String noticeClient(int noticeNo, Model model) {
 		Notice n = service.selectOneNotice(noticeNo);
+		n.setNoticeCount(service.updateCount(noticeNo));
 		Notice prev = service.selectOneNotice(noticeNo-1);
 		Notice next = service.selectOneNotice(noticeNo+1);
 		model.addAttribute("n", n);

@@ -12,7 +12,7 @@
 <body>
 	<jsp:include page="/WEB-INF/views/admin/navi.jsp"/>
 	<section>
-        <h1>사용자 관리</h1>
+        <h1 class="usertitle">사용자 관리</h1>
         <div class="navi">
             <ul>
                 <li><a href="javascript:void(0)">고객</a></li>

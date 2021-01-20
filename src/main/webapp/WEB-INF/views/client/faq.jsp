@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>자주 묻는 질문</title>
-<link href="/resources/css/faq.css" rel="stylesheet" type="text/css">
+<link href="/resources/css/faqC.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.js"></script>
 </head>
 <body>
@@ -140,7 +140,7 @@
             });
             $(".navi a").eq(0).click();
             $("#qna").click(function(){
-               location.href="";//문의하기 작성하는 페이지 
+               location.href="/client/mQuestion.sool?reqPage=1&period=1";//문의하기 작성하는 페이지 
             });
         });
     </script>

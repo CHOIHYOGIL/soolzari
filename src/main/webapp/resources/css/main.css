@@ -76,7 +76,7 @@ header .logo img{
 }
 header nav{
  
-	width:64%;
+	width:62%;
     height: 100%;
 	float:left;
   
@@ -146,8 +146,8 @@ header nav .gnb li a:hover .bg{
 
 .search_input{
     
-    width:150px !important; 
-    padding:12px 24px !important;
+    width:120px !important; 
+    padding:12px 10px !important;
      background-color: transparent !important;
   transition: transform 250ms ease-in-out;
         font-size: 14px !important;
@@ -195,7 +195,7 @@ width: 100%;
 
 .login li{
 	float:right;
-	margin-right:18px;
+	margin-right:13px;
 	position:relative;
 	top:-10px;
 }
@@ -470,7 +470,7 @@ header nav .gnb .sub li a:after{
 }
 .rateNum{
 	
-	font-size:15px;
+	font-size:16px;
 }
 
 /* 구독 */
@@ -536,6 +536,7 @@ footer{
     text-align: center;
     background: #4d5075;
     color:white;
+    margin-top:100px;
 }
 
 footer .sns li{
