@@ -116,7 +116,7 @@ public class SellerController {
 		System.out.println(g);
 		System.out.println(file);
 		
-		g.setStatus(1);
+		g.setStatus(0);
 		g.setGdsBcnt(0);
 		int result = service.insertGoods(g);
 		System.out.println(result);
