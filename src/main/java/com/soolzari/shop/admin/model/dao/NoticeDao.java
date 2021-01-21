@@ -33,7 +33,7 @@ public class NoticeDao {
 		return session.delete("admin.deleteNotice", noticeNo);
 	}
 
-	public ArrayList<Notice> findNotice(HashMap<String, String> map) {
+	public ArrayList<Notice> findNotice(HashMap<String, Object> map) {
 		List<Notice> list = session.selectList("admin.findNotice", map);
 		return (ArrayList<Notice>)list;
 	}
@@ -43,6 +43,16 @@ public class NoticeDao {
 	}
 
 	public int updateNotice(Notice n) {
+		System.out.println(n.getNoticeTitle());
+		System.out.println(n.getNoticeContent());
 		return session.update("admin.updateNotice", n);
+	}
+
+	public int totalNoticeSearch(HashMap<String, Object> map) {
+		return session.selectOne("admin.totalNoticeSearch", map);
+	}
+
+	public int updateCount(int noticeNo) {
+		return session.update("admin.updateCount", noticeNo);
 	}
 }

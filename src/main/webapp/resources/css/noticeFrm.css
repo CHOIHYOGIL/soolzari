@@ -16,6 +16,7 @@
     text-align: center;
     height: 60px;
     line-height: 60px;
+    font-size: 18px;
 }
 input[type="text"]{
     border: none;
@@ -38,6 +39,7 @@ input[type="submit"],
     box-sizing: border-box;
     line-height: 27px;
     cursor: pointer;
+    outline: none;
 }
 .notice>tr>td:first-child{
     border-right: 1px solid lightgray;
@@ -45,16 +47,17 @@ input[type="submit"],
 .notice tr:last-child{
     text-align: left;
 }
-.wrap>h2{
+.wrap>h1{
     margin: 50px;
     text-align: center;
+    font-weight: bold;
 }
 form{
-    width: 1000px;
+    width: 1200px;
     margin: 0 auto;
 }
 .inputbtn{
-    width: 1000px;
+    width: 1200px;
     display: flex;
     justify-content: flex-end;
 }
@@ -67,4 +70,7 @@ form{
 .inputbtn a{
     text-decoration: none;
     color: white;
+}
+.note-editor .note-editable {
+    line-height: 1;
 }

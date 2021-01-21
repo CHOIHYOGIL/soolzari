@@ -7,13 +7,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="resources/css/reservation.css">
+<link rel="stylesheet" href="/resources/css/reservation.css">
 
+
+    	   
+    <script type="text/javascript" src="/resources/js/jquery-3.3.1.min.js"></script>
    
- <!-- 모달창 드래그 -->
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-   
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 
@@ -32,27 +37,21 @@
 <script src='/resources/fullcalendar-4.4.0/packages/list/main.js'></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    
-  
+
+	
+
 
     <!-- moment -->
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/moment.min.js"></script>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/locale/ko.js"></script> 
 	
-	     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script> 
+
 
 
     <!-- icon 사용-->
     <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
     <!-- script -->
-    <script src="/resources/js/jquery-3.3.1.min.js"></script>
-  
-<link rel="stylesheet" href="/resources/css/bootstrap.min.css">
-   <script src="/resources/js/bootstrap.min.js"></script>
 
 
     <!-- 반응형 -->
@@ -60,6 +59,8 @@
 </head>
 <body>
  <%@include file="/WEB-INF/views/common/header.jsp" %>
+ 
+ 	<div style="height:80px; width:100%;"></div>
  <section class="carousel">
 
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
@@ -100,11 +101,8 @@
         
          <div class="soolzari_container">
            
-           <div class="reservationLogo" style="text-align: center;">
-               
-               <img src="/img/%EB%A1%9C%EA%B7%B8%EC%9D%B8%EB%A1%9C%EA%B3%A0.png" alt="">
-           </div>
-            <h2 class="fw300 fs34 f_scd text-center mb40" style="background:#f4f4f4; font-size:25px;">술자리<span>양조장 체험</span>프로그램 </h2><br><br>
+          
+            <h2 class="fw300 fs34 f_scd text-center mb40" style="background:#f4f4f4; font-size:25px;">술자리<span>&nbsp;양조장 체험</span>프로그램 </h2><br><br>
            
             <div class="choiceBtn">
                 <ul class>
@@ -176,15 +174,45 @@
 </html>
 
 <script>
-		
+
  /* 결제   */
   $(function(){
 	
 	$("#payBtn").click(function(){
-		console.log("pay");
-		console.log($('input[name=className]').val());
-		var title=$('input[name=className]').val();
 		var person=$('input[name=classPerson]').val();
+		var title=$('input[name=className]').val();
+		  var sessionNo='<%=session.getAttribute("sessionNo")%>';
+		  
+		$.ajax({
+				
+				url:"checkPerson.sool",
+				type:"POST",
+				dateType:'json',
+				async:false, 
+				data:{
+					sessionNo:sessionNo,
+					person:person,
+					title:title,
+					classNo:k
+				},
+				success:function(data){
+			
+					if(data.msg=="가능 인원이 초과입니다."){
+						alert(data.msg+data.person+"명 만 가능합니다.");
+						location.href="/reservation.sool"
+					}
+					
+				},
+				error:function(request, status, error){
+					console.log("error code : "+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					
+				}
+			})
+	
+		
+		
+		var title=$('input[name=className]').val();
+	
 		var id='<%=session.getAttribute("sessionId")%>';
 		console.log("session: "+id);
 		var name='<%=session.getAttribute("sessionName")%>';
@@ -198,8 +226,8 @@
 		var date = d.getFullYear() + '' + (d.getMonth() + 1)
 				+ '' + d.getDate() + '' + d.getHours() + ''
 				+ d.getMinutes() + '' + d.getSeconds();
-		IMP.init('imp16593684');
 		
+		IMP.init('imp16593684');
 		IMP.request_pay({
 			merchant_uid : 'soolZari' + date,//상점거래ID
 			name : name+"-"+'클래스 결제', //결제이름
@@ -214,15 +242,10 @@
 				var msg='클래스 예약 결제가 완료되었습니다';
 			        msg += '결제 금액 : ' + rsp.paid_amount;
 			        var eventDB=getEvents();
-			  
-			  	console.log("title : "+title);
-
+		
 			        for(var i=0; i<eventDB.length; i++){
-			        	console.log("hey");
-			        	console.log(eventDB[i].title);
-			      	  console.log("start :"+eventDB[i].date);
+			        
 			        if(eventDB[i].title==title && eventDB[i].id==k){
-			        	console.log("success");
 			          	setClassDB(eventDB[i].id,person);
 			        }
 			      
@@ -245,30 +268,18 @@
 
 
 
-$(function(){
-    // 이미지 슬라이드 컨트롤를 사용하기 위해서는 carousel를 실행해야한다.
-    $('#carousel-example-generic').carousel({
-    // 슬리아딩 자동 순환 지연 시간
-    // false면 자동 순환하지 않는다.
-    interval: 5000,
-    // hover를 설정하면 마우스를 가져대면 자동 순환이 멈춘다.
-    pause: "hover",
-    // 순환 설정, true면 1 -> 2가면 다시 1로 돌아가서 반복
-    wrap: true,
-    // 키보드 이벤트 설정 여부(?)
-    keyboard : true
-    });
-    });
+
    
 
 $(function(){
+	
 	$(".fc-past").text('예약불가');
 	$(".fc-today").text('예약불가');
 	//$(".fc-future").append(("<a href="#">test</a>"));
 	$("input[type=number]").change(function(){
 		var person=$(this).val();
 		console.log("person : "+person);
-		var price=$(".classPrice").val();
+
 		console.log("price : "+price);
 		var amount=price*person;
 		console.log("amount: "+amount);
@@ -283,29 +294,53 @@ $(function(){
 </script>
  
  <script>
- 
+ var price;
  	function getInput(info){
 		console.log("getInput");
 		  var session='<%=session.getAttribute("sessionNo")%>';
-	
+		  
 			console.log("k : "+k);
-		var person=$('input[name=classPerson]').val();
-		
- 		var today=dateFormat(info.event.start);
+			  var eventDB=getEvents();
+			console.log(eventDB);
+			  var date = new Date();
+				var today=dateFormat(date);
  		console.log(today);
  		var title=info.event.title;
- 		var price;
+ 	
  		var creator;
  		var description;
- 	 	if(title==='클래스1'){
- 	 		price='20000';
- 	 		description="음식디미방 전통주(김향주 등)만들기";
- 	 		creator="최효길";
- 	 	}else{
- 	 		price='15000';
- 	 		creator="유대호";
- 	 		description="전통주 만들기 및 시음 체험";
- 	 	}
+ 		console.log("title : "+title);
+ 		console.log(eventDB.length);
+ 		
+ 		
+ 		for(var i=0; i<eventDB.length; i++){
+ 			if(title==eventDB[i].title){
+ 				price=eventDB[i].price;
+ 				description=eventDB[i].description;
+ 				$.ajax({
+ 					
+ 					url:"findSeller.sool",
+ 					type:"POST",
+ 					dateType:'json',
+ 					async:false, 
+ 					data:{
+ 						selNo:eventDB[i].creator
+ 					},
+ 					success:function(data){
+ 						console.log("findSeller");
+ 						creator=data;
+ 					},
+ 					error:function(error){
+ 						alert(error);
+ 					}
+ 				})
+ 			
+ 			
+ 				
+ 			}
+ 		}
+ 		
+ 	 
  	 	console.log("price : "+price);
  	 	$(".classPerson").val('1');
  	 	$(".className").val(info.event.title);
@@ -334,14 +369,8 @@ $(function(){
  	
  	
  </script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script>
-  $(function () {
-    $(".modal").draggable({
-    	handle:".modal-top"
-    });
-  });
-</script>
+
+
 <script>
 
 	
@@ -383,37 +412,32 @@ var i=0;
 }
 	function getEvents(){
 		
-		var title;
-		var start;
-		var classDate;
+		var title ,start , classDate;
 		var classInfo=[];
-		var classNo;
-		var classStart;
-		
+		var classNo, classStart, price;
+		var description, person, creator ,selNo;
 		$.ajax({
 			url:"getClassDB.sool",
 			type:"POST",
-			dateType:'json',
-			async:false,  //이렇게 하면 객체를 return 하면 다른곳에서 받을수있다. 동기식으로 처리되는ㄴ 자바스크립트라면 반드시 이 getEvents()가 끝나고 classInfo를 리턴하고 다음 로직을 처리했을텐데
-						  //하지만 Ajax는 기본적으로 비동기식 처리방식이므로 Ajax 호출이 서버에서 응답받는데에 아무리 빨리 받아도 다음로직을 실행하기 전에 받을수 있다고 확신x 
-						  //async:false를 통해서 동기식 방식으로 설정하면 이제 ajax를 호출하여 서버에서 응답을 기다렸다가 응답을 모두 완료한 후 다음 로직을 싱행하므로 undefined가 뜨지않고 객체를 return할수있다.
+			dateType:'json', //이렇게 하면 객체를 return 하면 다른곳에서 받을수있다. 동기식으로 처리되는ㄴ 자바스크립트라면 반드시 이 getEvents()가 끝나고 classInfo를 리턴하고 다음 로직을 처리했을텐데
+			  //하지만 Ajax는 기본적으로 비동기식 처리방식이므로 Ajax 호출이 서버에서 응답받는데에 아무리 빨리 받아도 다음로직을 실행하기 전에 받을수 있다고 확신x 
+			  //async:false를 통해서 동기식 방식으로 설정하면 이제 ajax를 호출하여 서버에서 응답을 기다렸다가 응답을 모두 완료한 후 다음 로직을 싱행하므로 undefined가 뜨지않고 객체를 return할수있다.
+			async:false, 
 			success:function(data){
 				//console.log("data : "+data) 이런식으로 하면 안뜬다. 왜냐하면 "data :" 를 붙이면 javascrtip에서 string형으로 변환시킴
 				
-				console.log(data);
-				console.log(data.length);
-				
-			
+			console.log(data);
 					for(var i=0; i<data.length; i++){
 					classInfo[i]={
-							
-								
-						
 							title:data[i].className,
 							id:data[i].classNo,
+							person:data[i].classPerson,
 							date:data[i].classDate,
 							time:data[i].classStartTime,
-							color:'#e5e5e5',
+							description:data[i].classDescription,
+							creator:data[i].classCreator,
+							price:data[i].classPrice,
+							color:'#4d5075',
 							start:data[i].classDate+"T"+data[i].classStartTime,
 							}
 				
@@ -425,30 +449,23 @@ var i=0;
 			error:function(error){
 				console.log(error);
 			}
+			
+			
 	
 		})
-		console.log("sssssss");
-				console.log(classInfo);
+
 		return classInfo;
 	
 	}
 
 
 
-		
 	var k=0;
   document.addEventListener('DOMContentLoaded', function() {
-	
+	  console.log("hi");
 	  var eventDB=getEvents();
-	  console.log('hi');
-	
-		
-	  
-	  console.log(eventDB);
-
     var calendarEl = document.getElementById('calendar');
-	var session='<%=session.getAttribute("sessionId")%>';
-	console.log("session: "+session);
+
     var date = new Date();
     var date1 = new Date();
     var d = date.getDate();
@@ -471,44 +488,34 @@ var i=0;
       eventLimit:true,
       selectable:true,
       //hiddenDays:[ 0, 6 ],
- 
-      
+
       dateClick:function(info){
     	  var myDate= moment().format('YYYY-MM-DD');
     	  var clickDate=info.dateStr;
-    	
-    	  
     	  if(clickDate <= myDate){
     		  
     		  alert("예약불가");
     	  }
     	
       },
-      
-   
-
     	events:eventDB,
-    
+    	datesRender:function(){
+    	 	$(".fc-past").text('예약불가');
+    		$(".fc-today").text('예약불가');
+    	},
     	eventClick:function(info){
-    		
     	
-    		
-    		console.log("content :"+info.event.start);
-
-    		if(session=='null'){
+    		 var session='<%=session.getAttribute("sessionId")%>';
+   
+    		if(session=="null"){
     			alert('로그인 후 예약가능합니다');
     			location.href="/login.sool";
     		}else{
-    			
     			  var session='<%=session.getAttribute("sessionNo")%>';
     			  var classNo=0;
-    			
     				classNo=info.event.id;
     				k=info.event.id;
-    			console.log("df");
-    		
-    			console.log(info.event.start);
-    				console.log("classNo:"+classNo);
+   
     			$.ajax({
     				url:"checkUser.sool",
     				type:"POST",
@@ -518,13 +525,11 @@ var i=0;
     					{
     					classNo:classNo,
     					session:session,
-    					
     					},
     				success:function(data){
-    				console.log("data : "+data) //이런식으로 하면 안뜬다. 왜냐하면 "data :" 를 붙이면 javascrtip에서 string형으로 변환시킴
+    					console.log("data : "+data) //이런식으로 하면 안뜬다. 왜냐하면 "data :" 를 붙이면 javascript에서 string형으로 변환시킴
     					console.log(data);
-    			
-    					alert(data.msg);
+ 
     					if(data.msg=="예약 가능합니다."){
     						console.log("hihihihii");
     						$('.modal').modal("show");
@@ -535,7 +540,7 @@ var i=0;
     				
     					console.log(error);
     				}
-    		
+    			
     			})
 
     		}

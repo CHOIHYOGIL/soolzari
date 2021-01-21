@@ -11,26 +11,38 @@
     font-family: 'S-CoreDream-3Light';
 }
 
-.notice tr {
-    display: block;
-    border-top: 1px solid lightgray;
-    text-align: center;
+.noticeWrap{
+	margin-top: 100px;
 }
 
-.notice th,
-td {
+.notice{
+	border-spacing: 0;
+	text-align: center;
+}
+
+.notice th{
+    background: #4d5075;
+    color: white;
     width: 150px;
     box-sizing: border-box;
-    height: 40px;
-    line-height: 40px;
+    height: 50px;
+    line-height: 50px;
+}
+
+.notice td {
+    width: 150px;
+    box-sizing: border-box;
+    height: 50px;
+    line-height: 50px;
+    border-top: 1px solid lightgray;
 }
 
 .notice th:nth-child(3),
-td:nth-child(3) {
+.notice td:nth-child(3) {
     width: 500px;
 }
 
-.notice tr:last-child {
+.notice tr:last-child>td{
     border-bottom: 1px solid lightgray;
 }
 
@@ -38,6 +50,7 @@ select {
     border: 1px solid lightgray;
     height: 30px;
     outline: none;
+    width: 70px;
 }
 
 input[type="text"] {
@@ -48,7 +61,7 @@ input[type="text"] {
 }
 
 input[type="submit"],
-button {
+.btnwrap button {
     width: 70px;
     height: 31px;
     background: #4d5075;
@@ -57,6 +70,7 @@ button {
     box-sizing: border-box;
     line-height: 27px;
     cursor: pointer;
+    outline: none;
 }
 
 a {
@@ -104,18 +118,27 @@ section {
     border-bottom: 3px solid #4d5075;
 }
 
-.wrap {
+.btnwrap {
     margin-top: 10px;
     margin-bottom: 30px;
+    display: flex;
+    align-items: center;
 }
-h1{
+.noticetitle{
     text-align: center;
+    margin-bottom: 100px;
+    font-size: 2em;
 }
 .notice span{
     font-size: small;
     margin-left: 10px;
-    color: #bca0c9;
+    color: #f7b8b4;
 }
-#content{
-    cursor: pointer;
+.write{
+    width: 1200px;
+    display: flex;
+    justify-content: flex-end;
+}
+.btnwrap label{
+    width: 100px;
 }

@@ -35,9 +35,10 @@
 </head>
 <body>
    <%@include file="/WEB-INF/views/common/header.jsp" %>
+   	<div style="height:40px; width:100%;"></div>
  <div class="wrapper">
            <div class="introduce">
-            <h2 style="font-size:40px; color:white; "><br><br><br>술자리 소개</h2>
+            <h2 style="font-size:36px; color:white; "><br><br><br>술자리 소개</h2>
 
 
         </div>
@@ -84,7 +85,7 @@
                 <div class="col-md-7">
 
                     <h5 class="featurette-heading">
-                        <h2>우리들의 술 이야기,<br><span style="font-weight: bold; font-size:30px;">ABOUT 술자리</span></h2><br>
+                        <br><span style="font-weight: bold; font-size:30px; margin-top: 30px;">ABOUT 술자리</span><br>
                         <p class="lead">안녕하십니까? 반갑습니다.<br>술자리를 방문해주신 여러분께 진심으로 감사의 말씀을 전해드립니다.<br><br>
                             우리는 대한민국 5,000년 역사와 함께 해온<br>자랑스러운 전통술을 알리고자 이 자리에 섰습니다.<br><br>
                             우리는 전통술의 발전을 통해 지역 경제를 활성화하고, <br>나아가 세계 10위의 경제대국에 걸맞은<br>
@@ -94,7 +95,7 @@
 
                 </div>
                 <div class="col-md-5">
-                    <img src="/resources/image/carousel2.jpg" alt="" width="500px;" height="380px;" object-fit="cover;">
+                    <img src="/resources/image/carousel2.PNG" alt="" width="500px;" height="380px;" object-fit="cover;">
                 </div>
 
             </div>

@@ -9,8 +9,9 @@
 <link href="/resources/css/noticeViewClient.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	<section>
-        <h1>공지사항</h1>
+        <h1 class="noticetitle">공지사항</h1>
         <table class="notice">
             <tr>
                 <th>제목</th>
@@ -36,17 +37,15 @@
             </tr>
         </table>
         <button id="list">목록</button>
-
-   
-
-        <div id="next"><img src="/resources/image/arrowu/png"><span>next</span><a href="/notice/viewClient.sool?noticeNo=${next.noticeNo }">${next.noticeTitle }</a></div>
+       <!-- 로직 다시 짜야됨 -->
+        <div id="next"><img src="/resources/image/arrowu.png"><span>next</span><a href="/notice/viewClient.sool?noticeNo=${next.noticeNo }">${next.noticeTitle }</a></div>
         <div id="prev"><img src="/resources/image/arrowd.png"><span>prev</span><a href="/notice/viewClient.sool?noticeNo=${prev.noticeNo }">${prev.noticeTitle }</a></div>
 
     </section>
     
     <script>
         $("#list").click(function(){
-            location.href="/notice/list.sool?reqPage=1";
+            location.href="/notice/listClient.sool?reqPage=1";
         });
         $("#prev").click(function(){
         	location.href="/notice/viewClient.sool?noticeNo=${prev.noticeNo }";

@@ -40,7 +40,7 @@ public class NoticeService {
 		}
 		int pageNaviSize = 5;
 		String page = "";
-		int pageStart = (reqPage-1)/pageNaviSize+1;
+		int pageStart = ((reqPage-1)/pageNaviSize)*pageNaviSize + 1;
 		if(pageStart>1) {
 			page += "<a href='/notice/list.sool?reqPage=1'><<</a>";
 			page += "<a href='/notice/list.sool?reqPage="+(pageStart-1)+"'><</a>";
@@ -88,8 +88,8 @@ public class NoticeService {
 		return dao.deleteNotice(noticeNo);
 	}
 
-	public ArrayList<Notice> findNotice(String date, String type, String search) {
-		HashMap<String, String> map = new HashMap<String, String>();
+	public NoticePage findNotice(String date, String type, String search, int reqPage) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		Date d = new Date();
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     	String today = sdf.format(d);
@@ -106,14 +106,58 @@ public class NoticeService {
     	}
 		map.put("type", type);//title, content, writer
 		map.put("search", search);
-		return dao.findNotice(map);
+		int numPerPage = 10;
+		int start = (reqPage-1)*numPerPage+1;
+		int end = reqPage*numPerPage;
+		map.put("start", start);
+		map.put("end", end);
+		ArrayList<Notice> list = dao.findNotice(map);
+		NoticePage np = new NoticePage();
+		np.setList(list);
+		int totalCount = dao.totalNoticeSearch(map);//총 게시물 수
+		int totalPage = 0;
+		if(totalCount%numPerPage==0) {
+			totalPage = totalCount/numPerPage;
+		}else {
+			totalPage = (totalCount/numPerPage)+1;
+		}
+		int pageNaviSize = 5;
+		String page = "";
+		int pageStart = ((reqPage-1)/pageNaviSize)*pageNaviSize + 1;
+		if(pageStart>1) {
+			page += "<a href='/notice/find.sool?reqPage=1&date="+date+"&type="+type+"&search"+search+"'><<</a>";
+			page += "<a href='/notice/find.sool?reqPage="+(pageStart-1)+"&date="+date+"&type="+type+"&search"+search+"'><</a>";
+		}
+		for(int i=0;i<pageNaviSize;i++) {
+			if(reqPage != pageStart) {
+				page += "<a href='/notice/find.sool?reqPage="+pageStart+"&date="+date+"&type="+type+"&search"+search+"' class='num'>"+pageStart+"</a>";
+			}else {
+				page += "<span class='sel'>"+pageStart+"</span>";
+			}
+			pageStart++;
+			if(pageStart>totalPage) {
+				break;
+			}
+		}
+		if(pageStart<=totalPage) {
+			page += "<a href='/notice/find.sool?reqPage="+pageStart+"&date="+date+"&type="+type+"&search"+search+"'>></a>";
+			page += "<a href='/notice/find.sool?reqPage="+totalPage+"&date="+date+"&type="+type+"&search"+search+"'>>></a>";
+		}
+		np.setPage(page);
+		return np;
 	}
 
 	public Notice selectOneNotice(int noticeNo) {
 		return dao.selectOneNotice(noticeNo);
 	}
 	
+	@Transactional
 	public int updateNotice(Notice n) {
 		return dao.updateNotice(n);
+	}
+
+	@Transactional
+	public int updateCount(int noticeNo) {
+		return dao.updateCount(noticeNo);
 	}
 }

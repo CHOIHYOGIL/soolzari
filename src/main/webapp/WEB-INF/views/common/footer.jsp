@@ -21,8 +21,7 @@
     <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
     <!-- script -->
 
-<link rel="stylesheet" href="/resources/css/bootstrap.min.css">
-   <script src="/resources/js/bootstrap.min.js"></script>
+
 
 
     <!-- 반응형 -->
@@ -39,7 +38,7 @@
                 <li><a href="#"><img src="/resources/image/blog.png" alt=""></a></li>
             </ul>
 
-            <h2 class="footerLogo">SOOLZARI</h2>
+            <h2 class="footerLogo"><img src="/resources/image/logo1.png" style="width:100px"></h2>
             <ul>
                 <li>대표자 홍길동 | 서울 중구 세종대로 110</li>
                 <li>사업자등록번호:123-12-12345 | 이메일:abc@naver.com</li>

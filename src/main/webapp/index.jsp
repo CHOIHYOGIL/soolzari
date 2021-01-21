@@ -6,16 +6,14 @@
 <head>
 <meta charset="UTF-8">
 <title>술자리 메인페이지</title>
- <link rel="stylesheet" href="resources/css/main.css">
-
-    <!-- Bootstrap cdn 설정 -->
+ <link rel="stylesheet" href="/resources/css/main.css">
+ <!-- script -->
+    <script src="/resources/js/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
-
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <!--font-->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
@@ -23,10 +21,10 @@
 
     <!-- icon 사용-->
     <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
-    <!-- script -->
-    <script src="resources/js/jquery-3.3.1.min.js"></script>
+    
+   
 
-
+	
 
 
     <!-- 반응형 -->
@@ -37,24 +35,23 @@
 <body>
 	<div class="wrap">
       <%@include file="/WEB-INF/views/common/header.jsp" %>
-
+		<div style="height:80px; width:100%;"></div>
         <section class="carousel">
 
-            <div id="carousel-example-generic" class="carousel slide">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
 
                     <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
                     <li data-target="#carousel-example-generic" data-slide-to="1"></li>
                     <li data-target="#carousel-example-generic" data-slide-to="2"></li>
                 </ol>
-
                 <div class="carousel-inner">
                     <div class="item active">
                         <img src="resources/image/carousel1.PNG" alt="" style="width:100%;">
                     </div>
 
                     <div class="item">
-                        <img src="resources/image/carousel2.jpg" alt="" style="width:100%;">
+                        <img src="resources/image/carousel2.PNG" alt="" style="width:100%;">
                     </div>
 
                     <div class="item">
@@ -91,7 +88,7 @@
                         <a href="#">
                             <div class="newImg-wrap">
 
-                                <img src="resources/image/product.jpg" style="width: 100%;">
+                                <img src="resources/image/product.PNG" style="width: 100%;">
                             </div>
 
                             <div class="text-box" style="
@@ -100,18 +97,13 @@
                                     <span>
                                         <h4 class="name">시나브로 에뚜왈 화이트 </h4>
                                     </span>
-                                    <div class="star">
+                                    <div class="rate">
                                         <span><i class="fas fa-star" style="color:orange;"></i></span>
-                                        <span><i class="fas fa-star" style="color:orange;"></i></span>
-                                        <span><i class="fas fa-star" style="color:orange;"></i></span>
-                                        <span><i class="fas fa-star" style="color:orange;"></i></span>
-                                        <span><i class="fas fa-star"></i>
-                                        </span>
-
+                                         <span class="rateNum">4.5/5.0</span>
                                     </div>
                                 </div>
 
-                                <div class="gray"><span class="price">10,000원</span></div>
+                                <div class="gray"><span class="price">30,000원</span></div>
 
                             </div>
                         </a>
@@ -123,7 +115,7 @@
                             <div class="newImg-wrap">
 
 
-                                <img src="resources/image/product.jpg" style="width: 100%;">
+                                <img src="/resources/image/product3.PNG" style="width: 100%;">
                                 <!--  
                                     <button type="button" class="btn_like">
                                         <span class="img_emoti">좋아요</span>
@@ -133,19 +125,14 @@
                             <div class="text-box" style="padding: 20px; box-sizing: border-box;">
                                 <div>
                                     <span>
-                                        <h4 class="name">전통주1</h4>
+                                        <h4 class="name">가덕 순쌀 생막거리</h4>
                                     </span>
-                                    <div class="star">
+                                   <div class="rate">
                                         <span><i class="fas fa-star" style="color:orange;"></i></span>
-                                        <span><i class="fas fa-star" style="color:orange;"></i></span>
-                                        <span><i class="fas fa-star" style="color:orange;"></i></span>
-                                        <span><i class="fas fa-star"></i></span>
-                                        <span><i class="fas fa-star"></i>
-                                        </span>
-
+                                    <span class="rateNum">4.0/5.0</span>
                                     </div>
                                 </div>
-                                <div class="gray"><span class="price">10000원</span></div>
+                                <div class="gray"><span class="price">14400원</span></div>
 
                             </div>
                         </a>
@@ -156,25 +143,20 @@
                         <a href="#">
                             <div class="newImg-wrap">
 
-                                <img src="resources/image/product.jpg" style="width:100%;">
+                                <img src="/resources/image/product2.PNG" style="width:100%; object-fit:contain; ">
                             </div>
                             <div class="text-box" style="
                                padding: 20px; box-sizing: border-box;">
                                 <div>
                                     <span>
-                                        <h4 class="name">전통주1</h4>
+                                        <h4 class="name">나루 생 막걸리 11.5도</h4>
                                     </span>
-                                    <div class="star">
+                                   <div class="rate">
                                         <span><i class="fas fa-star" style="color:orange;"></i></span>
-                                        <span><i class="fas fa-star" style="color:orange;"></i></span>
-                                        <span><i class="fas fa-star"></i></span>
-                                        <span><i class="fas fa-star"></i></span>
-                                        <span><i class="fas fa-star"></i>
-                                        </span>
-
+                                        <span class="rateNum">4.2/5.0</span>
                                     </div>
                                 </div>
-                                <div class="gray"><span class="price">10000원</span></div>
+                                <div class="gray"><span class="price">33000원</span></div>
 
                             </div>
                         </a>
@@ -185,23 +167,18 @@
                             <div class="newImg-wrap">
 
 
-                                <img src="resources/image/product.jpg" style="width: 100%;">
+                                <img src="/resources/image/product4.PNG" style="width: 100%;">
 
                             </div>
                             <div class="text-box" style="
                                padding: 20px; box-sizing: border-box;">
                                 <div>
                                     <span>
-                                        <h4 class="name">전통주1</h4>
+                                        <h4 class="name">토박이 소곡화주</h4>
                                     </span>
-                                    <div class="star">
+                                  <div class="rate">
                                         <span><i class="fas fa-star" style="color:orange;"></i></span>
-                                        <span><i class="fas fa-star" style="color:orange;"></i></span>
-                                        <span><i class="fas fa-star"></i></span>
-                                        <span><i class="fas fa-star"></i></span>
-                                        <span><i class="fas fa-star"></i>
-                                        </span>
-
+                                          <span class="rateNum">4.5/5.0</span>
                                     </div>
                                     <!--  
                                     <button type="button" class="btn_like">
@@ -209,7 +186,7 @@
                                         <span class="ani_heart_m"></span>
                                     </button>-->
                                 </div>
-                                <div class="gray"><span class="price">10000원</span></div>
+                                <div class="gray"><span class="price">18000원</span></div>
 
                             </div>
                         </a>
@@ -232,26 +209,21 @@
                         <a href="#">
                             <div class="newImg-wrap">
 
-                                <img src="resources/image/product.jpg" style="width: 100%;">
+                                <img src="/resources/image/product5.PNG" style="width: 100%;">
                             </div>
 
                             <div class="text-box" style="
                                padding: 20px; box-sizing: border-box;">
                                 <div>
                                     <span>
-                                        <h4 class="name">전통주1</h4>
+                                        <h4 class="name">블루베리 생막걸리</h4>
                                     </span>
-                                    <div class="star">
+                                 <div class="rate">
                                         <span><i class="fas fa-star" style="color:orange;"></i></span>
-                                        <span><i class="fas fa-star" style="color:orange;"></i></span>
-                                        <span><i class="fas fa-star" style="color:orange;"></i></span>
-                                        <span><i class="fas fa-star"></i></span>
-                                        <span><i class="fas fa-star"></i>
-                                        </span>
-
+                                        <span class="rateNum">4.8/5.0</span>
                                     </div>
                                 </div>
-                                <div class="gray"><span class="price">10000원</span></div>
+                                <div class="gray"><span class="price">25000원</span></div>
 
                             </div>
                         </a>
@@ -263,25 +235,20 @@
                             <div class="newImg-wrap">
 
 
-                                <img src="resources/image/product.jpg" style="width: 100%;">
+                                <img src="/resources/image/product6.PNG" style="width: 100%;">
                             </div>
                             <div class="text-box" style="padding: 10px; box-sizing: border-box;
                                padding: 20px; box-sizing: border-box;">
                                 <div>
                                     <span>
-                                        <h4 class="name">전통주1</h4>
+                                        <h4 class="name">대왕 산삼 생막걸리</h4>
                                     </span>
-                                    <div class="star">
+                                  <div class="rate">
                                         <span><i class="fas fa-star" style="color:orange;"></i></span>
-                                        <span><i class="fas fa-star" style="color:orange;"></i></span>
-                                        <span><i class="fas fa-star" style="color:orange;"></i></span>
-                                        <span><i class="fas fa-star"></i></span>
-                                        <span><i class="fas fa-star"></i>
-                                        </span>
-
+                                          <span class="rateNum">4.5/5.0</span>
                                     </div>
                                 </div>
-                                <div class="gray"><span class="price">10000원</span></div>
+                                <div class="gray"><span class="price">25000원</span></div>
 
                             </div>
                         </a>
@@ -293,24 +260,19 @@
                         <a href="#">
                             <div class="newImg-wrap">
 
-                                <img src="resources/image/product.jpg" style="width: 100%;">
+                                <img src="/resources/image/product7.PNG" style="width: 100%;">
                             </div>
                             <div class="text-box" style="padding: 20px; box-sizing: border-box;">
                                 <div>
                                     <span>
-                                        <h4 class="name">전통주1</h4>
+                                        <h4 class="name">능이주 2종</h4>
                                     </span>
-                                    <div class="star">
+                                  <div class="rate">
                                         <span><i class="fas fa-star" style="color:orange;"></i></span>
-                                        <span><i class="fas fa-star" style="color:orange;"></i></span>
-                                        <span><i class="fas fa-star" style="color:orange;"></i></span>
-                                        <span><i class="fas fa-star"></i></span>
-                                        <span><i class="fas fa-star"></i>
-                                        </span>
-
+                                       <span class="rateNum">4.6/5.0</span>
                                     </div>
                                 </div>
-                                <div class="gray"><span class="price">10000원</span></div>
+                                <div class="gray"><span class="price">12000원</span></div>
 
                             </div>
                         </a>
@@ -322,24 +284,19 @@
                             <div class="newImg-wrap">
 
 
-                                <img src="resources/image/product.jpg" style="width: 100%;">
+                                <img src="resources/image/product8.PNG" style="width: 100%;">
                             </div>
                             <div class="text-box" style="padding: 20px; box-sizing: border-box;">
                                 <div>
                                     <span>
-                                        <h4 class="name">전통주1</h4>
+                                        <h4 class="name">송이주 2종</h4>
                                     </span>
-                                    <div class="star">
+                                 <div class="rate">
                                         <span><i class="fas fa-star" style="color:orange;"></i></span>
-                                        <span><i class="fas fa-star" style="color:orange;"></i></span>
-                                        <span><i class="fas fa-star" style="color:orange;"></i></span>
-                                        <span><i class="fas fa-star"></i></span>
-                                        <span><i class="fas fa-star"></i>
-                                        </span>
-
+                                        <span class="rateNum">4.7/5.0</span>
                                     </div>
                                 </div>
-                                <div class="gray"><span class="price">10000원</span></div>
+                                <div class="gray"><span class="price">12000원</span></div>
 
                             </div>
                         </a>
@@ -379,28 +336,10 @@
     
   
     
-    /* 캐러셀 */
-       $(function(){
-        // 이미지 슬라이드 컨트롤를 사용하기 위해서는 carousel를 실행해야한다.
-        $('#carousel-example-generic').carousel({
-        // 슬리아딩 자동 순환 지연 시간
-        // false면 자동 순환하지 않는다.
-        interval: 5000,
-        // hover를 설정하면 마우스를 가져대면 자동 순환이 멈춘다.
-        pause: "hover",
-        // 순환 설정, true면 1 -> 2가면 다시 1로 돌아가서 반복
-        wrap: true,
-        // 키보드 이벤트 설정 여부(?)
-        keyboard : true
-        });
-        });
-       
     
  
-
    
     /* 좋아요*/
-
     
     
     

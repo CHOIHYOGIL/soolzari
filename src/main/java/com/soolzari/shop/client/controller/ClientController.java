@@ -3,8 +3,7 @@ package com.soolzari.shop.client.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.Calendar;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,7 +14,6 @@ import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +27,7 @@ import com.google.gson.JsonObject;
 import com.soolzari.shop.client.model.service.ClientService;
 import com.soolzari.shop.client.model.vo.Class_List;
 import com.soolzari.shop.client.model.vo.Client;
+import com.soolzari.shop.client.model.vo.Fund;
 import com.soolzari.shop.client.model.vo.Goods;
 import com.soolzari.shop.client.model.vo.KakaoAccessToken;
 import com.soolzari.shop.client.model.vo.KakaoUserInfo;
@@ -93,7 +92,7 @@ public class ClientController {
 	
 	//네이버 로그인 성공시 callback호출 메소드
 	@RequestMapping(value = "/callback", method = { RequestMethod.GET, RequestMethod.POST })
-	public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session) throws IOException, ParseException {
+	public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session, Client c) throws IOException, ParseException {
 	System.out.println("여기는 callback");
 	OAuth2AccessToken oauthToken;
 	oauthToken = naverLoginBO.getAccessToken(session, code, state);
@@ -111,18 +110,48 @@ public class ClientController {
 	//3. 데이터 파싱
 	//Top레벨 단계 _response 파싱
 	JSONObject response_obj = (JSONObject)jsonObj.get("response");
+	System.out.println(response_obj);
 	//response의 nickname값 파싱
 	String nickname = (String)response_obj.get("nickname");
 	String name=(String)response_obj.get("name");
+	String id=(String)response_obj.get("id");
+	String mobile=(String)response_obj.get("mobile");
+	String birthYear=(String)response_obj.get("birthyear");
+	String birthday=(String)response_obj.get("birthday");
+	String email=(String)response_obj.get("email");
 	System.out.println("이름 : "+name);
 	System.out.println(nickname);
+	System.out.println(id);
+	System.out.println(mobile);
+	String birthday1=birthday.replace('-',' ').replaceAll(" ","");
+	System.out.println(birthYear+birthday1);
+	System.out.println(email);
+	c.setClientAge(birthYear+birthday1);
+	c.setClientName(name);
+	c.setClientId(email);
+	c.setClientEmail(email);
+	c.setClientTel(mobile);
+
 	//4.파싱 닉네임 세션으로 저장
 	if(name!=null) {
+		Calendar cal = Calendar.getInstance();
+		int year=cal.get(Calendar.YEAR);
+		int adultYear=year-20;
 		model.addAttribute("msg","네이버 로그인 성공");
-		session.setAttribute("sessionId",name); //세션 생성
-		model.addAttribute("result", apiResult);
-		model.addAttribute("name",name);
-		model.addAttribute("loc","/");
+
+		if(Integer.parseInt(birthYear)>adultYear) {
+			model.addAttribute("msg","성인만 가입가능합니다.");
+			model.addAttribute("loc","/");
+		}else {
+			int result = service.insertClient(c);
+			session.setAttribute("sessionClient", c);
+			session.setAttribute("sessionId",name); //세션 생성
+			model.addAttribute("result", apiResult);
+			model.addAttribute("name",name);
+			model.addAttribute("loc","/");
+		}
+
+
 	}else {
 		model.addAttribute("msg","네이버 로그인 실패");
 		model.addAttribute("loc","client/login");
@@ -144,7 +173,7 @@ public class ClientController {
 	
 	@RequestMapping(value="/kakaologin", produces="application/json", method=RequestMethod.GET)
 	  public String kakaologin(@RequestParam("code") String code, RedirectAttributes ra, HttpSession session, Model model,
-			  HttpServletResponse response) throws IOException{
+			  HttpServletResponse response, Client c) throws IOException{
 		
 		System.out.println("kakao code: "+code);
 		  JsonNode accessToken;
@@ -163,21 +192,40 @@ public class ClientController {
 	        String id = userInfo.path("id").asText();
 	        String name = null;
 	        String email = null;
-	 
+	 System.out.println("userInfo : "+userInfo);
 	        // 유저정보 카카오에서 가져오기 Get properties
 	        JsonNode properties = userInfo.path("properties");
 	        JsonNode kakao_account = userInfo.path("kakao_account");
-	        
+	  
+	        String age_range=kakao_account.path("age_range").asText();
 	        name = properties.path("nickname").asText();
 	        email = kakao_account.path("email").asText();
-	 
+	        System.out.println("properties :"+properties);
+	        System.out.println("kakao account:"+kakao_account);
 	        System.out.println("id : " + id);
+	        System.out.println(kakao_account.findPath("birthday").asText());
+	        age_range=age_range.substring(0,2);
+	        System.out.println(age_range);
+	        c.setClientId(email);
+	        c.setClientEmail(email);
+	        c.setClientName(name);
+	        c.setClientAge(age_range+"대");
 	        System.out.println("name : " + name);
 	        System.out.println("email : " + email);
+	        System.out.println("age : "+age_range);
 	        if(name!=null && email!=null) {
 	        	  model.addAttribute("msg","카카오 로그인 성공");
-	        		model.addAttribute("loc","/");
-	        		session.setAttribute("sessionId",name); //세션 생성
+	        	  if(Integer.parseInt(age_range)>=20) {
+	        			int result = service.insertClient(c);
+	        			model.addAttribute("loc","/");
+	        			session.setAttribute("sessionClient", c);
+		        		session.setAttribute("sessionId",name); //세션 생성
+	        	  }else {
+	        		  model.addAttribute("msg","성인만 가입가능합니다.");
+	        		  model.addAttribute("loc","/");
+	        	  }
+	        
+	        		
 	        }else {
 	        	  model.addAttribute("msg","카카오 로그인 실패");
 	        		model.addAttribute("loc","/");
@@ -211,9 +259,10 @@ public class ClientController {
 		System.out.println(c.getClientId());
 		System.out.println(c.getClientPw());
 		Client client=service.selectOneClient(c);
-		System.out.println("no : "+client.getClientNo());
+
 		System.out.println("Controller : "+client);
 		if(client!=null) {
+			session.setAttribute("sessionClient", client);
 			session.setAttribute("sessionId", client.getClientId());
 			session.setAttribute("sessionNo", client.getClientNo());
 			session.setAttribute("sessionName", client.getClientName());
@@ -222,12 +271,18 @@ public class ClientController {
 			session.setAttribute("sessionAddr", client.getClientAddr());
 			session.setAttribute("sessionPoint", client.getClientPoint());
 			session.setAttribute("sessionSubscribe", client.getClientRank());
-		
+			session.setAttribute("sessionClient", client);
+			System.out.println(client.getClientRank());
+			if(client.getClientRank()==10) {
+				return "redirect:/admin.sool";
+			}
 			model.addAttribute("msg","로그인 성공");
+			model.addAttribute("loc","/");
 		}else {
 			model.addAttribute("msg","아이디 또는 비밀번호를 확인해주세요");
+			model.addAttribute("loc","/login.sool");
 		}
-		model.addAttribute("loc","/");
+
 		return "common/msg";
 	}
 	
@@ -244,7 +299,66 @@ public class ClientController {
 		}
 		
 	}
+
+	@RequestMapping("/searchId.sool")
+	public String searchId(Model model, String userName, String useremail) {
+		
+		System.out.println(userName);
+		System.out.println(useremail);
+		String id=service.searchId(userName,useremail);
+		System.out.println(id);
+		if(id!=null) {
+			model.addAttribute("result",true);
+		}else {
+			model.addAttribute("result",false);
+		}
+		
+		model.addAttribute("id",id);
+		return "client/resultSearchId";
+		
+	}
 	
+	@RequestMapping("/searchPw.sool")
+	public String searchPw(Model model, String userId, String useremail) {
+		
+		System.out.println(userId);
+		System.out.println(useremail);
+		String pw=service.searchPw(userId,useremail);
+		
+		System.out.println(pw);
+		if(pw!=null) {
+			
+			model.addAttribute("result",true);
+		}else {
+			model.addAttribute("result",false);
+		}
+		model.addAttribute("id",userId);
+	
+		return "client/resultSearchPw";
+		
+	}
+	
+	@RequestMapping("/setPw.sool")
+	public String setPw(Model model, String userPw, String userId, Client c) {
+		
+		System.out.println(userPw);
+		System.out.println(userId);
+		c.setClientPw(userPw);
+		c.setClientId(userId);
+		int result=service.updateClient(c);
+		
+		if(result>0) {
+			model.addAttribute("msg","비밀번호 재설정 완료되었습니다.");
+		}else {
+
+			model.addAttribute("msg","비밀번호 재설정 실패했습니다.");
+		}
+		model.addAttribute("loc","/");
+		return "common/msg";
+	}
+	
+	
+	/* 등록되어 있는 클래스들 가져옴*/
 	@ResponseBody
 	@RequestMapping("/getClassDB.sool")
 	public ArrayList<Reservation> getClassInfo(Model model) {
@@ -255,7 +369,32 @@ public class ClientController {
 		return list;
 		
 	}
-
+	
+	@ResponseBody
+	@RequestMapping(value="/findSeller.sool" ,produces = "application/text; charset=UTF-8" )
+	public String findSeller(int selNo){
+		
+		System.out.println("findSeller");
+		System.out.println(selNo);
+		String seller=service.findSeller(selNo);
+		
+		System.out.println("seller : "+seller);
+		return seller;
+		
+	}
+	
+//	@ResponseBody
+//	@RequestMapping(value="/checkPerson.sool" ,produces = "application/text; charset=UTF-8" )
+//	public String checkPerson(int person){
+//		
+//		System.out.println("checkPerson");
+//		System.out.println(person);
+//		String seller=service.checkPerson(person);
+//		
+//		System.out.println("seller : "+seller);
+//		return seller;
+//		
+//	}
 	@RequestMapping("/basicSool.sool")
 	public String basicSool(Model model, String searchWord) {
 		
@@ -275,15 +414,63 @@ public class ClientController {
 		
 	}
 	
+	@RequestMapping("/takju.sool")
+	public String takju(Model model) {
+		System.out.println("takju");
+		ArrayList<Goods> list=service.getTakju();
+		System.out.println(list);
+		model.addAttribute("list",list);
+		
+		return "client/takju";
+	}
+	@RequestMapping("/cheongju.sool")
+	public String cheongju(Model model) {
+		System.out.println("cheongju");
+		ArrayList<Goods> list=service.getChoengju();
+		System.out.println(list);
+		model.addAttribute("list",list);
+		
+		return "client/cheongju";
+	}
+	@RequestMapping("/spirits.sool")
+	public String spirits(Model model) {
+		System.out.println("spirits");
+		ArrayList<Goods> list=service.getSpirits();
+		System.out.println(list);
+		model.addAttribute("list",list);
+		
+		return "client/spirits";
+	}
+	@RequestMapping("/wine.sool")
+	public String wine(Model model) {
+		System.out.println("wine");
+		ArrayList<Goods> list=service.getWine();
+		System.out.println(list);
+		model.addAttribute("list",list);
+		
+		return "client/wine";
+	}
+	@RequestMapping("/fruit.sool")
+	public String fruit(Model model) {
+		System.out.println("fruit");
+		ArrayList<Goods> list=service.getFruit();
+		System.out.println(list);
+		model.addAttribute("list",list);
+		
+		return "client/fruit";
+	}
+	/* 이미 예약해서 예약불가능 한지 아니면 예약가능한지 판별*/
 	@ResponseBody
-	@RequestMapping(value="/checkUser.sool", produces="application/json;charset=utf-8")
+	@RequestMapping(value="/checkUser.sool", produces="application/json;charset=utf-8", method=RequestMethod.POST)
 	public String checkUser(Model model, int classNo, int session) {
 		System.out.println("checkuser");
 		System.out.println("classNo : "+classNo);
 		System.out.println("clientNo" +session);
+	
 		JsonObject obj = new JsonObject();
 		ArrayList<Class_List> list=service.checkUser(session,classNo);
 		System.out.println("list : "+list);
+		
 		if(list.size()!=0) {
 			System.out.println("here");
 			obj.addProperty("msg", "이미 예약하신 클래스입니다");
@@ -291,6 +478,32 @@ public class ClientController {
 		}else {
 			obj.addProperty("msg", "예약 가능합니다.");
 		}
+		return new Gson().toJson(obj);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/checkPerson.sool",  produces="application/json;charset=utf-8",method=RequestMethod.POST)
+	public String checkPerson(Model model, int person,int sessionNo,String title,int classNo) {
+	
+		JsonObject obj = new JsonObject();
+		String date=service.getEnrollClass(classNo); // 해당클래스의 날짜를 가져온다
+		int person1=service.getClassNo(title,date); //클래스 허용인원
+		int result=service.sumPerson(classNo); //클래스 예약한 인원
+		int resultPerson=person+result;  //이미 클래스 등록한 사람수 + 예약하려고 하는 사람수
+		int okPerson=person1-result;  //예약 가능한인원
+		System.out.println(person1);
+		System.out.println(result);
+		System.out.println(okPerson);
+		if(resultPerson>person1) {
+			System.out.println("here");
+			
+			obj.addProperty("person", okPerson);
+			obj.addProperty("msg", "가능 인원이 초과입니다.");
+	
+		}else {
+			obj.addProperty("msg", "가능합니다.");
+		}
+		
 		return new Gson().toJson(obj);
 	}
 	
@@ -325,6 +538,21 @@ public class ClientController {
 		return "client/subscribe";
 	}
 	
+	@RequestMapping("/fund.sool")
+	public String fund(Model model) {
+		
+		
+
+		ArrayList<Fund> list=service.getFund();
+		
+		System.out.println("fundlist : "+list );
+		
+
+		System.out.println(list.size());
+		model.addAttribute("list",list);
+	
+		return "client/fund";
+	}
 	
 	@RequestMapping("/setSubscribe.sool")
 	public String setSubscribe(Model model, String name, int price, Subscribe sub) {
@@ -344,23 +572,52 @@ public class ClientController {
 		model.addAttribute("list",list);
 		return "client/subscribe";
 	}
-	
-	@RequestMapping("/setUsergrade.sool")
-	public String setUsergrade(String id, Model model) {
+	@ResponseBody
+	@RequestMapping(value="/checkUsergrade.sool",produces="application/json;charset=utf-8",method=RequestMethod.POST)
+	public String checkUsergrade(String id) {
+		JsonObject obj = new JsonObject();
+		int result=service.checkUsergrade(id);
 		
+		System.out.println(result);
+		if(result==1) {
+			obj.addProperty("msg", "구독 A세트 신청중입니다. 취소하시고 다시 신청해주세요.");
+		}else if(result==2){
+			obj.addProperty("msg", "구독 B세트 신청중입니다. 취소하시고 다시 신청해주세요.");
+		}else {
+			obj.addProperty("msg", "신청가능합니다.");
+		}
+		return new Gson().toJson(obj);
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/setUsergrade.sool",produces="application/json;charset=utf-8",method=RequestMethod.POST)
+	public String setUsergrade(String id, Model model,String name) {
+		JsonObject obj = new JsonObject();
 		System.out.println("name : "+id);
-		int result=service.setUsergrade(id);
+		System.out.println("subsname:"+name);
+		int grade=0;
+		if(name.equals("술자리 구독세트 A")) {
+			grade=1;
+		}else {
+			grade=2;
+		}
+		System.out.println(grade);
+		
+		int result=service.setUsergrade(id,grade);
+		System.out.println(result);
 		if(result>0) {
 		
-			model.addAttribute("msg","구독 신청 성공");
+			obj.addProperty("msg", "구독 신청 완료되었습니다.");
 		}else {
-			model.addAttribute("msg","구독 신청 실패");
+			obj.addProperty("msg","구독 신청 실패했습니다.");
 		}
-		model.addAttribute("loc","/");
-		return "common/msg";
+		return new Gson().toJson(obj);
 		
 		
 	}
+	
+	
 //	@RequestMapping("/classRegister.sool")
 //	public String classRegister(Reservation r,Model model ) {
 //		

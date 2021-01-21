@@ -38,9 +38,7 @@
 		<!-- DB접속 정보 -->
 	<beans:bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 		<beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-		<!-- <beans:property name="url" value="jdbc:oracle:thin:@1.220.236.74:15213:xe"/> -->
 		<beans:property name="url" value="jdbc:oracle:thin:@1.220.236.74:15213:xe"/>
-		<!-- <beans:property name="username" value="SOOLZARI"/> -->
 		<beans:property name="username" value="soolzari"/>
 		<beans:property name="password" value="1234"/>
 	</beans:bean>
@@ -76,6 +74,19 @@
 	<!-- NaverLoginBO Class에 대한 Bean설정 추가 -->
 <beans:bean id="naverLoginBO" class="com.soolzari.shop.client.model.vo.NaverLoginBO" />
 
+<!-- 메일보내기 -->
+<beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	<beans:property name="host" value="smtp.gmail.com" />
+	<beans:property name="port" value="587" />
+	<beans:property name="username" value="jinseon038@gmail.com" />
+	<beans:property name="password" value="wl!9674@kwt!" />
+	<beans:property name="javaMailProperties">
+		<beans:props>
+			<beans:prop key="mail.smtp.auth">true</beans:prop> 
+			<beans:prop key="mail.smtp.starttls.enable">true</beans:prop> 
+		</beans:props> 
+	</beans:property> 
+</beans:bean>
 
 	
 	

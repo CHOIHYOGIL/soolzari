@@ -8,7 +8,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
     <link rel="stylesheet" href="/resources/css/takju.css">
-
+    <!-- script -->
+     <script src="/resources/js/jquery-3.3.1.min.js"></script>
   
 <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
    <script src="/resources/js/bootstrap.min.js"></script>
@@ -16,8 +17,7 @@
 
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 
-    <!-- script -->
-     <script src="/resources/js/jquery-3.3.1.min.js"></script>
+
  
 
 
@@ -32,7 +32,7 @@
             <div class="sub_content">
                 <div class="content">
 						
-                    <!-- 위 홈메뉴-->
+                    <!-- 위 홈메뉴
                     <div class="location_wrap mb60">
                         <div class="location_cont clearfix">
                             <div class="local_home">
@@ -60,7 +60,7 @@
                         </div>
 
                     </div>
-
+-->
                     <!-- 아이텀 컨테이너-->
                     <div class="goods_list_item container">
                         
@@ -71,11 +71,11 @@
                         
                         <div class="list_item_category mb60">
                             <ul>
-                                <li><a href="/basicSool.sool"><span>탁주</span></a></li>
-                                <li><a href="#"><span>청주</span></a></li>
-                                <li><a href="#"><span>증류주</span></a></li>
-                                <li><a href="#"><span>와인</span></a></li>
-                                <li><a href="#"><span>과실주</span></a></li>
+                                <li><a href="/takju.sool"><span>탁주</span></a></li>
+                                <li><a href="/cheongju.sool"><span>청주</span></a></li>
+                                <li><a href="/spirits.sool"><span>증류주</span></a></li>
+                                <li><a href="/wine.sool"><span>와인</span></a></li>
+                                <li><a href="/fruit.sool"><span>과실주</span></a></li>
                            
                             </ul>
                         </div>
@@ -105,6 +105,10 @@
                                             <input type="radio" id="sort4" class="radio" name="sort" value="recommend">
                                             <label for="sort4" >인기순</label>
                                         </li>
+                                        <li>
+                                            <input type="radio" id="sort5" class="radio" name="sort" value="review">
+                                            <label for="sort5" >평점순</label>
+                                        </li>
                                     </ul>
                                     
                                  
@@ -119,24 +123,27 @@
                                     <ul class="product-li">
                                     
                                   	<c:forEach items="${list }" var="g">
-                                        <li style="width:25%;" data-price=${g.goodsPrice } data-count=${g.goodsCount }>
+                                        <li style="width:25%;" data-price=${g.goodsPrice } data-count=${g.goodsCount } data-review=${g.reviewScore }>
                                             <div class="item_cont">
                                                 <div class="item_photo_box">
-                                                    <a href="#">
+                                                    <a href="/client/oGoodsDetail.sool?gdsNo=${g.goodsNo}">
                                                         <img src="/resources/upload/${g.imagePath }" alt="전통주 짱맛있어" width="240" class="middle">
                                                     </a>
                                                 </div>
                                                 
                                                 <div class="item_info_cont">
                                                   <div class="item_tit_box">
-                                                      <a href="#">
+                                                      <a href="/client/oGoodsDetail.sool?gdsNo=${g.goodsNo}">
                                                           <strong class="item_name" style="font-size:20px;">${g.goodsName }</strong>
                                                       </a>
                                                   </div>
-                                              
+                                                      <div class="rate">
+                                        <span><i class="fas fa-star" style="color:orange;"></i></span>
+                                         <span class="rateNum">${g.reviewScore }/5.0</span>
+                                    </div>
                                                   
                                                   <div class="item_money_box">
-                                                      <strong class="item_price" style="font-size:12px;">
+                                                      <strong class="item_price" style="font-size:16px;">
                                                           <span>${g.goodsPrice }원</span>
                                                       </strong>
                                                   </div>
@@ -161,13 +168,13 @@
 		<div id="page-navi" >
 			<div>
 				<c:choose>
-					<c:when test="${list.size()% 12 !=0 }">
-						<c:forEach items="${list}" begin="1" end="${list.size()+1 }" step="12" varStatus="status">
+					<c:when test="${list.size()% 12!=0}">
+						<c:forEach items="${list}" begin="1" end="${list.size()+1}" step="12" varStatus="status">
 	    					<span class="page-num">${status.count}</span>
 	    				</c:forEach> 
 					</c:when>
 					<c:otherwise>
-	    				<c:forEach items="${list}" begin="1" end="${list.size() }" step="12" varStatus="status">
+	    				<c:forEach items="${list}" begin="1" end="${list.size()}" step="12" varStatus="status">
 	    					<span class="page-num">${status.count}</span>
 	    				</c:forEach> 
 	    			</c:otherwise>
@@ -203,16 +210,7 @@
               $(this).children('span').css("color","black");
         })
         
-        /* 윗부분 탁주 청주 증류주 이벤트
-        
-        $(".list_item_category ul li a").hover(function(){
-            $(this).css("background-color","blue");
-               $(this).children('span').css("color","white");
-        }, function(){
-                    $(this).css("background-color","white");
-            $(this).children('span').css("color","black");
-        })
-        */
+   
         $(".pick_list li label").click(function(){
         
         	
@@ -220,6 +218,8 @@
             $(this).addClass('on');
        
         })
+        
+        
         
     })
  
@@ -267,7 +267,16 @@
     					return $(b).data("count") - $(a).data("count"); 
     				})
     		)
-    	}else{
+    	}else if(sortVal="review"){
+    		console.log("평점순");
+    		$(".product-li").html(
+        		
+    				$(".product-li li").sort(function(a,b){
+    					return $(b).data("review") - $(a).data("review"); 
+    				})
+    		)
+    	}
+    	else{
     		console.log("최신순");
     		$(".product-li").html(recent);
     	}
@@ -288,12 +297,12 @@
 	}
 	$(function(){
 		paging(1);
-		$(".page-num").eq(0).css({color:'#fac60e'});
+		$(".page-num").eq(0).css({color:'black'});
 	})
 	
 	$(".page-num").click(function(){
 		$(".page-num").css({color:'darkgray'});
-		$(this).css({color:'#fac60e'});
+		$(this).css({color:'black'});
 		paging(parseInt($(this).html()));
 	});
   

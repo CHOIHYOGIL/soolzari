@@ -14,20 +14,21 @@
 </head>
 <body>
 	<section>
+		<jsp:include page="/WEB-INF/views/admin/navi.jsp"/>
         <div class="wrap">
-            <h2>공지사항</h2>
+            <h1>공지사항</h1>
             <form action="/notice/insert.sool" method="post" enctype="multipart/form-data">
                 <table class="notice">
                     <tr>
                         <td>제목</td>
-                        <td><input type="text" name="noticeTitle" placeholder="제목을 작성해주세요"></td>
+                        <td><input type="text" name="noticeTitle"></td>
                     </tr>
                     <tr>
                         <td>작성자</td>
-                        <td><input type="text" name="noticeWriter" readonly value="${SessionScope.login}"></td>
+                        <td><input type="text" name="noticeWriter" readonly value="${sessionScope.sessionId}"></td>
                     </tr>
                     <tr>
-                        <td colspan="2"><textarea name="noticeContent" id="summernote" style="resize: none"></textarea></td>
+                        <td colspan="2"><textarea name="noticeContent" id="summernote"></textarea></td>
                     </tr>
                 </table>
                 <div class="btnwrap">
@@ -46,9 +47,18 @@
             $("#list").click(function(){
                location.href="/notice/list.sool?reqPage=1"; 
             });
+            $("[type=submit]").click(function(event){
+            	if($("[name=noticeTitle]").val() == ""){
+            		alert("제목을 작성해주세요");
+            		event.preventDefault();
+            	}else if($("textarea").val() == ""){
+            		alert("내용을 작성해주세요");
+            		event.preventDefault();
+            	}
+            });
             $('#summernote').summernote({
                 height: 500, // set editor height
-                width: 1000,
+                width: 1200,
                 focus: true,
                 lang: "ko-KR",
                 toolbar: [

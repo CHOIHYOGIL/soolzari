@@ -22,7 +22,7 @@ address, em, i {font-style: normal;}
 
 #container{
 	     font-family: 'S-CoreDream-3Light';
-	margin-top:100px;
+	
 
 }
 #contents{
@@ -35,10 +35,11 @@ address, em, i {font-style: normal;}
 .sub_content{
 	     font-family: 'S-CoreDream-3Light';
     padding-bottom:100px;
-    
+    	margin-top:170px;
 }
 
 .sub_content .content{
+
          font-family: 'S-CoreDream-3Light';
     width:100%;
     min-height: 500px;
@@ -247,8 +248,9 @@ address, em, i {font-style: normal;}
          font-family: 'S-CoreDream-3Light';
     
 }
-.list_item_category li.on a{
+.list_item_category li.on{
     color:#fff;
+      background:#4d5075;
     font-weight: 500;
          font-family: 'S-CoreDream-3Light';
 }
@@ -388,17 +390,17 @@ select {
     padding: 0 10px;
     text-align: left;
     color: #1c1c1c;
-    height:400px;
+    height:430px;
 }
 
 .item_gallery_type > ul > li > .item_cont .item_photo_box {
     border: 0;
-    padding: 20px 0;
+    padding: 10px 0;
 }
 .item_gallery_type > ul > li > .item_cont .item_info_cont {
     display: block;
     width: 100%;
-    padding: 20px 20px;
+    padding: 0px 20px;
     height: 170px;
     box-sizing: border-box;
 }
@@ -429,13 +431,19 @@ select {
 }
 .item_money_box .item_price {
     display: inline-block;
-    padding: 7px 0 5px 0;
+    padding: 6px 0 5px 0;
     font-size: 18px;
     color: #222;
+    	 box-sizing:border-box;
     margin-right: 15px;
          font-family: 'S-CoreDream-3Light';
 }
 
+.rate{
+	padding: 5px 0 0 0;
+	 font-family: 'S-CoreDream-3Light';
+	 box-sizing:border-box;
+}
 
 /* 페이징 */
 	#page-navi>div{

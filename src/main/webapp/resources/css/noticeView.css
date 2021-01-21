@@ -13,7 +13,7 @@
 
 .notice,
 .btns {
-    width: 1000px;
+    width: 1200px;
     margin: 0 auto;
 }
 
@@ -29,6 +29,7 @@ td {
     height: 40px;
     line-height: 40px;
     text-align: center;
+    font-size: 16px;
 }
 
 .btns button {
@@ -40,10 +41,15 @@ td {
     box-sizing: border-box;
     line-height: 27px;
     cursor: pointer;
+    outline: none;
 }
 
-h1 {
+.noticetitle {
     text-align: center;
+    font-size: 2em;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    font-weight: bold;
 }
 
 input[type="text"] {
@@ -55,7 +61,7 @@ input[type="text"] {
     margin-bottom: 5px;
     height: 40px;
     box-sizing: border-box;
-    width: 200px;
+    width: 300px;
 }
 
 .notice td {
@@ -67,11 +73,23 @@ input[type="text"] {
 }
 
 .btn2 {
-    width: 1000px;
+    width: 1200px;
     display: flex;
     justify-content: flex-end;
 }
 
 .btn2 > button {
     margin-left: 10px;
+}
+
+.note-editor .note-editable {
+    line-height: 1;
+}
+
+.notice .readonly{
+	background-color: whitesmoke;
+	border: none;
+}
+input[name='noticeTitle']{
+	width: 750px;
 }

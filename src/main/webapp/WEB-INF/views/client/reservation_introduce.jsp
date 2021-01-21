@@ -9,7 +9,8 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="resources/css/reservation_intro.css">
 
-   
+       <!-- script -->
+    <script src="/resources/js/jquery-3.3.1.min.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 
@@ -19,22 +20,20 @@
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     
-  
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 	     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script> 
 
 
     <!-- icon 사용-->
     <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
-    <!-- script -->
-    <script src="/resources/js/jquery-3.3.1.min.js"></script>
-  
-<link rel="stylesheet" href="/resources/css/bootstrap.min.css">
-   <script src="/resources/js/bootstrap.min.js"></script>
+
+
 
 
     <!-- 반응형 -->
@@ -42,16 +41,16 @@
 </head>
 <body>
  <%@include file="/WEB-INF/views/common/header.jsp" %>
- <section class="carousel">
+ 	<div style="height:80px; width:100%;"></div>
+<section class="carousel">
 
-            <div id="carousel-example-generic" class="carousel slide">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
 
                     <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
                     <li data-target="#carousel-example-generic" data-slide-to="1"></li>
                     <li data-target="#carousel-example-generic" data-slide-to="2"></li>
                 </ol>
-
                 <div class="carousel-inner">
                     <div class="item active">
                         <img src="resources/image/reservation1.PNG" alt="" style="width:100%;">
@@ -344,13 +343,9 @@ $(function(){
     $('#carousel-example-generic').carousel({
     // 슬리아딩 자동 순환 지연 시간
     // false면 자동 순환하지 않는다.
-    interval: 5000,
-    // hover를 설정하면 마우스를 가져대면 자동 순환이 멈춘다.
-    pause: "hover",
-    // 순환 설정, true면 1 -> 2가면 다시 1로 돌아가서 반복
-    wrap: true,
-    // 키보드 이벤트 설정 여부(?)
-    keyboard : true
+    interval: 3000,
+
+
     });
     
 

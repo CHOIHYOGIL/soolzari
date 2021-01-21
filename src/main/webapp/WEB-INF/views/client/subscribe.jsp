@@ -6,7 +6,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
  <link rel="stylesheet" href="/resources/css/subscribe.css">
-
+    <!-- script -->
+     <script src="/resources/js/jquery-3.3.1.min.js"></script>
     <!-- Bootstrap cdn 설정 -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
@@ -15,14 +16,11 @@
 
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 
-    <!-- script -->
-     <script src="/resources/js/jquery-3.3.1.min.js"></script>
+
  
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
- <!-- 모달창 드래그 -->
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 
     <!-- 반응형 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0, maximum-scale=1.0">
@@ -32,9 +30,10 @@
 </head>
 <body>
    <%@include file="/WEB-INF/views/common/header.jsp" %>
+   	<div style="height:80px; width:100%;"></div>
     <section class="carousel">
 
-            <div id="carousel-example-generic" class="carousel slide">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
 
                     <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
@@ -166,7 +165,7 @@
                                     <p style="text-align: left;">
                                         <span style="font-size:16px;">
                                             <img src="https://cdn.imweb.me/upload/S201805235b04d0e324735/5b3a4252955b4.png" alt="">
-                                            가격 : 43000원
+                                            가격 : 63000원
                                         </span>
                                     </p>
                                     <p style="text-align: left;">
@@ -263,14 +262,38 @@
 			subscribeName1=$(this).parent().parent().parent().children('strong').text().trim();
 			console.log("구독상품");
 			console.log(subscribeName1);
-	
+			var id='<%=session.getAttribute("sessionId")%>';
 			if(sessionName=='null'){
 				alert('로그인 후 이용가능합니다.');
 				location.href="/login.sool";
 			}else{
-				
-				
-				$('.modal').modal('show');
+				$.ajax({
+					url:"checkUsergrade.sool",
+					type:"POST",
+					//dateType:'json',
+					async:false,
+					data:
+						{
+							id :id,
+						
+						
+						},
+					success:function(data){
+					console.log("data : "+data) //이런식으로 하면 안뜬다. 왜냐하면 "data :" 를 붙이면 javascrtip에서 string형으로 변환시킴
+					alert(data.msg);
+					if(data.msg=="신청가능합니다."){
+						console.log("hihihihii");
+						$('.modal').modal("show");
+    	        		
+					}
+			
+					},
+					error:function(error){
+						console.log(error);
+					}
+			
+				})
+	
 			}
 			
 			if(subscribeName1==="술자리 구독세트 A"){
@@ -279,7 +302,7 @@
 				$(".subscribePrice").val(price);
 	
 			}else{
-				price=50000;
+				price=63000;
 
 				console.log("술자리 b"+price);
 				$(".subscribePrice").val(price);
@@ -311,6 +334,9 @@
 			var date = d.getFullYear() + '' + (d.getMonth() + 1)
 					+ '' + d.getDate() + '' + d.getHours() + ''
 					+ d.getMinutes() + '' + d.getSeconds();
+			
+			console.log("test:"+subscribeName1);
+			
 		 	IMP.init('imp16593684');
 			
 			IMP.request_pay({
@@ -326,28 +352,7 @@
 				if(rsp.success){
 					var msg='클래스 예약 결제가 완료되었습니다';
 				        msg += '결제 금액 : ' + rsp.paid_amount;
-				  	  	
-				    	$.ajax({
-							url:"setSubscribe.sool",
-							type:"POST",
-							//dateType:'json',
-							async:false,
-							data:
-								{
-									name :subName,
-									price:subPrice
-								},
-							success:function(data){
-							console.log("data : "+data) //이런식으로 하면 안뜬다. 왜냐하면 "data :" 를 붙이면 javascrtip에서 string형으로 변환시킴
-								console.log(data);
-								console.log(data.length);
-								
-							},
-							error:function(error){
-								console.log(error);
-							}
-					
-						}),
+				
 						$.ajax({
 							url:"setUsergrade.sool",
 							type:"POST",
@@ -356,13 +361,13 @@
 							data:
 								{
 									id :id,
+									name:subscribeName1
 								
 								},
 							success:function(data){
 							console.log("data : "+data) //이런식으로 하면 안뜬다. 왜냐하면 "data :" 를 붙이면 javascrtip에서 string형으로 변환시킴
-								console.log(data);
-								console.log(data.length);
-								
+						
+								alert(data.msg);
 							},
 							error:function(error){
 								console.log(error);
@@ -370,6 +375,7 @@
 					
 						})
 				        alert(msg);
+						location.href="/subscribe.sool";
 				    
 				}else{
 					var msg='결제 실패하셨습니다';
@@ -410,12 +416,3 @@
 
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script>
-  $(function () {
-    $(".modal").draggable({
-    	handle:".modal-top",
-    	  cursor: 'move',
-    })
-  });
-</script>

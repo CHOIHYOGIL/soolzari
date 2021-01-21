@@ -6,13 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="resources/css/main.css">
+<link rel="stylesheet" href="/resources/css/main.css">
 
    
-
-    <!-- script -->
-    <script src="/resources/js/jquery-3.3.1.min.js"></script>
-  
 
 
 
@@ -36,19 +32,19 @@
                                 <li id="nop"><a href="/views/client/introduce.jsp">이용안내</a></li>
                             </ul>
                         </li>
-                        <li><a href="/basicSool.sool">전통주</a>
+                        <li><a href="/takju.sool">전통주</a>
                             <ul class="sub">
-                                <li id="nop"><a href="/basicSool.sool">탁주</a></li>
-                                <li id="nop"><a href="#">청주</a></li>
-                                <li id="nop"><a href="#">증류주</a></li>
-                                <li id="nop"><a href="#">와인</a></li>
-                                <li id="nop"><a href="#">과실주</a></li>
+                                <li id="nop"><a href="/takju.sool">탁주</a></li>
+                                <li id="nop"><a href="/cheongju.sool">청주</a></li>
+                                <li id="nop"><a href="/spirits.sool">증류주</a></li>
+                                <li id="nop"><a href="/wine.sool">와인</a></li>
+                                <li id="nop"><a href="/fruit.sool">과실주</a></li>
                             </ul>
                         </li>
                         <li><a href="#">구독/펀딩</a>
                             <ul class="sub">
                                 <li id="nop"><a href="/subscribe.sool">구독</a></li>
-                                <li id="nop"><a href="/reservation.sool">펀딩</a></li>
+                                <li id="nop"><a href="/fund.sool">펀딩</a></li>
                             </ul>
                         </li>
 
@@ -61,7 +57,7 @@
                         <li><a href="#">고객센터</a>
                             <ul class="sub">
                                 <li id="nop"><a href="/notice/listClient.sool?reqPage=1">공지사항</a></li>
-                                <li id="nop"><a href="/faq.sool">자주 묻는 질문</a></li>
+                                <li id="nop"><a href="/faqClient.sool">자주 묻는 질문</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -74,10 +70,12 @@
 		<c:choose>
 			<c:when test="${sessionId!=null }">
 				   <div>
+			
                     <ul class="login">
                         <li> <input class="search_input" type="text" placeholder="search"></li>
-                        <li><a href="#">${sessionId}님</a>
                         <li><a href="/logout.sool">로그아웃</a>
+                        <li><a href="/client/basketList.sool">장바구니</a>
+                        <li><a href="/client/mOrderList.sool?reqPage=1&period=1">${sessionName}님</a>
                     </ul>
                 </div>
 			</c:when>
@@ -99,7 +97,6 @@
 </body>
 </html>
 <script>
-
 /* keyup delay 줌*/
 function delay(callback, ms) {
 	  var timer = 0;
@@ -118,11 +115,8 @@ function delay(callback, ms) {
 		var searchWord=$(this).val();
 		location.href='/basicSool.sool?searchWord='+searchWord;
 	},1000));
-
-
  /* 헤더 */
  
-
  $(function(){
 	 $(document).on('mouseover','.gnb li a', function(){
          if($(window).width()>1200){
@@ -133,7 +127,6 @@ function delay(callback, ms) {
          }
     });
     
-
     $('.sub').on({
         mouseover:function(){
       
@@ -155,7 +148,6 @@ function delay(callback, ms) {
              $('header').css('height','80px');
         }  
        
-
     })
     
     
