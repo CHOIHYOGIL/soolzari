@@ -19,6 +19,8 @@ import com.soolzari.shop.client.model.vo.FundDetailDB;
 import com.soolzari.shop.client.model.vo.FundReview;
 import com.soolzari.shop.client.model.vo.Funding;
 import com.soolzari.shop.client.model.vo.FundingGoods;
+import com.soolzari.shop.client.model.vo.FundingListData;
+import com.soolzari.shop.client.model.vo.FundingPageData;
 import com.soolzari.shop.client.model.vo.Goods2;
 import com.soolzari.shop.client.model.vo.GoodsList;
 import com.soolzari.shop.client.model.vo.GoodsSellerDetail;
@@ -27,11 +29,14 @@ import com.soolzari.shop.client.model.vo.OrderPageData;
 import com.soolzari.shop.client.model.vo.Purchase;
 import com.soolzari.shop.client.model.vo.Qna;
 import com.soolzari.shop.client.model.vo.QnaPageData;
+import com.soolzari.shop.client.model.vo.Subscribe;
+import com.soolzari.shop.common.EmailSender;
 
 @Service
 public class ClientService2 {
 	@Autowired
 	private ClientDao2 dao;
+	
 
 	@Transactional
 	public int basketInsert(int cliNo, int gdsNo, int basCnt) {
@@ -372,10 +377,119 @@ public class ClientService2 {
 		return fd;
 	}
 	
+	//같은펀딩을 후원했는지 안했는지 확인
+	public int fundDetOverlapChk(int fundNo, int cliNo) {
+		return dao.fundDetOverlapChk(fundNo,cliNo);
+	}
+	
 	//펀딩후원(예약)하기 - fnd_det_db에 insert
 	@Transactional
 	public int fundReservationInsert(FundDetailDB fd) {
-		return dao.fundReservationInsert(fd);
+		int result = dao.fundReservationInsert(fd);
+		if(result>0) {//예약완료 후 목표달성률을 넘긴 펀딩이면 chk를 1로 업데이트
+			result = dao.fundChkUpdate(fd.getFundNo());
+			if(result>0) {
+				result=10;
+			}else {
+				result=1;
+			}
+		}
+		return result;//0:예약실패, 1:예약성공, 10:예약성공 및 목표달성
+	}
+
+	//마이페이지 - 펀딩(페이징)
+	public FundingPageData mFundingPaging(int reqPage, int period, int cliNo) {
+		int totalPage = dao.totalCountFunding(cliNo, period); //총개수(예약(후원)한 펀딩(fnd_det_db)에서 저장된)
+		int per = 10;	//한페이지에 보여줄 주문개수
+		if(totalPage/per==0) {//총페이지수
+			totalPage = totalPage/per;
+		}else {
+			totalPage = totalPage/per+1;
+		}
+		int end = reqPage*per;
+		int start = end-per+1;
+		System.out.println("totalPage"+totalPage);
+		System.out.println("start"+start);
+		System.out.println("end"+end);
+		
+		ArrayList<FundingListData> list = dao.FundingDataPageSelect(start,end,cliNo,period);	//experienceListData디비정보(서브쿼리로조합해서)
+		
+		int pageAllIdx = 5;
+		int pageIdx = (reqPage-1)/pageAllIdx*pageAllIdx+1;
+		System.out.println(reqPage);
+		String pageNavi = "";
+		if(reqPage>1) {//이전버튼
+			pageNavi += "<a id='prev1' href='/client/mFunding.sool?reqPage="+(pageIdx-1)+"&period="+period+"'><</a>";
+		}
+		
+		for(int i = 0;i<pageAllIdx;i++) {
+			if(pageIdx!=reqPage) {//a태그잇게
+				pageNavi += "<a class='pageA' href='/client/mFunding.sool?reqPage="+pageIdx+"&period="+period+"'>"+pageIdx+"</a>";
+			}else {//a태그없게
+				pageNavi += "<span class='selectedPage'>"+pageIdx+"</span>";
+			}
+			pageIdx++;
+			if(pageIdx>totalPage) {
+				break;
+			}
+		}
+		if(pageIdx<=totalPage) {//다음버튼
+			pageNavi += "<a id='next1' href='/client/mFunding.sool?reqPage="+pageIdx+"&period="+period+"'>></a>";
+		}
+		FundingPageData fpd = new FundingPageData(list, pageNavi);
+		return fpd;
+	}
+
+	//펀딩 주문/결제 페이지 이동
+	public FundingListData paymentFundingSelect(int fndDNo) {
+		return dao.paymentFundingSelect(fndDNo);
+	}
+
+	//펀딩 - 결제완료페이지 이동
+	public int fundingPayUpdate(FundDetailDB fd, int cliNo, int cliPoint) {
+		Client2 client = new Client2();
+		client.setCliNo(cliNo);
+		client.setCliPoint(cliPoint);
+		//fnd_det_db결제정보 업데이트하기
+		int result = dao.fundDetailUpdate(fd);
+		if(result>0) {//사용한포인트 업뎃하기
+			result = dao.pointUpdate(client);
+		}
+		return result;
+	}
+
+	//마이페이지 - 펀딩 배송관리(수취확인)
+	public int fundDeliveryStatus(int fndDNo) {
+		return dao.fundDeliveryStatus(fndDNo);
+	}
+	
+	
+	//펀딩 종료일에 목표달성이 됐으면 fnd_d_status를 1로 update(결제하라는 버튼표시) + 결제알림 메일전송필요...
+	//펀딩 종료일에 목표미달성이 됐으면 fnd_d_status를 7로 update(미결제취소 표시)
+	@Transactional
+	public HashMap<String, ArrayList<Client2>> fndDStatusUpdate() {
+		System.out.println("달성");
+		dao.fndDStatusYUpdate();//달성 fnd_d_status를 1
+		System.out.println("미달성");
+		dao.fndDStatusNUpdate();//미달성 fnd_d_status를 7
+		
+		ArrayList<Client2> clientYList = new ArrayList<Client2>();
+		clientYList = dao.emailSelect(1);//1:달성한 펀딩//사용자이메일 조회
+		System.out.println(clientYList.size());
+		ArrayList<Client2> clientNList = new ArrayList<Client2>();
+		clientNList = dao.emailSelect(0);//0:미달성한 펀딩//사용자이메일 조회
+		System.out.println(clientNList.size());
+		
+		HashMap<String, ArrayList<Client2>> map = new HashMap<String, ArrayList<Client2>>();
+		map.put("clientYList", clientYList);
+		map.put("clientNList", clientNList);
+		
+		return map;
+	}
+
+	//구독랭크 정보가져오기
+	public Subscribe subscribeSelect(int clientRank) {
+		return dao.subscribeSelect(clientRank);
 	}
 
 	public ArrayList<FundReview> reviewList(int fundNo) {

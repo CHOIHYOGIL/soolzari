@@ -17,12 +17,14 @@ import com.soolzari.shop.client.model.vo.FundDetailDB;
 import com.soolzari.shop.client.model.vo.FundReview;
 import com.soolzari.shop.client.model.vo.Funding;
 import com.soolzari.shop.client.model.vo.FundingGoods;
+import com.soolzari.shop.client.model.vo.FundingListData;
 import com.soolzari.shop.client.model.vo.Goods2;
 import com.soolzari.shop.client.model.vo.GoodsList;
 import com.soolzari.shop.client.model.vo.GoodsSellerDetail;
 import com.soolzari.shop.client.model.vo.OrderListData;
 import com.soolzari.shop.client.model.vo.Purchase;
 import com.soolzari.shop.client.model.vo.Qna;
+import com.soolzari.shop.client.model.vo.Subscribe;
 
 @Repository
 public class ClientDao2 {
@@ -211,11 +213,82 @@ public class ClientDao2 {
 		List<FundingGoods> fundGoodsList =  sqlSession.selectList("order.fundingGoodsSelect",fundNo);
 		return (ArrayList<FundingGoods>)fundGoodsList;
 	}
+	
+	//같은펀딩을 후원했는지 안했는지 확인
+	public int fundDetOverlapChk(int fundNo, int cliNo) {
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("fundNo", fundNo);
+		map.put("cliNo", cliNo);
+		return sqlSession.selectOne("order.fundDetOverlapChk",map);
+	}
 
 	//펀딩후원(예약)하기 - fnd_det_db에 insert
 	public int fundReservationInsert(FundDetailDB fd) {
 		return sqlSession.insert("order.fundReservationInsert",fd);
 	}
+	//예약완료 후 목표달성률을 넘긴 펀딩이면 chk를 1로 업데이트
+	public int fundChkUpdate(int fundNo) {
+		return sqlSession.update("order.fundChkUpdate",fundNo);
+	}
+
+	//마이페이지 - 펀딩(총레코드수구하기)
+	public int totalCountFunding(int cliNo, int period) {
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("cliNo", cliNo);
+		map.put("period", period);
+		return sqlSession.selectOne("mypage.totalCountFunding",map);
+	}
+	//마이페이지 - 펀딩리스트
+	public ArrayList<FundingListData> FundingDataPageSelect(int start, int end, int cliNo, int period) {
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("cliNo", cliNo);
+		map.put("period", period);
+		List<FundingListData> list =  sqlSession.selectList("mypage.FundingDataPageSelect",map);
+		return (ArrayList<FundingListData>)list;
+	}
+
+	//펀딩 주문/결제 페이지 이동
+	public FundingListData paymentFundingSelect(int fndDNo) {
+		return sqlSession.selectOne("mypage.paymentFundingSelect",fndDNo);
+	}
+
+	//펀딩 - 결제완료페이지 이동(결제정보업뎃)
+	public int fundDetailUpdate(FundDetailDB fd) {
+		return sqlSession.update("mypage.fundDetailUpdate",fd);
+	}
+
+	
+	//매일 자정 종료일인 펀딩 중 달성된 펀딩일경우 fnd_det_db의 fnd_d_status를 1로 변경(결제버튼생성됨)
+	public void fndDStatusYUpdate() {
+		sqlSession.update("mypage.fndDStatusYUpdate");
+	}
+	//매일 자정 종료일인 펀딩 중 미달성된 펀딩일경우 fnd_det_db의 fnd_d_status를 7로 변경(목표미달성이라는 문구 출력)
+	public void fndDStatusNUpdate() {
+		sqlSession.update("mypage.fndDStatusNUpdate");
+	}
+
+	//마이페이지 - 펀딩 배송관리(수취확인)
+	public int fundDeliveryStatus(int fndDNo) {
+		return sqlSession.update("mypage.fundDeliveryStatus",fndDNo);
+	}
+	
+	//달성한 펀딩 결제메일보내기
+	//미달성한 펀딩 결제메일보내기
+	public ArrayList<Client2> emailSelect(int fundChk) {
+		List<Client2> list =  sqlSession.selectList("mypage.emailSelect",fundChk);
+		return (ArrayList<Client2>)list;
+	}
+
+	//구독랭크 정보가져오기
+	public Subscribe subscribeSelect(int clientRank) {
+		return sqlSession.selectOne("mypage.subscribeSelect",clientRank);
+	}
+
+	
+
+	
 
 	public ArrayList<FundReview> reviewList(int fundNo) {
 		

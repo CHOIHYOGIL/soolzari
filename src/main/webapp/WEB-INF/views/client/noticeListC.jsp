@@ -15,7 +15,7 @@
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
 	<section>
-		<h1>공지사항</h1>
+		<h1 class="noticetitle">공지사항</h1>
 		<table class="notice">
 			<tr>
 				<th>번호</th>

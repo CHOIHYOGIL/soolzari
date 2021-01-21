@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/functions"  prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,6 +19,9 @@
 	<div class="sideNavi"></div>
 	<div class="content">
 		<div class="mainContent">
+			<div>
+				<span style="color: lightgray">*총 결제 금액은 포인트사용 후 금액입니다.</span>
+			</div>
 			<div class="listDiv">
 				<table class="listTable">
 					<tr>
@@ -25,8 +29,18 @@
 						<th class="th2">상품 정보</th>
 						<th class="th3">총 결제 금액</th>
 						<th class="th4">배송관리</th>
-						<th class="th5">리뷰</th>
 					</tr>
+					<c:choose>
+					<c:when test="${fn:length(pList) eq 0}">
+						<tr>
+							<td colspan="4">
+								<br><br><br>
+								<h4>지난 ${period }개월 동안 구매한 내역이 없습니다.</h4>
+								<br><br><br>
+							</td>
+						</tr>
+					</c:when>
+					<c:otherwise>
 					<c:forEach items="${pList }" var="purchase" varStatus="status">
 						<c:forEach items="${olDataList }" var="olData">
 						<c:if test="${purchase.purNo eq olData.purNo}">
@@ -38,9 +52,9 @@
 							</td>
 							<td>
 								<p>${olData.gdsName }</p>
-								<p>개수 : ${olData.gdsLCnt }</p>
-								<p>가격 : <span class="comma">${olData.gdsLPrice}</span>*${olData.gdsLCnt }=<span class="comma">${olData.gdsLPrice*olData.gdsLCnt }</span></p>
-								<p>배송지 : ${purchase.purGet }</p>
+								<p class="indent">개수 : ${olData.gdsLCnt }</p>
+								<p class="indent">가격 : <span class="comma">${olData.gdsLPrice}</span>*${olData.gdsLCnt }=<span class="comma">${olData.gdsLPrice*olData.gdsLCnt }</span></p>
+								<p class="indent">배송지 : ${purchase.purGet }</p>
 							</td>
 							<td>
 								<p><span class="comma">${purchase.purTtp }</span></p>
@@ -67,9 +81,6 @@
 									<p>수취확인완료</p>
 								</c:if>
 							</td>
-							<td>
-								<p>리뷰작성</p>
-							</td>
 						</tr>
 						</c:if>
 						</c:forEach>
@@ -77,6 +88,8 @@
 					<tr>
 						<td colspan="4" style="text-align: center;" id="pageNavi">${pageNavi }</td>
 					</tr>
+					</c:otherwise>
+					</c:choose>
 				</table>
 			</div>
 		</div>

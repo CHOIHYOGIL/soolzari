@@ -31,7 +31,7 @@
 						<tr>
 							<td colspan="3">
 								<br><br><br>
-								<h4>작성한 문의사항이 없습니다.</h4>
+								<h4>지난 ${period }개월 동안 작성한 문의사항이 없습니다.</h4>
 								<br><br><br>
 							</td>
 						</tr>
@@ -40,24 +40,27 @@
 						<c:forEach items="${list }" var="qna">
 							<tr>
 								<td>
-									<p>${qna.qnaName }</p>
+									<a href="/qnaViewClient.sool?qnaNo=${qna.qnaNo }&qnaAns=${qna.qnaAns }">
+										<p>${qna.qnaName }</p>
+									</a>
 								</td>
 								<td>
 									<p>${qna.qnaEnroll }</p>
 								</td>
 								<td>
-								
 									<c:if test="${qna.qnaAns==0 }">
-										<p>답변대기</p>
+										<p class="ans1">답변대기</p>
 									</c:if>
 									<c:if test="${qna.qnaAns==1 }">
-										<p>답변완료</p>
+										<a href="/qnaViewClient.sool?qnaNo=${qna.qnaNo }&qnaAns=${qna.qnaAns }">
+											<p class="ans2">답변완료</p>
+										</a>
 									</c:if>
 								</td>
 							</tr>
 						</c:forEach>
 					<tr>
-						<td colspan="4" style="text-align: center;" id="pageNavi">${pageNavi }</td>
+						<td colspan="3" style="text-align: center;" id="pageNavi">${pageNavi }</td>
 					</tr>
 					</c:otherwise>
 					</c:choose>
@@ -79,9 +82,9 @@
         </div>
         <form action="/client/mQuestionInsert.sool" method="post">
         <div class="modal-body">
-        	제목<br><textarea rows="1" cols="70" style="resize: none;" name="qnaName"></textarea>
+        	제목<br><textarea rows="1" cols="80" style="resize: none;" name="qnaName"></textarea><br>
 	       	내용<br>
-	        <textarea rows="12" cols="70" style="resize: none;" name="qnaCon"></textarea>
+	        <textarea rows="12" cols="80" style="resize: none;" name="qnaCon"></textarea>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-default ">문의하기</button>
@@ -109,6 +112,7 @@
 	});
 
 	$(function(){
+		$(".subTitle").html("문의 내역");
 		$(".giftSel").remove();//선물함 선택 안보이게
 		//조회기간별 조회(1,3,6,12개월)
 		$(".searchA").eq(0).attr("href","/client/mQuestion.sool?reqPage=1&period=1");
@@ -122,6 +126,25 @@
 				$(this).addClass("sA1");
 			}
 		});
+	});
+	
+	//문의하기 줄 수 제한
+	$("textarea[name=qnaName]").keyup(function(){
+		 var rows = $(this).val().split('\n').length;
+	        var maxRows = 1;
+	        if( rows > maxRows){
+	            modifiedText = $(this).val().split("\n").slice(0, maxRows);
+	            $(this).val(modifiedText.join("\n"));
+	        }
+	});
+	//문의하기 줄 수 제한
+	$("textarea[name=qnaCon]").keyup(function(){
+		 var rows = $(this).val().split('\n').length;
+	        var maxRows = 10;
+	        if( rows > maxRows){
+	            modifiedText = $(this).val().split("\n").slice(0, maxRows);
+	            $(this).val(modifiedText.join("\n"));
+	        }
 	});
 </script>
 </body>

@@ -31,7 +31,7 @@
 						<c:when test="${fn:length(eList) eq null}">
 							<tr>
 								<td colspan="5">
-									<p>예약한 클래스가 없습니다.</p>
+									<p>지난 ${period }개월 동안 예약한 클래스가 없습니다.</p>
 								</td>
 							</tr>
 						</c:when>
@@ -44,8 +44,8 @@
 									</td>
 									<td>
 										<p>${eld.clsName }</p>
-										<p>인원 : ${eld.classPerson }</p>
-										<p>가격 : ${eld.clsPrice }</p>
+										<p class="indent">인원 : ${eld.classPerson }</p>
+										<p class="indent">가격 : <span class="comma">${eld.clsPrice }</span></p>
 									</td>
 									<td>
 										<p>${eld.selName }</p>
@@ -73,11 +73,11 @@
 									</td>
 								</tr>
 							</c:forEach>
+							<tr>
+								<td colspan="5" style="text-align: center;" id="pageNavi">${pageNavi }</td>
+							</tr>
 						</c:otherwise>
 					</c:choose>
-					<tr>
-						<td colspan="4" style="text-align: center;" id="pageNavi">${pageNavi }</td>
-					</tr>
 				</table>
 			</div>
 		</div>
@@ -98,6 +98,7 @@
 	});
 	
 	$(function(){
+		$(".subTitle").html("예약 내역");
 		$(".giftSel").remove();//선물함 선택 안보이게
 		//조회기간별 조회(1,3,6,12개월)
 		$(".searchA").eq(0).attr("href","/client/mExperience.sool?reqPage=1&period=1");
@@ -112,6 +113,11 @@
 				$(this).addClass("sA1");
 			}
 		});
+		
+		//가격에 콤마
+		$(".comma").each(function(){
+			$(this).html(commaSet($(this).html()));
+		})
 	})
 	
 	$(".cancelBtn").click(function(){
@@ -120,5 +126,12 @@
 			location.href="/client/classCancel.sool?clsLNo="+clsLNo+"&reqPage="+${reqPage}+"&period="+${period};
 		}
 	})
+	
+	//금액단위 콤마 구분
+	function commaSet(price) {
+		var str = String(price);
+		let price1 = str.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		return price1;
+	}
 </script>
 </html>

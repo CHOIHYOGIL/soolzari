@@ -21,7 +21,12 @@ import com.soolzari.shop.client.model.vo.Client2;
 import com.soolzari.shop.client.model.vo.ExperiencePageData;
 import com.soolzari.shop.client.model.vo.FundDetail;
 import com.soolzari.shop.client.model.vo.FundDetailDB;
+
 import com.soolzari.shop.client.model.vo.FundReview;
+
+import com.soolzari.shop.client.model.vo.FundingListData;
+import com.soolzari.shop.client.model.vo.FundingPageData;
+
 import com.soolzari.shop.client.model.vo.Goods2;
 import com.soolzari.shop.client.model.vo.GoodsList;
 import com.soolzari.shop.client.model.vo.GoodsSellerDetail;
@@ -29,6 +34,7 @@ import com.soolzari.shop.client.model.vo.OrderPageData;
 import com.soolzari.shop.client.model.vo.Purchase;
 import com.soolzari.shop.client.model.vo.Qna;
 import com.soolzari.shop.client.model.vo.QnaPageData;
+import com.soolzari.shop.client.model.vo.Subscribe;
 
 @Controller
 @RequestMapping("/client")
@@ -274,12 +280,15 @@ public class ClientController2 {
 	@RequestMapping("/mOrderList.sool")
 	public String mOrderList(int reqPage, int period, Model model, @SessionAttribute(required=false) Client sessionClient) {
 		if(sessionClient!=null) {//로그인된사용자만 접근가능하게
+			Subscribe sub = service.subscribeSelect(sessionClient.getClientRank());//구독랭크 정보가져오기
+			System.out.println(sub.getSubscribeName());
 			OrderPageData opd = service.mOrderListPaging(reqPage,period,sessionClient.getClientNo());
 			model.addAttribute("pList",opd.getPList());
 			model.addAttribute("olDataList",opd.getOlDataList());
 			model.addAttribute("pageNavi",opd.getPageNavi());
 			model.addAttribute("period",period);
 			model.addAttribute("reqPage",reqPage);
+			model.addAttribute("sub",sub);
 			return "client/mOrderList";
 		}else {
 			model.addAttribute("msg","로그인 후 이용해주세요");
@@ -288,7 +297,7 @@ public class ClientController2 {
 		}
 	}
 	
-	//마이페이지 - 주문내역 배송관리(취소신청)
+	//마이페이지 - 주문내역 배송관리(취소신청/수취확인)
 	@RequestMapping("/orderDeliveryStatus.sool")
 	public String orderDeliveryStatus(int gdsLNo, int deliveryStatus, int reqPage, int period, Model model) {
 		int result = service.orderDeliveryStatus(gdsLNo,deliveryStatus);
@@ -313,11 +322,13 @@ public class ClientController2 {
 	@RequestMapping("/mExperience.sool")
 	public String mExperience(int reqPage, int period, Model model, @SessionAttribute(required=false) Client sessionClient) {
 		if(sessionClient!=null) {//로그인된사용자만 접근가능하게
+			Subscribe sub = service.subscribeSelect(sessionClient.getClientRank());//구독랭크 정보가져오기
 			ExperiencePageData epd = service.mExperiencePaging(reqPage,period,sessionClient.getClientNo());
 			model.addAttribute("eList",epd.getEList());
 			model.addAttribute("pageNavi",epd.getPageNavi());
 			model.addAttribute("period",period);
 			model.addAttribute("reqPage",reqPage);
+			model.addAttribute("sub",sub);
 			return "client/mExperience";
 		}else {
 			model.addAttribute("msg","로그인 후 이용해주세요");
@@ -364,11 +375,13 @@ public class ClientController2 {
 	@RequestMapping("/mQuestion.sool")
 	public String mQuestion (int reqPage, int period, Model model, @SessionAttribute(required=false) Client sessionClient) {
 		if(sessionClient!=null) {//로그인된사용자만 접근가능하게
+			Subscribe sub = service.subscribeSelect(sessionClient.getClientRank());//구독랭크 정보가져오기
 			QnaPageData qpd = service.mQuestionPaging(reqPage,period,sessionClient.getClientNo());
 			model.addAttribute("list",qpd.getList());
 			model.addAttribute("pageNavi",qpd.getPageNavi());
 			model.addAttribute("period",period);
-	
+			model.addAttribute("reqPage",reqPage);
+			model.addAttribute("sub",sub);
 			return "client/mQuestion";
 		}else {
 			model.addAttribute("msg","로그인 후 이용해주세요");
@@ -419,18 +432,39 @@ public class ClientController2 {
 		}
 	}
 	
-	//펀딩후원(예약)하기 - fnd_det_db에 insert
+	//펀딩상세페이지 - 같은펀딩을 후원했는지 안했는지 확인
+	@ResponseBody
+	@RequestMapping("/fundDetOverlapChk.sool")
+	public String fundDetOverlapChk (int fundNo, int cliNo, Model model){
+		int result = service.fundDetOverlapChk(fundNo,cliNo);
+		if(result>0) {
+			return "1";
+		}else {
+			return "0";
+		}
+	}
+	
+	//펀딩후원(예약)하기 - fnd_det_db에 insert / 목표달성시 fund_chk도 1로 업데이트
 	@RequestMapping("/fundReservationInsert.sool")
-	public String fundReservationInsert(FundDetailDB fd, Model model, @SessionAttribute(required=false) Client sessionClient) {
+	public String fundReservationInsert(int fundNo, int fndDPrice, int fndGNo, Model model, @SessionAttribute(required=false) Client sessionClient) {
 		if(sessionClient!=null) {//로그인된사용자만 접근가능하게
+			FundDetailDB fd = new FundDetailDB();
+			fd.setFundNo(fundNo);
+			fd.setFndDPrice(fndDPrice);
+			fd.setFndGNo(fndGNo);
+			fd.setFndDCli(sessionClient.getClientNo());
 			System.out.println("펀딩후원insert");
 			int result = service.fundReservationInsert(fd);
 			if(result>0) {
-				model.addAttribute("msg","후원하기가 완료되었습니다\n펀딩종료일에 메일로 결제안내를 드립니다\n확인하시고 결제 부탁드립니다");
+				if(result==10) {
+					model.addAttribute("msg","고객님의 후원으로 목표치에 달성하였습니다!!\\n펀딩종료일에 메일로 결제안내를 드립니다\\n확인하시고 결제 부탁드립니다");
+				}else {
+					model.addAttribute("msg","후원하기가 완료되었습니다\\n펀딩종료일에 메일로 결제안내를 드립니다\\n확인하시고 결제 부탁드립니다");
+				}
 			}else {
 				model.addAttribute("msg","후원하기에 실패하였습니다");
 			}
-			model.addAttribute("loc","/oFundingDetail.sool?fundNo="+fd.getFundNo());
+			model.addAttribute("loc","/client/oFundingDetail.sool?fundNo="+fd.getFundNo());
 		}else {
 			model.addAttribute("msg","로그인 후 이용해주세요");
 			model.addAttribute("loc","/");
@@ -438,5 +472,100 @@ public class ClientController2 {
 		return "common/msg";
 	}
 	
+	//마이페이지 - 펀딩
+	@RequestMapping("mFunding.sool")
+	public String mFunding (int reqPage, int period, Model model, @SessionAttribute(required=false) Client sessionClient) {
+		if(sessionClient!=null) {//로그인된사용자만 접근가능하게
+			Subscribe sub = service.subscribeSelect(sessionClient.getClientRank());//구독랭크 정보가져오기
+			FundingPageData fpd = service.mFundingPaging(reqPage,period,sessionClient.getClientNo());
+			model.addAttribute("list",fpd.getList());
+			model.addAttribute("pageNavi",fpd.getPageNavi());
+			model.addAttribute("period",period);
+			model.addAttribute("reqPage",reqPage);
+			model.addAttribute("sub",sub);
+			return "client/mFunding";
+		}else {
+			model.addAttribute("msg","로그인 후 이용해주세요");
+			model.addAttribute("loc","/");
+			return "common/msg";
+		}
+	}
+	
+	
+	//펀딩 주문/결제 페이지 이동
+	@RequestMapping("/paymentFundingShow.sool")
+	public String paymentFundingShow(int fndDNo, Model model, @SessionAttribute(required=false) Client sessionClient) {
+		if(sessionClient!=null) {//로그인된사용자만 접근가능하게
+			Client2 client = new Client2();
+			client = service.paymentShow(sessionClient.getClientNo());//사용자정보가져오기
+			if(client != null) {//client정보 전체 호출하고
+				FundingListData fd = service.paymentFundingSelect(fndDNo);//펀딩정보가져오기
+				if(fd!=null) {
+					model.addAttribute("fd",fd);
+					model.addAttribute("client",client);
+					return "client/oPaymentFunding";
+				}else {
+					model.addAttribute("msg","펀딩결제페이지 로드에 실패하였습니다");
+					model.addAttribute("loc","/");
+					return "common/msg";
+				}
+			}else {
+				model.addAttribute("msg","사용자정보 로드에 실패했습니다");
+				model.addAttribute("loc","/");
+				return "common/msg";
+			}
+		}else {
+			model.addAttribute("msg","로그인 후 이용해주세요");
+			model.addAttribute("loc","/");
+			return "common/msg";
+		}
+	}
+	
+	//펀딩 - 결제완료페이지 이동
+	@RequestMapping("/oCompleteFunding.sool")
+	public String oCompleteFunding(Model model, int fndDTotalp, int fndDNo, String fndDPaydate, int cliPoint, String fndDCliaddr, @SessionAttribute(required=false) Client sessionClient) {
+		if(sessionClient!=null) {
+			System.out.println("결제정보");
+			System.out.println(fndDPaydate);
+			FundDetailDB fd = new FundDetailDB();
+			fd.setFndDCli(sessionClient.getClientNo());
+			fd.setFndDCliaddr(fndDCliaddr);
+			fd.setFndDTotalp(fndDTotalp);
+			fd.setFndDNo(fndDNo);
+			fd.setFndDPaydate(fndDPaydate);
+			
+			int result = service.fundingPayUpdate(fd,sessionClient.getClientNo(),cliPoint);//fnd_det_db에 결제정보들 업뎃하고 사용자포인트 사용한것 빼기
+			
+			if(result>0) {
+				Client2 client = service.paymentShow(sessionClient.getClientNo()); //client정보가져오기
+				FundingListData fd2 = service.paymentFundingSelect(fndDNo);//펀딩정보가져오기
+				
+				model.addAttribute("client",client);//client정보
+				model.addAttribute("fd",fd2);//fundinglistdata정보
+				return "client/oSuccess";
+			}else {
+				model.addAttribute("msg","결제완료페이지 요청에 실패했습니다");
+				model.addAttribute("loc","/client/basketList.sool");
+				return "common/msg";
+			}
+		}else {
+			model.addAttribute("msg","로그인 후 이용해주세요");
+			model.addAttribute("loc","/");
+			return "common/msg";
+		}
+	}	
+	
+	//마이페이지 - 펀딩 배송관리(수취확인)
+	@RequestMapping("/fundDeliveryStatus.sool")
+	public String fundDeliveryStatus(int fndDNo, int reqPage, int period, Model model) {
+		int result = service.fundDeliveryStatus(fndDNo);
+		if(result>0) {
+			model.addAttribute("msg","수취확인이 완료되었습니다");
+		}else {
+			model.addAttribute("msg","수취확인에 실패하였습니다");
+		}
+		model.addAttribute("loc","/client/mFunding.sool?reqPage="+reqPage+"&period="+period);
+		return "common/msg";
+	}
 	
 }

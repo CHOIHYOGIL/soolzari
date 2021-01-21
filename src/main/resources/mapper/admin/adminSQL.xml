@@ -63,7 +63,7 @@
 		from notice_db where notice_no = #{_parameter}
 	</select>
 	<update id="updateNotice" parameterType="n">
-		update notice_db set notice_title = ${noticeTitle}, notice_content = ${noticeContent} where notice_no = ${noticeNo}
+		update notice_db set notice_title = #{noticeTitle}, notice_content = #{noticeContent} where notice_no = #{noticeNo}
 	</update>
 	<select id="totalNoticeSearch" parameterType="map" resultType="_int">
 		select count(*) from notice_db where
@@ -88,6 +88,9 @@
 		</choose>
 		order by 1 desc)n) where rnum between #{start} and #{end}
 	</select>
+	<update id="updateCount" parameterType="_int">
+		update notice_db set notice_count = notice_count+1 where notice_no = #{_parameter}
+	</update>
 	
 	<select id="selectAllGoods" parameterType="map" resultType="a">
 		select * from (select rownum as rnum, g.* from (
@@ -142,19 +145,19 @@
 			<when test="type == 1">
 				goods_db set status=1
 				<if test="acceptNo != null">
-					where gds_no=${acceptNo}
+					where gds_no=#{acceptNo}
 				</if>
 			</when>
 			<when test="type == 2">
 				funding_db set status=1
 				<if test="acceptNo != null">
-					where fund_no=${acceptNo}
+					where fund_no=#{acceptNo}
 				</if>
 			</when>
 			<when test="type == 3">
 				class_db set status=1
 				<if test="acceptNo != null">
-					where cls_no=${acceptNo}
+					where cls_no=#{acceptNo}
 				</if>
 			</when>
 		</choose>
@@ -165,19 +168,19 @@
 			<when test="type == 1">
 				goods_db set status=3
 				<if test="acceptNo != null">
-					where gds_no=${acceptNo}
+					where gds_no=#{acceptNo}
 				</if>
 			</when>
 			<when test="type == 2">
 				funding_db set status=3
 				<if test="acceptNo != null">
-					where fund_no=${acceptNo}
+					where fund_no=#{acceptNo}
 				</if>
 			</when>
 			<when test="type == 3">
 				class_db set status=3
 				<if test="acceptNo != null">
-					where cls_no=${acceptNo}
+					where cls_no=#{acceptNo}
 				</if>
 			</when>
 		</choose>

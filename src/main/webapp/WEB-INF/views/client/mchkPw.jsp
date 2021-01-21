@@ -21,8 +21,7 @@
 				<a class="sideNaviTop" href="/client/mOrderList.sool?reqPage=1&period=1">마이페이지</a>
 				<li><a class="sideNaviA a1" href="/client/mOrderList.sool?reqPage=1&period=1">주문 내역</a></li>
 				<li><a class="sideNaviA a2" href="/client/mExperience.sool?reqPage=1&period=1">예약한 클래스</a></li>
-				<li><a class="sideNaviA a3" href="#">후원한 펀딩</a></li>
-				<li><a class="sideNaviA a4" href="#">선물함</a></li>
+				<li><a class="sideNaviA a3" href="/client/mFunding.sool?reqPage=1&period=1">후원한 펀딩</a></li>
 				<li><a class="sideNaviA a5" href="#">내가 쓴 리뷰</a></li>
 				<li><a class="sideNaviA a6" href="/client/mQuestion.sool?reqPage=1&period=1">1:1 문의</a></li>
 				<li><a class="sideNaviA a7" href="/client/mInfo.sool">내 정보 수정</a></li>

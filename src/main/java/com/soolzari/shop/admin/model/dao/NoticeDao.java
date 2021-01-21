@@ -43,10 +43,16 @@ public class NoticeDao {
 	}
 
 	public int updateNotice(Notice n) {
+		System.out.println(n.getNoticeTitle());
+		System.out.println(n.getNoticeContent());
 		return session.update("admin.updateNotice", n);
 	}
 
 	public int totalNoticeSearch(HashMap<String, Object> map) {
 		return session.selectOne("admin.totalNoticeSearch", map);
+	}
+
+	public int updateCount(int noticeNo) {
+		return session.update("admin.updateCount", noticeNo);
 	}
 }
