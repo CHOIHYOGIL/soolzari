@@ -17,7 +17,7 @@
 			cli_no as cliNo,
 			bas_cnt as basCnt
 		from basket_db
-		where cli_no=#{_parameter}
+		where cli_no=#{_parameter} order by bas_no desc
 	</select>
 	<select id="goodsBasketSelect" parameterType="_int" resultType="g2">
 		select
@@ -158,10 +158,13 @@
 	
 	<!-- 펀딩 상세->후원하기버튼클릭 시 목표달성 시 update -->
 	<update id="fundChkUpdate" parameterType="_int">
-	update funding_db set fund_chk=1 where fund_no=(select fund_no from funding_db where fund_money &lt; (select sum(fnd_d_price) as sumprice 
+		update funding_db set fund_chk=1 where fund_no=(select fund_no from funding_db where fund_money &lt; (select sum(fnd_d_price) as sumprice 
         from fnd_det_db group by fund_no having fund_no=#{_parameter}) and fund_no=#{_parameter})
 	</update>
 	
-	
+	<!-- 상품 구매시 카운트 증가goods테이블 (gds_bcnt컬럼) -->
+	<update id="gdsBcntUpdate" parameterType="map">
+		update goods_db set gds_bcnt=gds_bcnt+#{gdsLCnt} where gds_no=#{gdsNo}
+	</update>
 	
 </mapper>

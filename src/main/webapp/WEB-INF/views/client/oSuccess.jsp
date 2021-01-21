@@ -36,7 +36,7 @@
 							</tr>
 							<tr>
 								<th scope="row">결제 금액</th>
-								<td class="payTd"><p class="totalPrice">${pur.purTtp }${fd.fndDTotalp }</p> 원</td>
+								<td class="payTd"><p class="totalPrice">${pur.purTtp }${fd.fndDTotalp }</p> 원</td><!-- 결제완료페이지를 펀딩이랑 상품이랑 같이쓰고 있어서 이렇게 사용함 -->
 							</tr>
 						</tbody>
 					</table>

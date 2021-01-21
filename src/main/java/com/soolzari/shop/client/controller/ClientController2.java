@@ -39,6 +39,7 @@ public class ClientController2 {
 	private ClientService2 service;
 	
 	//임시로그인
+	/*
 	@RequestMapping("/login.sool")
 	public String login(HttpSession session) {
 		Client2 client = new Client2();
@@ -58,19 +59,27 @@ public class ClientController2 {
 		session.setAttribute("sessionClient", client);
 		return "redirect:/";
 	}
+	*/
 	
 	//장바구니 담기
 	@RequestMapping("/basketInsert.sool")
-	public String basketInsert(int cliNo, int gdsNo, int basCnt, Model model) {
-		int result = service.basketInsert(cliNo,gdsNo,basCnt);
-		if(result>0) {
-			model.addAttribute("msg","장바구니에 담겼습니다");
-			model.addAttribute("loc","/client/oGoodsDetail.sool?gdsNo="+gdsNo);
+	public String basketInsert(int gdsNo, int basCnt, Model model, @SessionAttribute(required=false) Client sessionClient) {
+		if(sessionClient != null) {
+			int result = service.basketInsert(sessionClient.getClientNo(),gdsNo,basCnt);
+			if(result>0) {
+				model.addAttribute("msg","장바구니에 담겼습니다");
+				model.addAttribute("loc","/client/oGoodsDetail.sool?gdsNo="+gdsNo);
+			}else {
+				model.addAttribute("msg","장바구니 오류");
+				model.addAttribute("loc","/");
+			}
+			return "common/msg";
 		}else {
-			model.addAttribute("msg","장바구니 오류");
+			model.addAttribute("msg","로그인 후 이용해주세요");
+			model.addAttribute("loc","/login.sool");
+			return "common/msg";
 		}
-		model.addAttribute("loc","/");
-		return "common/msg";
+		
 	}
 	
 	//장바구니 리스트 상품정보(basket_db전체)
@@ -165,7 +174,7 @@ public class ClientController2 {
 			}
 		}else {
 			model.addAttribute("msg","로그인 후 이용해주세요");
-			model.addAttribute("loc","/");
+			model.addAttribute("loc","/login.sool");
 			return "common/msg";
 		}
 	}
@@ -194,10 +203,10 @@ public class ClientController2 {
 			pur.setPurGet(client.getCliAddr());
 			pur.setCliNo(client.getCliNo());
 			pur.setPurDate(purDate);
-			System.out.println(client.getCliPoint());
-			int result = service.paymentInsert(client,gdsNoStr,gdsLCntStr,pur);
+			System.out.println("purDate : "+purDate);
+			int result = service.paymentInsert(client,gdsNoStr,gdsLCntStr,pur);//purchase디비에 insert, point감소처리, goods디비에 상품구매횟수 증가
 			if(result>0) {
-				client = service.paymentShow(client.getCliNo()); //client정보가져오기
+				client = service.paymentShow(client.getCliNo()); //client정보가져오기(주문완료페이지에 뿌려줄)
 				model.addAttribute("client",client);//client정보
 				model.addAttribute("pur",pur);//purchase정보
 				return "client/oSuccess";
@@ -208,7 +217,7 @@ public class ClientController2 {
 			}
 		}else {
 			model.addAttribute("msg","로그인 후 이용해주세요");
-			model.addAttribute("loc","/");
+			model.addAttribute("loc","/login.sool");
 			return "common/msg";
 		}
 	}
@@ -223,7 +232,7 @@ public class ClientController2 {
 			return "redirect:/client/mInfo.sool";
 		}else {//로그인을 안한경우
 			model.addAttribute("msg","로그인 후 이용해주세요");
-			model.addAttribute("loc","/");
+			model.addAttribute("loc","/login.sool");
 			return "common/msg";
 		}
 	}
@@ -252,7 +261,7 @@ public class ClientController2 {
 			return "client/mInfo";
 		}else {
 			model.addAttribute("msg","로그인 후 이용해주세요");
-			model.addAttribute("loc","/");
+			model.addAttribute("loc","/login.sool");
 			return "common/msg";
 		}
 	}
@@ -288,7 +297,7 @@ public class ClientController2 {
 			return "client/mOrderList";
 		}else {
 			model.addAttribute("msg","로그인 후 이용해주세요");
-			model.addAttribute("loc","/");
+			model.addAttribute("loc","/login.sool");
 			return "common/msg";
 		}
 	}
@@ -328,7 +337,7 @@ public class ClientController2 {
 			return "client/mExperience";
 		}else {
 			model.addAttribute("msg","로그인 후 이용해주세요");
-			model.addAttribute("loc","/");
+			model.addAttribute("loc","/login.sool");
 			return "common/msg";
 		}
 	}
@@ -362,7 +371,7 @@ public class ClientController2 {
 			return "common/msg";
 		}else {
 			model.addAttribute("msg","로그인 후 이용해주세요");
-			model.addAttribute("loc","/");
+			model.addAttribute("loc","/login.sool");
 			return "common/msg";
 		}
 	}
@@ -381,7 +390,7 @@ public class ClientController2 {
 			return "client/mQuestion";
 		}else {
 			model.addAttribute("msg","로그인 후 이용해주세요");
-			model.addAttribute("loc","/");
+			model.addAttribute("loc","/login.sool");
 			return "common/msg";
 		}
 	}
@@ -450,7 +459,7 @@ public class ClientController2 {
 			model.addAttribute("loc","/client/oFundingDetail.sool?fundNo="+fd.getFundNo());
 		}else {
 			model.addAttribute("msg","로그인 후 이용해주세요");
-			model.addAttribute("loc","/");
+			model.addAttribute("loc","/login.sool");
 		}
 		return "common/msg";
 	}
@@ -469,7 +478,7 @@ public class ClientController2 {
 			return "client/mFunding";
 		}else {
 			model.addAttribute("msg","로그인 후 이용해주세요");
-			model.addAttribute("loc","/");
+			model.addAttribute("loc","/login.sool");
 			return "common/msg";
 		}
 	}
@@ -499,7 +508,7 @@ public class ClientController2 {
 			}
 		}else {
 			model.addAttribute("msg","로그인 후 이용해주세요");
-			model.addAttribute("loc","/");
+			model.addAttribute("loc","/login.sool");
 			return "common/msg";
 		}
 	}
@@ -533,7 +542,7 @@ public class ClientController2 {
 			}
 		}else {
 			model.addAttribute("msg","로그인 후 이용해주세요");
-			model.addAttribute("loc","/");
+			model.addAttribute("loc","/login.sool");
 			return "common/msg";
 		}
 	}	
@@ -549,6 +558,25 @@ public class ClientController2 {
 		}
 		model.addAttribute("loc","/client/mFunding.sool?reqPage="+reqPage+"&period="+period);
 		return "common/msg";
+	}
+	
+	//마이페이지 - 내가 쓴 리뷰
+	@RequestMapping("/mReview.sool")
+	public String mReview(int reqPage, int period, Model model, @SessionAttribute(required=false) Client sessionClient) {
+		if(sessionClient!=null) {//로그인된사용자만 접근가능하게
+			Subscribe sub = service.subscribeSelect(sessionClient.getClientRank());//구독랭크 정보가져오기
+			ExperiencePageData epd = service.mExperiencePaging(reqPage,period,sessionClient.getClientNo());
+			model.addAttribute("eList",epd.getEList());
+			model.addAttribute("pageNavi",epd.getPageNavi());
+			model.addAttribute("period",period);
+			model.addAttribute("reqPage",reqPage);
+			model.addAttribute("sub",sub);
+			return "client/mExperience";
+		}else {
+			model.addAttribute("msg","로그인 후 이용해주세요");
+			model.addAttribute("loc","/login.sool");
+			return "common/msg";
+		}
 	}
 	
 }

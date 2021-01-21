@@ -200,12 +200,22 @@ public class ClientService2 {
 				if(result>0) {
 					//장바구니에서 구매한 상품 삭제
 					result = dao.basketGoodsDelete(client,gdsNoList);
+					System.out.println("gdsNoList.size() : "+gdsNoList.size());
+					System.out.println("gdsLCntList.size() : "+gdsLCntList.size());
+					//상품 카운트 증가
+					for(int j=0;j<gdsNoList.size();j++) {
+						result = dao.gdsBcntUpdate(gdsNoList.get(j),gdsLCntList.get(j));
+					}
+					
 				}else {
 					result = 0;
 				}
 			}else {
 				result = 0;
 			}
+			
+			
+			
 			
 		}
 		return result;

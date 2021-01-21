@@ -344,6 +344,7 @@
 			return n;
 		}
 		var date=d.getFullYear()+''+az(d.getMonth()+1)+''+az(d.getDate())+''+az(d.getHours())+''+az(d.getMinutes())+''+az(d.getSeconds());
+		
 		IMP.init("imp54844867");
 		IMP.request_pay({//결제를 위해 전달해주는 정보
 			merchant_uid : "${client.cliId}"+date,//상점거래ID(필수)
@@ -355,7 +356,7 @@
 			buyer_addr : "${client.cliAddr}",	//구매자 주소
 		},function(rsp){//위의 값을 가지고 결제모듈을 진행
 			if(rsp.success){	//결제가 성공한 경우(결제정보를 디비에 저장해놔야지)
-				//$("input[name=purDate]").val(rsp.merchant_uid);//성공시 상점거래아이디 넘기기
+				$("input[name=purDate]").val(date);//성공시 상점거래아이디 넘기기
 				$("form").submit();//성공시 결제완료 페이지이동
 			}else{				//결제 실패한 경우
 				//$("input[name=resultMsg]").val(rsp.error_msg);//실패할경우 에러메세지

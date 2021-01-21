@@ -161,11 +161,11 @@ body .bannerTitle:hover{
 }
 .searchName{
 	text-align: right;
-	width: 10%;
+	width: 25%;
 }
 .searchADiv{
 	padding-left: 30px;
-	width: 41%;
+	width: 75%;
 	padding-top: 35px;
 	line-height: 30px;
 }
@@ -174,7 +174,7 @@ body .bannerTitle:hover{
 	display: inline-block;
 	color: black;
 	height: 30px;
-	width: 80px;
+	width: 120px;
 	text-align: center;
 	background-color: lightgray;
 }

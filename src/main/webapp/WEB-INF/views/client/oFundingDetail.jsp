@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +9,7 @@
 
 <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
 <script src="/resources/js/bootstrap.min.js"></script>
-<%-- <jsp:include page="/WEB-INF/views/common/header.jsp"/> --%>
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <meta charset="UTF-8">
 <title>펀딩 상세보기</title>
 </head>
@@ -76,9 +77,9 @@
 		
 	</div>
 	<div class="fixContent">
-			<h4><p>${fund.fundName }</p></h4>
-			목표 금액 달성률<br>
-			<h5 class="gh3"><span class="goodsPrice comma">${fund.fundTotalMoney }</span> 원 </h5><h4 class="gh4"><span class="percent">${fund.fundTotalMoney/fund.fundMoney*100 }</span>%</h4>
+			<h4><p class="fundName">${fund.fundName }</p></h4>
+			<span>목표 금액 달성률</span><br>
+			<h5 class="gh3"><span class="goodsPrice comma">${fund.fundTotalMoney }</span> 원 </h5><h4 class="gh4"><fmt:formatNumber value="${fund.fundTotalMoney/fund.fundMoney*100 }" pattern=".00"/>%</h4>
 			<table class="table fixTable">
 				<tr>
 					<th>등록일</th>
@@ -93,7 +94,7 @@
 					<td><span class="money">${fund.fundMoney }</span></td>
 				</tr>
 			</table>
-			<hr style="width: 90%;">
+			<hr>
 			<div class="goodsList">
 				<c:forEach items="${fundGoodsList }" var="fg">
 					<form action="/client/fundReservationInsert.sool" method="post">
@@ -108,8 +109,8 @@
 				        </div>
 				        <div id="detail_page${fg.fndGNo }" class="collapse">
 				           	<p>구성 : <span>${fg.fndGCon }</span></p>
-							<p>추가 후원금 : <input type="text" name="addFund"></p>
-							<div style="text-align: center;">
+							<p class="add">추가 후원금 : <input type="text" name="addFund"></p>
+							<div style="text-align: center; margin-top: 10px;">
 								<button type="button" class="btn btn-outline-secondary btn-sm addFundSel">+5,000</button>
 								<button type="button" class="btn btn-outline-secondary btn-sm addFundSel">+10,000</button>
 								<button type="button" class="btn btn-outline-secondary btn-sm addFundSel">+50,000</button>
@@ -126,7 +127,7 @@
 								<button type="button" class="btn btn-sm paymentBtn">후원하기</button>
 							</div> 
 				        </div>
-						<hr style="width: 90%;">
+						<hr>
 					</form>
 				</c:forEach>
 			</div>
@@ -180,7 +181,7 @@
 		totalPriceSet();
 		
 		//달성률 퍼센트 소숫점없이
-		$(".percent").html(parseInt($(".percent").html()));
+		//$(".percent").html(parseInt($(".percent").html()));
 	})
 	
 	

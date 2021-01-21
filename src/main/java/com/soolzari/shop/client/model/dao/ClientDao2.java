@@ -284,6 +284,14 @@ public class ClientDao2 {
 		return sqlSession.selectOne("mypage.subscribeSelect",clientRank);
 	}
 
+	//상품 구매시 카운트 증가goods테이블 (gds_bcnt컬럼)
+	public int gdsBcntUpdate(int gdsNo, int gdsLCnt) {
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("gdsNo", gdsNo);
+		map.put("gdsLCnt", gdsLCnt);
+		return sqlSession.update("order.gdsBcntUpdate",map);
+	}
+
 	
 
 	

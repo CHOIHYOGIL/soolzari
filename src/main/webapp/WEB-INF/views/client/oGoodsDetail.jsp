@@ -8,7 +8,7 @@
 
 <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
 <script src="/resources/js/bootstrap.min.js"></script>
-<%-- <jsp:include page="/WEB-INF/views/common/header.jsp"/> --%>
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <meta charset="UTF-8">
 <title>상품 상세보기</title>
 </head>
@@ -83,7 +83,7 @@
 	</div>
 	<div class="fixContent">
 		<form action="/client/basketInsert.sool" method="post">
-			<h4><p>${gsd.gdsName }</p></h4>
+			<h4><p class="fundName">${gsd.gdsName }</p></h4>
 			<h4 class="gh4"><span class="goodsPrice comma">${gsd.gdsPri }</span> 원</h4>
 			<table class="table fixTable">
 				<tr>
