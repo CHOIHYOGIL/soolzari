@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.soolzari.shop.admin.model.dao.AdminDao;
 import com.soolzari.shop.admin.model.vo.Qrv;
+import com.soolzari.shop.admin.model.vo.Sool;
 import com.soolzari.shop.admin.model.vo.User;
 import com.soolzari.shop.admin.model.vo.UserPage;
 import com.soolzari.shop.client.model.vo.Qna;
@@ -142,10 +143,10 @@ public class AdminService {
 		int totalCount = 0;
 		if(type == 1) {
 			list = dao.searchClient(map);
-			totalCount = dao.totalSearch(map);
+			totalCount = dao.searchUserTotal(map);
 		}else if(type == 2) {
 			list = dao.searchSeller(map);
-			totalCount = dao.totalSearch(map);
+			totalCount = dao.searchUserTotal(map);
 		}
 		int totalPage = 0;
 		if(totalCount%numPerPage==0) {
@@ -321,5 +322,65 @@ public class AdminService {
 		result += dao.deleteQrv(qrvNo);
 		return result;
 	}
+
+	public HashMap<String, Integer> selectUserChart() {
+		HashMap<String, Integer> user = new HashMap<String, Integer>();
+		int seller = dao.totalSeller();
+		int client = dao.totalUser(0);
+		int clientA = dao.totalUser(1);
+		int clientB = dao.totalUser(2);
+		user.put("seller", seller);
+		user.put("client", client);
+		user.put("clientA", clientA);
+		user.put("clientB", clientB);
+		return user;
+	}
+
+	public ArrayList<Sool> selectSool() {
+		ArrayList<Sool> list = dao.selectSool();
+		for(Sool s : list) {
+			double avg = s.getTakju()+s.getChungju()+s.getSoju()+s.getWine()+s.getFruit();
+			s.setAvg(avg/5);
+			s.setMonth(s.getMonth().substring(4));			
+		}
+		return list;
+	}
+
+	public HashMap<String, Integer> selectClass() {
+		HashMap<String, Integer> classes = new HashMap<String, Integer>();
+		int pprev = dao.totalClassMonth(-2);//11월
+		int prev = dao.totalClassMonth(-1);//12월
+		int now = dao.totalClassMonth(0);//1월
+		int next = dao.totalClassMonth(1);//2월
+		int nnext = dao.totalClassMonth(2);//2월
+		classes.put("pprev", pprev);
+		classes.put("prev", prev);
+		classes.put("now", now);
+		classes.put("next", next);
+		classes.put("nnext", nnext);
+		return classes;
+	}
+
+//	public HashMap<String, Integer> selectSubscribe() {
+//		HashMap<String, Integer> sub = new HashMap<String, Integer>();
+//		Date date = new Date();
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+//		String now = sdf.format(date);//1월
+//		Calendar cal = Calendar.getInstance();
+//    	cal.setTime(date);
+//    	cal.add(Calendar.MONTH, -1);
+//    	String onem = sdf.format(cal.getTime());//12월
+//    	cal.setTime(date);
+//    	cal.add(Calendar.MONTH, -2);
+//    	String twom = sdf.format(cal.getTime());//11월
+//    	cal.setTime(date);
+//    	cal.add(Calendar.MONTH, -3);
+//    	String threem = sdf.format(cal.getTime());//10월
+//    	HashMap<String, Object> mapA = new HashMap<String, Object>();
+//    	mapA.put("type",1);
+//    	HashMap<String, Object> mapB = new HashMap<String, Object>();
+//    	mapB.put("type",2);
+//		return sub;
+//	}
 
 }

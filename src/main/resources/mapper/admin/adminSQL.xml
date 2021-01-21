@@ -86,7 +86,6 @@
 				and notice_enroll between to_date(#{month}) and sysdate
 			</when>
 		</choose>
-		order by 1 desc)n) where rnum between #{start} and #{end}
 	</select>
 	<update id="updateCount" parameterType="_int">
 		update notice_db set notice_count = notice_count+1 where notice_no = #{_parameter}
@@ -136,51 +135,52 @@
 		from class_db join seller_db using (sel_no) where status=0 order by to_date(class_date))c) where rnum between #{start} and #{end}
 	</select>
 	<select id="totalClass" resultType="_int">
-		select count(*) from funding_db where status=0
+		select count(*) from class_db where status=0
 	</select>
 	
 	<update id="accept" parameterType="map">
 		update
 		<choose>
 			<when test="type == 1">
-				goods_db set status=1
+				goods_db set status=1 where status=0
 				<if test="acceptNo != null">
-					where gds_no=#{acceptNo}
+					and gds_no=#{acceptNo}
 				</if>
 			</when>
 			<when test="type == 2">
-				funding_db set status=1
+				funding_db set status=1 where status=0
 				<if test="acceptNo != null">
-					where fund_no=#{acceptNo}
+					and fund_no=#{acceptNo}
 				</if>
 			</when>
 			<when test="type == 3">
-				class_db set status=1
+				class_db set status=1 where status=0
 				<if test="acceptNo != null">
-					where cls_no=#{acceptNo}
+					and cls_no=#{acceptNo}
 				</if>
 			</when>
 		</choose>
+		and status=0
 	</update>
 	<update id="reject" parameterType="map">
 		update
 		<choose>
 			<when test="type == 1">
-				goods_db set status=3
+				goods_db set status=3 where status=0
 				<if test="acceptNo != null">
-					where gds_no=#{acceptNo}
+					and gds_no=#{acceptNo}
 				</if>
 			</when>
 			<when test="type == 2">
-				funding_db set status=3
+				funding_db set status=3 where status=0
 				<if test="acceptNo != null">
-					where fund_no=#{acceptNo}
+					and fund_no=#{acceptNo}
 				</if>
 			</when>
 			<when test="type == 3">
-				class_db set status=3
+				class_db set status=3 where status=0
 				<if test="acceptNo != null">
-					where cls_no=#{acceptNo}
+					and cls_no=#{acceptNo}
 				</if>
 			</when>
 		</choose>
@@ -252,16 +252,15 @@
 		select count(*) from 
 		<choose>
 			<when test="type == 1">
-				goods_db join seller_db using (sel_no) where gds_name
+				goods_db where gds_name like '%'||#{search}||'%' and status=0 and goods_date
 			</when>
 			<when test="type == 2">
-				funding_db join seller_db using (sel_no) where fund_name
+				funding_db where fund_name like '%'||#{search}||'%' and status=0 and fund_date
 			</when>
 			<when test="type == 3">
-				class_db join seller_db using (sel_no) where cls_name
+				class_db where cls_name like '%'||#{search}||'%' and status=0 and class_date
 			</when>
 		</choose>
-		like '%'||#{search}||'%' and status=0 and goods_date
 		<choose>
 			<when test="startDate.equals(endDate)">
 				= #{endDate}
@@ -284,7 +283,7 @@
 			cli_rank as status,
 			cli_enroll as userEnroll,
 			cli_point as point
-		from client_db)c) where rnum between #{start} and #{end}
+		from client_db order by 1)c) where rnum between #{start} and #{end}
 	</select>
 	<select id="totalClient" resultType="_int">
 		select count(*) from client_db
@@ -298,7 +297,7 @@
 			sel_tel as userPhone,
 			sel_addr as userAddr,
 			sel_enroll as userEnroll
-		from seller_db)s) where rnum between #{start} and #{end}
+		from seller_db order by 1)s) where rnum between #{start} and #{end}
 	</select>
 	<select id="totalSeller" resultType="_int">
 		select count(*) from seller_db
@@ -379,7 +378,7 @@
 		</if>
 		)s) where rnum between #{start} and #{end}
 	</select>
-	<select id="totalSearch" parameterType="map" resultType="_int">
+	<select id="searchUserTotal" parameterType="map" resultType="_int">
 		select count(*) from
 		<choose>
 			<when test="type == 1">
@@ -498,7 +497,7 @@
 		order by qna_ans)q) where rnum between #{start} and #{end}
 	</select>
 	<select id="totalQnaSearch" parameterType="map" resultType="_int">
-		select count(*) from qna_db where
+		select count(*) from qna_db join client_db on (cli_no = qna_writer) where
 		<choose>
 			<when test="type.equals('title')">
 				qna_name like '%'||#{search}||'%'
@@ -518,7 +517,6 @@
 				and qna_enroll between to_date(#{month}) and sysdate
 			</when>
 		</choose>
-		order by qna_ans)q) where rnum between #{start} and #{end}
 	</select>
 	<insert id="insertQrv" parameterType="qrv">
 		insert into qrv_db values(qrv_seq.nextval, #{qnaNo}, #{qrvWriter}, #{qrvContent}, to_char(sysdate, 'yyyy-mm-dd'))
@@ -529,4 +527,94 @@
 	<delete id="deleteQrv" parameterType="_int">
 		delete from qrv_db where qrv_no = #{_parameter}
 	</delete>
+	
+	<select id="totalUser" parameterType="_int" resultType="_int">
+		select count(*) from client_db
+		<if test="_parameter == 0">
+			where cli_rank = 0
+		</if>
+		<if test="_parameter == 1">
+			where cli_rank = 1
+		</if>
+		<if test="_parameter == 2">
+			where cli_rank = 2
+		</if>
+	</select>
+	<select id="selectSool" resultType="sool">
+		select month, nvl(wCount,0) wine, nvl(tCount,0) takju, nvl(cCount,0) chungju, nvl(fCount,0) fruit, nvl(sCount,0) soju
+		   from
+		       (select * from
+		           (
+		           select to_char(sysdate,'yyyymm')as month from dual
+		           union
+		           select to_char(add_months(sysdate, -1),'yyyymm') from dual
+		           union
+		           select to_char(add_months(sysdate, -2),'yyyymm') from dual
+		           union
+		           select to_char(add_months(sysdate, -3),'yyyymm') from dual
+		           )
+		           left join
+		           (select substr(pur_date,1,6) month, sum(gds_l_cnt) as wCount
+		           from goods_list_db
+		           left join goods_db using(gds_no)
+		           left join purchase_db using(pur_no)  
+		           where goods_type='w'
+		           group by (substr(pur_date,1,6),goods_type))
+		           using (month)
+		           left join
+		           (select substr(pur_date,1,6) month, sum(gds_l_cnt) as tCount
+		           from goods_list_db
+		           left join goods_db using(gds_no)
+		           left join purchase_db using(pur_no)  
+		           where goods_type='t'
+		           group by (substr(pur_date,1,6),goods_type))
+		           using (month)
+		           left join
+		           (select substr(pur_date,1,6) month, sum(gds_l_cnt) as cCount
+		           from goods_list_db
+		           left join goods_db using(gds_no)
+		           left join purchase_db using(pur_no)  
+		           where goods_type='c'
+		           group by (substr(pur_date,1,6),goods_type))
+		           using (month)
+		           left join
+		           (select substr(pur_date,1,6) month, sum(gds_l_cnt) as fCount
+		           from goods_list_db
+		           left join goods_db using(gds_no)
+		           left join purchase_db using(pur_no)  
+		           where goods_type='f'
+		           group by (substr(pur_date,1,6),goods_type))
+		           using (month)
+		           left join
+		           (select substr(pur_date,1,6) month, sum(gds_l_cnt) as sCount
+		           from goods_list_db
+		           left join goods_db using(gds_no)
+		           left join purchase_db using(pur_no)  
+		           where goods_type='s'
+		           group by (substr(pur_date,1,6),goods_type))
+		           using (month)
+		       )
+		where month between to_char(add_months(sysdate, -3),'yyyymm') and to_char(sysdate,'yyyymm')
+		order by 1 desc
+	</select>
+	<select id="totalClassMonth" parameterType="_int" resultType="_int">
+		select count(*) from class_db where
+		<choose>
+			<when test="_parameter == 0">
+				substr(class_enroll,1,7) = to_char(sysdate, 'yyyy-mm')
+			</when>
+			<when test="_parameter == -1">
+				substr(class_enroll,1,7) = to_char(add_months(sysdate, -1), 'yyyy-mm')
+			</when>
+			<when test="_parameter == -2">
+				substr(class_enroll,1,7) = to_char(add_months(sysdate, -2), 'yyyy-mm')
+			</when>
+			<when test="_parameter == 1">
+				substr(class_enroll,1,7) = to_char(add_months(sysdate, 1), 'yyyy-mm')
+			</when>
+			<when test="_parameter == 2">
+				substr(class_enroll,1,7) = to_char(add_months(sysdate, 2), 'yyyy-mm')
+			</when>
+		</choose>
+	</select>
 </mapper>

@@ -40,8 +40,8 @@
        <!-- 로직 다시 짜야됨 -->
         <div id="next"><img src="/resources/image/arrowu.png"><span>next</span><a href="/notice/viewClient.sool?noticeNo=${next.noticeNo }">${next.noticeTitle }</a></div>
         <div id="prev"><img src="/resources/image/arrowd.png"><span>prev</span><a href="/notice/viewClient.sool?noticeNo=${prev.noticeNo }">${prev.noticeTitle }</a></div>
-
     </section>
+    <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
     
     <script>
         $("#list").click(function(){

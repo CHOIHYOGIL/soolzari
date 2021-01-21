@@ -93,6 +93,9 @@
 					                        	<option value="1">구독 A</option>
 					                        	<option value="2" selected>구독 B</option>
 			                        		</c:when>
+			                        		<c:when test="${u.status == 10}">
+			                        			<option value="10">관리자</option>
+			                        		</c:when>
 			                        	</c:choose>
 			                        </select>
 			                    </td>

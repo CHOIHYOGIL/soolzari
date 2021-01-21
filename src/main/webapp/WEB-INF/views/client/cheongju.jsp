@@ -90,7 +90,7 @@
                                     <ul class="pick_list">
                                         <li>
                                             <input type="radio" id="sort1" class="radio" name="sort" value="date">
-                                            <label for="sort1" ">최신순</label>
+                                            <label for="sort1">최신순</label>
                                          
                                         </li>
                                          <li>

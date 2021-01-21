@@ -1,22 +1,21 @@
 @charset "UTF-8";
 
-        .main {
-            width: 80%;
-            text-align: center;
-            float: left;
-        }
+.main {
+    text-align: center;
+    width: 1400px;
+    margin: 0 auto;
+    overflow: hidden;
+}
 
-        .main>h1 {
-            text-align: center;
-        }
+.main>img {
+	width: 150px;
+	display: block;
+	margin: 0 auto;
+	margin-top: 20px;
+}
 
-        .stat {
-            border: 1px solid black;
-            width: 200px;
-            height: 200px;
-            margin: 50px;
-        }
-
-        .wrapper {
-            overflow: hidden;
-        }
+.main>div{
+	width: 700px;
+	height: 500px;
+	float: left;
+}

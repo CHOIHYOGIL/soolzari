@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.soolzari.shop.admin.model.vo.Qrv;
+import com.soolzari.shop.admin.model.vo.Sool;
 import com.soolzari.shop.admin.model.vo.User;
 import com.soolzari.shop.client.model.vo.Qna;
 
@@ -53,8 +54,8 @@ public class AdminDao {
 		return (ArrayList<User>)list;
 	}
 
-	public int totalSearch(HashMap<String, Object> map) {
-		return session.selectOne("admin.totalSearch", map);
+	public int searchUserTotal(HashMap<String, Object> map) {
+		return session.selectOne("admin.searchUserTotal", map);
 	}
 
 	public ArrayList<Qna> selectAllQna(HashMap<String, Integer> map) {
@@ -97,6 +98,19 @@ public class AdminDao {
 
 	public int deleteQrv(int qrvNo) {
 		return session.delete("admin.deleteQrv", qrvNo);
+	}
+
+	public int totalUser(int type) {
+		return session.selectOne("admin.totalUser", type);
+	}
+
+	public ArrayList<Sool> selectSool() {
+		List<Sool> list = session.selectList("admin.selectSool");
+		return (ArrayList<Sool>)list;
+	}
+
+	public int totalClassMonth(int month) {
+		return session.selectOne("admin.totalClassMonth", month);
 	}
 
 }
