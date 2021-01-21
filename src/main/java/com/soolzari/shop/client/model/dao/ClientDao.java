@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.soolzari.shop.client.model.vo.Class_List;
 import com.soolzari.shop.client.model.vo.Client;
 import com.soolzari.shop.client.model.vo.Fund;
+import com.soolzari.shop.client.model.vo.FundReview;
 import com.soolzari.shop.client.model.vo.Goods;
 import com.soolzari.shop.client.model.vo.Reservation;
 import com.soolzari.shop.client.model.vo.Subscribe;
@@ -179,6 +180,33 @@ public class ClientDao {
 		map.put("id",c.getClientId());
 		map.put("pw",c.getClientPw());
 		int result=sqlSession.update("client.setPw",map);
+		return result;
+	}
+	
+	public int insertComment(FundReview f) {
+		
+
+		System.out.println(f.getCommentWriter());
+		System.out.println(f.getFundNo());
+		int result=sqlSession.insert("client.insertComment",f);
+		return result;
+		
+	}
+
+	public int modifyComment(FundReview f) {
+		
+		int result=sqlSession.update("client.modifyComment",f);
+		return result;
+	}
+
+	public int deleteComment(FundReview f) {
+		
+		int result=sqlSession.delete("client.deleteCommnet",f);
+		return result;
+	}
+
+	public int insertComment1(FundReview f) {
+		int result=sqlSession.insert("client.insertComment1",f);
 		return result;
 	}
 

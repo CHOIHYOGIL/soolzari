@@ -11,7 +11,9 @@
 
 </head>
 <body>
+
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+
 	<section>
 		<h1 class="noticetitle">공지사항</h1>
 		<table class="notice">

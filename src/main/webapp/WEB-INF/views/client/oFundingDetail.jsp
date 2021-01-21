@@ -1,17 +1,53 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+            
 <!DOCTYPE html>
 <html>
 <head>
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.js"></script>
-
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
 <script src="/resources/js/bootstrap.min.js"></script>
 <%-- <jsp:include page="/WEB-INF/views/common/header.jsp"/> --%>
 <meta charset="UTF-8">
 <title>펀딩 상세보기</title>
 </head>
+
+<style>
+     #star_grade a{
+        text-decoration: none;
+        color: gray;
+    }
+    #star_grade a.on{
+        color: red;
+    }
+    
+   .commentList-ul{
+    	list-style:none;
+    }
+	li{
+		list-style:none;
+	}
+	.result-li textarea{
+		width:650px !important;
+		height:50px !important;
+		margin-top:15px;
+	}
+	
+	.name a{
+		text-decoration:none;
+		color:black;
+	}
+	.name a:hover{
+	text-decoration:none;
+		color:black;
+	}
+	
+	.rotate{
+      transform: rotate(180deg);
+   }
+</style>
 <body>
 <link rel="stylesheet" type="text/css" href="/resources/css/oFundingDetail.css">
 <div class="wrap2">
@@ -28,57 +64,14 @@
 				
 			</div>
 		</div>
-		<div class="reviewContent">
-			<a name="reviewGo"/>
-			<div class="glTitle">
-                          댓글
-            	<hr class="line">
-            </div>
-            <%-- <div class="gl" style="padding-left: 70px;">
-            	<!-- 댓글 입력하는 창 -->
-	            <div class="inputComment">
-		            <form action="/insertGroupComment" method="post">
-			            <input type="hidden" name="groupNo" value="<%=gsr.getGroupNo()%>"> <!-- 스룹스터디no -->
-			            <input type="hidden" name="commentWriter" value="<%=m.getMemberId()%>"> <!-- 작성자 -->
-			            <input type='hidden' name='category1' value='<%=category1%>'>
-			            <input type='hidden' name='category2' value='<%=category2%>'>
-			            <textarea class="form-control rowCheck" name="commentContent" style="resize: none; width: 85%; display: inline-block; outline: none;" maxlength="65" required="required"></textarea> 
-			            <button type="submit" class="btn btn-success btn-lg endDayCheck" style="background-color: #3B4E32">등록</button>
-		            </form>
-	            </div>
-	            <!-- 전체 댓글 출력 및 본인 댓글 수정 / 삭제 -->
-	            <div id="commentScrollDiv" style="width: 93%; margin-top: 20px;">
-	            	<%for(GroupComment gc : gcList){ %>
-		                <%if(gc.getCommentContent()!=null){ %>
-			                <div class="commentListWrap" style="clear:left;">
-			                 	<div class="commentList" style="width: 10%;">
-			                       	<img src="<%=memberIdFileMap.get(gc.getCommentWriter())%>" style="border-radius: 50%; width: 60px; height: 60px;" ><!-- 댓글을 쓴 사용자들의 프로필사진 -->
-			                    </div>
-			                    <div class="commentList" style="width: 77%;">
-			                     	<p id="commentWriterP" style="margin: 0;"><%=gc.getCommentWriter() %></p>
-			                        <p class="oldContent"><%=gc.getCommentContentBr() %></p>
-			                        <textarea name="commentContent" class="form-control changeComment" style="display: none; resize: none;" required="required"><%=gc.getCommentContent() %></textarea>
-			                    </div>
-			                    <%if(m.getMemberId().equals(gc.getCommentWriter()) || m.getMemberNo()==gsr.getGroupManagerNo()){ //작성자랑 현재 접속자랑 같은 경우 수정/삭제 가능하게 || 그룹장인경우 삭제만가능하게%>
-			                       	<div class="commentList" style="width: 13%;">
-			                         	<%if(m.getMemberId().equals(gc.getCommentWriter())){ %>
-			                             	<a href="javascript:void(0)" onclick="modifyComment(this,'<%=gc.getCommentNo()%>','<%=gsr.getGroupNo()%>')">수정</a>
-			                            <%} %>
-			                            <a href="javascript:void(0)" onclick="deleteComment(this,'<%=gc.getCommentNo()%>','<%=gsr.getGroupNo()%>','<%=category1%>','<%=category2%>')">삭제</a>
-			                       	</div>
-			                    <%} %>
-			             	</div>
-		                <%} %>
-	                <%} //댓글 for문 종료 지점%>
-	            </div>
-            </div> --%>
+
 		</div>
 		
-	</div>
+
 	<div class="fixContent">
 			<h4><p>${fund.fundName }</p></h4>
 			목표 금액 달성률<br>
-			<h5 class="gh3"><span class="goodsPrice comma">${fund.fundTotalMoney }</span> 원 </h5><h4 class="gh4"><span>${fund.fundTotalMoney/fund.fundMoney*100 }</span>%</h4>
+			<h5 class="gh3"><span class="goodsPrice comma">${fund.fundTotalMoney }</span> 원 </h5><h4 class="gh4"><span class="percent">${fund.fundTotalMoney/fund.fundMoney*100 }</span>%</h4>
 			<table class="table fixTable">
 				<tr>
 					<th>등록일</th>
@@ -136,6 +129,76 @@
 				<a href="#reviewGo" class="reviewGo at">상품 후기 보기</a>
 			</div>
 	</div>
+	
+	
+			<div class="reviewContent" style="margin-top:1200px;" >
+			<a name="reviewGo"/>
+			<div class="glTitle">
+                          <span style="font-size:25px;">댓글</span>
+            	<hr class="line">
+            </div>
+       <div class="gl">
+            	<!-- 댓글 입력하는 창 -->
+            	  <span style="font-size:18px;">평점 :</span> <p id="star_grade" style="display:inline-block;">
+	            	<a href="#">★</a>
+	            	<a href="#">★</a>
+	            	<a href="#">★</a>
+	            	<a href="#">★</a>
+	            	<a href="#">★</a>
+
+
+	            </p>
+	            <span id="rateCount"> </span>
+	            <div class="inputComment">
+		            <form action="/insertComment.sool" method="post">
+		            
+			            <input type="hidden" name="fundNo" value="${fund.fundNo}"> <!-- 스룹스터디no -->
+			            <input type="hidden" name="commentWriter" value="${sessionNo}"> <!-- 작성자 -->
+			            <input type="hidden" name="commentWriterName" value="${sessionName}"> <!-- 작성자 -->
+			          	<input type="hidden" id="commentRate" name="commentRate">
+			            <textarea class="form-control rowCheck" name="commentContent" style="resize: none; width: 65%; display: inline-block; outline: none;" maxlength="65" required="required"></textarea> 
+			            <button type="submit" class="btn btn-success btn-lg endDayCheck" style="background-color: #3B4E32; margin-bottom:50px; margin-left:10px;">등록</button>
+		            </form>
+	            </div>
+	            </div> 
+	             		    <div id="commentScrollDiv" style="width: 74%;">
+	            <!-- 전체 댓글 출력 및 본인 댓글 수정 / 삭제 -->
+	             <h4 style="font-size:20px;">댓글 리스트
+	             	<c:if test="${!empty reviewList}">
+	             		   <span class="toggle-review"><i class="fas fa-sort-down" width="20" style="transition-duration:0.2s;"></i></span>
+	             	</c:if>
+	             </h4>
+	        
+	               <ul class="commentList-ul" style=" width:100%; padding:0px 15px;" >
+	          
+	              	<c:forEach items="${reviewList}" var="r">
+	   
+	            		<li class="result-li" style="width:96%;  border:1px solid lightgrey; border-radius:15px 15px 15px 15px; padding:10px 15px; margin-bottom:8px;" >
+	            			<div class="name" style=" width:100%;">
+	            			       
+			                     	<p id="commentWriterP" style="margin: 0; font-size:18px;">${r.commentWriterName}<span><c:forEach var="i" begin="1" end="${r.commentRate }">	<a href="#" style="color:orange;">★</a></c:forEach></span></p>
+			                            		<input type="hidden" name="reviewNo" value="${r.reviewNo}">
+			                        <textarea name="commentContent" class="form-control changeComment" style="resize: none; display:inline-block;"  required="required" onfucs="this.value=this.value;" >${r.commentContent }</textarea>
+			           
+			             		<c:if test="${r.commentWriter eq sessionScope.sessionClient.clientNo  }">
+			                    		<a href="javascript:void(0)" onclick="modify(this,${r.reviewNo})">수정</a>
+			                    <a href="javascript:void(0)" onclick="delete1(this,${r.reviewNo})">삭제</a>
+			                  
+			                    	</c:if>
+			                     </div> 
+			          
+	            		         
+			                   
+			                 
+			                    
+			                    	
+			                 </li> 
+			  
+	           
+	                </c:forEach>
+	                 </ul>
+       </div>
+             </div>
 </div>
 
 
@@ -178,6 +241,9 @@
 		
 		//처음에 총 후원금액 세팅
 		totalPriceSet();
+		
+		//달성률 퍼센트 소숫점없이
+		$(".percent").html(parseInt($(".percent").html()));
 	})
 	
 	
@@ -237,19 +303,152 @@
 		let price1 = str.replace(/[^\d]+/g, "");
 		return price1;
 	}
+	
 	//후원하기 버튼
 	$(".paymentBtn").click(function(){
-		var login = "${sessionScope.sessionClient.clientNo }";
-		if(login.length>0){//로그인 된 상태일때만 후원가능하게
-			if(confirm("후원을 하시겠습니까?\n종료일날 메일로 결제안내를 드립니다")){
-				$("form").eq($(this).index()).submit();//후원하기버튼에 있는 form실행하기위해 index를 구해서 실행시킴
-			}
+		var cliNo = "${sessionScope.sessionClient.clientNo }";
+		var paymentForm = $(this).parent().parent().parent("form");
+		if(cliNo.length>0){//로그인 된 상태일때만 후원가능하게
+			var fundNo = ${fund.fundNo};
+			$.ajax({
+				url:"/client/fundDetOverlapChk.sool",
+				data: {fundNo:fundNo,cliNo:cliNo},
+				type:"post",
+				success:function(data){
+					if(data=="0"){//0 : 후원한 펀딩이 아닐경우에만 가능하게
+						if(confirm("후원을 하시겠습니까?\n종료일날 메일로 결제안내를 드립니다")){
+							paymentForm.submit();//후원하기버튼에 있는 form실행하기위해 index를 구해서 실행시킴
+						}
+					}else{//1 : 후원한 펀딩이 아닐경우에만 가능하게
+						alert("이미 후원한 펀딩입니다");
+					}
+				}
+			});
 		}else{//로그인된 상태가 아니면
 			alert("로그인 이후 후원이 가능합니다");
 			location.href="/login.sool";
 		}
 		
 	});
+</script>
+
+
+<script>
+
+	
+var count=0;
+        $('#star_grade a').click(function(){
+            $(this).parent().children("a").removeClass("on");  /* 별점의 on 클래스 전부 제거 */ 
+            $(this).addClass("on").prevAll("a").addClass("on"); /* 클릭한 별과, 그 앞 까지 별점에 on 클래스 추가 */
+            count=$('#star_grade a.on').length-1;
+            $("#rateCount").html(count+"점");
+            $("#commentRate").val(count);
+            console.log(count);
+            return false;
+        });
+        
+        $(".toggle-review").click(function(){ //리뷰 div 토글
+            $(".commentList-ul").slideToggle('600');
+            $(".toggle-review").children().toggleClass('rotate');
+         });
+        
+  function modify(obj,reviewNo){
+        	console.log(obj);
+        	console.log(reviewNo);
+        	var tx=$(obj).prev();
+        	tx.focus();
+        	tx.val(tx.val()+' ');  //textarea 글끝으로 커서 보내기
+        	$(obj).html('수정완료');
+        	$(obj).attr('onclick','modifyComplete(this,"'+reviewNo+'")');
+        	$(obj).next().html('수정취소');
+        	$(obj).next().attr('onclick','modifyCancel(this)');
+        	
+        }
+  
+  function delete1(obj,reviewNo){
+	  console.log("delete");
+	  var content=$(obj).prev().prev().val();
+	  console.log(content);
+	  $.ajax({
+	  		
+	  		url:"/deleteComment.sool",
+	  		type:"POST",
+	  		data:{
+	  			reviewNo : reviewNo,
+	  			commentContent :content
+	  		},
+	  		dataType:"json",
+	  		
+	  		success:function(data){
+	  			console.log(data);
+	  			
+	  			alert(data.msg);
+	  			location.reload();
+	  		},
+	  		error:function(error){
+	  			console.log(error);
+	  		}
+	  		
+	  	});
+	  
+	  
+  }
+  
+  function modifyComplete(obj, reviewNo){
+	  console.log("수정완료");
+	  console.log("수정완료 : "+obj);
+	  console.log(reviewNo);
+	  var content=$(obj).prev().val();
+	  console.log(content);
+	  $.ajax({
+  		
+  		url:"/modifyComment.sool",
+  		type:"POST",
+  		data:{
+  			reviewNo : reviewNo,
+  			commentContent :content
+  		},
+  		dataType:"json",
+  		
+  		success:function(data){
+  			console.log(data);
+  			alert(data.msg);
+  			$(obj).prev().val(content);
+  			$(obj).html('수정');
+  			$(obj).attr('onclick','modify(this,"'+reviewNo+'")');
+  			$(obj).next().html('삭제');
+  			$(obj).next().attr('onclick','delete');
+  			location.reload();
+  			console.log(data);
+  		},
+  		error:function(error){
+  			console.log(error);
+  		}
+  		
+  	})
+  }
+  
+  function modifyCancel(obj){
+	  console.log("cancel");
+  	var tx=$(obj).prev().prev();
+  	console.log(tx);
+  	tx.focusout();
+  	$(obj).html('삭제');
+  	$(obj).attr('class','delete');
+  	$(obj).prev().html('수정');
+  	$(obj).prev().attr('class','modify');
+	  
+  }
+      
+        $(".modifyComplete").click(function(){
+        	console.log("수정완료");
+			var reviewNo=$(this).prev().prev().val();
+			console.log(reviewNo);
+        	var content=$(".changeComment").val();
+      	
+        })
+      
+        
 </script>
 </body>
 </html>

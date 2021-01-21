@@ -272,6 +272,7 @@
    
 
 $(function(){
+	
 	$(".fc-past").text('예약불가');
 	$(".fc-today").text('예약불가');
 	//$(".fc-future").append(("<a href="#">test</a>"));
@@ -461,6 +462,7 @@ var i=0;
 
 	var k=0;
   document.addEventListener('DOMContentLoaded', function() {
+	  console.log("hi");
 	  var eventDB=getEvents();
     var calendarEl = document.getElementById('calendar');
 
@@ -486,7 +488,7 @@ var i=0;
       eventLimit:true,
       selectable:true,
       //hiddenDays:[ 0, 6 ],
- 
+
       dateClick:function(info){
     	  var myDate= moment().format('YYYY-MM-DD');
     	  var clickDate=info.dateStr;
@@ -497,7 +499,12 @@ var i=0;
     	
       },
     	events:eventDB,
+    	datesRender:function(){
+    	 	$(".fc-past").text('예약불가');
+    		$(".fc-today").text('예약불가');
+    	},
     	eventClick:function(info){
+    	
     		 var session='<%=session.getAttribute("sessionId")%>';
    
     		if(session=="null"){

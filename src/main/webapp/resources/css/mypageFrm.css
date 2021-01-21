@@ -17,13 +17,13 @@ body .wrap2{
 	width: 85%;
 }
 /* 버튼 아웃라인삭제----------------------------------------- */
-button:focus {
+body button:focus {
 	outline:0;
 }
-.btn:focus{
+body .btn:focus{
 	box-shadow: none;
 }
-a:hover{
+body a:hover{
 	text-decoration: none;
 }
 /* 배너----------------------------------------- */
@@ -35,7 +35,12 @@ a:hover{
 	line-height: 200px;
 	font-size: 22px;
 }
-.bannerTitle{
+body .bannerTitle{
+	text-decoration: none;
+	color: white;
+	font-size: 30px;
+}
+body .bannerTitle:hover{
 	text-decoration: none;
 	color: white;
 }
@@ -54,6 +59,9 @@ a:hover{
 	line-height: 40px;
 	color: rgb(77, 80, 117);
 	text-indent: 30px;
+}
+.sideNaviTop:hover{
+	color: rgb(77, 80, 117);
 }
 .sideNaviUl>li{
 	padding-left: 30px;
@@ -75,6 +83,7 @@ a:hover{
 /* TopContent 구독,포인트,쿠폰----------------------------------------- */
 .topContent, .mainContent{
 	padding-left: 20px;
+	font-size: 20px;
 }
 .contentTitle{
 	text-indent: 15px;
@@ -115,6 +124,7 @@ a:hover{
 }
 .fixC{
 	padding-left: 50px;
+	font-size: 20px;
 }
 
 .subGo{
@@ -199,9 +209,11 @@ a:hover{
 body .listTable{
 	text-align: center;
 }
+
 /* 테이블 border----------------------------------------- */
 .listTable tr:first-child>td, .listTable tr:first-child>th {
 	border-top: 1px solid gray;
+	
 }
 .listTable tr>th, .listTable tr>td{
 	border-top: 1px solid lightgray;
@@ -242,7 +254,6 @@ body .listTable{
 	border: 1px solid rgb(77, 80, 117);
 	background-color: rgb(77, 80, 117);
 }
-
 /* 받은 선물함 / 보낸 선물함----------------------------------------- */
 .giftSel{
 	margin-left: 30px;

@@ -21,8 +21,12 @@ import com.soolzari.shop.client.model.vo.Client2;
 import com.soolzari.shop.client.model.vo.ExperiencePageData;
 import com.soolzari.shop.client.model.vo.FundDetail;
 import com.soolzari.shop.client.model.vo.FundDetailDB;
+
+import com.soolzari.shop.client.model.vo.FundReview;
+
 import com.soolzari.shop.client.model.vo.FundingListData;
 import com.soolzari.shop.client.model.vo.FundingPageData;
+
 import com.soolzari.shop.client.model.vo.Goods2;
 import com.soolzari.shop.client.model.vo.GoodsList;
 import com.soolzari.shop.client.model.vo.GoodsSellerDetail;
@@ -30,6 +34,7 @@ import com.soolzari.shop.client.model.vo.OrderPageData;
 import com.soolzari.shop.client.model.vo.Purchase;
 import com.soolzari.shop.client.model.vo.Qna;
 import com.soolzari.shop.client.model.vo.QnaPageData;
+import com.soolzari.shop.client.model.vo.Subscribe;
 
 @Controller
 @RequestMapping("/client")
@@ -275,12 +280,15 @@ public class ClientController2 {
 	@RequestMapping("/mOrderList.sool")
 	public String mOrderList(int reqPage, int period, Model model, @SessionAttribute(required=false) Client sessionClient) {
 		if(sessionClient!=null) {//로그인된사용자만 접근가능하게
+			Subscribe sub = service.subscribeSelect(sessionClient.getClientRank());//구독랭크 정보가져오기
+			System.out.println(sub.getSubscribeName());
 			OrderPageData opd = service.mOrderListPaging(reqPage,period,sessionClient.getClientNo());
 			model.addAttribute("pList",opd.getPList());
 			model.addAttribute("olDataList",opd.getOlDataList());
 			model.addAttribute("pageNavi",opd.getPageNavi());
 			model.addAttribute("period",period);
 			model.addAttribute("reqPage",reqPage);
+			model.addAttribute("sub",sub);
 			return "client/mOrderList";
 		}else {
 			model.addAttribute("msg","로그인 후 이용해주세요");
@@ -314,11 +322,13 @@ public class ClientController2 {
 	@RequestMapping("/mExperience.sool")
 	public String mExperience(int reqPage, int period, Model model, @SessionAttribute(required=false) Client sessionClient) {
 		if(sessionClient!=null) {//로그인된사용자만 접근가능하게
+			Subscribe sub = service.subscribeSelect(sessionClient.getClientRank());//구독랭크 정보가져오기
 			ExperiencePageData epd = service.mExperiencePaging(reqPage,period,sessionClient.getClientNo());
 			model.addAttribute("eList",epd.getEList());
 			model.addAttribute("pageNavi",epd.getPageNavi());
 			model.addAttribute("period",period);
 			model.addAttribute("reqPage",reqPage);
+			model.addAttribute("sub",sub);
 			return "client/mExperience";
 		}else {
 			model.addAttribute("msg","로그인 후 이용해주세요");
@@ -365,11 +375,13 @@ public class ClientController2 {
 	@RequestMapping("/mQuestion.sool")
 	public String mQuestion (int reqPage, int period, Model model, @SessionAttribute(required=false) Client sessionClient) {
 		if(sessionClient!=null) {//로그인된사용자만 접근가능하게
+			Subscribe sub = service.subscribeSelect(sessionClient.getClientRank());//구독랭크 정보가져오기
 			QnaPageData qpd = service.mQuestionPaging(reqPage,period,sessionClient.getClientNo());
 			model.addAttribute("list",qpd.getList());
 			model.addAttribute("pageNavi",qpd.getPageNavi());
 			model.addAttribute("period",period);
 			model.addAttribute("reqPage",reqPage);
+			model.addAttribute("sub",sub);
 			return "client/mQuestion";
 		}else {
 			model.addAttribute("msg","로그인 후 이용해주세요");
@@ -384,6 +396,12 @@ public class ClientController2 {
 		GoodsSellerDetail gsd = service.oGoodsDetail(gdsNo);
 		if(gsd!=null) {//상품이 있을 경우
 			model.addAttribute("gsd",gsd);//상품정보 전달
+			ArrayList<FundReview> reviewList= service.reviewList1(gdsNo);
+			model.addAttribute("reviewList",reviewList);
+			
+			model.addAttribute("goodNo",gdsNo);
+			System.out.println(gdsNo);
+			System.out.println(reviewList);
 			return "client/oGoodsDetail";
 		}else {
 			model.addAttribute("msg","상품을 불러오는데 실패했습니다");
@@ -399,11 +417,30 @@ public class ClientController2 {
 		if(fd!=null) {//펀딩이 있을 경우
 			model.addAttribute("fund",fd.getFund());//펀딩정보
 			model.addAttribute("fundGoodsList",fd.getFundGoodsList());//펀딩상품정보
+			
+			ArrayList<FundReview> reviewList= service.reviewList(fundNo);
+			System.out.println("reviewList:"+reviewList);
+			model.addAttribute("reviewList",reviewList);
+			System.out.println("fund:"+fd.getFund());
+		
+			System.out.println("fundGoodsList:"+fd.getFundGoodsList());
 			return "client/oFundingDetail";
 		}else {
 			model.addAttribute("msg","상품을 불러오는데 실패했습니다");
 			model.addAttribute("loc","/");//상품리스트 경로수정
 			return "common/msg";
+		}
+	}
+	
+	//펀딩상세페이지 - 같은펀딩을 후원했는지 안했는지 확인
+	@ResponseBody
+	@RequestMapping("/fundDetOverlapChk.sool")
+	public String fundDetOverlapChk (int fundNo, int cliNo, Model model){
+		int result = service.fundDetOverlapChk(fundNo,cliNo);
+		if(result>0) {
+			return "1";
+		}else {
+			return "0";
 		}
 	}
 	
@@ -419,7 +456,11 @@ public class ClientController2 {
 			System.out.println("펀딩후원insert");
 			int result = service.fundReservationInsert(fd);
 			if(result>0) {
-				model.addAttribute("msg","후원하기가 완료되었습니다\\n펀딩종료일에 메일로 결제안내를 드립니다\\n확인하시고 결제 부탁드립니다");
+				if(result==10) {
+					model.addAttribute("msg","고객님의 후원으로 목표치에 달성하였습니다!!\\n펀딩종료일에 메일로 결제안내를 드립니다\\n확인하시고 결제 부탁드립니다");
+				}else {
+					model.addAttribute("msg","후원하기가 완료되었습니다\\n펀딩종료일에 메일로 결제안내를 드립니다\\n확인하시고 결제 부탁드립니다");
+				}
 			}else {
 				model.addAttribute("msg","후원하기에 실패하였습니다");
 			}
@@ -435,11 +476,13 @@ public class ClientController2 {
 	@RequestMapping("mFunding.sool")
 	public String mFunding (int reqPage, int period, Model model, @SessionAttribute(required=false) Client sessionClient) {
 		if(sessionClient!=null) {//로그인된사용자만 접근가능하게
+			Subscribe sub = service.subscribeSelect(sessionClient.getClientRank());//구독랭크 정보가져오기
 			FundingPageData fpd = service.mFundingPaging(reqPage,period,sessionClient.getClientNo());
 			model.addAttribute("list",fpd.getList());
 			model.addAttribute("pageNavi",fpd.getPageNavi());
 			model.addAttribute("period",period);
 			model.addAttribute("reqPage",reqPage);
+			model.addAttribute("sub",sub);
 			return "client/mFunding";
 		}else {
 			model.addAttribute("msg","로그인 후 이용해주세요");

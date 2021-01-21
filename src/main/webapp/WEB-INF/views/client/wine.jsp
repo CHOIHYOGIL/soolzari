@@ -126,7 +126,7 @@
                                         <li style="width:25%;" data-price=${g.goodsPrice } data-count=${g.goodsCount } data-review=${g.reviewScore }>
                                             <div class="item_cont">
                                                 <div class="item_photo_box">
-                                                    <a href="#">
+                                                          <a href="/client/oGoodsDetail.sool?gdsNo=${g.goodsNo}">
                                                         <img src="/resources/upload/${g.imagePath }" alt="전통주 짱맛있어" width="240" class="middle">
                                                     </a>
                                                 </div>

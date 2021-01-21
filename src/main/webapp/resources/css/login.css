@@ -45,10 +45,20 @@
 
 }
 
+* {
+    font-family: 'S-CoreDream-3Light';
+}
+form {
+     
+    width: 620px;
+    min-height: 600px;
+
+
 form {
      
     width: 520px;
     min-height: 550px;
+
     height: auto;
     border-radius: 5px;
     margin: 10% auto;
@@ -87,7 +97,11 @@ form .con {
 .input-item {
     background: #fff;
     color: #333;
+
+   
+
     padding: 13px 5px 16px 9px;
+
     border-radius: 5px 0px 0px 5px;
 }
 .input-eye{
@@ -184,7 +198,6 @@ button {
     margin-bottom:30px !important;
     letter-spacing: 0.05em;
 }
-
 
 ul.sns{
 	

@@ -28,7 +28,6 @@
 				<li><a class="sideNaviA a1" href="/client/mOrderList.sool?reqPage=1&period=1">주문 내역</a></li>
 				<li><a class="sideNaviA a2" href="/client/mExperience.sool?reqPage=1&period=1">예약한 클래스</a></li>
 				<li><a class="sideNaviA a3" href="/client/mFunding.sool?reqPage=1&period=1">후원한 펀딩</a></li>
-				<li><a class="sideNaviA a4" href="#">선물함</a></li>
 				<li><a class="sideNaviA a5" href="#">내가 쓴 리뷰</a></li>
 				<li><a class="sideNaviA a6" href="/client/mQuestion.sool?reqPage=1&period=1">1:1 문의</a></li>
 				<li><a class="sideNaviA a7" href="/client/mInfo.sool">내 정보 수정</a></li>
@@ -49,7 +48,7 @@
 						<h3>SNS로 로그인한 회원입니다</h3>
 					</div>
 					</c:if>
-					<c:if test="${!client.cliPw=='sns' }">
+					<c:if test="${client.cliPw!='sns' }">
 					<div class="infoDiv">
 						<h4>기본 정보</h4>
 						<table class="table">
@@ -162,7 +161,6 @@
 	                } /* else {
 	                    document.getElementById("sample4_extraAddress").value = '';
 	                } */
-
 	                thisBtn.parent().prev().children('.addr').html(addr);
 	                thisBtn.parent().prev().append("<p class='detailP'>상세주소 입력 : <input type='text' class='detailAddr'><span class='comment'></span></p>");
 	                thisBtn.html("완료");

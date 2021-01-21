@@ -4,10 +4,10 @@
 	width: 100%;
 }
 .th1 {
-	width: 15%;
+	width: 25%;
 }
 .th2 {
-	width: 45%;
+	width: 35%;
 }
 .th3 {
 	width: 15%;
@@ -23,4 +23,11 @@
 .a2 {
 	background-color: rgb(77, 80, 117);
 	color: white;
+}
+.listTable tr>td:nth-child(2) {
+	text-align: left;
+}
+
+.indent{
+	text-indent: 30px;
 }

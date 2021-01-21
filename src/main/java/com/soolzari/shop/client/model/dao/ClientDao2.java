@@ -12,7 +12,9 @@ import com.soolzari.shop.client.model.vo.Basket;
 import com.soolzari.shop.client.model.vo.BasketDel;
 import com.soolzari.shop.client.model.vo.Client2;
 import com.soolzari.shop.client.model.vo.ExperienceListData;
+import com.soolzari.shop.client.model.vo.Fund;
 import com.soolzari.shop.client.model.vo.FundDetailDB;
+import com.soolzari.shop.client.model.vo.FundReview;
 import com.soolzari.shop.client.model.vo.Funding;
 import com.soolzari.shop.client.model.vo.FundingGoods;
 import com.soolzari.shop.client.model.vo.FundingListData;
@@ -22,6 +24,7 @@ import com.soolzari.shop.client.model.vo.GoodsSellerDetail;
 import com.soolzari.shop.client.model.vo.OrderListData;
 import com.soolzari.shop.client.model.vo.Purchase;
 import com.soolzari.shop.client.model.vo.Qna;
+import com.soolzari.shop.client.model.vo.Subscribe;
 
 @Repository
 public class ClientDao2 {
@@ -210,6 +213,14 @@ public class ClientDao2 {
 		List<FundingGoods> fundGoodsList =  sqlSession.selectList("order.fundingGoodsSelect",fundNo);
 		return (ArrayList<FundingGoods>)fundGoodsList;
 	}
+	
+	//같은펀딩을 후원했는지 안했는지 확인
+	public int fundDetOverlapChk(int fundNo, int cliNo) {
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("fundNo", fundNo);
+		map.put("cliNo", cliNo);
+		return sqlSession.selectOne("order.fundDetOverlapChk",map);
+	}
 
 	//펀딩후원(예약)하기 - fnd_det_db에 insert
 	public int fundReservationInsert(FundDetailDB fd) {
@@ -270,7 +281,25 @@ public class ClientDao2 {
 		return (ArrayList<Client2>)list;
 	}
 
+	//구독랭크 정보가져오기
+	public Subscribe subscribeSelect(int clientRank) {
+		return sqlSession.selectOne("mypage.subscribeSelect",clientRank);
+	}
+
 	
+
+	
+
+	public ArrayList<FundReview> reviewList(int fundNo) {
+		
+		List<FundReview> list =sqlSession.selectList("client.getReview",fundNo);
+		return (ArrayList<FundReview>)list;
+	}
+
+	public ArrayList<FundReview> reviewList1(int gdsNo) {
+		List<FundReview> list =sqlSession.selectList("client.getReview1",gdsNo);
+		return (ArrayList<FundReview>)list;
+	}
 
 	
 
