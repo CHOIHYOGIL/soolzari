@@ -70,6 +70,7 @@
 		<c:choose>
 			<c:when test="${sessionId!=null }">
 				   <div>
+			
                     <ul class="login">
                         <li> <input class="search_input" type="text" placeholder="search"></li>
                         <li><a href="/logout.sool">로그아웃</a>
