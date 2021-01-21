@@ -45,25 +45,25 @@
 			<c:choose>
 			<c:when test="${sessionId==null }">
 			     <div class="side-menu" style="text-align: left;">
-            <img src="/resources/image/arrow.png" alt="" style="width: 40px; border-radius: 18px; 18px;18px; 18px;">
-            <span><a href="/views/client/join.jsp" style="text-decoration: none; color: black;">회원가입</a></span><br><br>
+            <img src="/resources/image/arrow.png" alt="" style="width: 40px; border-radius: 18px; 18px;18px; 18px; font-size:20px;">
+            <span><a href="/views/client/join.jsp" style="text-decoration: none; color: black; font-size:20px;">회원가입</a></span><br><br>
+             <img src="/resources/image/arrow.png" alt="" style="width: 40px; font-size:20px;border-radius: 18px; 18px;18px; 18px;">
+            <span><a href="/views/client/login.jsp" style="text-decoration: none; font-size:20px;color: black;">로그인</a></span><br><br>
              <img src="/resources/image/arrow.png" alt="" style="width: 40px; border-radius: 18px; 18px;18px; 18px;">
-            <span><a href="/views/client/login.jsp" style="text-decoration: none; color: black;">로그인</a></span><br><br>
-             <img src="/resources/image/arrow.png" alt="" style="width: 40px; border-radius: 18px; 18px;18px; 18px;">
-            <span><a href="/basicSool.sool" style="text-decoration: none; color: black;">상품보기</a></span><br><br>
+            <span><a href="/basicSool.sool" style="text-decoration: none; color: black;font-size:20px;">상품보기</a></span><br><br>
         </div>
 			</c:when>
 			<c:otherwise>
 			    <div class="side-menu" style="text-align: left;">
 			        <img src="/resources/image/arrow.png" alt="" style="width: 40px; border-radius: 18px; 18px;18px; 18px;">
-            <span><a href="/basicSool.sool" style="text-decoration: none; color: black;">상품보기</a></span><br><br>
+            <span><a href="/basicSool.sool" style="text-decoration: none; color: black; font-size:20px;">상품보기</a></span><br><br>
             </div>
 			</c:otherwise>
 	</c:choose>
    
         
         <div class="soolzari_container">
-            <h2 class="fw300 fs34 f_scd text-center mb40">이것이&nbsp;<span style="color:blue; font-size: 30px;">&nbsp;[우리들의 술]&nbsp;</span>이다. </h2><br><br>
+            <h2 class="fw300 fs34 f_scd text-center mb40" style="font-size:30px;">이것이&nbsp;<span>&nbsp;[우리들의 술]&nbsp;</span>이다. </h2><br><br>
             <div class="contents">
 
 

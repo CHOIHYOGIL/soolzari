@@ -9,21 +9,11 @@
 <link rel="stylesheet" href="resources/css/main.css">
 
    
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 
-    <!--font-->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
-
-
-    <!-- icon 사용-->
-    <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
     <!-- script -->
     <script src="/resources/js/jquery-3.3.1.min.js"></script>
   
-<link rel="stylesheet" href="/resources/css/bootstrap.min.css">
-   <script src="/resources/js/bootstrap.min.js"></script>
+
 
 
     <!-- 반응형 -->
@@ -32,11 +22,11 @@
 <body>
 <div class="wrap">
   <!-- 헤더 -->
-        <div class="bgColor">
+        <div class="bgColor"  style="position:absolute;"> <!-- 화면 밀고 내려가지 않도록 absolute준다. -->
             <header>
                 <span class="bg"></span> <!-- 반응형 메뉴 클릭하면 배경화면 어두워지게 하기위해 작성-->
                 <a href="#" class="open"><span class="lnr lnr-menu"></span></a>
-                <a href="/index.jsp" class="logo"><img src="/resources/image/logo.PNG"></a>
+                <a href="/index.jsp" class="logo"><img src="/resources/image/logo1.png"></a>
                 <nav>
                     <a href="#" class="close"><span class="lnr lnr-cross"></span></a>
                     <ul class="gnb">
@@ -158,7 +148,7 @@ function delay(callback, ms) {
     
     $(document).on('mouseleave','header', function(){
         if($(window).width()>1200){
-            $('.sub').slideUp(300);
+            $('.sub').slideUp(20);
          $('header').css('height','80px');
         $('.bgColor').css('height','0px'); 
         }else{

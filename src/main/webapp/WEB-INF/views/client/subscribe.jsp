@@ -75,7 +75,7 @@
 
             <img src="/resources/image/loginLogo.png" alt="">
         </div>
-        <h2 class="fw300 fs34 f_scd text-center mb40" style="background:#f4f4f4;">술자리 &nbsp;<span style="font-size: 30px;">구독 </span>안내 </h2><br><br>
+        <h2 class="fw300 fs34 f_scd text-center mb40" style="background:#f4f4f4; font-size:25px;">술자리 <span>구독 </span>안내 </h2><br><br>
 
         <div class="choiceBtn">
             <ul class>

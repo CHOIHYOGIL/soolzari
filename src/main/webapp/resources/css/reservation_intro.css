@@ -93,13 +93,13 @@ width: 100%;
 }
 .choiceBtn ul li:nth-child(1) a{
 	
-	background-color:orange;
+	background-color:#4d5075;
 	color:white !important;
 }
 .choiceBtn ul li:nth-child(2) a{
 	
 	background-color:white;
-	color:blue !important;
+	color:#4d5075 !important;
 }
 .text-table{
 	

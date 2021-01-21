@@ -87,7 +87,7 @@
 
             <img src="/resources/image/loginLogo.png" alt="">
         </div>
-        <h2 class="fw300 fs34 f_scd text-center mb40" style="background:#f4f4f4;">술자리<span style="font-size: 30px;">양조장 체험</span>프로그램 </h2><br><br>
+        <h2 class="fw300 fs34 f_scd text-center mb40" style="background:#f4f4f4; font-size:25px;">술자리<span>&nbsp;양조장 체험</span>프로그램 </h2><br><br>
 
         <div class="choiceBtn">
             <ul class>

@@ -2,13 +2,15 @@
 
 /* reset */
 * {margin: 0;padding: 0;}
-
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, tbody, tfoot, thead, tr, th, td{margin:0;padding:0;}
 h1, h2, h3, h4, h5, h6 {font-weight: 700; font-size: inherit;}
 a {color: inherit; text-decoration: none;}
 img {vertical-align: middle;}
 a img {border: none;}
 li {list-style: none;}
 address, em, i {font-style: normal;}
+
+
 
 /*layout*/@charset "utf-8";
 @font-face {
@@ -25,7 +27,7 @@ address, em, i {font-style: normal;}
 .wrap{
 	width:100vw;
 
-     background: #fdf4f4;
+    
 	min-width:1200px;
 
  overflow: hidden;
@@ -41,7 +43,7 @@ header{
 	line-height:80px;
 	padding:0px 30px;
 	box-sizing:border-box;
-	background: #fff;
+	background: rgba(255,255,255,0.9);
 	position:fixed;
 	top:0;
 	z-index:1500;
@@ -65,7 +67,13 @@ header .logo{
     margin-right:20px;
 	float:left;
 }
-
+header .logo img{
+	
+	opacity:0.6;
+	width:200px;
+	height:100%;
+	object-fit:cover;
+}
 header nav{
  
 	width:64%;
@@ -87,7 +95,7 @@ header nav .gnb{
 }
 header nav .gnb li{
     letter-spacing: 3px;
-    width:10%;
+    width:12%;
   
     
     text-align: center;
@@ -169,16 +177,10 @@ header nav .gnb li a:hover .bg{
 
 
 .carousel-inner {
-width: 100%;
-  
-    
-  
+width: 80%;
+    height:70%;
 }
-.carousel-indicators li{
-	background-clip:inherit !important ;
-	border-top:0px !important;
-	border-bottom:0px !important;
-}
+
 
 .carousel-inner > .item > img{
     width:80%;
@@ -190,6 +192,7 @@ width: 100%;
      margin: auto;
      min-height:initial;
 }
+
 
 .login li{
 	float:right;
@@ -246,7 +249,7 @@ header nav .gnb .sub li{
 }
 */
 header nav .gnb .sub li a{
-  font-size:16px;
+  font-size:13px;
     width:100%;
    font-family: 'S-CoreDream-3Light';
    left:50%;
@@ -532,8 +535,8 @@ footer{
 
     padding: 30px 0 0;
     text-align: center;
-    background: #f8b24f;
-    
+    background: #4d5075;
+    color:white;
 }
 
 footer .sns li{
@@ -547,7 +550,7 @@ footer .footerLogo{
     font-size: 40px;
     font-weight: 900;
     letter-spacing: -6px;
-    color:#39312b;
+    color:white;
     margin:40px 0 20px;
 }
 
@@ -564,7 +567,7 @@ footer ul li .copyright{
     font-weight: 100;
     display: block; /* span은 인라인이라 마진이 먹히지않으므로 block 속성으로 바꿔줌*/
     margin-top: 20px;
-    color:#888;
+       color:white;
     
 }
 header .open, header .close{
@@ -597,7 +600,7 @@ header .open, header .close{
         font-size:30px;
         letter-spacing: -4px;
     }
-    
+
     .bgColor{
         height: 0;
     }
