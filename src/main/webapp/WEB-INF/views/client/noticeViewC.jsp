@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,9 +38,12 @@
             </tr>
         </table>
         <button id="list">목록</button>
-       <!-- 로직 다시 짜야됨 -->
-        <div id="next"><img src="/resources/image/arrowu.png"><span>next</span><a href="/notice/viewClient.sool?noticeNo=${next.noticeNo }">${next.noticeTitle }</a></div>
-        <div id="prev"><img src="/resources/image/arrowd.png"><span>prev</span><a href="/notice/viewClient.sool?noticeNo=${prev.noticeNo }">${prev.noticeTitle }</a></div>
+       	<c:if test="${nc.nextNo != 0 }">
+       		<div id="next"><img src="/resources/image/arrowu.png"><span>next</span><a href="/notice/viewClient.sool?noticeNo=${nc.nextNo }">${nc.nextTitle }</a></div>
+       	</c:if>
+        <c:if test="${nc.prevNo != 0 }">
+        	<div id="prev"><img src="/resources/image/arrowd.png"><span>prev</span><a href="/notice/viewClient.sool?noticeNo=${nc.prevNo }">${nc.prevTitle }</a></div>
+        </c:if>
     </section>
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
     
@@ -48,10 +52,10 @@
             location.href="/notice/listClient.sool?reqPage=1";
         });
         $("#prev").click(function(){
-        	location.href="/notice/viewClient.sool?noticeNo=${prev.noticeNo }";
+        	location.href="/notice/viewClient.sool?noticeNo=${nc.prevNo }";
         });
         $("#next").click(function(){
-        	location.href="/notice/viewClient.sool?noticeNo=${next.noticeNo }";
+        	location.href="/notice/viewClient.sool?noticeNo=${nc.nextNo }";
         });
     </script>
 </body>

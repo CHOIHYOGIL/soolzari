@@ -123,6 +123,14 @@
 		    <div id="goodsChart"></div>
 		    <div id="classChart"></div>
 		    <div id="fundingChart"></div>
+		    <div>
+		    	펀딩 최고 금액
+		    	${bestFunding.fundTotalMoney }
+		    </div>
+		    <div>
+		    	총 상품 판매 금액
+		    	총 상품 판매량
+		    </div>
 	    </div>
 	</section>
 </body>

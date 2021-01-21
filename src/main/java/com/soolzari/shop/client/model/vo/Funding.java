@@ -6,7 +6,7 @@ import lombok.Data;
 public class Funding {
 	private int fundNo;
 	private String fundName;
-	private int fundMoney;
+	private int fundMoney;//목표금액
 	private int fundChk;
 	private String fundDet;
 	private int status;
