@@ -10,6 +10,7 @@ import com.soolzari.shop.client.model.dao.ClientDao;
 import com.soolzari.shop.client.model.vo.Class_List;
 import com.soolzari.shop.client.model.vo.Client;
 import com.soolzari.shop.client.model.vo.Fund;
+import com.soolzari.shop.client.model.vo.FundReview;
 import com.soolzari.shop.client.model.vo.Goods;
 import com.soolzari.shop.client.model.vo.Reservation;
 import com.soolzari.shop.client.model.vo.Subscribe;
@@ -106,6 +107,21 @@ public class ClientService {
 	
 	public int updateClient(Client c) {
 		return dao.updateClient(c);
+	}
+	public int insertComment(FundReview f) {
+		
+		return dao.insertComment(f);
+	}
+	public int modifyComment(FundReview f) {
+		
+		return dao.modifyComment(f);
+	}
+	public int deleteComment(FundReview f) {
+		
+		return dao.deleteComment(f);
+	}
+	public int insertComment1(FundReview f) {
+		return dao.insertComment1(f);
 	}
 
 	

@@ -21,8 +21,12 @@ import com.soolzari.shop.client.model.vo.Client2;
 import com.soolzari.shop.client.model.vo.ExperiencePageData;
 import com.soolzari.shop.client.model.vo.FundDetail;
 import com.soolzari.shop.client.model.vo.FundDetailDB;
+
+import com.soolzari.shop.client.model.vo.FundReview;
+
 import com.soolzari.shop.client.model.vo.FundingListData;
 import com.soolzari.shop.client.model.vo.FundingPageData;
+
 import com.soolzari.shop.client.model.vo.Goods2;
 import com.soolzari.shop.client.model.vo.GoodsList;
 import com.soolzari.shop.client.model.vo.GoodsSellerDetail;
@@ -401,6 +405,12 @@ public class ClientController2 {
 		GoodsSellerDetail gsd = service.oGoodsDetail(gdsNo);
 		if(gsd!=null) {//상품이 있을 경우
 			model.addAttribute("gsd",gsd);//상품정보 전달
+			ArrayList<FundReview> reviewList= service.reviewList1(gdsNo);
+			model.addAttribute("reviewList",reviewList);
+			
+			model.addAttribute("goodNo",gdsNo);
+			System.out.println(gdsNo);
+			System.out.println(reviewList);
 			return "client/oGoodsDetail";
 		}else {
 			model.addAttribute("msg","상품을 불러오는데 실패했습니다");
@@ -416,6 +426,13 @@ public class ClientController2 {
 		if(fd!=null) {//펀딩이 있을 경우
 			model.addAttribute("fund",fd.getFund());//펀딩정보
 			model.addAttribute("fundGoodsList",fd.getFundGoodsList());//펀딩상품정보
+			
+			ArrayList<FundReview> reviewList= service.reviewList(fundNo);
+			System.out.println("reviewList:"+reviewList);
+			model.addAttribute("reviewList",reviewList);
+			System.out.println("fund:"+fd.getFund());
+		
+			System.out.println("fundGoodsList:"+fd.getFundGoodsList());
 			return "client/oFundingDetail";
 		}else {
 			model.addAttribute("msg","상품을 불러오는데 실패했습니다");

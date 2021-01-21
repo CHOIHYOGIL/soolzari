@@ -12,7 +12,9 @@ import com.soolzari.shop.client.model.vo.Basket;
 import com.soolzari.shop.client.model.vo.BasketDel;
 import com.soolzari.shop.client.model.vo.Client2;
 import com.soolzari.shop.client.model.vo.ExperienceListData;
+import com.soolzari.shop.client.model.vo.Fund;
 import com.soolzari.shop.client.model.vo.FundDetailDB;
+import com.soolzari.shop.client.model.vo.FundReview;
 import com.soolzari.shop.client.model.vo.Funding;
 import com.soolzari.shop.client.model.vo.FundingGoods;
 import com.soolzari.shop.client.model.vo.FundingListData;
@@ -295,6 +297,17 @@ public class ClientDao2 {
 	
 
 	
+
+	public ArrayList<FundReview> reviewList(int fundNo) {
+		
+		List<FundReview> list =sqlSession.selectList("client.getReview",fundNo);
+		return (ArrayList<FundReview>)list;
+	}
+
+	public ArrayList<FundReview> reviewList1(int gdsNo) {
+		List<FundReview> list =sqlSession.selectList("client.getReview1",gdsNo);
+		return (ArrayList<FundReview>)list;
+	}
 
 	
 

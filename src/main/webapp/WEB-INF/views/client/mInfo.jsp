@@ -161,7 +161,6 @@
 	                } /* else {
 	                    document.getElementById("sample4_extraAddress").value = '';
 	                } */
-
 	                thisBtn.parent().prev().children('.addr').html(addr);
 	                thisBtn.parent().prev().append("<p class='detailP'>상세주소 입력 : <input type='text' class='detailAddr'><span class='comment'></span></p>");
 	                thisBtn.html("완료");

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.soolzari.shop.client.model.vo.Client;
+import com.soolzari.shop.seller.model.vo.Seller;
 
 
 
@@ -37,6 +38,22 @@ public class LogAdvice {
 		         client.setClientPw(encPw);  //여기서 바뀌었으므로 바뀐값이 dao로 넘어가게 된다.
 		      }
 
+	}
+	
+	@Pointcut("execution(* com.soolzari.shop.seller.model.service.SellerService.*Seller(com.soolzari.shop.seller.model.vo.Seller))")
+	public void loginEncPwSeller() {
+		
+	}
+	
+	@Before("loginEncPwSeller()")
+	public void loginSeller(JoinPoint jp) throws Throwable{
+		Object[] args2 = jp.getArgs();
+		Seller seller = (Seller)args2[0];
+		String sellerPw = seller.getSelPw();
+		if(sellerPw != null) {
+			String encPwSeller = sha256.encPw(sellerPw);
+			seller.setSelPw(encPwSeller);
+		}
 	}
 	
 }

@@ -28,6 +28,7 @@ import com.soolzari.shop.client.model.service.ClientService;
 import com.soolzari.shop.client.model.vo.Class_List;
 import com.soolzari.shop.client.model.vo.Client;
 import com.soolzari.shop.client.model.vo.Fund;
+import com.soolzari.shop.client.model.vo.FundReview;
 import com.soolzari.shop.client.model.vo.Goods;
 import com.soolzari.shop.client.model.vo.KakaoAccessToken;
 import com.soolzari.shop.client.model.vo.KakaoUserInfo;
@@ -145,7 +146,8 @@ public class ClientController {
 		}else {
 			int result = service.insertClient(c);
 			session.setAttribute("sessionClient", c);
-			session.setAttribute("sessionId",name); //세션 생성
+			session.setAttribute("sessionId", c);
+			session.setAttribute("sessionName",name); //세션 생성
 			model.addAttribute("result", apiResult);
 			model.addAttribute("name",name);
 			model.addAttribute("loc","/");
@@ -218,8 +220,9 @@ public class ClientController {
 	        	  if(Integer.parseInt(age_range)>=20) {
 	        			int result = service.insertClient(c);
 	        			model.addAttribute("loc","/");
+	        			session.setAttribute("sessionId", c);
 	        			session.setAttribute("sessionClient", c);
-		        		session.setAttribute("sessionId",name); //세션 생성
+		        		session.setAttribute("sessionName",name); //세션 생성
 	        	  }else {
 	        		  model.addAttribute("msg","성인만 가입가능합니다.");
 	        		  model.addAttribute("loc","/");
@@ -417,6 +420,7 @@ public class ClientController {
 	@RequestMapping("/takju.sool")
 	public String takju(Model model) {
 		System.out.println("takju");
+		
 		ArrayList<Goods> list=service.getTakju();
 		System.out.println(list);
 		model.addAttribute("list",list);
@@ -617,25 +621,105 @@ public class ClientController {
 		
 	}
 	
-	
-//	@RequestMapping("/classRegister.sool")
-//	public String classRegister(Reservation r,Model model ) {
-//		
-//		System.out.println(r.getClassEnroll());
-//		int result=service.reservation(r);
-//		
-//		if(result>0) {
-//			model.addAttribute("msg","클래스 예약 성공");
-//			
-//		}else {
-//			model.addAttribute("msg","클래스 예약 실패");
-//			
-//		}
-//		model.addAttribute("loc","/");
-//		return "common/msg";
-//		
-//	}
 
+	@RequestMapping("/insertComment.sool")
+	public String insertComment(Model model, int fundNo, int commentWriter, int commentRate,String commentContent, String commentWriterName,FundReview f) {
+		
+		System.out.println("insertComment");
+		System.out.println(fundNo);
+		System.out.println(commentWriter);
+		System.out.println(commentRate);
+		System.out.println(commentContent);
+		
+		f.setCommentWriter(commentWriter);
+		f.setCommentContent(commentContent);
+		f.setFundNo(fundNo);
+		f.setCommentWriterName(commentWriterName);
+		f.setCommentRate(commentRate);
+		int result=service.insertComment(f);
+				if(result>0) {
+					model.addAttribute("msg","댓글 삽입 성공");
+					model.addAttribute("loc","/");
+				}else {
+					model.addAttribute("msg","댓글 삽입 실패");
+					model.addAttribute("loc","/");
+				}
+			
+			
+
+			return "common/msg";		
+		
+	}
+	@RequestMapping("/insertComment1.sool")
+	public String insertComment1(Model model, int goodNo, int commentWriter, int commentRate,String commentContent, String commentWriterName,FundReview f) {
+		
+		System.out.println("insertComment1");
+		System.out.println(goodNo);
+		System.out.println(commentWriter);
+		System.out.println(commentRate);
+		System.out.println(commentContent);
+		
+		f.setCommentWriter(commentWriter);
+		f.setCommentContent(commentContent);
+		f.setGoodNo(goodNo);
+		f.setCommentWriterName(commentWriterName);
+		f.setCommentRate(commentRate);
+		int result=service.insertComment1(f);
+				if(result>0) {
+					model.addAttribute("msg","댓글 삽입 성공");
+					model.addAttribute("loc","/");
+				}else {
+					model.addAttribute("msg","댓글 삽입 실패");
+					model.addAttribute("loc","/");
+				}
+			
+			
+
+			return "common/msg";		
+		
+	}
+	@ResponseBody
+	@RequestMapping(value="/modifyComment.sool",produces="application/json;charset=utf-8",method=RequestMethod.POST)
+	public String modifyComment(Model model, int reviewNo, String commentContent, FundReview f) {
+		JsonObject obj = new JsonObject();
+		System.out.println("modifyComment");
+		System.out.println(reviewNo);
+
+		System.out.println(commentContent);
+		
+		f.setReviewNo(reviewNo);
+		f.setCommentContent(commentContent);
+
+		int result=service.modifyComment(f);
+		if(result>0) {
+			
+			obj.addProperty("msg", "댓글 수정 완료되었습니다.");
+		}else {
+			obj.addProperty("msg","댓글 수정 실패했습니다.");
+		}
+		return new Gson().toJson(obj);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/deleteComment.sool" ,produces="application/json;charset=utf-8",method=RequestMethod.POST)
+	public String deleteComment(int reviewNo, String commentContent, FundReview f) {
+		JsonObject obj = new JsonObject();
+		System.out.println("modifyComment");
+		System.out.println(reviewNo);
+
+		System.out.println(commentContent);
+		
+		f.setReviewNo(reviewNo);
+		f.setCommentContent(commentContent);
+		int result=service.deleteComment(f);
+		if(result>0) {
+			
+			obj.addProperty("msg", "댓글 삭제 완료되었습니다.");
+		}else {
+			obj.addProperty("msg","댓글 삭제 실패했습니다.");
+		}
+		return new Gson().toJson(obj);
+	}
 }
 
 	

@@ -16,6 +16,7 @@ import com.soolzari.shop.client.model.vo.ExperienceListData;
 import com.soolzari.shop.client.model.vo.ExperiencePageData;
 import com.soolzari.shop.client.model.vo.FundDetail;
 import com.soolzari.shop.client.model.vo.FundDetailDB;
+import com.soolzari.shop.client.model.vo.FundReview;
 import com.soolzari.shop.client.model.vo.Funding;
 import com.soolzari.shop.client.model.vo.FundingGoods;
 import com.soolzari.shop.client.model.vo.FundingListData;
@@ -499,6 +500,15 @@ public class ClientService2 {
 	//구독랭크 정보가져오기
 	public Subscribe subscribeSelect(int clientRank) {
 		return dao.subscribeSelect(clientRank);
+	}
+
+	public ArrayList<FundReview> reviewList(int fundNo) {
+		
+		return dao.reviewList(fundNo);
+	}
+
+	public ArrayList<FundReview> reviewList1(int gdsNo) {
+		return dao.reviewList1(gdsNo);
 	}
 
 	
