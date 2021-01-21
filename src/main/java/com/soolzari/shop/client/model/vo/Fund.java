@@ -18,5 +18,4 @@ public class Fund {
 	private String imagePath;
 	private int fundMoneyNow;  //펀딩후원액
 	private int fundPrice;
-	private double goal;
 }
