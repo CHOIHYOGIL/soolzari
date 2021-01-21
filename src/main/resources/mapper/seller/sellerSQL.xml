@@ -4,79 +4,93 @@
   
   <!-- sl = seller -->
   <insert id="insertSeller" parameterType="sl">
-  	insert into seller_db values(seller_db_seq.nextval, #{selId}, #{selPw}, #{selName}, #{selTel}, #{selAddr}, to_char(sysdate,'yyyy-mm-dd'))
+     insert into seller_db values(seller_db_seq.nextval, #{selId}, #{selPw}, #{selName}, #{selTel}, #{selAddr}, to_char(sysdate,'yyyy-mm-dd'))
   </insert>
   
   <insert id="insertClass" parameterType="sellerClass">
-  	insert into class_db values(class_db_seq.nextval, #{classsName}, #{selNo}, #{classsDetail}, #{classsPrice}, #{classEnroll}, #{classStartTime}, #{status}, #{classPerson}, to_char(sysdate,"yyyy-mm-dd"))
+     insert into class_db values(class_seq.nextval, #{className}, #{selNo}, #{classDetail}, #{classPrice},#{classEnroll}, #{classStartTime}, 0,  #{classPerson},to_char(sysdate,'yyyy-mm-dd'))
   </insert>
   
   <select id="selectOneSeller" parameterType="sl" resultType="sl">
-  	select
-  		sel_no as selNo,
-  		sel_id as selId,
-  		sel_pw as selPw,
-  		sel_name as selName,
-  		sel_tel as selTel,
-  		sel_addr as selAddr,
-  		sel_enroll as selEnroll
-  	from seller_db where sel_id = #{selId} and sel_pw= #{selPw}
- 
+     select
+        sel_no as selNo,
+        sel_id as selId,
+        sel_pw as selPw,
+        sel_name as selName,
+        sel_tel as selTel,
+        sel_addr as selAddr,
+        sel_enroll as selEnroll
+     from seller_db where sel_id = #{selId}
+     <if test="selPw != null">
+     and sel_pw = #{selPw}
+     </if>
   </select>
   
+  <select id="getClassInfo" parameterType="int" resultType="sellerClass">
+  	select cls_no as classNo, cls_name as className, sel_no as selNo, cls_Det as classDetail, cls_price as classPrice, class_person as classPerson, 
+  	class_enroll as classEnroll, classstarttime as classStartTime, status, class_date as classDate from class_db where cls_no=#{classNo}
+  </select>
   <select id="selectAllClass" parameterType="map" resultType="sellerClass">
   select * from (select rownum as rnum, c.* from (
-  	select
-  		cls_no as classNo,
-  		cls_name as className,
-  		sel_no as selNo,
-  		cls_det as classDetail,
-  		cls_price as classPrice,
-  		class_enroll as classEnroll,
-  		classstarttime as classStartTime,
-  		status,
-  		class_person as classPerson,
-  		class_date as classDate
-  	from class_db order by 1 desc)c) where rnum between #{start} and #{end}
+     select
+        cls_no as classNo,
+        cls_name as className,
+        sel_no as selNo,
+        cls_det as classDetail,
+        cls_price as classPrice,
+        class_enroll as classEnroll,
+        classstarttime as classStartTime,
+        status,
+        class_person as classPerson,
+        class_date as classDate
+     from class_db order by 1 desc)c) where rnum between #{start} and #{end}
   </select>
   
   <select id="selectAllGoods" parameterType="map" resultType="sellerGoods">
   select * from (select rownum as rnum, g.* from (
-  	select
-  		gds_no as gdsNo,
-  		gds_name as gdsName,
-  		gds_pri as gdsPri,
-  		gds_bcnt as gdsBcnt,
-  		sel_no as selNo,
-  		status,
-  		goods_date as goodsDate,
-  		goods_type as goodsType
-  	from goods_db order by 1 desc)g) where rnum between #{start} and #{end}
+     select
+        gds_no as gdsNo,
+        gds_name as gdsName,
+        gds_pri as gdsPri,
+        gds_bcnt as gdsBcnt,
+        sel_no as selNo,
+        status,
+        goods_date as goodsDate,
+        goods_type as goodsType
+     from goods_db order by 1 desc)g) where rnum between #{start} and #{end}
   </select>
   <select id="classTotalCount" resultType="_int">
-		select count(*) from class_db
-	</select>
-	<select id="goodsTotalCount" resultType="_int">
-		select count(*) from goods_db
-	</select>
-	
-	
-	<insert id="insertGoods" parameterType="sellerGoods">
-  	insert into goods_db values(goods_db_seq.nextval, #{gdsName}, #{gdsPri}, #{gdsBcnt}, #{selNo}, #{status}, TO_CHAR(SYSDATE,'YYYY-MM-DD'),#{goodsType})
+      select count(*) from class_db
+   </select>
+   <select id="goodsTotalCount" resultType="_int">
+      select count(*) from goods_db
+   </select>
+   
+   
+   <insert id="insertGoods" parameterType="sellerGoods">
+     insert into goods_db values(goods_db_seq.nextval, #{gdsName}, #{gdsPri}, #{gdsBcnt}, #{selNo}, 0, TO_CHAR(SYSDATE,'YYYY-MM-DD'),#{goodsType})
   </insert>
   <select id="searchLastGoods" resultType="_int">
-  	select max(gds_no) from goods_db
+     select max(gds_no) from goods_db
   </select>
-  	<insert id="insertImage" parameterType="sellerImage">
-  	insert into img_db values(img_db_seq.nextval, #{filepath}, #{filename}, #{imgType}, #{typeNo} )
-  	</insert>
-  	<select id="selectOneGoods" resultType="sellerGoods" parameterType="_int">
-  	select * from goods_db where gds_no = #{gdsNo }
-  	</select>
-  	<select id="selectOneImageGoods" resultType="sellerImage" parameterType="_int">
-  	select * from img_db where type_no = #{gdsNo} and img_type = 'g'
-  	</select>
-  	<select id="selectOneScore" resultType="sellerScore" parameterType="_int">
-  	select avg(rev_score) as avgRevScore,count(rev_score) as countRevScore from review_db where rev_gdsno=#{gdsNo }
-  	</select>
+     <insert id="insertImage" parameterType="sellerImage">
+     insert into img_db values(img_db_seq.nextval, #{filepath}, #{filename}, #{imgType}, #{typeNo} )
+     </insert>
+     <select id="selectOneGoods" resultType="sellerGoods" parameterType="_int">
+     select * from goods_db where gds_no = #{gdsNo }
+     </select>
+     <select id="selectOneImageGoods" resultType="sellerImage" parameterType="int">
+     select img_no as imgNo , filepath, filename, img_type as imgType, type_no as typeNo from img_db where type_no = #{gdsNo} and img_type = 'g'
+     </select>
+     <select id="selectOneScore" resultType="sellerScore" parameterType="_int">
+     select avg(rev_score) as avgRevScore,count(rev_score) as countRevScore from review_db where rev_gdsno=#{gdsNo }
+     </select>
+     
+     <update id="updateGoods" parameterType="sellerGoods">
+     update goods_db set gds_name = #{gdsName}, gds_pri = ${gdsPri} where gds_no = ${gdsNo }
+     </update>
+     
+     <delete id="deleteGoods" parameterType="int">
+     delete from goods_db where gds_no = #{temp}
+     </delete>
 </mapper>

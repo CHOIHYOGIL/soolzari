@@ -25,9 +25,6 @@ public class SellerDao {
 	}
 
 	public Seller selectOneSeller(Seller s) {
-		System.out.println(s);
-		System.out.println(s.getSelId());
-		System.out.println(s.getSelPw());
 		return sqlSession.selectOne("seller.selectOneSeller",s);
 	}
 
@@ -72,11 +69,33 @@ public class SellerDao {
 	}
 
 	public Image selectOneImage(int gdsNo) {
+		System.out.println("image Dao:"+gdsNo);
 		return sqlSession.selectOne("seller.selectOneImageGoods",gdsNo);
 	}
 
 	public Score selectOneScore(int gdsNo) {
 		return sqlSession.selectOne("seller.selectOneScore",gdsNo);
+	}
+
+	public int addClass(Class cls) {
+		System.out.println("classDao: "+cls);;
+		return sqlSession.insert("seller.insertClass",cls);
+	}
+
+	public int modifyGoods(Goods g) {
+		return sqlSession.update("seller.updateGoods",g);
+	}
+
+	public int deleteGoods(int temp) {
+		System.out.println("dao temp:"+temp);
+		return sqlSession.delete("seller.deleteGoods",temp);
+	}
+
+	public Class getClassInfo(int classNo) {
+	
+		System.out.println("dao classNo : "+classNo);
+		return sqlSession.selectOne("seller.getClassInfo",classNo);
+		
 	}
 	
 	

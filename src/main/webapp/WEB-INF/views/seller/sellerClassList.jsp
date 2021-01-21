@@ -19,15 +19,15 @@
                     <li class="item" id="goods_con">
                         <a href="#goods_con" class="btn-left">상품 관리</a>
                         <div class="subMenu">
-                            <a href="/shop/seller/goodsAdd.sool">상품 등록</a>
-                            <a href="/shop/seller/goodsList.sool?reqPage=1">상품 보기</a>
+                            <a href="/seller/goodsAdd.sool">상품 등록</a>
+                            <a href="/seller/goodsList.sool?reqPage=1">상품 보기</a>
                         </div>
                     </li>
                     <li class="item" id="class_con">
                         <a href="#class_con" class="btn-left">클래스 관리</a>
                         <div class="subMenu">
-                            <a href="/shop/seller/classAdd.sool">클래스 등록</a>
-                            <a href="/shop/seller/classList.sool?reqPage=1">클래스 확인</a>
+                            <a href="/seller/classAdd.sool">클래스 등록</a>
+                            <a href="/seller/classList.sool?reqPage=1">클래스 확인</a>
                         </div>
                     </li>
                     <li class="item" id="funding_con">
@@ -38,10 +38,10 @@
                         </div>
                     </li>
                     <li class="item">
-                        <a href="/shop/seller/main.sool" class="btn-left">마이페이지</a>
+                        <a href="/seller/main.sool" class="btn-left">마이페이지</a>
                     </li>
                     <li class="item">
-                        <a href="/shop/seller/logout.sool" class="btn-left">로그아웃</a>
+                        <a href=/seller/logout.sool" class="btn-left">로그아웃</a>
                     </li>
                 </ui>
             </div>
@@ -64,7 +64,7 @@
 				       <c:forEach items="${list }" var="cl">
 				        <tr>
 				            <th scope="row">${cl.classNo}</th>
-				            <td>${cl.className}</td>
+				            <td><a href="/seller/classDetail.sool?classNo=${cl.classNo }">${cl.className}</a></td>
 				            <td>${cl.classPrice}</td>
 				            <td>${cl.classEnroll} ${cl.classStartTime}</td>
 				            <td>${cl.classNow} / ${cl.classPerson}</td>
@@ -74,7 +74,7 @@
 				</table>
 				<div id="main_sub">
 				    <div id="main_search">
-				        <form action="/shop/seller/goods_list.sool" method="post">
+				        <form action="/seller/goods_list.sool" method="post">
 				            <select name="search_type" style="margin-left: 10px;">
 				                <option value="name">클래스 이름</option>
 				                <option value="price">클래스 가격</option>

@@ -623,26 +623,26 @@ public class ClientController {
 	
 
 	@RequestMapping("/insertComment.sool")
-	public String insertComment(Model model, int fundNo, int commentWriter, int commentRate,String commentContent, String commentWriterName,FundReview f) {
+	public String insertComment(Model model, int fundNo, int commentWriter, String commentContent, String commentWriterName,FundReview f) {
 		
 		System.out.println("insertComment");
 		System.out.println(fundNo);
 		System.out.println(commentWriter);
-		System.out.println(commentRate);
+
 		System.out.println(commentContent);
 		
 		f.setCommentWriter(commentWriter);
 		f.setCommentContent(commentContent);
 		f.setFundNo(fundNo);
 		f.setCommentWriterName(commentWriterName);
-		f.setCommentRate(commentRate);
+
 		int result=service.insertComment(f);
 				if(result>0) {
 					model.addAttribute("msg","댓글 삽입 성공");
-					model.addAttribute("loc","/");
+					model.addAttribute("loc","/client/oFundingDetail.sool?fundNo="+fundNo);
 				}else {
 					model.addAttribute("msg","댓글 삽입 실패");
-					model.addAttribute("loc","/");
+					model.addAttribute("loc","/client/oFundingDetail.sool?fundNo="+fundNo);
 				}
 			
 			
@@ -667,10 +667,10 @@ public class ClientController {
 		int result=service.insertComment1(f);
 				if(result>0) {
 					model.addAttribute("msg","댓글 삽입 성공");
-					model.addAttribute("loc","/");
+					model.addAttribute("loc","/client/oGoodsDetail.sool?gdsNo="+goodNo);
 				}else {
 					model.addAttribute("msg","댓글 삽입 실패");
-					model.addAttribute("loc","/");
+					model.addAttribute("loc","/client/oGoodsDetail.sool?gdsNo="+goodNo);
 				}
 			
 			

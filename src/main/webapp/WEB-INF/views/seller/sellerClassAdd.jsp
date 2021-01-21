@@ -19,15 +19,15 @@
                     <li class="item" id="goods_con">
                         <a href="#goods_con" class="btn-left">상품 관리</a>
                         <div class="subMenu">
-                            <a href="/shop/seller/goodsAdd.sool">상품 등록</a>
-                            <a href="/shop/seller/goodsList.sool?reqPage=1">상품 보기</a>
+                            <a href="/seller/goodsAdd.sool">상품 등록</a>
+                            <a href="/seller/goodsList.sool?reqPage=1">상품 보기</a>
                         </div>
                     </li>
                     <li class="item" id="class_con">
                         <a href="#class_con" class="btn-left">클래스 관리</a>
                         <div class="subMenu">
-                            <a href="/shop/seller/classAdd.sool">클래스 등록</a>
-                            <a href="/shop/seller/classList.sool?reqPage=1">클래스 확인</a>
+                            <a href="/seller/classAdd.sool">클래스 등록</a>
+                            <a href="/seller/classList.sool?reqPage=1">클래스 확인</a>
                         </div>
                     </li>
                     <li class="item" id="funding_con">
@@ -38,10 +38,10 @@
                         </div>
                     </li>
                     <li class="item">
-                        <a href="/shop/seller/main.sool" class="btn-left">마이페이지</a>
+                        <a href="/seller/main.sool" class="btn-left">마이페이지</a>
                     </li>
                     <li class="item">
-                        <a href="/shop/seller/logout.sool" class="btn-left">로그아웃</a>
+                        <a href="/seller/logout.sool" class="btn-left">로그아웃</a>
                     </li>
                 </ui>
             </div>
@@ -50,7 +50,7 @@
             <div id="main_content">
             <h2 style="text-align: center;padding:20px;margin: 0 auto;background-color:#f7b8b4;"> 클래스 등록 </h2>
                 <div id="class_add_form">
-                    <form action="/shop/seller/classAddChk.sool" method="post">
+                    <form action="/seller/classAddChk.sool" method="post">
                         <table class="table">
 
                             <tbody>
