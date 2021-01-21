@@ -7,10 +7,10 @@
 	width: 10%;
 }
 .th2 {
-	width: 40%;
+	width: 10%;
 }
 .th3 {
-	width: 35%;
+	width: 65%;
 }
 .th4 {
 	width: 15%;
@@ -20,4 +20,10 @@
 .a5{
 	background-color: rgb(77, 80, 117);
 	color: white;
+}
+
+.listTable a:hover{
+	color: black;
+	font-weight: bold;
+	
 }

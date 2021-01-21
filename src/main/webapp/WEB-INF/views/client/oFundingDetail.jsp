@@ -54,14 +54,11 @@
 	<div class="mainContent">
 		<a name="mainGo"/>
 		<div class="mainImg">
-			메인이미지 올곳
+			<img src="/resources/upload/${fund.filepath }">
 		</div>
 		<div class="detailContent">
 			<div>
-				펀딩이미지올곳~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-				<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-				<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-				
+				<img src="/resources/upload/${fundFD.filepath }">
 			</div>
 		</div>
 
@@ -71,7 +68,7 @@
 	<div class="fixContent">
 			<h4><p class="fundName">${fund.fundName }</p></h4>
 			<span>목표 금액 달성률</span><br>
-			<h5 class="gh3"><span class="goodsPrice comma">${fund.fundTotalMoney }</span> 원 </h5><h4 class="gh4"><fmt:formatNumber value="${fund.fundTotalMoney/fund.fundMoney*100 }" pattern=".00"/>%</h4>
+			<h5 class="gh3"><span class="goodsPrice comma">${fund.fundTotalMoney }</span> 원 </h5><h4 class="gh4"><fmt:formatNumber value="${fund.fundTotalMoney/fund.fundMoney*100 }" pattern="0.00"/>%</h4>
 			<table class="table fixTable">
 				<tr>
 					<th>등록일</th>

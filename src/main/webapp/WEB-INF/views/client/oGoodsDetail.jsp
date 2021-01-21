@@ -59,15 +59,12 @@
 	<div class="mainContent">
 		<a name="mainGo"/>
 		<div class="mainImg">
-			메인이미지 올곳
-			<a href="/client/oFundingDetail.sool?fundNo=17">펀딩상세페이지(임시)</a>
+			<img src="/resources/upload/${gsd.filepath }">
 		</div>
+		<hr>
 		<div class="detailContent">
 			<div>
-				판매이미지올곳~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-				<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-				<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-				
+				<img src="/resources/upload/${gsdGD.filepath }">
 			</div>
 		</div>
 		

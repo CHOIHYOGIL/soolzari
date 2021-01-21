@@ -34,6 +34,7 @@ import com.soolzari.shop.client.model.vo.OrderPageData;
 import com.soolzari.shop.client.model.vo.Purchase;
 import com.soolzari.shop.client.model.vo.Qna;
 import com.soolzari.shop.client.model.vo.QnaPageData;
+import com.soolzari.shop.client.model.vo.ReviewPageData;
 import com.soolzari.shop.client.model.vo.Subscribe;
 
 @Controller
@@ -402,9 +403,10 @@ public class ClientController2 {
 	//상품상세페이지
 	@RequestMapping("/oGoodsDetail.sool")
 	public String oGoodsDetail (int gdsNo, Model model){
-		GoodsSellerDetail gsd = service.oGoodsDetail(gdsNo);
+		ArrayList<GoodsSellerDetail> gsd = service.oGoodsDetail(gdsNo);
 		if(gsd!=null) {//상품이 있을 경우
-			model.addAttribute("gsd",gsd);//상품정보 전달
+			model.addAttribute("gsd",gsd.get(0));//상품정보 전달(기본이미지를 포함하고있음)
+			model.addAttribute("gsdGD",gsd.get(1));//상품정보 전달(상세이미지를 포함하고있음)
 			ArrayList<FundReview> reviewList= service.reviewList1(gdsNo);
 			model.addAttribute("reviewList",reviewList);
 			
@@ -424,15 +426,16 @@ public class ClientController2 {
 	public String oFundingDetail (int fundNo, Model model){
 		FundDetail fd = service.oFundingDetail(fundNo);
 		if(fd!=null) {//펀딩이 있을 경우
-			model.addAttribute("fund",fd.getFund());//펀딩정보
+			model.addAttribute("fund",fd.getFund().get(0));//펀딩정보와 기본이미지
+			model.addAttribute("fundFD",fd.getFund().get(1));//펀딩정보와 상세이미지
 			model.addAttribute("fundGoodsList",fd.getFundGoodsList());//펀딩상품정보
 			
 			ArrayList<FundReview> reviewList= service.reviewList(fundNo);
 			System.out.println("reviewList:"+reviewList);
 			model.addAttribute("reviewList",reviewList);
-			System.out.println("fund:"+fd.getFund());
+			//System.out.println("fund:"+fd.getFund());
 		
-			System.out.println("fundGoodsList:"+fd.getFundGoodsList());
+			//System.out.println("fundGoodsList:"+fd.getFundGoodsList());
 			return "client/oFundingDetail";
 		}else {
 			model.addAttribute("msg","상품을 불러오는데 실패했습니다");
@@ -582,13 +585,13 @@ public class ClientController2 {
 	public String mReview(int reqPage, int period, Model model, @SessionAttribute(required=false) Client sessionClient) {
 		if(sessionClient!=null) {//로그인된사용자만 접근가능하게
 			Subscribe sub = service.subscribeSelect(sessionClient.getClientRank());//구독랭크 정보가져오기
-			ExperiencePageData epd = service.mExperiencePaging(reqPage,period,sessionClient.getClientNo());
-			model.addAttribute("eList",epd.getEList());
-			model.addAttribute("pageNavi",epd.getPageNavi());
+			ReviewPageData rpd = service.mReviewPaging(reqPage,period,sessionClient.getClientNo());
+			model.addAttribute("rList",rpd.getRList());
+			model.addAttribute("pageNavi",rpd.getPageNavi());
 			model.addAttribute("period",period);
 			model.addAttribute("reqPage",reqPage);
 			model.addAttribute("sub",sub);
-			return "client/mExperience";
+			return "client/mReview";
 		}else {
 			model.addAttribute("msg","로그인 후 이용해주세요");
 			model.addAttribute("loc","/login.sool");
