@@ -43,7 +43,7 @@
  	</select>
  	
  	<select id="selectOneClient" parameterType="c" resultType="c">
- 		select CLI_ID as clientId, CLI_NO as clientNo, CLI_NAME as clientName, CLI_EMAIL as clientEmail, CLI_TEL as clientTel, CLI_ADDR as clientAddr, CLI_RANK as clientRank from client_db where CLI_ID=#{clientId} and CLI_PW=#{clientPw}
+ 		select CLI_ID as clientId, CLI_NO as clientNo, CLI_NAME as clientName, CLI_EMAIL as clientEmail, CLI_TEL as clientTel, CLI_ADDR as clientAddr, CLI_RANK as clientRank,CLI_POINT as clientPoint from client_db where CLI_ID=#{clientId} and CLI_PW=#{clientPw}
  	</select>
  	
  	
@@ -52,11 +52,11 @@
  	</insert>
  	
  	<select id="getClassInfo" parameterType="r" resultType="r">
- 		select cls_no as classNo, cls_name as className, sel_no as classCreator, cls_det as classDescription, cls_price as classPrice, class_person as classPerson, class_enroll as classDate, classStarttime as classStartTime from class_db  where class_enroll>TO_CHAR(SYSDATE,'yyyy-mm-dd')
+ 		select cls_no as classNo, cls_name as className, sel_no as classCreator, cls_det as classDescription, cls_price as classPrice, class_person as classPerson, class_enroll as classDate, classStarttime as classStartTime from class_db  where class_enroll>TO_CHAR(SYSDATE,'yyyy-mm-dd') and status=1
  	</select>
  	
  	<select id="getClassNo" parameterType="map" resultType="Integer">
- 		select  class_person as classPerson from class_db where cls_name=#{title} and class_enroll=#{date}
+ 		select  class_person as classPerson from class_db where cls_name=#{title} and class_enroll=#{date} and status=1
  	</select>
  	
  	<select id="sumPerson" parameterType="map" resultType="r">
@@ -65,7 +65,7 @@
  	</select>
  	
  	<select id="getEnroll" parameterType="Integer" resultType="string">
- 		select class_enroll as classDate from class_db where cls_no=#{classNo}
+ 		select class_enroll as classDate from class_db where cls_no=#{classNo} and status=1
  	</select>
  	
  	
@@ -76,9 +76,11 @@
  	</insert>
  	
  	<select id="getGoods" parameterType="string" resultType="g">
- 		select g.gds_no as goodsNo, g.gds_name as goodsName, g.gds_pri as goodsPrice, g.GDS_BCNT as goodsCount, i.FILEPATH as imagePath, ROUND(AVG(NVL(r.rev_score,0)),1) as reviewScore
-from goods_db g, img_db i,review_db r
-where g.gds_no=i.TYPE_NO and i.IMG_TYPE='g' and r.rev_gdsno=g.gds_no and g.status=1
+select g.gds_no as goodsNo, g.gds_name as goodsName, g.gds_pri as goodsPrice, g.GDS_BCNT as goodsCount, i.FILEPATH as imagePath, ROUND(AVG(NVL(r.rev_score,0)),1) as reviewScore
+from goods_db g
+left join review_db r  on(g.gds_no=r.rev_gdsno)
+left join img_db i on (g.gds_no = i.type_no)
+where i.IMG_TYPE='g' and g.status=1
 <if test="value !=null">
 
 	and g.gds_name like '%'||#{value}||'%'
@@ -89,51 +91,57 @@ order by g.gds_no DESC
  	</select>
  	
  	<select id="getTakju" resultType="g">
- 	select g.gds_no as goodsNo, g.gds_name as goodsName, g.gds_pri as goodsPrice, g.GDS_BCNT as goodsCount, i.FILEPATH as imagePath, ROUND(AVG(NVL(r.rev_score,0)),1) as reviewScore
-from goods_db g, img_db i,review_db r
-where g.gds_no=i.TYPE_NO and i.IMG_TYPE='g' and r.rev_gdsno=g.gds_no and g.goods_type='t' and g.status=1
-
+select g.gds_no as goodsNo, g.gds_name as goodsName, g.gds_pri as goodsPrice, g.GDS_BCNT as goodsCount, i.FILEPATH as imagePath, ROUND(AVG(NVL(r.rev_score,0)),1) as reviewScore
+from goods_db g
+left join review_db r  on(g.gds_no=r.rev_gdsno)
+left join img_db i on (g.gds_no = i.type_no)
+where i.IMG_TYPE='g'  and g.goods_type='t' and g.status=1
 group by g.gds_no, g.gds_name, g.gds_pri, g.GDS_BCNT, i.FILEPATH, r.rev_gdsno
 order by g.gds_no DESC
  	</select>
  	
  	 	<select id="getCheongju" resultType="g">
- 	select g.gds_no as goodsNo, g.gds_name as goodsName, g.gds_pri as goodsPrice, g.GDS_BCNT as goodsCount, i.FILEPATH as imagePath, ROUND(AVG(NVL(r.rev_score,0)),1) as reviewScore
-from goods_db g, img_db i,review_db r
-where g.gds_no=i.TYPE_NO and i.IMG_TYPE='g' and r.rev_gdsno=g.gds_no and g.goods_type='c' and g.status=1
-
+select g.gds_no as goodsNo, g.gds_name as goodsName, g.gds_pri as goodsPrice, g.GDS_BCNT as goodsCount, i.FILEPATH as imagePath, ROUND(AVG(NVL(r.rev_score,0)),1) as reviewScore
+from goods_db g
+left join review_db r  on(g.gds_no=r.rev_gdsno)
+left join img_db i on (g.gds_no = i.type_no)
+where i.IMG_TYPE='g'  and g.goods_type='c' and g.status=1
 group by g.gds_no, g.gds_name, g.gds_pri, g.GDS_BCNT, i.FILEPATH, r.rev_gdsno
 order by g.gds_no DESC
  	</select>
  		<select id="getSpirits" resultType="g">
- 	select g.gds_no as goodsNo, g.gds_name as goodsName, g.gds_pri as goodsPrice, g.GDS_BCNT as goodsCount, i.FILEPATH as imagePath, ROUND(AVG(NVL(r.rev_score,0)),1) as reviewScore
-from goods_db g, img_db i,review_db r
-where g.gds_no=i.TYPE_NO and i.IMG_TYPE='g' and r.rev_gdsno=g.gds_no and g.goods_type='s'and g.status=1
-
+select g.gds_no as goodsNo, g.gds_name as goodsName, g.gds_pri as goodsPrice, g.GDS_BCNT as goodsCount, i.FILEPATH as imagePath, ROUND(AVG(NVL(r.rev_score,0)),1) as reviewScore
+from goods_db g
+left join review_db r  on(g.gds_no=r.rev_gdsno)
+left join img_db i on (g.gds_no = i.type_no)
+where i.IMG_TYPE='g'  and g.goods_type='s' and g.status=1
 group by g.gds_no, g.gds_name, g.gds_pri, g.GDS_BCNT, i.FILEPATH, r.rev_gdsno
 order by g.gds_no DESC
  	</select>
  	
  	<select id="getWine" resultType="g">
- 	select g.gds_no as goodsNo, g.gds_name as goodsName, g.gds_pri as goodsPrice, g.GDS_BCNT as goodsCount, i.FILEPATH as imagePath, ROUND(AVG(NVL(r.rev_score,0)),1) as reviewScore
-from goods_db g, img_db i,review_db r
-where g.gds_no=i.TYPE_NO and i.IMG_TYPE='g' and r.rev_gdsno=g.gds_no and g.goods_type='w' and g.status=1
-
+select g.gds_no as goodsNo, g.gds_name as goodsName, g.gds_pri as goodsPrice, g.GDS_BCNT as goodsCount, i.FILEPATH as imagePath, ROUND(AVG(NVL(r.rev_score,0)),1) as reviewScore
+from goods_db g
+left join review_db r  on(g.gds_no=r.rev_gdsno)
+left join img_db i on (g.gds_no = i.type_no)
+where i.IMG_TYPE='g'  and g.goods_type='w' and g.status=1
 group by g.gds_no, g.gds_name, g.gds_pri, g.GDS_BCNT, i.FILEPATH, r.rev_gdsno
 order by g.gds_no DESC
  	</select>
  	<select id="getFruit" resultType="g">
- 	select g.gds_no as goodsNo, g.gds_name as goodsName, g.gds_pri as goodsPrice, g.GDS_BCNT as goodsCount, i.FILEPATH as imagePath, ROUND(AVG(NVL(r.rev_score,0)),1) as reviewScore
-from goods_db g, img_db i,review_db r
-where g.gds_no=i.TYPE_NO and i.IMG_TYPE='g' and r.rev_gdsno=g.gds_no and g.goods_type='f' and g.status=1
-
+select g.gds_no as goodsNo, g.gds_name as goodsName, g.gds_pri as goodsPrice, g.GDS_BCNT as goodsCount, i.FILEPATH as imagePath, ROUND(AVG(NVL(r.rev_score,0)),1) as reviewScore
+from goods_db g
+left join review_db r  on(g.gds_no=r.rev_gdsno)
+left join img_db i on (g.gds_no = i.type_no)
+where i.IMG_TYPE='g'  and g.goods_type='f' and g.status=1
 group by g.gds_no, g.gds_name, g.gds_pri, g.GDS_BCNT, i.FILEPATH, r.rev_gdsno
 order by g.gds_no DESC
  	</select>
  	
  	<select id="getFund" resultType="f">
  		select f.fund_no as fundNo, f.fund_name as fundName , f.fund_money as fundMoney, f.fund_chk as fundChk, f.fund_det as fundDet, status, f.fund_Date as fundDate, f.sel_no as selNo, f.fund_enrolldate as fundEnrollDate , f.fund_enddate as fundEndDate, 
-i.FILEPATH as imagePath, d.fnd_d_price as fundMoneyNow, g.fnd_g_pri as fundPrice from funding_db f, img_db i, fnd_det_db d, fnd_gds_db g
+i.FILEPATH as imagePath, d.fnd_d_price as fundMoneyNow, g.fnd_g_pri as fundPrice
+ from funding_db f, img_db i, fnd_det_db d, fnd_gds_db g
 where i.IMG_TYPE='f' and f.fund_no=i.TYPE_NO and d.fund_no=f.fund_no and g.fund_no = f.fund_no and f.status=1
 order by f.fund_no DESC
  			</select>
@@ -165,4 +173,25 @@ order by f.fund_no DESC
  	<update id="setPw" parameterType="map">
  		update client_Db set cli_pw=#{pw} where cli_id=#{id}
  	</update>
+ 	
+ 	<insert id="insertComment" parameterType="fr">
+ 		insert into review_Db values(review_seq.nextval, 0, #{commentContent}, #{commentWriter}, to_char(sysdate, 'yyyy-mm-dd'), #{commentRate},#{fundNo} ,#{commentWriterName})
+ 	</insert>
+ 	 <insert id="insertComment1" parameterType="fr">
+ 		insert into review_Db values(review_seq.nextval, #{goodNo}, #{commentContent}, #{commentWriter}, to_char(sysdate, 'yyyy-mm-dd'), #{commentRate},0 ,#{commentWriterName})
+ 	</insert>
+ 	<select id="getReview" parameterType="integer" resultType="fr">
+ 		select rev_no as reviewNo, rev_GDSNO as goodNo, rev_con as commentContent, rev_writer as commentWriter, rev_enroll as reviewDate, rev_score as commentRate, rev_fundno as fundNo, rev_writername as commentWriterName from review_db where rev_fundno=#{fundNo}
+ 	</select>
+ 	
+ 	<select id="getReview1" parameterType="integer" resultType="fr">
+ 		select rev_no as reviewNo, rev_GDSNO as goodNo, rev_con as commentContent, rev_writer as commentWriter, rev_enroll as reviewDate, rev_score as commentRate, rev_fundno as fundNo, rev_writername as commentWriterName from review_db where rev_gdsno=#{gdsNo}
+ 	</select>
+ 	<update id="modifyComment" parameterType="fr">
+ 		update review_db set rev_con=#{commentContent} where rev_no=#{reviewNo}
+ 	</update>
+ 	
+ 	<delete id="deleteCommnet" parameterType="fr">
+ 		delete from review_db where rev_no=#{reviewNo}
+ 	</delete>
 </mapper>

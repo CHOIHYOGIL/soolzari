@@ -11,11 +11,9 @@
 
 </head>
 <body>
-<<<<<<< Updated upstream
+
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
-=======
-   <%@include file="/WEB-INF/views/common/header.jsp" %>
->>>>>>> Stashed changes
+
 	<section>
 		<h1>공지사항</h1>
 		<table class="notice">

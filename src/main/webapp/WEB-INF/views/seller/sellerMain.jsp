@@ -17,15 +17,15 @@
                     <li class="item" id="goods_con">
                         <a href="#goods_con" class="btn-left">상품 관리</a>
                         <div class="subMenu">
-                            <a href="">상품 등록</a>
-                            <a href="">상품 보기</a>
+                            <a href="/seller/goodsAdd.sool">상품 등록</a>
+                            <a href="/seller/goodsList.sool?reqPage=1">상품 보기</a>
                         </div>
                     </li>
                     <li class="item" id="class_con">
                         <a href="#class_con" class="btn-left">클래스 관리</a>
                         <div class="subMenu">
-                            <a href="">클래스 등록</a>
-                            <a href="">클래스 인원 확인</a>
+                            <a href="/seller/classAdd.sool">클래스 등록</a>
+                            <a href="/seller/classList.sool?reqPage=1">클래스 확인</a>
                         </div>
                     </li>
                     <li class="item" id="funding_con">
@@ -36,17 +36,17 @@
                         </div>
                     </li>
                     <li class="item">
-                        <a href="#" class="btn-left">마이페이지</a>
+                        <a href="/seller/main.sool" class="btn-left">마이페이지</a>
                     </li>
                     <li class="item">
-                        <a href="#" class="btn-left">로그아웃</a>
+                        <a href="/seller/logout.sool" class="btn-left">로그아웃</a>
                     </li>
                 </ui>
             </div>
         </div>
         <div id="main_container">
             <div id="main_content">
-
+            
             </div>
         </div>
     </div>

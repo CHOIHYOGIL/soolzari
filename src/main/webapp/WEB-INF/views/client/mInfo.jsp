@@ -44,12 +44,12 @@
 				<h3 class="contentTitle">회원정보 수정</h3>
 				<hr class="hrMargin">
 				<div class="allInfoDiv">
-					<c:if test="${client.cliPw=='sns' }">
+		
 					<div class="infoDiv">
 						<h3>SNS로 로그인한 회원입니다</h3>
 					</div>
-					</c:if>
-					<c:if test="${!client.cliPw=='sns' }">
+				
+			
 					<div class="infoDiv">
 						<h4>기본 정보</h4>
 						<table class="table">
@@ -77,7 +77,7 @@
 						  </tbody>
 						</table>
 					</div>
-					</c:if>
+				
 					<div class="addrDiv">
 						<h4>배송지</h4>
 						<div class="addrDiv2">

@@ -12,4 +12,5 @@ public class Goods {
 	public String imagePath;
 	public String searchWord;
 	public double reviewScore;
+	public int reviewCount;
 }

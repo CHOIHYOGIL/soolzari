@@ -12,7 +12,7 @@
 	<typeAliases>
 		<typeAlias type="com.soolzari.shop.client.model.vo.Client" alias="c"/>
 		<typeAlias type="com.soolzari.shop.client.model.vo.Reservation" alias="r"/>
-
+		<typeAlias type="com.soolzari.shop.client.model.vo.FundReview" alias="fr"/>
 		<typeAlias type="com.soolzari.shop.client.model.vo.Class_List" alias="cl"/>
 		<typeAlias type="com.soolzari.shop.client.model.vo.Goods" alias="g"/>
 		<typeAlias type="com.soolzari.shop.client.model.vo.Subscribe" alias="s"/>
@@ -40,6 +40,13 @@
 		<typeAlias type="com.soolzari.shop.client.model.vo.FundingGoods" alias="fundingGoods"/>
 		<typeAlias type="com.soolzari.shop.client.model.vo.FundDetailDB" alias="fundDetailDB"/>
 		
+
+<typeAlias type="com.soolzari.shop.seller.model.vo.Seller" alias="sl"/>
+<typeAlias type="com.soolzari.shop.seller.model.vo.Goods" alias="sellerGoods"/>
+		<typeAlias type="com.soolzari.shop.seller.model.vo.Class" alias="sellerClass"/>
+		<typeAlias type="com.soolzari.shop.seller.model.vo.ClassPage" alias="sellerClassPage"/>
+		<typeAlias type="com.soolzari.shop.seller.model.vo.Image" alias="sellerImage"/>
+		<typeAlias type="com.soolzari.shop.seller.model.vo.Score" alias="sellerScore"/>
 	</typeAliases>
 
 </configuration>
