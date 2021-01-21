@@ -8,6 +8,7 @@
 
 <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
 <script src="/resources/js/bootstrap.min.js"></script>
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <%-- <jsp:include page="/WEB-INF/views/common/header.jsp"/> --%>
 <meta charset="UTF-8">
@@ -58,15 +59,12 @@
 	<div class="mainContent">
 		<a name="mainGo"/>
 		<div class="mainImg">
-			메인이미지 올곳
-			<a href="/client/oFundingDetail.sool?fundNo=17">펀딩상세페이지(임시)</a>
+			<img src="/resources/upload/${gsd.filepath }">
 		</div>
+		<hr>
 		<div class="detailContent">
 			<div>
-				판매이미지올곳~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-				<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-				<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-				
+				<img src="/resources/upload/${gsdGD.filepath }">
 			</div>
 		</div>
 		
@@ -74,7 +72,7 @@
 	</div>
 	<div class="fixContent">
 		<form action="/client/basketInsert.sool" method="post">
-			<h4><p>${gsd.gdsName }</p></h4>
+			<h4><p class="fundName">${gsd.gdsName }</p></h4>
 			<h4 class="gh4"><span class="goodsPrice comma">${gsd.gdsPri }</span> 원</h4>
 			<table class="table fixTable">
 				<tr>
@@ -112,7 +110,7 @@
 				<button type="button" class="btn btn-lg paymentBtn">구매하기</button> 
 			</div>
 			<div class="aTarget">
-				<a href="#mainGo" class="mainGo at">상품 상세</a> / 
+				<a href="#mainGo" class="mainGo at">상품 상세</a> 
 				<a href="#reviewGo" class="reviewGo at">상품 후기 보기</a>
 			</div>
 			
@@ -120,9 +118,10 @@
 	</div>
 		<div class="reviewContent" style="margin-top:1200px;" >
 			<a name="reviewGo"/>
+				<c:if test="${sessionId!=null }">
 			<div class="glTitle">
                           <span style="font-size:25px;">댓글</span>
-            	<hr class="line">
+            	<hr width="860px" align="left">
             </div>
        <div class="gl">
             	<!-- 댓글 입력하는 창 -->
@@ -144,10 +143,11 @@
 			            <input type="hidden" name="commentWriterName" value="${sessionName}"> <!-- 작성자 -->
 			          	<input type="hidden" id="commentRate" name="commentRate">
 			            <textarea class="form-control rowCheck" name="commentContent" style="resize: none; width: 65%; display: inline-block; outline: none;" maxlength="65" required="required"></textarea> 
-			            <button type="submit" class="btn btn-success btn-lg endDayCheck" style="background-color: #3B4E32; margin-bottom:50px; margin-left:10px;">등록</button>
+			            <button type="submit" class="btn btn-success btn-lg endDayCheck" style="background-color: #4d5075; color:white; border:none; margin-bottom:50px; margin-left:10px;">등록</button>
 		            </form>
 	            </div>
 	            </div> 
+	            </c:if>
 	             		    <div id="commentScrollDiv" style="width: 74%;">
 	            <!-- 전체 댓글 출력 및 본인 댓글 수정 / 삭제 -->
 	             <h4 style="font-size:20px;">댓글 리스트

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-            
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +9,7 @@
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
 <script src="/resources/js/bootstrap.min.js"></script>
-<%-- <jsp:include page="/WEB-INF/views/common/header.jsp"/> --%>
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <meta charset="UTF-8">
 <title>펀딩 상세보기</title>
 </head>
@@ -54,14 +54,11 @@
 	<div class="mainContent">
 		<a name="mainGo"/>
 		<div class="mainImg">
-			메인이미지 올곳
+			<img src="/resources/upload/${fund.filepath }">
 		</div>
 		<div class="detailContent">
 			<div>
-				펀딩이미지올곳~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-				<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-				<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-				
+				<img src="/resources/upload/${fundFD.filepath }">
 			</div>
 		</div>
 
@@ -69,9 +66,9 @@
 		
 
 	<div class="fixContent">
-			<h4><p>${fund.fundName }</p></h4>
-			목표 금액 달성률<br>
-			<h5 class="gh3"><span class="goodsPrice comma">${fund.fundTotalMoney }</span> 원 </h5><h4 class="gh4"><span class="percent">${fund.fundTotalMoney/fund.fundMoney*100 }</span>%</h4>
+			<h4><p class="fundName">${fund.fundName }</p></h4>
+			<span>목표 금액 달성률</span><br>
+			<h5 class="gh3"><span class="goodsPrice comma">${fund.fundTotalMoney }</span> 원 </h5><h4 class="gh4"><fmt:formatNumber value="${fund.fundTotalMoney/fund.fundMoney*100 }" pattern="0.00"/>%</h4>
 			<table class="table fixTable">
 				<tr>
 					<th>등록일</th>
@@ -86,7 +83,7 @@
 					<td><span class="money">${fund.fundMoney }</span></td>
 				</tr>
 			</table>
-			<hr style="width: 90%;">
+			<hr>
 			<div class="goodsList">
 				<c:forEach items="${fundGoodsList }" var="fg">
 					<form action="/client/fundReservationInsert.sool" method="post">
@@ -101,8 +98,8 @@
 				        </div>
 				        <div id="detail_page${fg.fndGNo }" class="collapse">
 				           	<p>구성 : <span>${fg.fndGCon }</span></p>
-							<p>추가 후원금 : <input type="text" name="addFund"></p>
-							<div style="text-align: center;">
+							<p class="add">추가 후원금 : <input type="text" name="addFund"></p>
+							<div style="text-align: center; margin-top: 10px;">
 								<button type="button" class="btn btn-outline-secondary btn-sm addFundSel">+5,000</button>
 								<button type="button" class="btn btn-outline-secondary btn-sm addFundSel">+10,000</button>
 								<button type="button" class="btn btn-outline-secondary btn-sm addFundSel">+50,000</button>
@@ -119,7 +116,7 @@
 								<button type="button" class="btn btn-sm paymentBtn">후원하기</button>
 							</div> 
 				        </div>
-						<hr style="width: 90%;">
+						<hr>
 					</form>
 				</c:forEach>
 			</div>
@@ -133,21 +130,13 @@
 	
 			<div class="reviewContent" style="margin-top:1200px;" >
 			<a name="reviewGo"/>
+			<c:if test="${sessionId!=null }">
 			<div class="glTitle">
                           <span style="font-size:25px;">댓글</span>
             	<hr class="line">
             </div>
        <div class="gl">
-            	<!-- 댓글 입력하는 창 -->
-            	  <span style="font-size:18px;">평점 :</span> <p id="star_grade" style="display:inline-block;">
-	            	<a href="#">★</a>
-	            	<a href="#">★</a>
-	            	<a href="#">★</a>
-	            	<a href="#">★</a>
-	            	<a href="#">★</a>
-
-
-	            </p>
+           
 	            <span id="rateCount"> </span>
 	            <div class="inputComment">
 		            <form action="/insertComment.sool" method="post">
@@ -155,12 +144,14 @@
 			            <input type="hidden" name="fundNo" value="${fund.fundNo}"> <!-- 스룹스터디no -->
 			            <input type="hidden" name="commentWriter" value="${sessionNo}"> <!-- 작성자 -->
 			            <input type="hidden" name="commentWriterName" value="${sessionName}"> <!-- 작성자 -->
-			          	<input type="hidden" id="commentRate" name="commentRate">
+			      
 			            <textarea class="form-control rowCheck" name="commentContent" style="resize: none; width: 65%; display: inline-block; outline: none;" maxlength="65" required="required"></textarea> 
+			            
 			            <button type="submit" class="btn btn-success btn-lg endDayCheck" style="background-color: #3B4E32; margin-bottom:50px; margin-left:10px;">등록</button>
 		            </form>
 	            </div>
 	            </div> 
+	            </c:if>
 	             		    <div id="commentScrollDiv" style="width: 74%;">
 	            <!-- 전체 댓글 출력 및 본인 댓글 수정 / 삭제 -->
 	             <h4 style="font-size:20px;">댓글 리스트
@@ -176,7 +167,7 @@
 	            		<li class="result-li" style="width:96%;  border:1px solid lightgrey; border-radius:15px 15px 15px 15px; padding:10px 15px; margin-bottom:8px;" >
 	            			<div class="name" style=" width:100%;">
 	            			       
-			                     	<p id="commentWriterP" style="margin: 0; font-size:18px;">${r.commentWriterName}<span><c:forEach var="i" begin="1" end="${r.commentRate }">	<a href="#" style="color:orange;">★</a></c:forEach></span></p>
+			                     	<p id="commentWriterP" style="margin: 0; font-size:18px;">${r.commentWriterName}</p>
 			                            		<input type="hidden" name="reviewNo" value="${r.reviewNo}">
 			                        <textarea name="commentContent" class="form-control changeComment" style="resize: none; display:inline-block;"  required="required" onfucs="this.value=this.value;" >${r.commentContent }</textarea>
 			           
@@ -243,7 +234,7 @@
 		totalPriceSet();
 		
 		//달성률 퍼센트 소숫점없이
-		$(".percent").html(parseInt($(".percent").html()));
+		//$(".percent").html(parseInt($(".percent").html()));
 	})
 	
 	

@@ -55,7 +55,7 @@
 					   	<tr>
 						    <th scope="col" class="th1">펀딩정보</th>
 						    <th scope="col" class="th2">후원금액</th>
-						    <th scope="col" class="th3">배송비</th>
+						    <!-- <th scope="col" class="th3">배송비</th> -->
 					    </tr>
 					</thead>
 					<tbody>
@@ -67,8 +67,8 @@
 								<p class="indent"> - 가격 : <span class="comma">${fd.fndGPri}</span></p>
 								<p class="indent"> - 후원한 금액 : <span class="comma">${fd.fndDPrice-fd.fndGPri}</span>
 							</td>
-							<td class="textRight"><p class="eachPrice comma eachGoodsPrice">${fd.fndDPrice }</p><span>원</span></td>
-							<td class="textRight"><p class="eachPrice comma eachDeliPrice">2500</p><span>원</span></td>
+							<td class="textRight"><p class="eachPrice comma eachGoodsPrice bold">${fd.fndDPrice }</p><span>원</span></td>
+							<!-- <td class="textRight"><p class="eachPrice comma eachDeliPrice">2500</p><span>원</span></td> -->
 						</tr>
 					</tbody>
 				</table>
@@ -83,7 +83,7 @@
 						</tr>
 						<tr>
 							<th scope="row">포인트 사용</th>
-							<td class="atd2"><input type="text" name="usePoint" value="0"> P <button type="button" class="btn btn-outline-secondary btn-sm usePointSet">적용</button> <button type="button" class="btn btn-outline-secondary btn-sm pointAllUse">전액 사용</button></td>
+							<td class="atd2"><input type="text" name="usePoint" value="0"> P <button type="button" class="btn btn-outline-secondary btn-sm usePointSet">적용</button> <button type="button" class="btn btn-outline-secondary btn-sm pointAllUse">전액 사용</button> <span style="color: lightgrey">100원 이상 결제가능합니다.</span></td>
 						</tr>
 					</tbody>
 				</table>
@@ -96,12 +96,12 @@
 					      	<th scope="row" colspan="2" rowspan="2" class="price">결제 금액</th>
 					      	<td>
 					      		<p style="text-indent: 15px; margin-top: 16px" class="goodsPriceP"> 상품금액</p>
-					      		<p class="goodsPriceP">+ 배송비</p>
+					      		<!-- <p class="goodsPriceP">+ 배송비</p> -->
 					      		<p class="goodsPriceP">- 포인트 사용</p>
 					      	</td>
 					      	<td style="text-align: right;">
 					      		<p style="margin-top: 16px" class="goodsPrice comma">0</p> 원<br>
-					      		<p class="deliPay comma">0</p> 원<br>
+					      		<!-- <p class="deliPay comma">0</p> 원<br> -->
 					      		<p class="point comma">0</p> 원
 					      		<input type="hidden" name="cliPoint"><!-- 사용포인트 전달 -->
 					      	</td>
@@ -188,14 +188,12 @@
 		var myPoint = Number(commaReset($(".myPoint").html()));//보유포인트
 		var goodsPrice = Number(commaReset($(".goodsPrice").html()));//상품금액
 		if(myPoint>goodsPrice){//보유포인트가 상품금액보다 큰경우
-			$("input[name=usePoint]").val($(".goodsPrice").html());
-			$(".point").html($(".goodsPrice").html());
+			$("input[name=usePoint]").val(commaSet(goodsPrice-100));
+			$(".point").html(commaSet(goodsPrice-100));
 		}else{
 			$("input[name=usePoint]").val($(".myPoint").html());
 			$(".point").html(commaSet($("input[name=usePoint]").val()));
 		}
-		
-		
 		totalPriceSet();
 	});
 	
@@ -210,8 +208,8 @@
 		var deliPay = Number(commaReset($(".deliPay").html()));
 		if(Number($("input[name=usePoint]").val())>goodsPrice){//상품금액보다 적용할 포인트가 더 크면 상품금액으로 맞춰줌
 			alert("주문할 상품의 가격보다 포인트사용이 많습니다");
-			$(".point").html($(".goodsPrice").html());
-			$("input[name=usePoint]").val($(".goodsPrice").html());
+			$(".point").html(commaSet(goodsPrice-100));
+			$("input[name=usePoint]").val(commaSet(goodsPrice-100));
 		}else{
 			$(".point").html(($("input[name=usePoint]").val()));
 			$(".point").html(commaSet($("input[name=usePoint]").val()));

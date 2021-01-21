@@ -17,7 +17,7 @@
 			cli_no as cliNo,
 			bas_cnt as basCnt
 		from basket_db
-		where cli_no=#{_parameter}
+		where cli_no=#{_parameter} order by bas_no desc
 	</select>
 	<select id="goodsBasketSelect" parameterType="_int" resultType="g2">
 		select
@@ -113,26 +113,32 @@
 		    s.sel_no as selNo,
 		    s.sel_name as selName,
 		    s.sel_tel as selTel,
-		    s.sel_addr as selAddr
-		from goods_db g,seller_db s 
-		where g.sel_no=s.sel_no and g.gds_no=#{_parameter}
+		    s.sel_addr as selAddr,
+		    i.img_type as imgType,
+		    i.filepath,
+		    I.FILENAME
+		from goods_db g, seller_db s, img_db i
+		where g.sel_no=s.sel_no and img_type in ('g','gd') and i.type_no=#{gdsNo} and g.gds_no=#{gdsNo} order by imgType
 	</select>
 	
 	<!-- 펀딩상세페이지 - 펀딩정보 -->
-	<select id="fundingSelect" parameterType="_int" resultType="funding">
+	<select id="fundingSelect" parameterType="_int" resultType="fundingImg">
 		SELECT 
-		    fund_no as fundNo,
-		    fund_name as fundName,
-		    fund_money as fundMoney,
-		    fund_chk as fundChk,
-		    fund_det as fundDet,
-		    status,
-		    fund_date as fundDate,
-		    sel_no as selNo,
-		   	fund_enrollDate as fundEnrollDate,
-		    fund_enddate as fundEndDate,
+		    f.fund_no as fundNo,
+		    f.fund_name as fundName,
+		    f.fund_money as fundMoney,
+		    f.fund_chk as fundChk,
+		    f.fund_det as fundDet,
+		    f.status,
+		    f.fund_date as fundDate,
+		    f.sel_no as selNo,
+		   	f.fund_enrollDate as fundEnrollDate,
+		    f.fund_enddate as fundEndDate,
+            i.img_type as imgType,
+		    i.filepath,
+		    i.FILENAME,
 		    (select sum(fnd_d_price) from FND_DET_DB where fund_no=#{_parameter}) as fundTotalMoney
-		FROM FUNDING_DB where fund_no=#{_parameter}
+		FROM FUNDING_DB f, img_db i where img_type in('f','fd') and i.type_no=#{_parameter} and f.fund_no=#{_parameter} order by imgType
 	</select>
 	
 	<!-- 펀딩상세페이지 - 펀딩상품정보 -->
@@ -158,10 +164,13 @@
 	
 	<!-- 펀딩 상세->후원하기버튼클릭 시 목표달성 시 update -->
 	<update id="fundChkUpdate" parameterType="_int">
-	update funding_db set fund_chk=1 where fund_no=(select fund_no from funding_db where fund_money &lt; (select sum(fnd_d_price) as sumprice 
+		update funding_db set fund_chk=1 where fund_no=(select fund_no from funding_db where fund_money &lt; (select sum(fnd_d_price) as sumprice 
         from fnd_det_db group by fund_no having fund_no=#{_parameter}) and fund_no=#{_parameter})
 	</update>
 	
-	
+	<!-- 상품 구매시 카운트 증가goods테이블 (gds_bcnt컬럼) -->
+	<update id="gdsBcntUpdate" parameterType="map">
+		update goods_db set gds_bcnt=gds_bcnt+#{gdsLCnt} where gds_no=#{gdsNo}
+	</update>
 	
 </mapper>

@@ -56,12 +56,12 @@ public class SellerService {
 		String page = "";
 		int pageStart = ((reqPage-1)/pageNaviSize)*pageNaviSize + 1;
 		if(pageStart>1) {
-			page += "<a href='/seller/sellerClassList.sool?reqPage=1'></a>";
-			page += "<a href='/seller/sellerClassList.sool?reqPage="+(pageStart-1)+"'></a>";
+			page += "<a href='/seller/ClassList.sool?reqPage=1'></a>";
+			page += "<a href='/seller/ClassList.sool?reqPage="+(pageStart-1)+"'></a>";
 		}
 		for(int i=0;i<pageNaviSize;i++) {
 			if(reqPage != pageStart) {
-				page += "<a href='/seller/sellerClassList.sool?reqPage="+pageStart+"' class='num'>"+pageStart+"</a>";
+				page += "<a href='/seller/ClassList.sool?reqPage="+pageStart+"' class='num'>"+pageStart+"</a>";
 			}else {
 				page += "<span class='sel'>"+pageStart+"</span>";
 			}
@@ -71,8 +71,8 @@ public class SellerService {
 			}
 		}
 		if(pageStart<=totalPage) {
-			page += "<a href='/seller/sellerClassList.sool?reqPage="+pageStart+"'></a>";
-			page += "<a href='/seller/sellerClassList.sool?reqPage="+totalPage+"'></a>";
+			page += "<a href='/seller/ClassList.sool?reqPage="+pageStart+"'></a>";
+			page += "<a href='/seller/ClassList.sool?reqPage="+totalPage+"'></a>";
 		}
 		cp.setPage(page);
 		return cp;
@@ -99,12 +99,12 @@ public GoodsPage selectAllGoods(int reqPage) {
 	String page = "";
 	int pageStart = ((reqPage-1)/pageNaviSize)*pageNaviSize + 1;
 	if(pageStart>1) {
-		page += "<a href='/seller/sellerGoodsList.sool?reqPage=1'></a>";
-		page += "<a href='/seller/sellerGoodsList.sool?reqPage="+(pageStart-1)+"'></a>";
+		page += "<a href='/seller/goodsList.sool?reqPage=1'></a>";
+		page += "<a href='/seller/goodsList.sool?reqPage="+(pageStart-1)+"'></a>";
 	}
 	for(int i=0;i<pageNaviSize;i++) {
 		if(reqPage != pageStart) {
-			page += "<a href='/seller/sellerGoodsList.sool?reqPage="+pageStart+"' class='num'>"+pageStart+"</a>";
+			page += "<a href='/seller/goodsList.sool?reqPage="+pageStart+"' class='num'>"+pageStart+"</a>";
 		}else {
 			page += "<span class='sel'>"+pageStart+"</span>";
 		}
@@ -114,8 +114,8 @@ public GoodsPage selectAllGoods(int reqPage) {
 		}
 	}
 	if(pageStart<=totalPage) {
-		page += "<a href='/seller/sellerGoodsList.sool?reqPage="+pageStart+"'></a>";
-		page += "<a href='/seller/sellerGoodsList.sool?reqPage="+totalPage+"'></a>";
+		page += "<a href='/seller/goodsList.sool?reqPage="+pageStart+"'></a>";
+		page += "<a href='/seller/goodsList.sool?reqPage="+totalPage+"'></a>";
 	}
 	gp.setPage(page);
 	return gp;
@@ -143,6 +143,22 @@ public Image selectOneImage(int gdsNo) {
 
 public Score selectOneScore(int gdsNo) {
 	return dao.selectOneScore(gdsNo);
+}
+
+public int addClass(Class cls) {
+	return dao.addClass(cls);
+}
+
+public int modifyGoods(Goods g) {
+	return dao.modifyGoods(g);
+}
+
+public int deleteGoods(int temp) {
+	return dao.deleteGoods(temp);
+}
+
+public Class getClassInfo(int classNo) {
+	return dao.getClassInfo(classNo);
 }
 
 

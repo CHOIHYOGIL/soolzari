@@ -19,15 +19,15 @@
                     <li class="item" id="goods_con">
                         <a href="#goods_con" class="btn-left">상품 관리</a>
                         <div class="subMenu">
-                            <a href="/shop/seller/goodsAdd.sool">상품 등록</a>
-                            <a href="/shop/seller/goodsList.sool?reqPage=1">상품 보기</a>
+                            <a href="/seller/goodsAdd.sool">상품 등록</a>
+                            <a href="/seller/goodsList.sool?reqPage=1">상품 보기</a>
                         </div>
                     </li>
                     <li class="item" id="class_con">
                         <a href="#class_con" class="btn-left">클래스 관리</a>
                         <div class="subMenu">
-                            <a href="/shop/seller/classAdd.sool">클래스 등록</a>
-                            <a href="/shop/seller/classList.sool?reqPage=1">클래스 확인</a>
+                            <a href="/seller/classAdd.sool">클래스 등록</a>
+                            <a href="/seller/classList.sool?reqPage=1">클래스 확인</a>
                         </div>
                     </li>
                     <li class="item" id="funding_con">
@@ -38,10 +38,10 @@
                         </div>
                     </li>
                     <li class="item">
-                        <a href="/shop/seller/main.sool" class="btn-left">마이페이지</a>
+                        <a href="/seller/main.sool" class="btn-left">마이페이지</a>
                     </li>
                     <li class="item">
-                        <a href="/shop/seller/logout.sool" class="btn-left">로그아웃</a>
+                        <a href="/seller/logout.sool" class="btn-left">로그아웃</a>
                     </li>
                 </ui>
             </div>
@@ -52,7 +52,7 @@
 <div id="goods_det">
     <div id="goods_det_con">
         <div id="goods_det_img">
-            <img src="/shop/resources/image/${gd.filename }" id="det_img">
+            <img src="/resources/image/${gd.filename }" id="det_img">
         </div>
         <div id="goods_det_cons">
             <div id="goods_det_con_1">
@@ -71,18 +71,23 @@
     </div>
 
     <div id="goods_det_fix">
-    <form action="/shop/seller/fixGds.sool" method="post">
+    <form action="/seller/fixGds.sool" method="post">
+          
         <table style="border:1px solid black; width:100%;height: 100%;">
             <tr style="height:30%;">
                 <th style="width:25%;text-align:center;">상품명</th>
+         
                 <td><input type="text" name="gdsName"></td>
+                <td> <input type="hidden" name="gdsNo" value="${gd.gdsNo }"></td>
             </tr>
             <tr style="height:30%;">
                 <th style="width:25%;text-align:center;">판매가</th>
                 <td><input type="text" name="gdsPri"></td>
             </tr>
             <tr style="height:40%;">
+            	
                 <td colspan="2"><input type="submit" value="수정하기" style="width:100%; border:none; height:100%;background-color: #4d5075; color:white;"></td>
+            
             </tr>
         </table>
         </form>

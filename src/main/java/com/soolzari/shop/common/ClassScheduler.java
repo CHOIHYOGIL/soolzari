@@ -36,7 +36,7 @@ public class ClassScheduler {
 	
 	//펀딩 종료일에 목표달성이 됐으면 fnd_d_status를 1로 update(결제하라는 버튼표시) + 결제알림 메일전송필요...
 	//펀딩 종료일에 목표미달성이 됐으면 fnd_d_status를 7로 update(미결제취소 표시) + 후원실패 메일
-	@Scheduled(cron = "0 0 8 * * *")
+	@Scheduled(cron = "0 0 0 * * *")
 	public void fndDStatusUpdate() {
 		//달성/미달성 여부 업뎃하고
 		HashMap<String, ArrayList<Client2>> map = service.fndDStatusUpdate();//달성/미달성 후원자들의 이메일값을 가져옴
