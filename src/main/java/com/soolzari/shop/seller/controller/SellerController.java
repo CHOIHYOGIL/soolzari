@@ -4,7 +4,10 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Array;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.soolzari.shop.common.FileNameOverlap;
@@ -69,17 +74,31 @@ public class SellerController {
 	@RequestMapping("/classList.sool")
 	public String classList(int reqPage, Model model) {
 		ClassPage cp = service.selectAllClass(reqPage);
+		
+		System.out.println("cp");
+		System.out.println(cp.getList());
 		model.addAttribute("list",cp.getList());
 		model.addAttribute("page",cp.getPage());
 		return "seller/sellerClassList";
 	}
 	
+	@RequestMapping("/classDetail.sool")
+	public String classDetail(int classNo, Model model) {
+		
+		System.out.println("classNo : "+classNo);
+		Class cl=service.getClassInfo(classNo);
+		
+		System.out.println("cl : "+cl);
+		
+		model.addAttribute("cl",cl);
+	
+		return "seller/sellerClassDetail";
+	}
+	
 	//로그인
 	@RequestMapping("/loginCheck.sool")
 	public String login(Seller s, HttpSession session, Model model) {
-		System.out.println(s);
 		Seller seller = service.selectOneSeller(s);
-		System.out.println(seller);
 		if(seller!=null) {
 			session.setAttribute("sessionSeller", seller);
 			model.addAttribute("loc","/seller/sellerMain.sool");
@@ -112,20 +131,14 @@ public class SellerController {
 	@RequestMapping("/insertGoods.sool")
 	public String insertGoods(Goods g, MultipartFile file, Model model, HttpServletRequest request) {
 		//상품등록
-		System.out.println("HIHI");
-		System.out.println(g);
-		System.out.println(file);
-		
-		g.setStatus(1);
+
 		g.setGdsBcnt(0);
 		int result = service.insertGoods(g);
 		System.out.println(result);
 		int gdsNo = service.searchLastGoods();
 		//이미지 업로드
 		String root = request.getSession().getServletContext().getRealPath("/");
-		System.out.println("root : "+root);
-		String path = root+"resources/upload/";
-		System.out.println("path:"+path);
+		String path = root+"resources/image";
 		Image i = new Image();
 			if(!file.isEmpty()) {
 				String filename = file.getOriginalFilename();
@@ -162,10 +175,14 @@ public class SellerController {
 	
 	@RequestMapping("goodsDetail.sool")
 	public String goodsDetail(int gdsNo, Model model) {
+		System.out.println("gdsNo : "+gdsNo);
 		String type = "g";
 		Goods g = service.selectOneGoods(gdsNo);
+		System.out.println("g : "+g);
 		Image i = service.selectOneImage(gdsNo);
+		System.out.println("i : "+i);
 		Score s = service.selectOneScore(gdsNo);
+		System.out.println("s : "+s);
 		GoodsDetail gd = new GoodsDetail();
 		gd.setGdsNo(g.getGdsNo());
 		gd.setGdsName(g.getGdsName());
@@ -186,6 +203,68 @@ public class SellerController {
 		return "seller/sellerGoodsDetail";
 		
 	}
+	
+	@RequestMapping("classAddChk.sool")
+	public String classAddChk(Class cls, Model model){
+		System.out.println(cls);
+
+		System.out.println(cls.getClassEnroll());
+		int result = service.addClass(cls);
+		if(result>0) {
+			model.addAttribute("msg","클래스 등록이 완료되었습니다.");
+		}else {
+			model.addAttribute("msg","클래스 등록이 실패했습니다.");
+		}
+		model.addAttribute("loc","/seller/classList.sool?reqPage=1");
+		return "common/msg";
+	}
+	
+
+	@RequestMapping("fixGds.sool")
+	public String fixGds(Goods g, Model model) {
+		System.out.println("fix:"+g);
+		int result = service.modifyGoods(g);
+		System.out.println(result);
+		if(result>0) {
+			model.addAttribute("msg","상품 수정이 완료되었습니다.");
+		}else {
+			model.addAttribute("msg","상품 수정이 실패했습니다.");
+		}
+		model.addAttribute("loc","/seller/goodsList.sool?reqPage=1");
+		return "common/msg";
+	}
+	
+	@RequestMapping("logout.sool")
+	public String logout(HttpSession session, Model model) {
+		session.invalidate();
+		model.addAttribute("loc","/seller/login.sool");
+		model.addAttribute("msg","로그아웃됨");
+		return "common/msg";
+	}
+	
+	@RequestMapping("deleteGoods.sool")
+	public String deleteGoods(@RequestParam("checkbox") List<Integer> values, Model model) {
+		System.out.println("delete");
+		int cnt = values.size();
+		System.out.println(cnt);
+		int result = 0;
+		int delResult = 0;
+		for(Integer value : values) {
+			System.out.println("value : "+value);
+			delResult = service.deleteGoods(value);
+			System.out.println("delResult:"+delResult);
+			result += delResult;
+		}
+		System.out.println("result : "+result);
+		if(result < cnt) {
+			model.addAttribute("msg","삭제 실패");
+		}else {
+			model.addAttribute("msg","삭제 성공");
+		}
+		model.addAttribute("loc","/seller/goodsList.sool?reqPage=1");
+		return "common/msg";
+	}
+
 	
 	
 }

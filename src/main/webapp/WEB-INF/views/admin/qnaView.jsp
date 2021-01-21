@@ -69,7 +69,7 @@
 					        </tr>
 					    </table>
 					    <div class="btnwrap">
-					    	<button type="button">목록</button>
+					    	<button type="button" id="list">목록</button>
 					    	<div class="btns">
 					            <button type="submit">수정</button>
 					            <button type="button" id="delete">삭제</button>

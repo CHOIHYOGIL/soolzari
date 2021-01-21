@@ -2,15 +2,21 @@ package com.soolzari.shop.admin.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.soolzari.shop.admin.model.service.AdminService;
 import com.soolzari.shop.admin.model.vo.Qrv;
+import com.soolzari.shop.admin.model.vo.Sool;
 import com.soolzari.shop.admin.model.vo.UserPage;
 import com.soolzari.shop.client.model.vo.Qna;
 import com.soolzari.shop.client.model.vo.QnaPageData;
@@ -31,9 +37,44 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/admin.sool")
-	public String admin() {
-
+	public String admin(Model model) {
+		HashMap<String, Integer> user = service.selectUserChart();
+		model.addAttribute("user", user);
+		
+    	HashMap<String, Integer> classes = service.selectClass();
+    	model.addAttribute("classes", classes);
+    	Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("MM");
+		String now = sdf.format(date);//1월
+		Calendar cal = Calendar.getInstance();
+    	cal.setTime(date);
+    	cal.add(Calendar.MONTH, -1);
+    	String prev = sdf.format(cal.getTime());//12월
+    	cal.setTime(date);
+    	cal.add(Calendar.MONTH, -2);
+    	String pprev = sdf.format(cal.getTime());//11월
+    	cal.setTime(date);
+    	cal.add(Calendar.MONTH, +1);
+    	String next = sdf.format(cal.getTime());//2월
+    	cal.setTime(date);
+    	cal.add(Calendar.MONTH, +2);
+    	String nnext = sdf.format(cal.getTime());//3월
+    	model.addAttribute("now", now);
+    	model.addAttribute("prev", prev);
+    	model.addAttribute("pprev", pprev);
+    	model.addAttribute("next", next);
+    	model.addAttribute("nnext", nnext);
+    	
+    	HashMap<String, Integer> funding = service.selectFunding();
+    	model.addAttribute("funding", funding);
 		return "admin/admin";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/selectSool.sool", produces = "application/json;charset=utf-8")
+	public String selectSool() {
+		ArrayList<Sool> list = service.selectSool();//매달 술 종류 판매량
+		return new Gson().toJson(list);
 	}
 	
 	@RequestMapping("/user.sool")

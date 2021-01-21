@@ -92,7 +92,6 @@ public class NoticeService {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		Date d = new Date();
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    	String today = sdf.format(d);
     	Calendar cal = Calendar.getInstance();
     	cal.setTime(d);
     	if(date.equals("week")) {

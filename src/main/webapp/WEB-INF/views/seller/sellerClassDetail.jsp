@@ -48,7 +48,7 @@
         </div>
         <div id="main_container">
             <div id="main_content">
-            <h2 style="text-align: center;padding:20px;margin: 0 auto;background-color:#f7b8b4;"> 상품 상세보기 </h2>
+            <h2 style="text-align: center;padding:20px;margin: 0 auto;background-color:#f7b8b4;"> 클래스 상세보기 </h2>
 <div id="goods_det">
     <div id="goods_det_con">
         <div id="goods_det_img">

@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-a{
+td>a{
         text-decoration: none;
         color:#4d5075;
         display:block;
@@ -16,8 +16,8 @@ a{
 
     input[type="submit"],
     button {
-        width: 70px;
-        height: 32px;
+        width: 130px;
+        height: 42px;
         background: #4d5075;
         color: white;
         border: 1px solid #4d5075;
@@ -38,12 +38,12 @@ a{
 
     #main_crud {
         display: block;
-        text-align: right;
-        width: 50%;
+        text-align: center;
+        width: 100%;
     }
 
     #main_crud>input[type="button"] {
-        height: 32px;
+        height: 42px;
         background: #4d5075;
         color: white;
         border: 1px solid #4d5075;
@@ -75,4 +75,10 @@ a{
 
     *>tr>th:nth-child(5) {
         width: 5%;
+    }
+    
+    #page a, #page span{
+    padding:0 5px;
+    	display:inline-block !important;
+    	border:none !important;
     }

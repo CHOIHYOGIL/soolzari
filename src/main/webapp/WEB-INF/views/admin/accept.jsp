@@ -150,16 +150,27 @@
     	var type = ${type};
         $(function(){
             $("[type=date]").val(new Date().toISOString().substring(0, 10));
+            console.log("${list}");
             $(".navi a").click(function(){
                 var index = $(".navi a").index(this);
                 location.href="/accept.sool?type="+(index+1)+"&reqPage=1";
             });
             $(".navi a").eq(type-1).addClass('select');
-            $("#allac").click(function(){//모두 승인
-                location.href="/acceptAll.sool?type="+type;
+            $("#allac").click(function(event){//모두 승인
+            	var inputs = $("[type=checkbox]");
+            	if(inputs.length == 0){
+            		event.preventDefault();
+            	}else{
+            		location.href="/acceptAll.sool?type="+type;
+            	}
             });
-            $("#allre").click(function(){//모두 거절
-                location.href="/rejectAll.sool?type="+type;
+            $("#allre").click(function(event){//모두 거절
+            	var inputs = $("[type=checkbox]");
+            	if(inputs.length == 0){
+            		event.preventDefault();
+            	}else{
+            		location.href="/rejectAll.sool?type="+type;
+            	}
             });
             $("#partac").click(function(){//선택 승인
             	var inputs = $("[type=checkbox]:checked");

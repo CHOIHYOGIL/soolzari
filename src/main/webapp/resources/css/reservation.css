@@ -258,8 +258,10 @@ body {
         	    font-family: 'S-CoreDream-3Light';
             font-size:17px;
             width:100px;
-            background-color:orange;
+            background-color: #4d5075;
             color:white;
+            border: none;
+            outline: none;
         }
         
 

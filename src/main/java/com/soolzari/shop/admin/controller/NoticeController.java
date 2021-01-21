@@ -154,7 +154,7 @@ public class NoticeController {
 		return "admin/noticeView";
 	}
 	
-	@RequestMapping("/viewClient.sool")//조회수 해야함
+	@RequestMapping("/viewClient.sool")//3개 가져와야됨
 	public String noticeClient(int noticeNo, Model model) {
 		Notice n = service.selectOneNotice(noticeNo);
 		n.setNoticeCount(service.updateCount(noticeNo));
