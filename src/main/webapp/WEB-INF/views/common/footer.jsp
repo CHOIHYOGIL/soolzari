@@ -38,7 +38,8 @@
                 <li><a href="#"><img src="/resources/image/blog.png" alt=""></a></li>
             </ul>
 
-            <h2 class="footerLogo"><img src="/resources/image/logo1.png" style="width:100px"></h2>
+            <h2 class="footerLogo" style="margin-bottom:0px"><img src="/resources/image/logowhite.png" style="width:100px"></h2>
+            <h2 class="footerLogo" style="margin-top:0px; margin-bottom:40px"><img src="/resources/image/logowhite2.png" style="width:100px"></h2>
             <ul>
                 <li>대표자 홍길동 | 서울 중구 세종대로 110</li>
                 <li>사업자등록번호:123-12-12345 | 이메일:abc@naver.com</li>

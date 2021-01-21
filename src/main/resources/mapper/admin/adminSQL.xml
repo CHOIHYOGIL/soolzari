@@ -598,7 +598,7 @@
 		order by 1 desc
 	</select>
 	<select id="totalClassMonth" parameterType="_int" resultType="_int">
-		select count(*) from class_db where
+		select nvl(sum(class_list_db.class_person), 0) from class_db join class_list_db on (cls_no = cls_class_no) where
 		<choose>
 			<when test="_parameter == 0">
 				substr(class_enroll,1,7) = to_char(sysdate, 'yyyy-mm')
@@ -614,6 +614,33 @@
 			</when>
 			<when test="_parameter == 2">
 				substr(class_enroll,1,7) = to_char(add_months(sysdate, 2), 'yyyy-mm')
+			</when>
+		</choose>
+	</select>
+	<select id="totalFundingChart" parameterType="_int" resultType="_int">
+		select count(*) from
+		<choose>
+			<when test="_parameter == 1">
+				funding_db where fund_chk=1
+			</when>
+			<when test="_parameter == 8">
+				(select fund_no, sum(fnd_d_price) total, f2.fund_money , nvl(round(sum(fnd_d_price)/f2.fund_money,1),0) as goal from fnd_det_db f1
+			    right join funding_db f2 using(fund_no)
+			    where to_date(f2.fund_enddate) > sysdate
+			    group by (fund_no, f2.fund_money)
+			    order by 1)
+				where goal <![CDATA[ >= ]]> 0.8 and goal <![CDATA[ < ]]> 1
+			</when>
+			<when test="_parameter == 5">
+				(select fund_no, sum(fnd_d_price) total, f2.fund_money , nvl(round(sum(fnd_d_price)/f2.fund_money,1),0) as goal from fnd_det_db f1
+			    right join funding_db f2 using(fund_no)
+			    where to_date(f2.fund_enddate) > sysdate
+			    group by (fund_no, f2.fund_money)
+			    order by 1)
+				where goal <![CDATA[ >= ]]> 0.5 and goal <![CDATA[ < ]]> 0.8
+			</when>
+			<when test="_parameter == 0">
+				funding_db where fund_chk=-1
 			</when>
 		</choose>
 	</select>

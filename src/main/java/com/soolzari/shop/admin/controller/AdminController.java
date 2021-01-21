@@ -40,7 +40,7 @@ public class AdminController {
 	public String admin(Model model) {
 		HashMap<String, Integer> user = service.selectUserChart();
 		model.addAttribute("user", user);
-
+		
     	HashMap<String, Integer> classes = service.selectClass();
     	model.addAttribute("classes", classes);
     	Date date = new Date();
@@ -64,6 +64,9 @@ public class AdminController {
     	model.addAttribute("pprev", pprev);
     	model.addAttribute("next", next);
     	model.addAttribute("nnext", nnext);
+    	
+    	HashMap<String, Integer> funding = service.selectFunding();
+    	model.addAttribute("funding", funding);
 		return "admin/admin";
 	}
 	

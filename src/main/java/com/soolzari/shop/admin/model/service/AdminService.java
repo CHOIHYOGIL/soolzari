@@ -361,6 +361,19 @@ public class AdminService {
 		return classes;
 	}
 
+	public HashMap<String, Integer> selectFunding() {
+		HashMap<String, Integer> funding = new HashMap<String, Integer>();
+		int one = dao.totalFundingChart(1);//100% 달성
+		int eight = dao.totalFundingChart(8);
+		int five = dao.totalFundingChart(5);
+		int zero = dao.totalFundingChart(0);
+		funding.put("one", one);
+		funding.put("eight", eight);
+		funding.put("five", five);
+		funding.put("zero", zero);
+		return funding;
+	}
+
 //	public HashMap<String, Integer> selectSubscribe() {
 //		HashMap<String, Integer> sub = new HashMap<String, Integer>();
 //		Date date = new Date();

@@ -13,6 +13,7 @@
       google.charts.setOnLoadCallback(userChart);
       google.charts.setOnLoadCallback(goodsChart);
       google.charts.setOnLoadCallback(classChart);
+      google.charts.setOnLoadCallback(fundingChart);
       let list;
       function userChart() {//사용자 현황
         var data = google.visualization.arrayToDataTable([
@@ -24,6 +25,7 @@
         ]);
 
         var options = {
+          title: '사용자 현황',
           pieHole: 0.4,
           colors:['#4d5075','#bca0c9','#f7b8b4','#ffd0bf'],
           fontSize: 16
@@ -43,6 +45,7 @@
         	  var data = google.visualization.arrayToDataTable(arr);
 
                 var options = {
+                  title: '상품 판매량',
                   vAxis: {title: '판매 개수'},
                   hAxis: {title: '월'},
                   seriesType: 'bars',
@@ -59,7 +62,7 @@
       
       	function classChart() {
           var data = google.visualization.arrayToDataTable([
-            ['월', '클래스'],
+            ['월', '클래스 예약'],
             ['${pprev}월', ${classes.pprev}],
             ['${prev}월', ${classes.prev}],
             ['${now}월', ${classes.now}],
@@ -68,9 +71,10 @@
           ]);
 
           var options = {
+        	 title: '클래스 예약 현황',
         	 vAxis: {title: '클래스 예약 수'},
              hAxis: {title: '월'},
-             colors:['#4d5075','#bca0c9','#f7b8b4','#ffd0bf', 'rgb(251, 220, 173)', 'rgb(215, 109, 119)', 'rgb(254, 180, 123)'],
+             colors: ['#4d5075','#bca0c9','#f7b8b4','#ffd0bf', 'rgb(251, 220, 173)', 'rgb(215, 109, 119)', 'rgb(254, 180, 123)'],
              fontSize: 16
           };
 
@@ -88,6 +92,26 @@
       			}
       		});
       	});
+      	
+      	function fundingChart() {
+            var data = google.visualization.arrayToDataTable([
+              ['펀딩', '달성률'],
+              ['100% 이상', ${funding.one}],
+              ['80% 이상', ${funding.eight}],
+              ['50% 이상', ${funding.five}],
+              ['미달성', ${funding.zero}]
+            ]);
+
+            var options = {
+              title: '펀딩 달성률',
+              pieHole: 0.4,
+              colors: ['#4d5075','#bca0c9','#f7b8b4','#ffd0bf', 'rgb(251, 220, 173)', 'rgb(215, 109, 119)', 'rgb(254, 180, 123)'],
+              fontSize: 16
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('fundingChart'));
+            chart.draw(data, options);
+          }
     </script>
 </head>
 <body>
@@ -98,6 +122,7 @@
 		    <div id="userChart"></div>
 		    <div id="goodsChart"></div>
 		    <div id="classChart"></div>
+		    <div id="fundingChart"></div>
 	    </div>
 	</section>
 </body>

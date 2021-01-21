@@ -2,7 +2,7 @@
 
 .main {
     text-align: center;
-    width: 1400px;
+    width: 1450px;
     margin: 0 auto;
     overflow: hidden;
 }
@@ -15,7 +15,10 @@
 }
 
 .main>div{
-	width: 700px;
-	height: 500px;
+	width: 650px;
+	height: 400px;
 	float: left;
+	border: 1px solid lightgray;
+	margin-top : 50px;
+	margin-left: 50px;
 }

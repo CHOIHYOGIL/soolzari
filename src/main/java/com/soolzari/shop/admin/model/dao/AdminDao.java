@@ -113,4 +113,8 @@ public class AdminDao {
 		return session.selectOne("admin.totalClassMonth", month);
 	}
 
+	public int totalFundingChart(int per) {
+		return session.selectOne("admin.totalFundingChart", per);
+	}
+
 }
