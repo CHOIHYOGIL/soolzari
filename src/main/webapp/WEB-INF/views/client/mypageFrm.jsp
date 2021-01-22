@@ -21,7 +21,7 @@
 				<li><a class="sideNaviA a1" href="/client/mOrderList.sool?reqPage=1&period=1">주문 내역</a></li>
 				<li><a class="sideNaviA a2" href="/client/mExperience.sool?reqPage=1&period=1">예약한 클래스</a></li>
 				<li><a class="sideNaviA a3" href="/client/mFunding.sool?reqPage=1&period=1">후원한 펀딩</a></li>
-				<li><a class="sideNaviA a5" href="#">내가 쓴 리뷰</a></li>
+				<li><a class="sideNaviA a5" href="/client/mReview.sool?reqPage=1&period=1">내가 쓴 리뷰</a></li>
 				<li><a class="sideNaviA a6" href="/client/mQuestion.sool?reqPage=1&period=1">1:1 문의</a></li>
 				<li><a class="sideNaviA a7" href="/client/mInfo.sool">내 정보 수정</a></li>
 			</ul>
@@ -54,7 +54,7 @@
 					</div>
 					<div class="pointDiv">
 						<p class="fixT">포인트</p>
-						<p class="fixC userPoint">${sessionScope.sessionClient.clientPoint} <span>P</span></p>
+						<p class="fixC userPoint comma">${sessionScope.sessionClient.clientPoint} <span>P</span></p>
 					</div>
 				</div>
 			</div>
@@ -91,6 +91,18 @@
 	</div>
 </body>
 <script>
+$(function(){
+	//가격에 콤마
+	$(".comma").each(function(){
+		$(this).html(commaSet($(this).html()));
+	})
+})
+//금액단위 콤마 구분
+function commaSet(price) {
+	var str = String(price);
+	let price1 = str.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	return price1;
+}
 
 </script>
 </html>

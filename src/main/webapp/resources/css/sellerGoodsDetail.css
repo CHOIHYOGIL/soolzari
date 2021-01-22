@@ -21,7 +21,7 @@
         display: block;
     }
 
-    #det_img {
+    #det_img1, #det_img2 {
         width: 100%;
         height: 100%;
     }

@@ -40,7 +40,7 @@
 		<typeAlias type="com.soolzari.shop.client.model.vo.Funding" alias="funding"/>
 		<typeAlias type="com.soolzari.shop.client.model.vo.FundingGoods" alias="fundingGoods"/>
 		<typeAlias type="com.soolzari.shop.client.model.vo.FundDetailDB" alias="fundDetailDB"/>
-
+		<typeAlias type="com.soolzari.shop.client.model.vo.FundingImg" alias="fundingImg"/>
 		
 
 <typeAlias type="com.soolzari.shop.seller.model.vo.Seller" alias="sl"/>
@@ -49,6 +49,8 @@
 		<typeAlias type="com.soolzari.shop.seller.model.vo.ClassPage" alias="sellerClassPage"/>
 		<typeAlias type="com.soolzari.shop.seller.model.vo.Image" alias="sellerImage"/>
 		<typeAlias type="com.soolzari.shop.seller.model.vo.Score" alias="sellerScore"/>
+		<typeAlias type="com.soolzari.shop.seller.model.vo.Funding" alias="sellerFunding"/>
+		<typeAlias type="com.soolzari.shop.seller.model.vo.FundingGoods" alias="sellerFG"/>
 	<typeAlias type="com.soolzari.shop.client.model.vo.FundingListData" alias="fundingListData"/>
 
 	</typeAliases>

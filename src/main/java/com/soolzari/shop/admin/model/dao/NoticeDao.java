@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.soolzari.shop.admin.model.vo.Notice;
+import com.soolzari.shop.admin.model.vo.NoticeClient;
 
 
 @Repository
@@ -54,5 +55,9 @@ public class NoticeDao {
 
 	public int updateCount(int noticeNo) {
 		return session.update("admin.updateCount", noticeNo);
+	}
+
+	public NoticeClient selectNoticeClient(int noticeNo) {
+		return session.selectOne("admin.selectNoticeClient", noticeNo);
 	}
 }

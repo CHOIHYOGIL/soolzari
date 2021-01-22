@@ -135,3 +135,8 @@ input[name=usePoint]{
 .indent{
 	text-indent: 20px;
 }
+
+body .bold{
+	font-weight: bold;
+	font-size: 20px;
+}

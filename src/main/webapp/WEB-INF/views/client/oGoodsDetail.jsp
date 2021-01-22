@@ -8,6 +8,7 @@
 
 <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
 <script src="/resources/js/bootstrap.min.js"></script>
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <%-- <jsp:include page="/WEB-INF/views/common/header.jsp"/> --%>
 <meta charset="UTF-8">
@@ -58,15 +59,12 @@
 	<div class="mainContent">
 		<a name="mainGo"/>
 		<div class="mainImg">
-			메인이미지 올곳
-			<a href="/client/oFundingDetail.sool?fundNo=17">펀딩상세페이지(임시)</a>
+			<img src="/resources/upload/${gsd.filepath }">
 		</div>
+		<hr>
 		<div class="detailContent">
 			<div>
-				판매이미지올곳~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-				<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-				<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-				
+				<img src="/resources/upload/${gsdGD.filepath }">
 			</div>
 		</div>
 		
@@ -74,7 +72,7 @@
 	</div>
 	<div class="fixContent">
 		<form action="/client/basketInsert.sool" method="post">
-			<h4><p>${gsd.gdsName }</p></h4>
+			<h4><p class="fundName">${gsd.gdsName }</p></h4>
 			<h4 class="gh4"><span class="goodsPrice comma">${gsd.gdsPri }</span> 원</h4>
 			<table class="table fixTable">
 				<tr>

@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.soolzari.shop.admin.model.service.NoticeService;
 import com.soolzari.shop.admin.model.vo.Notice;
+import com.soolzari.shop.admin.model.vo.NoticeClient;
 import com.soolzari.shop.admin.model.vo.NoticePage;
 
 
@@ -158,11 +159,9 @@ public class NoticeController {
 	public String noticeClient(int noticeNo, Model model) {
 		Notice n = service.selectOneNotice(noticeNo);
 		n.setNoticeCount(service.updateCount(noticeNo));
-		Notice prev = service.selectOneNotice(noticeNo-1);
-		Notice next = service.selectOneNotice(noticeNo+1);
+		NoticeClient nc = service.selectNoticeClient(noticeNo);
 		model.addAttribute("n", n);
-		model.addAttribute("prev", prev);
-		model.addAttribute("next", next);
+		model.addAttribute("nc", nc);
 		return "client/noticeViewC";
 	}
 	

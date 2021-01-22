@@ -11,5 +11,7 @@ public class Funding {
 	private String fundDet;
 	private int status;
 	private String fundDate;
+	private String fundEndDate;
+	private String fundEnrollDate;
 	private int selNo;
 }

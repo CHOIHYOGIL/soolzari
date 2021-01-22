@@ -11,6 +11,9 @@ import com.soolzari.shop.admin.model.vo.NoticePage;
 import com.soolzari.shop.seller.model.dao.SellerDao;
 import com.soolzari.shop.seller.model.vo.Class;
 import com.soolzari.shop.seller.model.vo.ClassPage;
+import com.soolzari.shop.seller.model.vo.Funding;
+import com.soolzari.shop.seller.model.vo.FundingGoods;
+import com.soolzari.shop.seller.model.vo.FundingPage;
 import com.soolzari.shop.seller.model.vo.Goods;
 import com.soolzari.shop.seller.model.vo.GoodsPage;
 import com.soolzari.shop.seller.model.vo.Image;
@@ -137,8 +140,12 @@ public Goods selectOneGoods(int gdsNo) {
 	return dao.selectOneGoods(gdsNo);
 }
 
-public Image selectOneImage(int gdsNo) {
-	return dao.selectOneImage(gdsNo);
+public Funding selectOneFunding(int fundNo) {
+	return dao.selectOneFunding(fundNo);
+}
+
+public Image selectOneImage(int No,int num) {
+	return dao.selectOneImage(No, num);
 }
 
 public Score selectOneScore(int gdsNo) {
@@ -161,6 +168,7 @@ public Class getClassInfo(int classNo) {
 	return dao.getClassInfo(classNo);
 }
 
+
 public int deleteClass(int value) {
 	
 	return dao.deleteClass(value);
@@ -169,6 +177,67 @@ public int deleteClass(int value) {
 public int modifyClass(Class c) {
 	return dao.modifyClass(c);
 }
+
+
+public FundingPage selectAllFunding(int reqPage, int selNo) {
+	int numPerPage = 10;
+	int start = (reqPage-1)*numPerPage+1;
+	int end = reqPage*numPerPage;
+	HashMap<String, Integer> pageNo = new HashMap<String, Integer>();
+	pageNo.put("start", start);
+	pageNo.put("end", end);
+	pageNo.put("selNo", selNo);
+	System.out.println(start);
+	System.out.println(end);
+	ArrayList<Funding> list = dao.selectAllFunding(pageNo);
+	FundingPage fp = new FundingPage();
+	fp.setList(list);
+	int totalCount = dao.FundingTotalCount();//총 게시물 수
+	int totalPage = 0;
+	if(totalCount%numPerPage==0) {
+		totalPage = totalCount/numPerPage;
+	}else {
+		totalPage = (totalCount/numPerPage)+1;
+	}
+	int pageNaviSize = 5;
+	String page = "";
+	int pageStart = ((reqPage-1)/pageNaviSize)*pageNaviSize + 1;
+	if(pageStart>1) {
+		page += "<a href='/seller/fundingList.sool?reqPage=1'></a>";
+		page += "<a href='/seller/fundingList.sool?reqPage="+(pageStart-1)+"'></a>";
+	}
+	for(int i=0;i<pageNaviSize;i++) {
+		if(reqPage != pageStart) {
+			page += "<a href='/seller/fundingList.sool?reqPage="+pageStart+"' class='num'>"+pageStart+"</a>";
+		}else {
+			page += "<span class='sel'>"+pageStart+"</span>";
+		}
+		pageStart++;
+		if(pageStart>totalPage) {
+			break;
+		}
+	}
+	if(pageStart<=totalPage) {
+		page += "<a href='/seller/fundingList.sool?reqPage="+pageStart+"'></a>";
+		page += "<a href='/seller/fundingList.sool?reqPage="+totalPage+"'></a>";
+	}
+	fp.setPage(page);
+	return fp;
+}
+
+public ArrayList<FundingGoods> selectAllFundingGoods(int fundNo) {
+	return dao.selectAllFundingGoods(fundNo);
+}
+
+public int insertFunding(Funding f) {
+	return dao.insertFunding(f);
+}
+
+public int searchLastFunding() {
+	return dao.searchLastFunding();
+}
+
+
 
 
 }

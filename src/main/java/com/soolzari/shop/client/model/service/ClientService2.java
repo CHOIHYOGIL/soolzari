@@ -19,6 +19,7 @@ import com.soolzari.shop.client.model.vo.FundDetailDB;
 import com.soolzari.shop.client.model.vo.FundReview;
 import com.soolzari.shop.client.model.vo.Funding;
 import com.soolzari.shop.client.model.vo.FundingGoods;
+import com.soolzari.shop.client.model.vo.FundingImg;
 import com.soolzari.shop.client.model.vo.FundingListData;
 import com.soolzari.shop.client.model.vo.FundingPageData;
 import com.soolzari.shop.client.model.vo.Goods2;
@@ -29,6 +30,7 @@ import com.soolzari.shop.client.model.vo.OrderPageData;
 import com.soolzari.shop.client.model.vo.Purchase;
 import com.soolzari.shop.client.model.vo.Qna;
 import com.soolzari.shop.client.model.vo.QnaPageData;
+import com.soolzari.shop.client.model.vo.ReviewPageData;
 import com.soolzari.shop.client.model.vo.Subscribe;
 import com.soolzari.shop.common.EmailSender;
 
@@ -201,12 +203,22 @@ public class ClientService2 {
 				if(result>0) {
 					//장바구니에서 구매한 상품 삭제
 					result = dao.basketGoodsDelete(client,gdsNoList);
+					System.out.println("gdsNoList.size() : "+gdsNoList.size());
+					System.out.println("gdsLCntList.size() : "+gdsLCntList.size());
+					//상품 카운트 증가
+					for(int j=0;j<gdsNoList.size();j++) {
+						result = dao.gdsBcntUpdate(gdsNoList.get(j),gdsLCntList.get(j));
+					}
+					
 				}else {
 					result = 0;
 				}
 			}else {
 				result = 0;
 			}
+			
+			
+			
 			
 		}
 		return result;
@@ -365,14 +377,15 @@ public class ClientService2 {
 	}
 	
 	//상품상세페이지
-	public GoodsSellerDetail oGoodsDetail(int gdsNo) {
+	public ArrayList<GoodsSellerDetail> oGoodsDetail(int gdsNo) {
 		return dao.oGoodsDetail(gdsNo);
 	}
 	
 	//펀딩상세페이지
 	public FundDetail oFundingDetail(int fundNo) {
-		Funding fund = dao.fundingSelect(fundNo);
-		ArrayList<FundingGoods> fundGoodsList = dao.fundingGoodsSelect(fundNo);
+		//Funding fund = dao.fundingSelect(fundNo);
+		ArrayList<FundingImg> fund = dao.fundingSelect(fundNo);//펀딩정보 및 이미지(2개) 가져오기
+		ArrayList<FundingGoods> fundGoodsList = dao.fundingGoodsSelect(fundNo);//펀딩상품정보 가져오기
 		FundDetail fd = new FundDetail(fund, fundGoodsList);
 		return fd;
 	}
@@ -446,6 +459,7 @@ public class ClientService2 {
 	}
 
 	//펀딩 - 결제완료페이지 이동
+	@Transactional
 	public int fundingPayUpdate(FundDetailDB fd, int cliNo, int cliPoint) {
 		Client2 client = new Client2();
 		client.setCliNo(cliNo);
@@ -459,6 +473,7 @@ public class ClientService2 {
 	}
 
 	//마이페이지 - 펀딩 배송관리(수취확인)
+	@Transactional
 	public int fundDeliveryStatus(int fndDNo) {
 		return dao.fundDeliveryStatus(fndDNo);
 	}
@@ -472,6 +487,7 @@ public class ClientService2 {
 		dao.fndDStatusYUpdate();//달성 fnd_d_status를 1
 		System.out.println("미달성");
 		dao.fndDStatusNUpdate();//미달성 fnd_d_status를 7
+		dao.fundChkNUpdate();//미달성 fund_db테이블의 fundChk를 -1로
 		
 		ArrayList<Client2> clientYList = new ArrayList<Client2>();
 		clientYList = dao.emailSelect(1);//1:달성한 펀딩//사용자이메일 조회
@@ -492,19 +508,59 @@ public class ClientService2 {
 		return dao.subscribeSelect(clientRank);
 	}
 
+	//댓글(최효길님)
 	public ArrayList<FundReview> reviewList(int fundNo) {
 		
 		return dao.reviewList(fundNo);
 	}
 
+	//댓글(최효길님)
 	public ArrayList<FundReview> reviewList1(int gdsNo) {
 		return dao.reviewList1(gdsNo);
 	}
 
-	
-
-	
-
+	//문의하기 페이징
+	public ReviewPageData mReviewPaging(int reqPage, int period, int cliNo) {
+		int totalPage = dao.totalCountReview(cliNo, period); //총개수(리뷰(review_db)에서 저장된)
+		int per = 10;	//한페이지에 보여줄 주문개수
+		if(totalPage/per==0) {//총페이지수
+			totalPage = totalPage/per;
+		}else {
+			totalPage = totalPage/per+1;
+		}
+		int end = reqPage*per;
+		int start = end-per+1;
+		System.out.println("totalPage"+totalPage);
+		System.out.println("start"+start);
+		System.out.println("end"+end);
+			
+		ArrayList<FundReview> list = dao.reviewDataPageSelect(start,end,cliNo,period);	//experienceListData디비정보(서브쿼리로조합해서)
+			
+		int pageAllIdx = 5;
+		int pageIdx = (reqPage-1)/pageAllIdx*pageAllIdx+1;
+		System.out.println(reqPage);
+		String pageNavi = "";
+		if(reqPage>1) {//이전버튼
+			pageNavi += "<a id='prev1' href='/client/mReview.sool?reqPage="+(pageIdx-1)+"&period="+period+"'><</a>";
+		}
+			
+		for(int i = 0;i<pageAllIdx;i++) {
+			if(pageIdx!=reqPage) {//a태그잇게
+				pageNavi += "<a class='pageA' href='/client/mReview.sool?reqPage="+pageIdx+"&period="+period+"'>"+pageIdx+"</a>";
+			}else {//a태그없게
+				pageNavi += "<span class='selectedPage'>"+pageIdx+"</span>";
+			}
+			pageIdx++;
+			if(pageIdx>totalPage) {
+				break;
+			}
+		}
+		if(pageIdx<=totalPage) {//다음버튼
+			pageNavi += "<a id='next1' href='/client/mReview.sool?reqPage="+pageIdx+"&period="+period+"'>></a>";
+		}
+		ReviewPageData rpd = new ReviewPageData(list, pageNavi);
+		return rpd;
+	}
 	
 
 	

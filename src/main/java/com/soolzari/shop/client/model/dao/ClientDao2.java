@@ -17,6 +17,7 @@ import com.soolzari.shop.client.model.vo.FundDetailDB;
 import com.soolzari.shop.client.model.vo.FundReview;
 import com.soolzari.shop.client.model.vo.Funding;
 import com.soolzari.shop.client.model.vo.FundingGoods;
+import com.soolzari.shop.client.model.vo.FundingImg;
 import com.soolzari.shop.client.model.vo.FundingListData;
 import com.soolzari.shop.client.model.vo.Goods2;
 import com.soolzari.shop.client.model.vo.GoodsList;
@@ -199,13 +200,15 @@ public class ClientDao2 {
 
 	
 	//상품상세페이지
-	public GoodsSellerDetail oGoodsDetail(int gdsNo) {
-		return sqlSession.selectOne("order.oGoodsDetail",gdsNo);
+	public ArrayList<GoodsSellerDetail> oGoodsDetail(int gdsNo) {
+		List<GoodsSellerDetail> list = sqlSession.selectList("order.oGoodsDetail",gdsNo);
+		return (ArrayList<GoodsSellerDetail>) list;
 	}
 	
 	//펀딩상세페이지 - 펀딩정보
-	public Funding fundingSelect(int fundNo) {
-		return sqlSession.selectOne("order.fundingSelect",fundNo);
+	public ArrayList<FundingImg> fundingSelect(int fundNo) {
+		List<FundingImg> list = sqlSession.selectList("order.fundingSelect",fundNo);
+		return (ArrayList<FundingImg>) list;
 	}
 	
 	//펀딩상세페이지 - 펀딩상품정보
@@ -268,6 +271,10 @@ public class ClientDao2 {
 	public void fndDStatusNUpdate() {
 		sqlSession.update("mypage.fndDStatusNUpdate");
 	}
+	//매일 자정 종료일인 펀딩 중 미달성된 펀딩일 경우funding_db의 fund_chk를 -1로 변경
+	public void fundChkNUpdate() {
+		sqlSession.update("mypage.fundChkNUpdate");
+	}
 
 	//마이페이지 - 펀딩 배송관리(수취확인)
 	public int fundDeliveryStatus(int fndDNo) {
@@ -286,20 +293,49 @@ public class ClientDao2 {
 		return sqlSession.selectOne("mypage.subscribeSelect",clientRank);
 	}
 
-	
+	//상품 구매시 카운트 증가goods테이블 (gds_bcnt컬럼)
+	public int gdsBcntUpdate(int gdsNo, int gdsLCnt) {
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("gdsNo", gdsNo);
+		map.put("gdsLCnt", gdsLCnt);
+		return sqlSession.update("order.gdsBcntUpdate",map);
+	}
 
 	
 
+	
+	//댓글(최효길님)
 	public ArrayList<FundReview> reviewList(int fundNo) {
 		
 		List<FundReview> list =sqlSession.selectList("client.getReview",fundNo);
 		return (ArrayList<FundReview>)list;
 	}
-
+	//댓글(최효길님)
 	public ArrayList<FundReview> reviewList1(int gdsNo) {
 		List<FundReview> list =sqlSession.selectList("client.getReview1",gdsNo);
 		return (ArrayList<FundReview>)list;
 	}
+
+	//마이페이지 - 내가쓰리뷰 페이징
+	public int totalCountReview(int cliNo, int period) {
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("cliNo", cliNo);
+		map.put("period", period);
+		return sqlSession.selectOne("mypage.totalCountReview",map);
+	}
+
+	public ArrayList<FundReview> reviewDataPageSelect(int start, int end, int cliNo, int period) {
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("cliNo", cliNo);
+		map.put("period", period);
+		List<FundReview> list =  sqlSession.selectList("mypage.reviewDataPageSelect",map);
+		return (ArrayList<FundReview>)list;
+	}
+
+	
+
 
 	
 

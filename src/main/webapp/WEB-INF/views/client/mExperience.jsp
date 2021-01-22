@@ -113,11 +113,6 @@
 				$(this).addClass("sA1");
 			}
 		});
-		
-		//가격에 콤마
-		$(".comma").each(function(){
-			$(this).html(commaSet($(this).html()));
-		})
 	})
 	
 	$(".cancelBtn").click(function(){

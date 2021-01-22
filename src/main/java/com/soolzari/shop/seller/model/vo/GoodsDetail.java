@@ -12,10 +12,14 @@ public class GoodsDetail {
 	private int status;
 	private String goodsDate;
 	private String goodsType;
-	public String filepath;
-	public String filename;
-	public String imgType;
-	public int typeNo;
+	public String filepath1;
+	public String filename1;
+	public String imgType1;
+	public int typeNo1;
+	public String filepath2;
+	public String filename2;
+	public String imgType2;
+	public int typeNo2;
 	public double avgRevScore;
 	public double countRevScore;
 }

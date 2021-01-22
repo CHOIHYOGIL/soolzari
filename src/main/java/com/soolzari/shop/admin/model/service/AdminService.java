@@ -16,6 +16,7 @@ import com.soolzari.shop.admin.model.vo.Qrv;
 import com.soolzari.shop.admin.model.vo.Sool;
 import com.soolzari.shop.admin.model.vo.User;
 import com.soolzari.shop.admin.model.vo.UserPage;
+import com.soolzari.shop.client.model.vo.Funding;
 import com.soolzari.shop.client.model.vo.Qna;
 import com.soolzari.shop.client.model.vo.QnaPageData;
 
@@ -372,6 +373,10 @@ public class AdminService {
 		funding.put("five", five);
 		funding.put("zero", zero);
 		return funding;
+	}
+
+	public Funding selectBestFunding() {
+		return dao.selectBestFunding();
 	}
 
 //	public HashMap<String, Integer> selectSubscribe() {

@@ -1,3 +1,4 @@
+
 package com.soolzari.shop.client.model.vo;
 
 import lombok.Data;
