@@ -148,7 +148,7 @@
 	<!-- 마이페이지 - 문의하기 -->
 	<!-- 문의하기insert -->
 	<insert id="questionInsert" parameterType="qna">
-		insert into qna_db values(qna_seq.nextval,#{qnaName},42,#{qnaCon},to_char(sysdate,'yyyy-mm-dd'),0)
+		insert into qna_db values(qna_seq.nextval,#{qnaName},#{qnaWriter},#{qnaCon},to_char(sysdate,'yyyy-mm-dd'),0)
 	</insert>
 	<!-- 문의하기 조회하기 totalpage수(개월수별로 조회해야하니까 period사용) -->
 	<select id="totalCountQuestion" parameterType="map" resultType="_int">

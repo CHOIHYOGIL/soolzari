@@ -514,7 +514,7 @@ public class ClientService2 {
 		return dao.reviewList1(gdsNo);
 	}
 
-	//문의하기 페이징
+	//리뷰 페이징
 	public ReviewPageData mReviewPaging(int reqPage, int period, int cliNo) {
 		int totalPage = dao.totalCountReview(cliNo, period); //총개수(리뷰(review_db)에서 저장된)
 		int per = 10;	//한페이지에 보여줄 주문개수
