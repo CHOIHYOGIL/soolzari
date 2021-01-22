@@ -161,5 +161,10 @@ public Class getClassInfo(int classNo) {
 	return dao.getClassInfo(classNo);
 }
 
+//마이페이지 - 판매자 정보 수정
+public int mypageUpdateSeller(Seller seller) {
+	return dao.mypageUpdateSeller(seller);
+}
+
 
 }

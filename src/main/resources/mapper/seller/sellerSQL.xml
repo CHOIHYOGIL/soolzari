@@ -93,4 +93,8 @@
      <delete id="deleteGoods" parameterType="int">
      delete from goods_db where gds_no = #{temp}
      </delete>
+     
+     <update id="mypageSellerUpdate" parameterType="sl">
+     	update seller_db set sel_name=#{selName}, sel_pw=#{selPw}, sel_tel=#{selTel}, sel_addr=#{selAddr} where sel_no=#{selNo}
+     </update>
 </mapper>

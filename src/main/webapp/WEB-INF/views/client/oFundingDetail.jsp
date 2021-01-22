@@ -56,6 +56,7 @@
 		<div class="mainImg">
 			<img src="/resources/upload/${fund.filepath }">
 		</div>
+		<hr>
 		<div class="detailContent">
 			<div>
 				<img src="/resources/upload/${fundFD.filepath }">

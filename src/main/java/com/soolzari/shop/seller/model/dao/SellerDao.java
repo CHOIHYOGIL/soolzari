@@ -97,6 +97,10 @@ public class SellerDao {
 		return sqlSession.selectOne("seller.getClassInfo",classNo);
 		
 	}
+	//마이페이지 - 판매자 정보 수정
+	public int mypageUpdateSeller(Seller seller) {
+		return sqlSession.update("seller.mypageSellerUpdate",seller);
+	}
 	
 	
 }
