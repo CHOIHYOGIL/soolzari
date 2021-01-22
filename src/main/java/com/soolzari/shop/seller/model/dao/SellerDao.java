@@ -111,6 +111,7 @@ public class SellerDao {
 
 	public ArrayList<Funding> selectAllFunding(HashMap<String, Integer> pageNo) {
 		List<Funding> list = sqlSession.selectList("seller.selectAllFunding", pageNo);
+		System.out.println(list.size());
 		return (ArrayList<Funding>)list;
 	}
 

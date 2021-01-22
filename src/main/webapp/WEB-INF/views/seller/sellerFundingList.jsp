@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,19 +10,7 @@
     <link rel="stylesheet" href="/resources/css/sellerFundingList.css">
 </head>
 <body>
-    <div class="seller_header">
-        <header>
-            <div id="seller_banner" style="display:block;"><img src="imgs/szrbanner.png" style="height:30px;margin-top:5px;margin-bottom: 5px;width:115px;">
-                <h5 style="margin:0 auto;">판매자페이지</h5>
-            </div>
-            <nav>
-                <span>판매자 홍길동님 환영합니다.</span>
-                <span><input type="button" class="btn btn-primary" value="고객페이지"></span>
-                <span><input type="button" class="btn btn-primary" value="마이페이지"></span>
-                <span><input type="button" class="btn btn-danger" value="로그아웃"></span>
-            </nav>
-        </header>
-    </div>
+    <%@include file="/WEB-INF/views/seller/sellerHeader.jsp"%>
     <div id="content_box">
         <div id="left_bar">
             <div class="wrapper">

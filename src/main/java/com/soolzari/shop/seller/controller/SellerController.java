@@ -94,7 +94,7 @@ public class SellerController {
 	
 	@RequestMapping("/fundingList.sool")
 	public String fundingList(int reqPage, int selNo, Model model) {
-		FundingPage fp = service.selectAllFunding(reqPage);
+		FundingPage fp = service.selectAllFunding(reqPage, selNo);
 		/* 이부분 수정해야함. selNo로 한번 필터링 필요 */
 		System.out.println(fp.getList());
 		model.addAttribute("list",fp.getList());

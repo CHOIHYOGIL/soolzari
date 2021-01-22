@@ -168,13 +168,16 @@ public Class getClassInfo(int classNo) {
 	return dao.getClassInfo(classNo);
 }
 
-public FundingPage selectAllFunding(int reqPage) {
+public FundingPage selectAllFunding(int reqPage, int selNo) {
 	int numPerPage = 10;
 	int start = (reqPage-1)*numPerPage+1;
 	int end = reqPage*numPerPage;
 	HashMap<String, Integer> pageNo = new HashMap<String, Integer>();
 	pageNo.put("start", start);
 	pageNo.put("end", end);
+	pageNo.put("selNo", selNo);
+	System.out.println(start);
+	System.out.println(end);
 	ArrayList<Funding> list = dao.selectAllFunding(pageNo);
 	FundingPage fp = new FundingPage();
 	fp.setList(list);

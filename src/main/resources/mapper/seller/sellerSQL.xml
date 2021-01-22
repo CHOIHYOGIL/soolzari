@@ -116,7 +116,7 @@
         sel_no as selNo,
         fund_enrolldate as fundEnrollDate,
         fund_enddate as fundEndDate
-     from funding_db order by 1 desc)f) where rnum between #{start} and #{end}
+     from funding_db order by 1 desc)f) where (rnum between #{start} and #{end}) and selno = #{selNo}
   </select>
   
   	<select id="fundingTotalCount" resultType="_int">
