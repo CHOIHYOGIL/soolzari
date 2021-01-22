@@ -165,8 +165,8 @@ public class SellerController {
 		int gdsNo = service.searchLastGoods();
 		//이미지 업로드
 		String root = request.getSession().getServletContext().getRealPath("/");
-
-		String path = root+"resources/upload";
+		System.out.println(root);
+		String path = root+"resources/upload/";
 		Image i = new Image();
 		int count=0;
 		int result2=0;
@@ -382,7 +382,7 @@ public class SellerController {
 				int fundNo = service.searchLastFunding();
 				//이미지 업로드
 				String root = request.getSession().getServletContext().getRealPath("/");
-				String path = root+"resources/image/";
+				String path = root+"resources/upload/";
 				Image i1 = new Image();
 				Image i2 = new Image();
 					if( !(file1.isEmpty()) && !(file2.isEmpty()) ) {

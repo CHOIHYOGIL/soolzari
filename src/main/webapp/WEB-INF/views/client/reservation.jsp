@@ -107,10 +107,10 @@
             <div class="choiceBtn">
                 <ul class>
                     <li>
-                        <a href="/reservation_intro.sool">체험안내</a>
+                        <a href="/reservation_intro.sool">클래스 안내</a>
                     </li>
                     <li>
-                        <a href="/reservation.sool">체험예약</a>
+                        <a href="/reservation.sool">클래스 예약</a>
                     </li>
                 </ul>
             </div>
