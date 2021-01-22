@@ -230,6 +230,7 @@ select {
     text-align: left;
     color: #1c1c1c;
     padding-bottom: 10px;
+    height: 600px;
 }
 
 .item_gallery_type > ul > li > .item_cont .item_photo_box {

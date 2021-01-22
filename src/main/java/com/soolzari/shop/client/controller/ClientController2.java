@@ -68,12 +68,12 @@ public class ClientController2 {
 	
 	//장바구니 담기
 	@RequestMapping("/basketInsert.sool")
-	public String basketInsert(int gdsNo, int basCnt, Model model, @SessionAttribute(required=false) Client sessionClient) {
+	public String basketInsert(int gdsNo, int basCnt, String gdsRate, Model model, @SessionAttribute(required=false) Client sessionClient) {
 		if(sessionClient != null) {
 			int result = service.basketInsert(sessionClient.getClientNo(),gdsNo,basCnt);
 			if(result>0) {
 				model.addAttribute("msg","장바구니에 담겼습니다");
-				model.addAttribute("loc","/client/oGoodsDetail.sool?gdsNo="+gdsNo);
+				model.addAttribute("loc","/client/oGoodsDetail.sool?gdsNo="+gdsNo+"&gdsRate="+gdsRate);
 			}else {
 				model.addAttribute("msg","장바구니 오류");
 				model.addAttribute("loc","/");
@@ -212,6 +212,7 @@ public class ClientController2 {
 			int result = service.paymentInsert(client,gdsNoStr,gdsLCntStr,pur);//purchase디비에 insert, point감소처리, goods디비에 상품구매횟수 증가
 			if(result>0) {
 				client = service.paymentShow(client.getCliNo()); //client정보가져오기(주문완료페이지에 뿌려줄)
+				sessionClient.setClientPoint(client.getCliPoint());
 				model.addAttribute("client",client);//client정보
 				model.addAttribute("pur",pur);//purchase정보
 				return "client/oSuccess";
@@ -274,10 +275,13 @@ public class ClientController2 {
 	
 	//마이페이지-내정보수정하기Update
 	@RequestMapping("/mInfoUpdate.sool")
-	public String mInfoUpdate(Client2 client, Model model) {
+	public String mInfoUpdate(Client2 client, Model model, HttpSession session) {
 		System.out.println(client);
 		int result = service.updateMInfo(client);
 		if(result>0) {
+			Client c = (Client) session.getAttribute("sessionClient");//세션에도 바꾸기
+			c.setClientName(client.getCliName());
+			session.setAttribute("sessionClient", c);
 			model.addAttribute("msg","정보 수정이 완료되었습니다");
 		}else {
 			model.addAttribute("msg","정보 수정에 실패하였습니다");
@@ -291,7 +295,6 @@ public class ClientController2 {
 	public String mOrderList(int reqPage, int period, Model model, @SessionAttribute(required=false) Client sessionClient) {
 		if(sessionClient!=null) {//로그인된사용자만 접근가능하게
 			Subscribe sub = service.subscribeSelect(sessionClient.getClientRank());//구독랭크 정보가져오기
-			System.out.println(sub.getSubscribeName());
 			OrderPageData opd = service.mOrderListPaging(reqPage,period,sessionClient.getClientNo());
 			model.addAttribute("pList",opd.getPList());
 			model.addAttribute("olDataList",opd.getOlDataList());
@@ -402,7 +405,7 @@ public class ClientController2 {
 	
 	//상품상세페이지
 	@RequestMapping("/oGoodsDetail.sool")
-	public String oGoodsDetail (int gdsNo, Model model){
+	public String oGoodsDetail (int gdsNo, String gdsRate, Model model){
 		ArrayList<GoodsSellerDetail> gsd = service.oGoodsDetail(gdsNo);
 		if(gsd!=null) {//상품이 있을 경우
 			model.addAttribute("gsd",gsd.get(0));//상품정보 전달(기본이미지를 포함하고있음)
@@ -410,6 +413,7 @@ public class ClientController2 {
 			ArrayList<FundReview> reviewList= service.reviewList1(gdsNo);
 			model.addAttribute("reviewList",reviewList);
 			
+			model.addAttribute("gdsRate",gdsRate);
 			model.addAttribute("goodNo",gdsNo);
 			System.out.println(gdsNo);
 			System.out.println(reviewList);
@@ -468,11 +472,7 @@ public class ClientController2 {
 			System.out.println("펀딩후원insert");
 			int result = service.fundReservationInsert(fd);
 			if(result>0) {
-				if(result==10) {
-					model.addAttribute("msg","고객님의 후원으로 목표치에 달성하였습니다!!\\n펀딩종료일에 메일로 결제안내를 드립니다\\n확인하시고 결제 부탁드립니다");
-				}else {
-					model.addAttribute("msg","후원하기가 완료되었습니다\\n펀딩종료일에 메일로 결제안내를 드립니다\\n확인하시고 결제 부탁드립니다");
-				}
+				model.addAttribute("msg","고객님의 후원으로 목표치에 달성하였습니다!!\\n펀딩종료일에 메일로 결제안내를 드립니다\\n확인하시고 결제 부탁드립니다");
 			}else {
 				model.addAttribute("msg","후원하기에 실패하였습니다");
 			}
@@ -599,4 +599,25 @@ public class ClientController2 {
 		}
 	}
 	
+	//마이페이지 - 구독취소하기
+	@RequestMapping("/subscribeUpdate.sool")
+	public String subscribeUpdate (Model model, @SessionAttribute(required=false) Client sessionClient) {
+		if(sessionClient!=null) {//로그인된사용자만 접근가능하게
+			int result = service.subscribeUpdate(sessionClient.getClientNo());
+			if(result>0) {
+				sessionClient.setClientRank(0);//세션도 업데이트해줘야함
+				model.addAttribute("msg","구독이 취소되었습니다!\\n새로운 구독상품을 확인해보세요");
+				model.addAttribute("loc","/subscribe.sool");
+			}else {
+				model.addAttribute("msg","구독 취소에 실패하였습니다\\n 관리자에게 문의해주세요");
+				model.addAttribute("loc","/client/mOrderList.sool?reqPage=1&period=1");
+			}
+		}else {
+			model.addAttribute("msg","로그인 후 이용해주세요");
+			model.addAttribute("loc","/login.sool");
+		}
+		return "common/msg";
+		
+	}
+		
 }

@@ -46,6 +46,18 @@ public class AcceptController {
 		return "common/msg";
 	}
 	
+	@RequestMapping("/acceptPart.sool")
+	public String acceptPart(int type, String acceptNo, Model model) {
+		int result = service.acceptPart(type, acceptNo);
+		if(result>0) {
+			model.addAttribute("msg", "승인 성공");
+		}else {
+			model.addAttribute("msg", "승인 실패");
+		}
+		model.addAttribute("loc", "/accept.sool?type="+type+"&reqPage=1");
+		return "common/msg";
+	}
+	
 	@RequestMapping("/acceptOne.sool")
 	public String acceptOne(int type, int acceptNo, Model model) {
 		int result = service.acceptOne(type, acceptNo);
@@ -61,6 +73,18 @@ public class AcceptController {
 	@RequestMapping("/rejectAll.sool")
 	public String rejectAll(int type, Model model) {
 		int result = service.rejectAll(type);
+		if(result>0) {
+			model.addAttribute("msg", "거절 성공");
+		}else {
+			model.addAttribute("msg", "거절 실패");
+		}
+		model.addAttribute("loc", "/accept.sool?type="+type+"&reqPage=1");
+		return "common/msg";
+	}
+	
+	@RequestMapping("/rejectPart.sool")
+	public String rejectPart(int type, String acceptNo, Model model) {
+		int result = service.rejectPart(type, acceptNo);
 		if(result>0) {
 			model.addAttribute("msg", "거절 성공");
 		}else {

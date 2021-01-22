@@ -401,13 +401,8 @@ public class ClientService2 {
 		int result = dao.fundReservationInsert(fd);
 		if(result>0) {//예약완료 후 목표달성률을 넘긴 펀딩이면 chk를 1로 업데이트
 			result = dao.fundChkUpdate(fd.getFundNo());
-			if(result>0) {
-				result=10;
-			}else {
-				result=1;
-			}
 		}
-		return result;//0:예약실패, 1:예약성공, 10:예약성공 및 목표달성
+		return result;//0:예약실패, 1:예약성공 목표달성도 체크
 	}
 
 	//마이페이지 - 펀딩(페이징)
@@ -519,7 +514,7 @@ public class ClientService2 {
 		return dao.reviewList1(gdsNo);
 	}
 
-	//문의하기 페이징
+	//리뷰 페이징
 	public ReviewPageData mReviewPaging(int reqPage, int period, int cliNo) {
 		int totalPage = dao.totalCountReview(cliNo, period); //총개수(리뷰(review_db)에서 저장된)
 		int per = 10;	//한페이지에 보여줄 주문개수
@@ -560,6 +555,12 @@ public class ClientService2 {
 		}
 		ReviewPageData rpd = new ReviewPageData(list, pageNavi);
 		return rpd;
+	}
+
+	//마이페이지 - 구독취소하기
+	@Transactional
+	public int subscribeUpdate(int cliNo) {
+		return dao.subscribeUpdate(cliNo);
 	}
 	
 

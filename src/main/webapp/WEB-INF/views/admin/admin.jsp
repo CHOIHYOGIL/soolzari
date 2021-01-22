@@ -137,11 +137,15 @@
 		    <div id="fundingChart"></div>
 		    <div>
 		    	<h2>이번 달 펀딩 최고 금액</h2>
-		    	${bestFunding.fundTotalMoney }
+		    	${fundTotalMoney }
+		    	${bestFunding.fundName }
 		    </div>
 		    <div>
-		    	총 상품 판매 금액
-		    	총 상품 판매량
+		    	<h2>이번 달 총 상품 판매 금액</h2>
+		    	${goods.totalPrice }원
+		    	<h2>이번 달 총 상품 판매량</h2>
+		    	${goods.totalSales }개
+		    	<h2>이번 달 가장 많이 팔린 상품</h2>
 		    </div>
 	    </div>
 	</section>

@@ -23,7 +23,7 @@
 				<li><a class="sideNaviA a3" href="/client/mFunding.sool?reqPage=1&period=1">후원한 펀딩</a></li>
 				<li><a class="sideNaviA a5" href="/client/mReview.sool?reqPage=1&period=1">내가 쓴 리뷰</a></li>
 				<li><a class="sideNaviA a6" href="/client/mQuestion.sool?reqPage=1&period=1">1:1 문의</a></li>
-				<li><a class="sideNaviA a7" href="/client/mInfo.sool">내 정보 수정</a></li>
+				<li><a class="sideNaviA a7" href="/client/mchkPw.sool">내 정보 수정</a></li>
 			</ul>
 		</div>
 		<div class="content">
@@ -31,7 +31,7 @@
 				<h3><a class="bannerTitle" href="#">마이페이지</a></h3>
 			</div>
 			<div class="topContent"><!-- 구독상품/포인트/쿠폰 -->
-				<h5 class="topUser contentTitle">${sessionScope.sessionClient.clientId }<span>님 환영합니다.</span></h5>
+				<h5 class="topUser contentTitle">${sessionScope.sessionClient.clientName }<span>님 환영합니다.</span></h5>
 				<hr>
 				<div class="fixContent">
 					<div class="subscribeDiv">
@@ -47,7 +47,8 @@
 								<div class="fixC Subscribing"><!-- 구독중일경우 -->
 									<p>[ ${sub.subscribeName } ] 상품을 구독중입니다!</p>
 									<p> - 구성 : ${sub.subscribeDept } </p>
-									<p> - 가격 : <span class="comma">${sub.subscribePrice }</span> </p>
+									<p class="mid"> - 가격 : <span class="comma">${sub.subscribePrice }</span> </p><p class="mid" style="text-align: right; margin-right: 50px;"><a href="/client/subscribeUpdate.sool">구독 취소하기></a></p>
+									
 								</div>
 							</c:otherwise>
 						</c:choose>
