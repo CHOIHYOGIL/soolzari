@@ -67,7 +67,7 @@
 				<img src="/resources/upload/${gsdGD.filepath }">
 			</div>
 		</div>
-				<div class="reviewContent" style="margin-top:1200px;" >
+				<div class="reviewContent" >
 			<a name="reviewGo"/>
 				<c:if test="${sessionId!=null }">
 			<div class="glTitle">
