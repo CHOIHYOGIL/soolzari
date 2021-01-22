@@ -31,6 +31,6 @@
 	
 	$("#logout").click(function(){
 		
-		location.href='/logout.sool';
+		location.href='/seller/logout.sool';
 	})
 </script>

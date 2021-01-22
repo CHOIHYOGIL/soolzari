@@ -30,8 +30,10 @@
   	select c1.cls_no as classNo, c1.cls_name as className, c1.sel_no as selNo, c1.cls_Det as classDetail, c1.cls_price as classPrice, c1.class_person as classPerson, 
   	c1.class_enroll as classEnroll, c1.classstarttime as classStartTime, c1.status, c1.class_date as classDate , NVL(sum(c2.class_person),0) as classNow
   	
-  	from class_db c1, class_list_db c2
-  	 	where cls_no=#{classNo} and cls_class_no=#{classNo}
+  	from class_db c1
+  	LEFT JOIN CLASS_LIST_DB c2 
+  	on cls_class_no=#{classNo}
+  	 	where cls_no=#{classNo} 
   	group by c1.cls_no , c1.cls_name, c1.sel_no, c1.cls_det, c1.cls_price, c1.class_enroll, c1.classstarttime,c1.status,c1.class_person,c1.class_date
  
   </select>

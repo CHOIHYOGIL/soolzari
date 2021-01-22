@@ -60,6 +60,7 @@ public class SellerController {
 	
 	@RequestMapping("/goodsAdd.sool")
 	public String goodsAdd() {
+		System.out.println("Dsfsd");
 		return "seller/sellerGoodsAdd";
 	}
 	
