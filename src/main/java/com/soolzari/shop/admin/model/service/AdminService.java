@@ -1,5 +1,6 @@
 package com.soolzari.shop.admin.model.service;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -379,12 +380,14 @@ public class AdminService {
 		return dao.selectBestFunding();
 	}
 
-	public HashMap<String, Integer> selectGoods() {
-		HashMap<String, Integer> goods = new HashMap<String, Integer>();
+	public HashMap<String, Object> selectGoods() {
+		HashMap<String, Object> goods = new HashMap<String, Object>();
 		int totalSalePrice = dao.totalSalePrice();//총 판매 금액
 		int totalSales = dao.totalSales();//총 판매량
+		DecimalFormat formatter = new DecimalFormat("###,###");
+		String totalPrice = formatter.format(totalSalePrice);
 		goods.put("totalSales", totalSales);
-		goods.put("totalSalePrice", totalSalePrice);
+		goods.put("totalPrice", totalPrice);
 		return goods;
 	}
 

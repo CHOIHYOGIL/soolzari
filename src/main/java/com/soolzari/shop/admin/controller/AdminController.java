@@ -1,10 +1,13 @@
 package com.soolzari.shop.admin.controller;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,43 +41,53 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/admin.sool")
-	public String admin(Model model) {
-		HashMap<String, Integer> user = service.selectUserChart();
-		model.addAttribute("user", user);
-		
-    	HashMap<String, Integer> classes = service.selectClass();
-    	model.addAttribute("classes", classes);
-    	Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("MM");
-		String now = sdf.format(date);//1월
-		Calendar cal = Calendar.getInstance();
-    	cal.setTime(date);
-    	cal.add(Calendar.MONTH, -1);
-    	String prev = sdf.format(cal.getTime());//12월
-    	cal.setTime(date);
-    	cal.add(Calendar.MONTH, -2);
-    	String pprev = sdf.format(cal.getTime());//11월
-    	cal.setTime(date);
-    	cal.add(Calendar.MONTH, +1);
-    	String next = sdf.format(cal.getTime());//2월
-    	cal.setTime(date);
-    	cal.add(Calendar.MONTH, +2);
-    	String nnext = sdf.format(cal.getTime());//3월
-    	model.addAttribute("now", now);
-    	model.addAttribute("prev", prev);
-    	model.addAttribute("pprev", pprev);
-    	model.addAttribute("next", next);
-    	model.addAttribute("nnext", nnext);
-    	
-    	HashMap<String, Integer> funding = service.selectFunding();
-    	model.addAttribute("funding", funding);
-    	
-    	Funding bestFunding = service.selectBestFunding();
-    	model.addAttribute("bestFunding", bestFunding);
-    	
-    	HashMap<String, Integer> goods = service.selectGoods();
-    	model.addAttribute("goods", goods);
-		return "admin/admin";
+	public String admin(Model model, HttpSession session) {
+		if(session.getAttribute("sessionId").equals("admin")) {
+			HashMap<String, Integer> user = service.selectUserChart();
+			model.addAttribute("user", user);
+			
+	    	HashMap<String, Integer> classes = service.selectClass();
+	    	model.addAttribute("classes", classes);
+	    	Date date = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("MM");
+			String now = sdf.format(date);//1월
+			Calendar cal = Calendar.getInstance();
+	    	cal.setTime(date);
+	    	cal.add(Calendar.MONTH, -1);
+	    	String prev = sdf.format(cal.getTime());//12월
+	    	cal.setTime(date);
+	    	cal.add(Calendar.MONTH, -2);
+	    	String pprev = sdf.format(cal.getTime());//11월
+	    	cal.setTime(date);
+	    	cal.add(Calendar.MONTH, +1);
+	    	String next = sdf.format(cal.getTime());//2월
+	    	cal.setTime(date);
+	    	cal.add(Calendar.MONTH, +2);
+	    	String nnext = sdf.format(cal.getTime());//3월
+	    	model.addAttribute("now", now);
+	    	model.addAttribute("prev", prev);
+	    	model.addAttribute("pprev", pprev);
+	    	model.addAttribute("next", next);
+	    	model.addAttribute("nnext", nnext);
+	    	
+	    	HashMap<String, Integer> funding = service.selectFunding();
+	    	model.addAttribute("funding", funding);
+	    	
+	    	Funding bestFunding = service.selectBestFunding();
+	    	DecimalFormat formatter = new DecimalFormat("###,###");
+			String fundTotalMoney = formatter.format(bestFunding.getFundTotalMoney());
+	    	model.addAttribute("bestFunding", bestFunding);
+	    	model.addAttribute("fundTotalMoney", fundTotalMoney);
+	    	
+	    	HashMap<String, Object> goods = service.selectGoods();
+	    	model.addAttribute("goods", goods);
+			return "admin/admin";
+		}
+		else {
+			model.addAttribute("msg", "관리자만 접근 가능합니다");
+			model.addAttribute("loc", "/");
+			return "common/msg";
+		}
 	}
 	
 	@ResponseBody
