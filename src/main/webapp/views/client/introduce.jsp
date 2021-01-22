@@ -49,7 +49,7 @@
             <img src="/resources/image/arrow.png" alt="" style="width: 40px; border-radius: 18px; 18px;18px; 18px; font-size:20px;">
             <span><a href="/views/client/join.jsp" style="text-decoration: none; color: black; font-size:20px;">회원가입</a></span><br><br>
              <img src="/resources/image/arrow.png" alt="" style="width: 40px; font-size:20px;border-radius: 18px; 18px;18px; 18px;">
-            <span><a href="/views/client/login.jsp" style="text-decoration: none; font-size:20px;color: black;">로그인</a></span><br><br>
+            <span><a href="/login.sool" style="text-decoration: none; font-size:20px;color: black;">로그인</a></span><br><br>
              <img src="/resources/image/arrow.png" alt="" style="width: 40px; border-radius: 18px; 18px;18px; 18px;">
             <span><a href="/basicSool.sool" style="text-decoration: none; color: black;font-size:20px;">상품보기</a></span><br><br>
         </div>

@@ -43,7 +43,7 @@
                 <table>
                     <tr>
                         <td><label for="userid">아이디 *&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
-                        <td><input type="text" id="userid"  name="clientId" placeholder="영/숫자 6자 이상" required></td>
+                        <td><input type="text" id="userid"  name="clientId" placeholder="4글자에서 12글자" required></td>
                        <td style="width:45px;">
                        <button type="button" id="idchk"  >중복확인</button>  
                        <span class="comment1"></span></td>
