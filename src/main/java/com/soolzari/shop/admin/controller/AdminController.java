@@ -72,8 +72,8 @@ public class AdminController {
     	Funding bestFunding = service.selectBestFunding();
     	model.addAttribute("bestFunding", bestFunding);
     	
-//    	HashMap<String, Integer> goods = service.selectGoods();
-//    	model.addAttribute("goods", goods);
+    	HashMap<String, Integer> goods = service.selectGoods();
+    	model.addAttribute("goods", goods);
 		return "admin/admin";
 	}
 	

@@ -379,15 +379,14 @@ public class AdminService {
 		return dao.selectBestFunding();
 	}
 
-//	public HashMap<String, Integer> selectGoods() {
-//		HashMap<String, Integer> goods = new HashMap<String, Integer>();
-//		HashMap<String, Object> map = new HashMap<String, Object>();
-//		int totalSale = dao.totalSale("sale");//총 판매 금액
-//		int totalGoods = dao.totalSale("goods");//총 판매량
-//		goods.put("totalSale", totalSale);
-//		goods.put("totalGoods", totalGoods);
-//		return goods;
-//	}
+	public HashMap<String, Integer> selectGoods() {
+		HashMap<String, Integer> goods = new HashMap<String, Integer>();
+		int totalSalePrice = dao.totalSalePrice();//총 판매 금액
+		int totalSales = dao.totalSales();//총 판매량
+		goods.put("totalSales", totalSales);
+		goods.put("totalSalePrice", totalSalePrice);
+		return goods;
+	}
 
 //	public HashMap<String, Integer> selectSubscribe() {
 //		HashMap<String, Integer> sub = new HashMap<String, Integer>();
