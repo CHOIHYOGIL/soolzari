@@ -13,17 +13,16 @@ a{
         outline: none;
     }
 
-    input[type="submit"],
-    button {
-        width: 70px;
-        height: 32px;
-        background: #4d5075;
-        color: white;
-        border: 1px solid #4d5075;
-        box-sizing: border-box;
-        line-height: 27px;
-        cursor: pointer;
-    }
+  input[type="submit"], button {
+    width: 130px;
+    height: 42px;
+    background: #4d5075;
+    color: white;
+    border: 1px solid #4d5075;
+    box-sizing: border-box;
+    line-height: 27px;
+    cursor: pointer;
+}
     
     #class_maincon{
         width:100%;
@@ -48,8 +47,8 @@ a{
 
     #main_crud {
         display: block;
-        text-align: right;
-        width: 50%;
+        text-align: center;
+        width: 100%;
     }
 
     #main_crud>input[type="button"] {
@@ -80,9 +79,9 @@ a{
     }
 
     *>tr>th:nth-child(4) {
-        width: 13%;
+        width: 20%;
     }
 
     *>tr>th:nth-child(5) {
-        width: 10%;
+        width: 20%;
     }

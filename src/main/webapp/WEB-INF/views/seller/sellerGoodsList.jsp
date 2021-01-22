@@ -35,8 +35,8 @@
                     <li class="item" id="funding_con">
                         <a href="#funding_con" class="btn-left">펀딩 관리</a>
                         <div class="subMenu">
-                            <a href="">펀딩 열기</a>
-                            <a href="">펀딩 확인</a>
+                            <a href="/seller/fundingAdd.sool">펀딩 열기</a>
+                            <a href="/seller/fundingList.sool?reqPage=1&selNo=${sessionScope.sessionSeller.selNo}">펀딩 확인</a>
                         </div>
                     </li>
                     <li class="item">
@@ -51,6 +51,8 @@
         <div id="main_container">
             <div id="main_content">
             <h2 style="text-align: center;padding:20px;margin: 0 auto;background-color:#f7b8b4;"> 내 상품 목록 </h2>
+            
+            
 <form action="deleteGoods.sool" method="post">
 <table class="table">
     <thead>

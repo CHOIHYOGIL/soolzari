@@ -33,8 +33,8 @@
                     <li class="item" id="funding_con">
                         <a href="#funding_con" class="btn-left">펀딩 관리</a>
                         <div class="subMenu">
-                            <a href="">펀딩 열기</a>
-                            <a href="">펀딩 확인</a>
+                            <a href="/seller/fundingAdd.sool">펀딩 열기</a>
+                            <a href="/seller/fundingList.sool?reqPage=1&selNo=${sessionScope.sessionSeller.selNo}">펀딩 확인</a>
                         </div>
                     </li>
                     <li class="item">
@@ -52,7 +52,8 @@
 <div id="goods_det">
     <div id="goods_det_con">
         <div id="goods_det_img">
-            <img src="/resources/image/${gd.filename }" id="det_img">
+            <img src="/resources/image/${gd.filename1 }" id="det_img1">
+            <img src="/resources/image/${gd.filename2 }" id="det_img2">
         </div>
         <div id="goods_det_cons">
             <div id="goods_det_con_1">
@@ -77,12 +78,12 @@
             <tr style="height:30%;">
                 <th style="width:25%;text-align:center;">상품명</th>
          
-                <td><input type="text" name="gdsName"></td>
+                <td><input type="text" name="gdsName" value="${gd.gdsName }"></td>
                 <td> <input type="hidden" name="gdsNo" value="${gd.gdsNo }"></td>
             </tr>
             <tr style="height:30%;">
                 <th style="width:25%;text-align:center;">판매가</th>
-                <td><input type="text" name="gdsPri"></td>
+                <td><input type="text" name="gdsPri" value="${gd.gdsPri }"></td>
             </tr>
             <tr style="height:40%;">
             	

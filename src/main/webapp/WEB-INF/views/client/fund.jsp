@@ -103,7 +103,7 @@
                                                   </div>
                                                       <div class="rate">
                    
-                                         <span class="rateNum">진행 상황 :${f.fundMoneyNow/f.fundMoney } %</span><br>
+                                         <span class="rateNum">진행 상황 :${(f.fundMoneyNow/f.fundMoney) } %</span><br>
                                     <span class="rateNum">목표치 :<fmt:formatNumber type="number" maxFractionDigits="3" value="${f.fundMoney}" />원</span><br>
                       
                                     <span class="rateNum" > <span style="color:#f7b8b4; float:right; padding-top:30px;">${itDate-isDate}일 남음</span></span>

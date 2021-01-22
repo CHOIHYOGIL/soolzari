@@ -27,23 +27,22 @@
   </select>
   
   <select id="getClassInfo" parameterType="int" resultType="sellerClass">
-  	select cls_no as classNo, cls_name as className, sel_no as selNo, cls_Det as classDetail, cls_price as classPrice, class_person as classPerson, 
-  	class_enroll as classEnroll, classstarttime as classStartTime, status, class_date as classDate from class_db where cls_no=#{classNo}
+  	select c1.cls_no as classNo, c1.cls_name as className, c1.sel_no as selNo, c1.cls_Det as classDetail, c1.cls_price as classPrice, c1.class_person as classPerson, 
+  	c1.class_enroll as classEnroll, c1.classstarttime as classStartTime, c1.status, c1.class_date as classDate , NVL(sum(c2.class_person),0) as classNow
+  	
+  	from class_db c1
+  	LEFT JOIN CLASS_LIST_DB c2 
+  	on cls_class_no=#{classNo}
+  	 	where cls_no=#{classNo} 
+  	group by c1.cls_no , c1.cls_name, c1.sel_no, c1.cls_det, c1.cls_price, c1.class_enroll, c1.classstarttime,c1.status,c1.class_person,c1.class_date
+ 
   </select>
   <select id="selectAllClass" parameterType="map" resultType="sellerClass">
-  select * from (select rownum as rnum, c.* from (
-     select
-        cls_no as classNo,
-        cls_name as className,
-        sel_no as selNo,
-        cls_det as classDetail,
-        cls_price as classPrice,
-        class_enroll as classEnroll,
-        classstarttime as classStartTime,
-        status,
-        class_person as classPerson,
-        class_date as classDate
-     from class_db order by 1 desc)c) where rnum between #{start} and #{end}
+  select c.cls_no as classNo, c.cls_name as className, c.sel_no as selNo, c.cls_det as classDetail, c.cls_price as classPrice, c.class_enroll as classEnroll, c.classstarttime as classStartTime,
+  c.status as status,c.class_person as classPerson,c.class_date as classDate,sum(cl.class_person) as classNow
+from class_db c
+left join class_list_db cl on(cl.cls_class_no = c.cls_no)
+group by c.cls_no , c.cls_name, c.sel_no, c.cls_det, c.cls_price, c.class_enroll, c.classstarttime,c.status,c.class_person,c.class_date
   </select>
   
   <select id="selectAllGoods" parameterType="map" resultType="sellerGoods">
@@ -79,8 +78,17 @@
      <select id="selectOneGoods" resultType="sellerGoods" parameterType="_int">
      select * from goods_db where gds_no = #{gdsNo }
      </select>
-     <select id="selectOneImageGoods" resultType="sellerImage" parameterType="int">
-     select img_no as imgNo , filepath, filename, img_type as imgType, type_no as typeNo from img_db where type_no = #{gdsNo} and img_type = 'g'
+     <select id="selectOneImageGoodsOne" resultType="sellerImage" parameterType="int">
+     select img_no as imgNo , filepath, filename, img_type as imgType, type_no as typeNo from img_db where type_no = #{No} and img_type = 'g'
+     </select>
+     <select id="selectOneImageGoodsTwo" resultType="sellerImage" parameterType="int">
+     select img_no as imgNo , filepath, filename, img_type as imgType, type_no as typeNo from img_db where type_no = #{No} and img_type = 'gd'
+     </select>
+     <select id="selectOneImageFundingOne" resultType="sellerImage" parameterType="int">
+     select img_no as imgNo , filepath, filename, img_type as imgType, type_no as typeNo from img_db where type_no = #{No} and img_type = 'f'
+     </select>
+     <select id="selectOneImageFundingTwo" resultType="sellerImage" parameterType="int">
+     select img_no as imgNo , filepath, filename, img_type as imgType, type_no as typeNo from img_db where type_no = #{No} and img_type = 'fd'
      </select>
      <select id="selectOneScore" resultType="sellerScore" parameterType="_int">
      select avg(rev_score) as avgRevScore,count(rev_score) as countRevScore from review_db where rev_gdsno=#{gdsNo }
@@ -90,6 +98,11 @@
      update goods_db set gds_name = #{gdsName}, gds_pri = ${gdsPri} where gds_no = ${gdsNo }
      </update>
      
+     <update id="updateClass" parameterType="sellerClass">
+     	update class_db set cls_name=#{className}, cls_det=#{classDetail}, cls_price=#{classPrice}, class_enroll=#{classEnroll}, classstarttime=#{classStartTime}, class_person=#{classPerson} 
+     	where cls_no=#{classNo}
+     </update>
+     
      <delete id="deleteGoods" parameterType="int">
      delete from goods_db where gds_no = #{temp}
      </delete>
@@ -97,4 +110,45 @@
      <update id="mypageSellerUpdate" parameterType="sl">
      	update seller_db set sel_name=#{selName}, sel_pw=#{selPw}, sel_tel=#{selTel}, sel_addr=#{selAddr} where sel_no=#{selNo}
      </update>
+
+       <delete id="deleteClass" parameterType="int">
+     delete from class_db where cls_no = #{value}
+     </delete>
+
+     
+     <select id="selectAllFunding" parameterType="map" resultType="sellerFunding">
+  select * from (select rownum as rnum, f.* from (
+     select
+        fund_no as fundNo,
+        fund_name as fundName,
+        fund_money as fundMoney,
+        fund_chk as fundChk,
+        fund_det as fundDet,
+        status,
+        fund_date as fundDate,
+        sel_no as selNo,
+        fund_enrolldate as fundEnrollDate,
+        fund_enddate as fundEndDate
+     from funding_db order by 1 desc)f) where (rnum between #{start} and #{end}) and selno = #{selNo}
+  </select>
+  
+  	<select id="fundingTotalCount" resultType="_int">
+      select count(*) from funding_db
+   </select>
+   
+   <select id="selectOneFunding" resultType="sellerFunding" parameterType="_int">
+   	select * from funding_db where fund_no=#{fundNo }
+   </select>
+   
+   <select id="selectAllFundingGoods" resultType="sellerFG" parameterType="_int">
+   	select * from fnd_gds_db where fund_no=#{fundNo }
+   </select>
+   
+   <insert id="insertFunding" parameterType="sellerFunding">
+   insert into funding_db values (funding_db_seq.nextval, #{fundName}, #{fundMoney}, #{fundChk}, #{fundDet}, #{status}, #{fundDate}, #{selNo}, to_char(sysdate,'yyyy-mm-dd'), #{fundEndDate})
+   </insert>
+   <select id="selectLastFunding" resultType="_int">
+     select max(fund_no) from funding_db
+  </select>
+>>>>>>> 01e8a571a6fc70f81c46af1f6e1f249faa59f428
 </mapper>

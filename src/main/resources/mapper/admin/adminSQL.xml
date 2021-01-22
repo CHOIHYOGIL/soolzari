@@ -90,6 +90,20 @@
 	<update id="updateCount" parameterType="_int">
 		update notice_db set notice_count = notice_count+1 where notice_no = #{_parameter}
 	</update>
+	<select id="selectNoticeClient" parameterType="_int" resultType="com.soolzari.shop.admin.model.vo.NoticeClient">
+		select
+		    n.*
+		    from
+		        (select 
+		            notice_no as noticeNo, 
+		            notice_title as noticeTitle,
+		            lag(notice_no,1,0) over(order by notice_no) as prevNo, 
+		            lag(notice_title,1,null) over(order by notice_no) as prevTitle,
+		            lead(notice_no,1,0) over(order by notice_no) as nextNo,
+		            lead(notice_title,1,null) over(order by notice_no) as nextTitle
+		        from notice_db)n
+		where noticeNo=#{_parameter}
+	</select>
 	
 	<select id="selectAllGoods" parameterType="map" resultType="a">
 		select * from (select rownum as rnum, g.* from (
@@ -643,5 +657,26 @@
 				funding_db where fund_chk=-1
 			</when>
 		</choose>
+	</select>
+	<select id="selectBestFunding" resultType="funding">
+		select * from (select rownum, m.* from (select
+			fund_no as fundNo,
+			f2.fund_name as fundName,
+			nvl(sum(fnd_d_price),0) as fundTotalMoney,
+			f2.fund_money as fundMoney,
+            f2.sel_no as selNo,
+			f2.fund_enrolldate as fundEnrolldate,
+			f2.fund_enddate as fundEnddate
+		from fnd_det_db f1 right join funding_db f2 using(fund_no) where substr(fund_enrolldate,1,7) = to_char(sysdate, 'yyyy-mm')
+    	group by (fund_no, f2.fund_money, f2.fund_name, f2.fund_enrolldate, f2.fund_enddate, f2.sel_no) order by fundTotalMoney desc)m) where rownum=1
+	</select>
+	<select id="totalSale" parameterType="string" resultType="_int">
+		select
+		<if test="type.equals('sale')">
+		
+		</if>
+		<if test="type.equals('goods')">
+			sum(gds_bcnt) from goods_db
+		</if>
 	</select>
 </mapper>

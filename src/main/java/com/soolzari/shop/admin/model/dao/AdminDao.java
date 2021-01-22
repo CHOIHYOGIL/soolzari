@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.soolzari.shop.admin.model.vo.Qrv;
 import com.soolzari.shop.admin.model.vo.Sool;
 import com.soolzari.shop.admin.model.vo.User;
+import com.soolzari.shop.client.model.vo.Funding;
 import com.soolzari.shop.client.model.vo.Qna;
 
 @Repository
@@ -115,6 +116,14 @@ public class AdminDao {
 
 	public int totalFundingChart(int per) {
 		return session.selectOne("admin.totalFundingChart", per);
+	}
+
+	public Funding selectBestFunding() {
+		return session.selectOne("admin.selectBestFunding");
+	}
+
+	public int totalSale(String type) {
+		return session.selectOne("admin.totalSale", type);
 	}
 
 }

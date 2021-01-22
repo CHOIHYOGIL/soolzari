@@ -47,9 +47,10 @@ td {
 }
 .notice tr:last-child>td {
     text-align: left;
+    font-size: 20px;
 }
 
-button {
+#list {
     width: 70px;
     height: 31px;
     background: #4d5075;
@@ -59,19 +60,15 @@ button {
     line-height: 27px;
     cursor: pointer;
     outline: none;
+    margin-bottom: 30px;
 }
 
-#next {
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
-    cursor: pointer;
-}
-
-#prev {
+#next, #prev {
     display: flex;
     align-items: center;
     cursor: pointer;
+    font-size: 18px;
+    margin-bottom: 10px;
 }
 
 #prev > span,
@@ -87,5 +84,5 @@ a {
 
 #prev > a,
 #next > a {
-    margin-left: 50px;
+    margin-left: 80px;
 }

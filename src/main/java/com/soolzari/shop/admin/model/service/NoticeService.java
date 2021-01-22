@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.soolzari.shop.admin.model.dao.NoticeDao;
 import com.soolzari.shop.admin.model.vo.Notice;
+import com.soolzari.shop.admin.model.vo.NoticeClient;
 import com.soolzari.shop.admin.model.vo.NoticePage;
 
 
@@ -158,5 +159,9 @@ public class NoticeService {
 	@Transactional
 	public int updateCount(int noticeNo) {
 		return dao.updateCount(noticeNo);
+	}
+
+	public NoticeClient selectNoticeClient(int noticeNo) {
+		return dao.selectNoticeClient(noticeNo);
 	}
 }

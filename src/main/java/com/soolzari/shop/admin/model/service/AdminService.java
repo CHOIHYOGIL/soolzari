@@ -16,6 +16,7 @@ import com.soolzari.shop.admin.model.vo.Qrv;
 import com.soolzari.shop.admin.model.vo.Sool;
 import com.soolzari.shop.admin.model.vo.User;
 import com.soolzari.shop.admin.model.vo.UserPage;
+import com.soolzari.shop.client.model.vo.Funding;
 import com.soolzari.shop.client.model.vo.Qna;
 import com.soolzari.shop.client.model.vo.QnaPageData;
 
@@ -372,6 +373,19 @@ public class AdminService {
 		funding.put("five", five);
 		funding.put("zero", zero);
 		return funding;
+	}
+
+	public Funding selectBestFunding() {
+		return dao.selectBestFunding();
+	}
+
+	public HashMap<String, Integer> selectGoods() {
+		HashMap<String, Integer> goods = new HashMap<String, Integer>();
+		int totalSale = dao.totalSale("sale");//총 판매 금액
+		int totalGoods = dao.totalSale("goods");//총 판매량
+		goods.put("totalSale", totalSale);
+		goods.put("totalGoods", totalGoods);
+		return goods;
 	}
 
 //	public HashMap<String, Integer> selectSubscribe() {
