@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +9,8 @@
 	<title>술자리 판매자 페이지</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link rel="stylesheet" href="/resources/css/sellerFundingList.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js">
+    </script>
 </head>
 <body>
     <%@include file="/WEB-INF/views/seller/sellerHeader.jsp"%>
@@ -64,11 +67,11 @@
                         <c:forEach items="${list }" var="f">
                             <tr>
                                 <th scope="row">${f.fundNo}</th>
-                                <td><a href="/shop/seller/fundingDetail.sool?fundNo=${f.fundNo }">${f.fundName}</a></td>
+                                <td><a href="/seller/fundingDetail.sool?fundNo=${f.fundNo }">${f.fundName}</a></td>
                                 <td>${f.fundMoney}</td>
                                 <td>${f.fundDate}</td>
                                 <td>${f.fundEndDate}</td>
-                                <td><input type="checkbox"></td>
+                                <td><input type="checkbox" name="fundCheckBox" value="${f.fundNo }"></td>
                             </tr>
                         </c:forEach>
                     </tbody>
@@ -84,7 +87,7 @@
                         </form>
                     </div>
                     <div id="main_crud">
-                        <input type="button" onclick="javascript:;" value="펀딩 삭제">
+                        <input id="deleteBtn" type="button" value="펀딩 삭제">
                     </div>
                 </div>
             </div>
@@ -94,5 +97,19 @@
         © SoolZaRi 술자리
     </div>
 </body>
+<script>
+	$(function(){
+		$("#deleteBtn").click(function(){
+			var arr = $("input[name=fundCheckBox]:checked");
+			var fundNo = new Array();
+			arr.each(function(idx,item){
+				fundNo.push($(item).val());
+			});
+			location.href='/seller/deleteFunding.sool?fundNo='+fundNo.join("/");
+		});
+			
+		
+	});
+</script>
 
 </html>
