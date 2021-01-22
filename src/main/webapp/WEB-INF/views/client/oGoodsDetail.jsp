@@ -150,11 +150,7 @@
 				</tr>
 				<tr>
 					<th>평점</th>
-					<td></td>
-				</tr>
-				<tr>
-					<th>총판매수량</th>
-					<td>${gsd.gdsBcnt }</td>
+					<td>${gdsRate } / 5.0</td>
 				</tr>
 				<tr>
 					<th>배송비</th>
@@ -242,7 +238,7 @@
 	
 	//장바구니에 담기 버튼
 	$(".basketBtn").click(function(){
-		location.href="/client/basketInsert.sool?cliNo=${sessionScope.sessionClient.clientNo}&gdsNo=${gsd.gdsNo}&basCnt="+$(".basCnt").html();
+		location.href="/client/basketInsert.sool?cliNo=${sessionScope.sessionClient.clientNo}&gdsNo=${gsd.gdsNo}&basCnt="+$(".basCnt").html()+"&gdsRate=${gdsRate}";
 	})
 	//바로 구매하기버튼
 	$(".paymentBtn").click(function(){

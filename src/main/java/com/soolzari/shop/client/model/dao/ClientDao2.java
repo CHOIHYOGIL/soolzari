@@ -334,6 +334,11 @@ public class ClientDao2 {
 		return (ArrayList<FundReview>)list;
 	}
 
+	//마이페이지 - 구독취소하기
+	public int subscribeUpdate(int cliNo) {
+		return sqlSession.update("mypage.subScribeUpdate",cliNo);
+	}
+
 	
 
 
