@@ -106,6 +106,10 @@ group by c.cls_no , c.cls_name, c.sel_no, c.cls_det, c.cls_price, c.class_enroll
      <delete id="deleteGoods" parameterType="int">
      delete from goods_db where gds_no = #{temp}
      </delete>
+     
+     <update id="mypageSellerUpdate" parameterType="sl">
+     	update seller_db set sel_name=#{selName}, sel_pw=#{selPw}, sel_tel=#{selTel}, sel_addr=#{selAddr} where sel_no=#{selNo}
+     </update>
 
        <delete id="deleteClass" parameterType="int">
      delete from class_db where cls_no = #{value}
@@ -146,4 +150,5 @@ group by c.cls_no , c.cls_name, c.sel_no, c.cls_det, c.cls_price, c.class_enroll
    <select id="selectLastFunding" resultType="_int">
      select max(fund_no) from funding_db
   </select>
+>>>>>>> 01e8a571a6fc70f81c46af1f6e1f249faa59f428
 </mapper>

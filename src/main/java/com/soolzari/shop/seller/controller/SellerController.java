@@ -18,9 +18,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.soolzari.shop.client.model.vo.Client;
 import com.soolzari.shop.common.FileNameOverlap;
 import com.soolzari.shop.seller.model.service.SellerService;
 import com.soolzari.shop.seller.model.vo.Goods;
@@ -429,7 +431,6 @@ public class SellerController {
 				return "common/msg";
 	}
 	
-
 	@RequestMapping("deleteClass.sool")
 	public String deleteClass(@RequestParam("checkbox") List<Integer> values, Model model) {
 		System.out.println("delete");
@@ -452,6 +453,25 @@ public class SellerController {
 		model.addAttribute("loc","/seller/classList.sool?reqPage=1");
 		return "common/msg";
 	} 
-	
+	//마이페이지 이동
+	@RequestMapping("mypage.sool")
+	public String mypage() {
+		return "seller/sellerMypage";
+	}
+		
+	//마이페이지 - 판매자 정보 수정
+	@RequestMapping("/mypageSellerUpdate.sool")
+	public String mypageSellerUpdate (Seller seller,Model model, @SessionAttribute(required=false) Seller sessionSeller) {
+		int selNo = sessionSeller.getSelNo();
+		seller.setSelNo(selNo);
+		int result = service.mypageUpdateSeller(seller);
+		if(result>0) {
+			model.addAttribute("msg","수정 성공");
+		}else {
+			model.addAttribute("msg","수정 실패");
+		}
+		model.addAttribute("loc","/seller/sellerMain.sool");
+		return "common/msg";
+	}
 	
 }

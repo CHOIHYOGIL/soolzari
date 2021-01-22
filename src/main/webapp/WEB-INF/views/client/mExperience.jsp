@@ -60,13 +60,10 @@
 											<c:when test="${eld.classCheck==0}">
 												<button type="button" class="btn btn-outline-secondary btn-sm cancelBtn">취소신청</button>
 											</c:when>
-											<c:when test="${eld.classCheck==1 }">
-												<p>취소승인<br> 대기중</p>
-											</c:when>
-											<c:when test="${eld.classCheck==3 }">
+											<c:when test="${eld.classCheck==2 }">
 												<p>취소완료</p>
 											</c:when>
-											<c:when test="${eld.classCheck==4 }">
+											<c:when test="${eld.classCheck==3 }"><!-- 체험날짜가 지나면 자정에 자동으로 업데이트됨 -->
 												<p>체험완료</p>
 											</c:when>
 										</c:choose>
