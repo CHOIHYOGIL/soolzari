@@ -65,7 +65,8 @@
                     <option value="w">와인</option>
                     <option value="s">증류주</option>
                 </select>
-                <label>사진</label><input type="file" name="file">
+                <label>상품사진</label><input type="file" name="files" >
+        <label>상품 설명 사진</label><input type="file" name="files" >
                 <button type="submit" name="button" class="submit-btn">등록</button>
             </form>
         </div>

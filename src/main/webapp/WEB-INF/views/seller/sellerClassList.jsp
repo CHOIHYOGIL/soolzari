@@ -33,8 +33,8 @@
                     <li class="item" id="funding_con">
                         <a href="#funding_con" class="btn-left">펀딩 관리</a>
                         <div class="subMenu">
-                            <a href="">펀딩 열기</a>
-                            <a href="">펀딩 확인</a>
+                            <a href="/seller/fundingAdd.sool">펀딩 열기</a>
+                            <a href="/seller/fundingList.sool?reqPage=1&selNo=${sessionScope.sessionSeller.selNo}">펀딩 확인</a>
                         </div>
                     </li>
                     <li class="item">
@@ -49,6 +49,8 @@
         <div id="main_container">
             <div id="main_content">
             <h2 style="text-align: center;padding:20px;margin: 0 auto;background-color:#f7b8b4;"> 내 전통주 클래스 목록 </h2>
+            
+            <form action="deleteClass.sool" method="post">
 				<div id="class_maincon">
 				<table class="table">
 				    <thead>
@@ -58,6 +60,7 @@
 				            <th scope="col">클래스 가격</th>
 				            <th scope="col">클래스 시작시간</th>
 				            <th scope="col">클래스 인원</th>
+				            <th scope="col">선택</th>
 				        </tr>
 				    </thead>
 				    <tbody>
@@ -68,27 +71,22 @@
 				            <td>${cl.classPrice}</td>
 				            <td>${cl.classEnroll} ${cl.classStartTime}</td>
 				            <td>${cl.classNow} / ${cl.classPerson}</td>
+				               <td><input type="checkbox" name="checkbox" value="${cl.classNo }"></td>
 				        </tr>
 				        </c:forEach>
 				    </tbody>
 				</table>
-				<div id="main_sub">
-				    <div id="main_search">
-				        <form action="/seller/goods_list.sool" method="post">
-				            <select name="search_type" style="margin-left: 10px;">
-				                <option value="name">클래스 이름</option>
-				                <option value="price">클래스 가격</option>
-				            </select>
-				            <input type="text" name="search" placeholder="검색할 내용을 적어주세요">
-				            <input type="submit" value="찾기">
-				        </form>
-				    </div>
+			
 				</div>
-				</div>
+				<div id="main_crud">
 				<!-- 페이징처리 -->
 				<div id="page">
 				            ${page }
 				</div>
+        		<input type="submit" value="선택 상품 삭제">
+    </div>
+				</form>
+				
             </div>
         </div>
     </div>

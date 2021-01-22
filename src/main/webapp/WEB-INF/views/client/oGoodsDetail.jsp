@@ -136,7 +136,7 @@
 	            </p>
 	            <span id="rateCount"> </span>
 	            <div class="inputComment">
-		            <form action="/insertComment1.sool" method="post">
+		            <form action="/insertComment1.sool" method="post" onsubmit='return check()'>
 		
 			            <input type="hidden" name="goodNo" value="${goodNo}"> <!-- 스룹스터디no -->
 			            <input type="hidden" name="commentWriter" value="${sessionNo}"> <!-- 작성자 -->
@@ -253,7 +253,16 @@
 
 
 <script>
-
+	function check(){
+		
+		var rate=$("#commentRate").val();
+		if(rate==0){
+			alert('별점을 체크해주세요.');
+			return false;
+		}else{
+			return true;
+		}
+	}
 	
 var count=0;
         $('#star_grade a').click(function(){
@@ -350,14 +359,17 @@ var count=0;
   function modifyCancel(obj){
 	  console.log("cancel");
   	var tx=$(obj).prev().prev();
-  	console.log(tx);
+  
   	tx.focusout();
+
   	$(obj).html('삭제');
-  	$(obj).attr('class','delete');
+  	$(obj).attr('onclick','delete');
   	$(obj).prev().html('수정');
-  	$(obj).prev().attr('class','modify');
+  	$(obj).prev().attr('onclick','modify');
+  	location.reload();
 	  
   }
+      
       
         $(".modifyComplete").click(function(){
         	console.log("수정완료");
