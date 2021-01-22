@@ -181,7 +181,7 @@
                 	inputs.each(function(index, item){
                 		acceptNo.push($(item).parent().parent().find("[type=hidden]").val());
                 	});
-                	location.href="/acceptAll.sool?type="+type+"&acceptNo="+acceptNo.join("/");
+                	location.href="/acceptPart.sool?type="+type+"&acceptNo="+acceptNo.join("/");
             	}
             });
             $("#partre").click(function(){//선택 거절
@@ -191,7 +191,7 @@
                 	inputs.each(function(index, item){
                 		acceptNo.push($(item).parent().parent().find("[type=hidden]").val());
                 	});
-                	location.href="/rejectAll.sool?type="+type+"&acceptNo="+acceptNo.join("/");
+                	location.href="/rejectPart.sool?type="+type+"&acceptNo="+acceptNo.join("/");
             	}else{
             		alert("선택해주세요");
             	}

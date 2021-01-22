@@ -319,8 +319,8 @@ public class AdminService {
 
 	@Transactional
 	public int deleteQrv(int qnaNo, int qrvNo) {
-		int result = dao.deleteQna(qnaNo);
-		result += dao.deleteQrv(qrvNo);
+		int result = dao.deleteQrv(qrvNo);
+		result += dao.deleteQna(qnaNo);
 		return result;
 	}
 

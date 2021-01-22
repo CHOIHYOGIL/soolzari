@@ -326,7 +326,7 @@
 				client_db where cli_no = #{userNo}
 			</when>
 			<otherwise>
-				seller_db where seller_no = #{userNo}
+				seller_db where sel_no = #{userNo}
 			</otherwise>
 		</choose>
 	</delete>
@@ -478,7 +478,7 @@
 	<delete id="deleteQna" parameterType="_int">
 		delete from qna_db where qna_no = #{_parameter}
 	</delete>
-	<select id="searchQna" parameterType="map" resultType="u">
+	<select id="searchQna" parameterType="map" resultType="qna">
 		select * from (select rownum as rnum, q.* from (
 		select
 			qna_no as qnaNo,
@@ -487,7 +487,7 @@
 			qna_con as qnaCon,
 			qna_enroll as qnaEnroll,
 			qna_ans qnaAns,
-			cli_id as qnaId,
+			cli_id as qnaId
 		from qna_db join client_db on (cli_no = qna_writer) where
 		<choose>
 			<when test="type.equals('title')">
@@ -669,5 +669,15 @@
 			f2.fund_enddate as fundEnddate
 		from fnd_det_db f1 right join funding_db f2 using(fund_no) where substr(fund_enrolldate,1,7) = to_char(sysdate, 'yyyy-mm')
     	group by (fund_no, f2.fund_money, f2.fund_name, f2.fund_enrolldate, f2.fund_enddate, f2.sel_no) order by fundTotalMoney desc)m) where rownum=1
+	</select>
+	<select id="totalSales" resultType="_int">
+		select sum(totalGoods) from (
+			select pur_no, nvl(sum(gds_l_cnt),0) as totalGoods, substr(pur_date,1,6) today from goods_list_db left join purchase_db using(pur_no) group by pur_no, pur_date)
+		where today = to_char(sysdate, 'yyyymm')
+	</select>
+	<select id="totalSalePrice" resultType="_int">
+		select sum(totalGoods) from (
+			select pur_no, nvl(sum(gds_l_cnt),0) as totalGoods, substr(pur_date,1,6) today from goods_list_db left join purchase_db using(pur_no) group by pur_no, pur_date)
+		where today = to_char(sysdate, 'yyyymm')
 	</select>
 </mapper>

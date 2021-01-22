@@ -123,13 +123,11 @@ public class AdminDao {
 	}
 
 	public int totalSalePrice() {//총 판매금액
-		//return session.selectOne("admin.totalSalePrice");
-		return 0;
+		return session.selectOne("admin.totalSalePrice");
 	}
 
 	public int totalSales() {//총 판매량
-		//return session.selectOne("admin.totalSales");
-		return 0;
+		return session.selectOne("admin.totalSales");
 	}
 
 }
