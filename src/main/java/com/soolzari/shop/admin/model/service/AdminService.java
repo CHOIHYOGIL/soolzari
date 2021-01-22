@@ -381,10 +381,10 @@ public class AdminService {
 
 	public HashMap<String, Integer> selectGoods() {
 		HashMap<String, Integer> goods = new HashMap<String, Integer>();
-		int totalSale = dao.totalSale("sale");//총 판매 금액
-		int totalGoods = dao.totalSale("goods");//총 판매량
-		goods.put("totalSale", totalSale);
-		goods.put("totalGoods", totalGoods);
+		int totalSalePrice = dao.totalSalePrice();//총 판매 금액
+		int totalSales = dao.totalSales();//총 판매량
+		goods.put("totalSales", totalSales);
+		goods.put("totalSalePrice", totalSalePrice);
 		return goods;
 	}
 
