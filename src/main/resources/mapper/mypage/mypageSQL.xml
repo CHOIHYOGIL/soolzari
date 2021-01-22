@@ -341,4 +341,7 @@
 		            order by r.rev_no desc)n) where rnum between #{start} and #{end}
 	</select>
 	
+	<update id="subScribeUpdate" parameterType="_int">
+		update client_db set cli_rank=0 where cli_no=#{_parameter}
+	</update>
 </mapper>

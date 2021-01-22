@@ -94,7 +94,7 @@ body .bannerTitle:hover{
 	margin: 30px;
 	margin-bottom: 70px;
 	overflow: hidden;
-	height: 150px;
+	height: 160px;
 }
 
 .subscribeDiv{
@@ -125,6 +125,15 @@ body .bannerTitle:hover{
 .fixC{
 	padding-left: 50px;
 	font-size: 20px;
+}
+
+.mid{
+	width: 45%;
+	display: inline-block;
+}
+.mid a:hover{
+	color: black;
+	
 }
 
 .subGo{
@@ -273,6 +282,7 @@ body .listTable{
 	color: white;
 }
 
+.
 
 
 
