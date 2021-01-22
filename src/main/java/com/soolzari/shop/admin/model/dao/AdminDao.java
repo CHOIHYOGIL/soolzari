@@ -122,4 +122,8 @@ public class AdminDao {
 		return session.selectOne("admin.selectBestFunding");
 	}
 
+	public int totalSale(String type) {
+		return session.selectOne("admin.totalSale", type);
+	}
+
 }
