@@ -135,6 +135,10 @@ public class SellerDao {
 	public int searchLastFunding() {
 		return sqlSession.selectOne("seller.selectLastFunding");
 	}
+
+	public int deleteFunding(int fundNo) {
+		return sqlSession.delete("seller.deleteFunding",fundNo);
+	}
 	
 	
 }

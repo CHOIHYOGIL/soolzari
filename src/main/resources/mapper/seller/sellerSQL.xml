@@ -137,4 +137,7 @@
    <select id="selectLastFunding" resultType="_int">
      select max(fund_no) from funding_db
   </select>
+  	<delete id="deleteFunding" parameterType="_int">
+  	delete from funding_db where fund_no = #{fundNo }
+  	</delete>
 </mapper>

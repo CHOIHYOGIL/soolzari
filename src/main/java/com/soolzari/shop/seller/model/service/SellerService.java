@@ -226,6 +226,19 @@ public int searchLastFunding() {
 	return dao.searchLastFunding();
 }
 
+public int deleteFunding(String[] tokens) {
+	int result = 1;
+	for(int i=0;i<tokens.length;i++) {
+		int rt = dao.deleteFunding(Integer.parseInt(tokens[i]));
+		if(rt>0) {
+			result = 1;
+		}else {
+			result = 0;
+		}
+	}
+	return result;
+}
+
 
 
 }
