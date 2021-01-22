@@ -77,12 +77,12 @@
             <tr style="height:30%;">
                 <th style="width:25%;text-align:center;">상품명</th>
          
-                <td><input type="text" name="gdsName"></td>
+                <td><input type="text" name="gdsName" value="${gd.gdsName }"></td>
                 <td> <input type="hidden" name="gdsNo" value="${gd.gdsNo }"></td>
             </tr>
             <tr style="height:30%;">
                 <th style="width:25%;text-align:center;">판매가</th>
-                <td><input type="text" name="gdsPri"></td>
+                <td><input type="text" name="gdsPri" value="${gd.gdsPri }"></td>
             </tr>
             <tr style="height:40%;">
             	

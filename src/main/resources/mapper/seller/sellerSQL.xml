@@ -27,23 +27,20 @@
   </select>
   
   <select id="getClassInfo" parameterType="int" resultType="sellerClass">
-  	select cls_no as classNo, cls_name as className, sel_no as selNo, cls_Det as classDetail, cls_price as classPrice, class_person as classPerson, 
-  	class_enroll as classEnroll, classstarttime as classStartTime, status, class_date as classDate from class_db where cls_no=#{classNo}
+  	select c1.cls_no as classNo, c1.cls_name as className, c1.sel_no as selNo, c1.cls_Det as classDetail, c1.cls_price as classPrice, c1.class_person as classPerson, 
+  	c1.class_enroll as classEnroll, c1.classstarttime as classStartTime, c1.status, c1.class_date as classDate , NVL(sum(c2.class_person),0) as classNow
+  	
+  	from class_db c1, class_list_db c2
+  	 	where cls_no=#{classNo} and cls_class_no=#{classNo}
+  	group by c1.cls_no , c1.cls_name, c1.sel_no, c1.cls_det, c1.cls_price, c1.class_enroll, c1.classstarttime,c1.status,c1.class_person,c1.class_date
+ 
   </select>
   <select id="selectAllClass" parameterType="map" resultType="sellerClass">
-  select * from (select rownum as rnum, c.* from (
-     select
-        cls_no as classNo,
-        cls_name as className,
-        sel_no as selNo,
-        cls_det as classDetail,
-        cls_price as classPrice,
-        class_enroll as classEnroll,
-        classstarttime as classStartTime,
-        status,
-        class_person as classPerson,
-        class_date as classDate
-     from class_db order by 1 desc)c) where rnum between #{start} and #{end}
+  select c.cls_no as classNo, c.cls_name as className, c.sel_no as selNo, c.cls_det as classDetail, c.cls_price as classPrice, c.class_enroll as classEnroll, c.classstarttime as classStartTime,
+  c.status as status,c.class_person as classPerson,c.class_date as classDate,sum(cl.class_person) as classNow
+from class_db c
+left join class_list_db cl on(cl.cls_class_no = c.cls_no)
+group by c.cls_no , c.cls_name, c.sel_no, c.cls_det, c.cls_price, c.class_enroll, c.classstarttime,c.status,c.class_person,c.class_date
   </select>
   
   <select id="selectAllGoods" parameterType="map" resultType="sellerGoods">
@@ -90,7 +87,15 @@
      update goods_db set gds_name = #{gdsName}, gds_pri = ${gdsPri} where gds_no = ${gdsNo }
      </update>
      
+     <update id="updateClass" parameterType="sellerClass">
+     	update class_db set cls_name=#{className}, cls_det=#{classDetail}, cls_price=#{classPrice}, class_enroll=#{classEnroll}, classstarttime=#{classStartTime}, class_person=#{classPerson} 
+     	where cls_no=#{classNo}
+     </update>
+     
      <delete id="deleteGoods" parameterType="int">
      delete from goods_db where gds_no = #{temp}
+     </delete>
+       <delete id="deleteClass" parameterType="int">
+     delete from class_db where cls_no = #{value}
      </delete>
 </mapper>

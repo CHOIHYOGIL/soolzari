@@ -161,5 +161,14 @@ public Class getClassInfo(int classNo) {
 	return dao.getClassInfo(classNo);
 }
 
+public int deleteClass(int value) {
+	
+	return dao.deleteClass(value);
+}
+
+public int modifyClass(Class c) {
+	return dao.modifyClass(c);
+}
+
 
 }

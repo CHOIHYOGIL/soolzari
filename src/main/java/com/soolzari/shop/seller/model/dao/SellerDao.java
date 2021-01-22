@@ -97,6 +97,15 @@ public class SellerDao {
 		return sqlSession.selectOne("seller.getClassInfo",classNo);
 		
 	}
+
+	public int deleteClass(int value) {
+		System.out.println(value);
+		return sqlSession.delete("seller.deleteClass",value);
+	}
+
+	public int modifyClass(Class c) {
+		return sqlSession.update("seller.updateClass",c);
+	}
 	
 	
 }

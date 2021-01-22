@@ -651,7 +651,7 @@ public class ClientController {
 		
 	}
 	@RequestMapping("/insertComment1.sool")
-	public String insertComment1(Model model, int goodNo, int commentWriter, int commentRate,String commentContent, String commentWriterName,FundReview f) {
+	public String insertComment1(Model model, int goodNo, int commentWriter, @RequestParam(value="commentRate", defaultValue="null")int commentRate,String commentContent, String commentWriterName,FundReview f) {
 		
 		System.out.println("insertComment1");
 		System.out.println(goodNo);

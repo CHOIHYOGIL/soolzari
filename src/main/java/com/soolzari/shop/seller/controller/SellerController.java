@@ -129,18 +129,25 @@ public class SellerController {
 	
 	//상품등록
 	@RequestMapping("/insertGoods.sool")
-	public String insertGoods(Goods g, MultipartFile file, Model model, HttpServletRequest request) {
+	public String insertGoods(Goods g, @RequestParam("files")MultipartFile[] files, Model model, HttpServletRequest request) {
 		//상품등록
-
+		System.out.println(files);
+	
 		g.setGdsBcnt(0);
 		int result = service.insertGoods(g);
-		System.out.println(result);
+		//System.out.println(result);
 		int gdsNo = service.searchLastGoods();
 		//이미지 업로드
 		String root = request.getSession().getServletContext().getRealPath("/");
-		String path = root+"resources/image";
+		String path = root+"resources/upload";
 		Image i = new Image();
+		int count=0;
+		int result2=0;
+		for(MultipartFile file:files) {
 			if(!file.isEmpty()) {
+				System.out.println("hi");
+				System.out.println(file);
+		
 				String filename = file.getOriginalFilename();
 				String filepath = new FileNameOverlap().rename(path, filename);
 				try {
@@ -152,13 +159,21 @@ public class SellerController {
 					bos.close();
 					i.setFilename(filename);
 					i.setFilepath(filepath);
-					i.setImgType("g");
+					if(count==0) {
+						i.setImgType("g");
+					}else {
+						i.setImgType("gd");
+					}
+					
 					i.setTypeNo(gdsNo);
+				 result2 = service.insertImage(i);
+					count++;
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 		}
-		int result2 = service.insertImage(i);
+		}
+
 		
 		if(result>0 && result2>0) {
 			model.addAttribute("msg","상품 등록이 완료되었습니다.");
@@ -234,6 +249,22 @@ public class SellerController {
 		return "common/msg";
 	}
 	
+	@RequestMapping("fixClass.sool")
+	public String fixClass(Class c, Model model) {
+		
+		System.out.println("fix :"+c);
+		int result = service.modifyClass(c);
+		System.out.println(result);
+		if(result>0) {
+			model.addAttribute("msg","클래스 수정이 완료되었습니다.");
+		}else {
+			model.addAttribute("msg","클래스 수정이 실패했습니다.");
+		}
+		model.addAttribute("loc","/seller/classList.sool?reqPage=1");
+		return "common/msg";
+		
+	}
+	
 	@RequestMapping("logout.sool")
 	public String logout(HttpSession session, Model model) {
 		session.invalidate();
@@ -265,6 +296,28 @@ public class SellerController {
 		return "common/msg";
 	}
 
+	@RequestMapping("deleteClass.sool")
+	public String deleteClass(@RequestParam("checkbox") List<Integer> values, Model model) {
+		System.out.println("delete");
+		int cnt = values.size();
+		System.out.println(cnt);
+		int result = 0;
+		int delResult = 0;
+		for(Integer value : values) {
+			System.out.println("value : "+value);
+			delResult = service.deleteClass(value);
+			System.out.println("delResult:"+delResult);
+			result += delResult;
+		}
+		System.out.println("result : "+result);
+		if(result < cnt) {
+			model.addAttribute("msg","삭제 실패");
+		}else {
+			model.addAttribute("msg","삭제 성공");
+		}
+		model.addAttribute("loc","/seller/classList.sool?reqPage=1");
+		return "common/msg";
+	} 
 	
 	
 }
