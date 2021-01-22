@@ -41,7 +41,7 @@
                                 <li id="nop"><a href="/fruit.sool">과실주</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">구독/펀딩</a>
+                        <li><a href="/subscribe.sool">구독/펀딩</a>
                             <ul class="sub">
                                 <li id="nop"><a href="/subscribe.sool">구독</a></li>
                                 <li id="nop"><a href="/fund.sool">펀딩</a></li>

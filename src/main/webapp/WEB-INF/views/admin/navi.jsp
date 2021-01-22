@@ -17,6 +17,12 @@
         font-family: 'S-CoreDream-3Light';
     }
     
+    section{
+    	float: left;
+    	width: 270px;
+    	height: 100vh;
+    }
+    
     .navis li {
         list-style-type: none;
     }
@@ -39,7 +45,6 @@
     .navis {
         background-color: #4d5075;
         padding-right: 20px;
-        float: left;
         height: 100vh;
         position: fixed;
         left: 0;

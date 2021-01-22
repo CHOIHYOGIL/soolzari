@@ -150,4 +150,7 @@ group by c.cls_no , c.cls_name, c.sel_no, c.cls_det, c.cls_price, c.class_enroll
    <select id="selectLastFunding" resultType="_int">
      select max(fund_no) from funding_db
   </select>
+  	<delete id="deleteFunding" parameterType="_int">
+  	delete from funding_db where fund_no = #{fundNo }
+  	</delete>
 </mapper>

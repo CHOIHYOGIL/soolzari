@@ -122,8 +122,12 @@ public class AdminDao {
 		return session.selectOne("admin.selectBestFunding");
 	}
 
-	public int totalSale(String type) {
-		return session.selectOne("admin.totalSale", type);
+	public int totalSalePrice() {//총 판매금액
+		return session.selectOne("admin.totalSalePrice");
+	}
+
+	public int totalSales() {//총 판매량
+		return session.selectOne("admin.totalSales");
 	}
 
 }

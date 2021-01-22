@@ -87,11 +87,11 @@
                                     <fmt:parseNumber value="${tDate.time/(1000*60*60*24) }" integerOnly="true" var="itDate" scope="request"/>
                                     
                                     
-                                        <li style="width:25%;" data-percent=${f.fundMoneyNow / f.fundMoney } data-date=${itDate-isDate} >
+                                        <li style="width:24%;" data-percent=${f.fundMoneyNow / f.fundMoney } data-date=${itDate-isDate} >
                                             <div class="item_cont">
                                                 <div class="item_photo_box">
                                                     <a href="/client/oFundingDetail.sool?fundNo=${f.fundNo }">
-                                                        <img src="/resources/upload/${f.imagePath }" alt="전통주 짱맛있어" width="240" class="middle">
+                                                        <img src="/resources/upload/${f.imagePath }" alt="전통주 짱맛있어" class="middle" style= "max-height:180px; width:100%;" >
                                                     </a>
                                                 </div>
                                                 
@@ -102,8 +102,8 @@
                                                       </a>
                                                   </div>
                                                       <div class="rate">
-                   
-                                         <span class="rateNum">진행 상황 :${(f.fundMoneyNow/f.fundMoney) } %</span><br>
+       
+                                         <span class="rateNum">진행 상황 :            <fmt:formatNumber value="${f.fundMoneyNow/f.fundMoney*100 }" pattern="0.00"/> %</span><br>
                                     <span class="rateNum">목표치 :<fmt:formatNumber type="number" maxFractionDigits="3" value="${f.fundMoney}" />원</span><br>
                       
                                     <span class="rateNum" > <span style="color:#f7b8b4; float:right; padding-top:30px;">${itDate-isDate}일 남음</span></span>

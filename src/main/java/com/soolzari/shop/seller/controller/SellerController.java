@@ -382,7 +382,7 @@ public class SellerController {
 				int fundNo = service.searchLastFunding();
 				//이미지 업로드
 				String root = request.getSession().getServletContext().getRealPath("/");
-				String path = root+"resources/image";
+				String path = root+"resources/image/";
 				Image i1 = new Image();
 				Image i2 = new Image();
 					if( !(file1.isEmpty()) && !(file2.isEmpty()) ) {
@@ -429,6 +429,20 @@ public class SellerController {
 				}
 				model.addAttribute("loc","/seller/fundingList.sool?reqPage=1&selNo="+f.getSelNo());
 				return "common/msg";
+	}
+	
+	@RequestMapping("/deleteFunding.sool")
+	public String deleteFunding(String fundNo, Model model) {
+		System.out.println(fundNo);
+		String[] tokens = fundNo.split("/");
+		int result = service.deleteFunding(tokens);
+		if(result>0) {
+			model.addAttribute("msg","삭제가 완료되었습니다");
+		}else {
+			model.addAttribute("msg","삭제 실패");
+		}
+		model.addAttribute("loc","/seller/main.sool");
+		return "common/msg";
 	}
 	
 	@RequestMapping("deleteClass.sool")

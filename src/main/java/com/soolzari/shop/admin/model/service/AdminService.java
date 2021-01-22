@@ -1,5 +1,6 @@
 package com.soolzari.shop.admin.model.service;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -319,8 +320,8 @@ public class AdminService {
 
 	@Transactional
 	public int deleteQrv(int qnaNo, int qrvNo) {
-		int result = dao.deleteQna(qnaNo);
-		result += dao.deleteQrv(qrvNo);
+		int result = dao.deleteQrv(qrvNo);
+		result += dao.deleteQna(qnaNo);
 		return result;
 	}
 
@@ -379,12 +380,14 @@ public class AdminService {
 		return dao.selectBestFunding();
 	}
 
-	public HashMap<String, Integer> selectGoods() {
-		HashMap<String, Integer> goods = new HashMap<String, Integer>();
-		int totalSale = dao.totalSale("sale");//총 판매 금액
-		int totalGoods = dao.totalSale("goods");//총 판매량
-		goods.put("totalSale", totalSale);
-		goods.put("totalGoods", totalGoods);
+	public HashMap<String, Object> selectGoods() {
+		HashMap<String, Object> goods = new HashMap<String, Object>();
+		int totalSalePrice = dao.totalSalePrice();//총 판매 금액
+		int totalSales = dao.totalSales();//총 판매량
+		DecimalFormat formatter = new DecimalFormat("###,###");
+		String totalPrice = formatter.format(totalSalePrice);
+		goods.put("totalSales", totalSales);
+		goods.put("totalPrice", totalPrice);
 		return goods;
 	}
 
