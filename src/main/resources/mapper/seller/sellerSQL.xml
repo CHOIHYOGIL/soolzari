@@ -153,4 +153,8 @@ group by c.cls_no , c.cls_name, c.sel_no, c.cls_det, c.cls_price, c.class_enroll
   	<delete id="deleteFunding" parameterType="_int">
   	delete from funding_db where fund_no = #{fundNo }
   	</delete>
+  	
+  	<insert id="insertFundingGoods" parameterType="sellerFG">
+  	insert into fnd_gds_db values (fund_gds_seq.nextval, #{fundNo}, #{fndGName}, #{fndGCon}, #{fndGPri})
+  	</insert>
 </mapper>

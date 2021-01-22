@@ -68,7 +68,6 @@
     #left_bar {
         width: 20%;
         min-width: 250px;
-        height: 100%;
         display: block;
         /*border:1px solid black;*/
         background-color: #fdf4f4;
@@ -125,7 +124,7 @@
     .wrapper {
         display: block;
         width: 100%;
-        height: 80%;
+        overflow: hidden;
     }
 
     .mainMenu {
@@ -147,19 +146,6 @@
 
     }
 
-    .btn:before {
-        content: '';
-        position: absolute;
-        width: 0;
-        height: 0;
-        border-left: 8px solid transparent;
-        border-right: 8px solid transparent;
-        border-top: 10px solid #f7b8b4;
-        right: 15px;
-        bottom: -8px;
-        z-index: 9;
-
-    }
 
     .subMenu {
         background: #fdf4f4;

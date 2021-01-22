@@ -33,15 +33,12 @@
                     <li class="item" id="funding_con">
                         <a href="#funding_con" class="btn-left">펀딩 관리</a>
                         <div class="subMenu">
-                            <a href="">펀딩 열기</a>
-                            <a href="">펀딩 확인</a>
+                            <a href="/seller/fundingAdd.sool">펀딩 열기</a>
+                            <a href="/seller/fundingList.sool?reqPage=1&selNo=${sessionScope.sessionSeller.selNo}">펀딩 확인</a>
                         </div>
                     </li>
                     <li class="item">
-                        <a href="/seller/main.sool" class="btn-left">마이페이지</a>
-                    </li>
-                    <li class="item">
-                        <a href="/seller/logout.sool" class="btn-left">로그아웃</a>
+                        <a href="/seller/mypage.sool" class="btn-left">마이페이지</a>
                     </li>
                 </ui>
             </div>

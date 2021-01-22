@@ -38,9 +38,6 @@
                     <li class="item">
                         <a href="/seller/mypage.sool" class="btn-left">마이페이지</a>
                     </li>
-                    <li class="item">
-                        <a href="/seller/logout.sool" class="btn-left">로그아웃</a>
-                    </li>
                 </ui>
             </div>
         </div>
@@ -53,6 +50,11 @@
     <div id="seller_footer">
         © SoolZaRi 술자리
     </div>
+    <script>
+    function hold(){
+    	document.getElementById("goods_con").scrollIntoView();
+    }
+    </script>
 </body>
 
 </html>

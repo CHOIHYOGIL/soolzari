@@ -382,7 +382,7 @@ public class SellerController {
 				int fundNo = service.searchLastFunding();
 				//이미지 업로드
 				String root = request.getSession().getServletContext().getRealPath("/");
-				String path = root+"resources/image/";
+				String path = root+"resources/upload/";
 				Image i1 = new Image();
 				Image i2 = new Image();
 					if( !(file1.isEmpty()) && !(file2.isEmpty()) ) {
@@ -485,6 +485,18 @@ public class SellerController {
 			model.addAttribute("msg","수정 실패");
 		}
 		model.addAttribute("loc","/seller/sellerMain.sool");
+		return "common/msg";
+	}
+	//펀딩 상품추가
+	@RequestMapping("/addFundingGoods.sool")
+	public String addFundingGoods (FundingGoods fg, Model model) {
+		int result = service.insertFundingGoods(fg);
+		if(result>0) {
+			model.addAttribute("msg","등록 성공");
+		}else {
+			model.addAttribute("msg","등록 실패");
+		}
+		model.addAttribute("loc","/seller/fundingDetail.sool?fundNo="+fg.getFundNo());
 		return "common/msg";
 	}
 	

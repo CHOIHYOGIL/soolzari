@@ -151,6 +151,10 @@ public class SellerDao {
 	public int deleteFunding(int fundNo) {
 		return sqlSession.delete("seller.deleteFunding",fundNo);
 	}
+
+	public int insertFundingGoods(FundingGoods fg) {
+		return sqlSession.insert("seller.insertFundingGoods",fg);
+	}
 	
 	
 }

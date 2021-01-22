@@ -255,6 +255,10 @@ public int deleteFunding(String[] tokens) {
 	return result;
 }
 
+public int insertFundingGoods(FundingGoods fg) {
+	return dao.insertFundingGoods(fg);
+}
+
 
 
 

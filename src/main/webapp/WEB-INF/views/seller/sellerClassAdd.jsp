@@ -38,10 +38,7 @@
                         </div>
                     </li>
                     <li class="item">
-                        <a href="/seller/main.sool" class="btn-left">마이페이지</a>
-                    </li>
-                    <li class="item">
-                        <a href="/seller/logout.sool" class="btn-left">로그아웃</a>
+                        <a href="/seller/mypage.sool" class="btn-left">마이페이지</a>
                     </li>
                 </ui>
             </div>
@@ -84,8 +81,7 @@
                                     <td><input type="text" name="classPerson"></td>
                                 </tr>
                                 <tr>
-                                    <th></th>
-                                    <td style="text-align: right; border-bottom: none;"><input type="submit" class="btn btn-primary" value="등록하기" style="width:30%"></td>
+                                    <td colspan="2" style="text-align: right; border-bottom: none; text-align:center;"><input type="submit" class="btn btn-primary" value="등록하기" style="width:30%"></td>
                                 </tr>
                             </tbody>
 
@@ -98,5 +94,8 @@
     <div id="seller_footer">
         © SoolZaRi 술자리
     </div>
+    <script>
+    	
+    </script>
 </body>
 </html>
