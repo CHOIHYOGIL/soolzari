@@ -165,8 +165,8 @@ public class SellerController {
 		int gdsNo = service.searchLastGoods();
 		//이미지 업로드
 		String root = request.getSession().getServletContext().getRealPath("/");
-
-		String path = root+"resources/upload";
+		System.out.println(root);
+		String path = root+"resources/upload/";
 		Image i = new Image();
 		int count=0;
 		int result2=0;

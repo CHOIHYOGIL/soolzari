@@ -41,6 +41,12 @@
                     </li>
                     <li class="item">
                         <a href="/seller/mypage.sool" class="btn-left">마이페이지</a>
+<<<<<<< HEAD
+=======
+                    </li>
+                    <li class="item">
+                        <a href="/seller/logout.sool" class="btn-left">로그아웃</a>
+>>>>>>> branch 'main' of https://github.com/CHOIHYOGIL/soolzari.git
                     </li>
                 </ui>
             </div>

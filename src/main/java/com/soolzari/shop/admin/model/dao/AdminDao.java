@@ -8,11 +8,11 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.soolzari.shop.admin.model.vo.Goods;
 import com.soolzari.shop.admin.model.vo.Qrv;
 import com.soolzari.shop.admin.model.vo.Sool;
 import com.soolzari.shop.admin.model.vo.User;
 import com.soolzari.shop.client.model.vo.Funding;
-import com.soolzari.shop.client.model.vo.Goods;
 import com.soolzari.shop.client.model.vo.Qna;
 
 @Repository
@@ -132,7 +132,7 @@ public class AdminDao {
 	}
 
 	public Goods bestGoods() {
-		return session.selectOne("admin.selectOneGoods");
+		return session.selectOne("admin.selectBestGoods");
 	}
 
 }
