@@ -33,8 +33,8 @@
                     <li class="item" id="funding_con">
                         <a href="#funding_con" class="btn-left">펀딩 관리</a>
                         <div class="subMenu">
-                            <a href="">펀딩 열기</a>
-                            <a href="">펀딩 확인</a>
+                            <a href="/seller/fundingAdd.sool">펀딩 열기</a>
+                            <a href="/seller/fundingList.sool?reqPage=1&selNo=${sessionScope.sessionSeller.selNo}">펀딩 확인</a>
                         </div>
                     </li>
                     <li class="item">
@@ -65,7 +65,8 @@
                     <option value="w">와인</option>
                     <option value="s">증류주</option>
                 </select>
-                <label>사진</label><input type="file" name="file">
+                <label>사진</label><input type="file" name="file1">
+                <label>내용사진</label><input type="file" name="file2">
                 <button type="submit" name="button" class="submit-btn">등록</button>
             </form>
         </div>

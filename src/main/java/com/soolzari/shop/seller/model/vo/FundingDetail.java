@@ -3,15 +3,15 @@ package com.soolzari.shop.seller.model.vo;
 import lombok.Data;
 
 @Data
-public class GoodsDetail {
-	private int gdsNo;
-	private String gdsName;
-	private int gdsPri;
-	private int gdsBcnt;
-	private int selNo;
+public class FundingDetail {
+	private int fundNo;
+	private String fundName;
+	private int fundMoney;
+	private int fundChk;
+	private String fundDet;
 	private int status;
-	private String goodsDate;
-	private String goodsType;
+	private String fundEnrollDate;
+	private String fundEndDate;
 	public String filepath1;
 	public String filename1;
 	public String imgType1;
@@ -20,6 +20,7 @@ public class GoodsDetail {
 	public String filename2;
 	public String imgType2;
 	public int typeNo2;
-	public double avgRevScore;
-	public double countRevScore;
+	public int selNo;
+	public double fundPercent;
+	public int fundTotal;
 }

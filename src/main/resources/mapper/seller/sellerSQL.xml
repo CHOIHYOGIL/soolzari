@@ -79,8 +79,17 @@
      <select id="selectOneGoods" resultType="sellerGoods" parameterType="_int">
      select * from goods_db where gds_no = #{gdsNo }
      </select>
-     <select id="selectOneImageGoods" resultType="sellerImage" parameterType="int">
-     select img_no as imgNo , filepath, filename, img_type as imgType, type_no as typeNo from img_db where type_no = #{gdsNo} and img_type = 'g'
+     <select id="selectOneImageGoodsOne" resultType="sellerImage" parameterType="int">
+     select img_no as imgNo , filepath, filename, img_type as imgType, type_no as typeNo from img_db where type_no = #{No} and img_type = 'g'
+     </select>
+     <select id="selectOneImageGoodsTwo" resultType="sellerImage" parameterType="int">
+     select img_no as imgNo , filepath, filename, img_type as imgType, type_no as typeNo from img_db where type_no = #{No} and img_type = 'gd'
+     </select>
+     <select id="selectOneImageFundingOne" resultType="sellerImage" parameterType="int">
+     select img_no as imgNo , filepath, filename, img_type as imgType, type_no as typeNo from img_db where type_no = #{No} and img_type = 'f'
+     </select>
+     <select id="selectOneImageFundingTwo" resultType="sellerImage" parameterType="int">
+     select img_no as imgNo , filepath, filename, img_type as imgType, type_no as typeNo from img_db where type_no = #{No} and img_type = 'fd'
      </select>
      <select id="selectOneScore" resultType="sellerScore" parameterType="_int">
      select avg(rev_score) as avgRevScore,count(rev_score) as countRevScore from review_db where rev_gdsno=#{gdsNo }
@@ -93,4 +102,39 @@
      <delete id="deleteGoods" parameterType="int">
      delete from goods_db where gds_no = #{temp}
      </delete>
+     
+     <select id="selectAllFunding" parameterType="map" resultType="sellerFunding">
+  select * from (select rownum as rnum, f.* from (
+     select
+        fund_no as fundNo,
+        fund_name as fundName,
+        fund_money as fundMoney,
+        fund_chk as fundChk,
+        fund_det as fundDet,
+        status,
+        fund_date as fundDate,
+        sel_no as selNo,
+        fund_enrolldate as fundEnrollDate,
+        fund_enddate as fundEndDate
+     from funding_db order by 1 desc)f) where rnum between #{start} and #{end}
+  </select>
+  
+  	<select id="fundingTotalCount" resultType="_int">
+      select count(*) from funding_db
+   </select>
+   
+   <select id="selectOneFunding" resultType="sellerFunding" parameterType="_int">
+   	select * from funding_db where fund_no=#{fundNo }
+   </select>
+   
+   <select id="selectAllFundingGoods" resultType="sellerFG" parameterType="_int">
+   	select * from fnd_gds_db where fund_no=#{fundNo }
+   </select>
+   
+   <insert id="insertFunding" parameterType="sellerFunding">
+   insert into funding_db values (funding_db_seq.nextval, #{fundName}, #{fundMoney}, #{fundChk}, #{fundDet}, #{status}, #{fundDate}, #{selNo}, to_char(sysdate,'yyyy-mm-dd'), #{fundEndDate})
+   </insert>
+   <select id="selectLastFunding" resultType="_int">
+     select max(fund_no) from funding_db
+  </select>
 </mapper>

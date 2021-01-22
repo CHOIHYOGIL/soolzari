@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.soolzari.shop.seller.model.vo.Class;
+import com.soolzari.shop.seller.model.vo.Funding;
+import com.soolzari.shop.seller.model.vo.FundingGoods;
 import com.soolzari.shop.seller.model.vo.Goods;
 import com.soolzari.shop.seller.model.vo.Image;
 import com.soolzari.shop.seller.model.vo.Score;
@@ -68,9 +70,18 @@ public class SellerDao {
 		return sqlSession.selectOne("seller.selectOneGoods",gdsNo);
 	}
 
-	public Image selectOneImage(int gdsNo) {
-		System.out.println("image Dao:"+gdsNo);
-		return sqlSession.selectOne("seller.selectOneImageGoods",gdsNo);
+	public Image selectOneImage(int No, int num) {
+		System.out.println("image Dao:"+No);
+		if(num==1) {
+			return sqlSession.selectOne("seller.selectOneImageGoodsOne",No);
+		}else if(num==2) {
+			return sqlSession.selectOne("seller.selectOneImageGoodsTwo",No);
+		}else if(num==3) {
+			return sqlSession.selectOne("seller.selectOneImageFundingOne",No);
+		}else if(num==4) {
+			return sqlSession.selectOne("seller.selectOneImageFundingTwo",No);
+		}
+		return null;
 	}
 
 	public Score selectOneScore(int gdsNo) {
@@ -96,6 +107,32 @@ public class SellerDao {
 		System.out.println("dao classNo : "+classNo);
 		return sqlSession.selectOne("seller.getClassInfo",classNo);
 		
+	}
+
+	public ArrayList<Funding> selectAllFunding(HashMap<String, Integer> pageNo) {
+		List<Funding> list = sqlSession.selectList("seller.selectAllFunding", pageNo);
+		return (ArrayList<Funding>)list;
+	}
+
+	public int FundingTotalCount() {
+		return sqlSession.selectOne("seller.fundingTotalCount");
+	}
+
+	public Funding selectOneFunding(int fundNo) {
+		return sqlSession.selectOne("seller.selectOneFunding",fundNo);
+	}
+
+	public ArrayList<FundingGoods> selectAllFundingGoods(int fundNo) {
+		List<FundingGoods> list = sqlSession.selectList("seller.selectAllFundingGoods", fundNo);
+		return (ArrayList<FundingGoods>)list;
+	}
+
+	public int insertFunding(Funding f) {
+		return sqlSession.insert("seller.insertFunding",f);
+	}
+
+	public int searchLastFunding() {
+		return sqlSession.selectOne("seller.selectLastFunding");
 	}
 	
 	
