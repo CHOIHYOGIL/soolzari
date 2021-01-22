@@ -680,4 +680,9 @@
 			select pur_no, gds_l_no, substr(pur_date,1,6) month, (gds_l_price * gds_l_cnt) totalSalePrice, gds_no, pur_cancel from goods_list_db join purchase_db using (pur_no)
 		) where month = to_char(sysdate, 'yyyymm') and pur_cancel=0
 	</select>
+	<select id="selectOneGoods" resultType="g">
+		select * from (select rownum, g.* from (
+			select * from goods_db order by gds_bcnt desc
+		)g) where rownum=1
+	</select>
 </mapper>
