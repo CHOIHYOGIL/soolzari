@@ -114,6 +114,7 @@ public class ClientDao {
 
 	public int sumPerson(int classNo) {
 		System.out.println("sumPersonDao : "+classNo);
+		
 		return sqlSession.selectOne("client.sumPerson",classNo);
 	}
 

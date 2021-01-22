@@ -142,7 +142,7 @@
 	
 	<!-- 클래스 취소신청하기 -->
 	<update id="classCancel" parameterType="_int">
-		update class_list_db set class_check=1 where cls_l_no=#{_parameter}
+		update class_list_db set class_check=2 where cls_l_no=#{_parameter}
 	</update>
 	
 	<!-- 마이페이지 - 문의하기 -->
@@ -177,7 +177,7 @@
 	
 	<!-- 스케줄러로 매일밤 체험기간이 지난 클래스들은 체험완료로보이게함 -->
 	<update id="classCheckUpdate">
-		update class_list_db set class_check=4 where cls_class_no in (select cls_no from class_db where (to_date(class_enroll,'yyyy-mm-dd')+1)=to_char(sysdate,'yyyy-mm-dd')) and class_check=0
+		update class_list_db set class_check=3 where cls_class_no in (select cls_no from class_db where (to_date(class_enroll,'yyyy-mm-dd')+1)=to_char(sysdate,'yyyy-mm-dd')) and class_check=0
 	</update>
 	
 	

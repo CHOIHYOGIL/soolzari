@@ -312,13 +312,13 @@ public class ClientController2 {
 	public String orderDeliveryStatus(int gdsLNo, int deliveryStatus, int reqPage, int period, Model model) {
 		int result = service.orderDeliveryStatus(gdsLNo,deliveryStatus);
 		if(result>0) {
-			if(deliveryStatus==1) {
+			if(deliveryStatus==2) {
 				model.addAttribute("msg","취소신청이 완료되었습니다");
 			}else if(deliveryStatus==5){
 				model.addAttribute("msg","수취확인이 완료되었습니다");
 			}
 		}else {
-			if(deliveryStatus==1) {
+			if(deliveryStatus==2) {
 				model.addAttribute("msg","취소신청에 실패하였습니다");
 			}else if(deliveryStatus==5){
 				model.addAttribute("msg","수취확인에 실패하였습니다");

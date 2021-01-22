@@ -56,12 +56,74 @@
 		<div class="mainImg">
 			<img src="/resources/upload/${fund.filepath }">
 		</div>
+		<hr>
 		<div class="detailContent">
 			<div>
 				<img src="/resources/upload/${fundFD.filepath }">
 			</div>
 		</div>
 
+	<div class="reviewContent" >
+			<a name="reviewGo"></a>
+				<c:if test="${sessionId!=null }">
+			<div class="glTitle">
+                          <span style="font-size:25px;">댓글</span>
+            	<hr width="860px" align="left">
+            </div>
+       <div class="gl">
+            
+	          
+	            <div class="inputComment">
+		            <form action="/insertComment.sool" method="post">
+		
+			            <input type="hidden" name="fundNo" value="${fund.fundNo}"> <!-- 스룹스터디no -->
+			            <input type="hidden" name="commentWriter" value="${sessionNo}"> <!-- 작성자 -->
+			            <input type="hidden" name="commentWriterName" value="${sessionName}"> <!-- 작성자 -->
+			  			
+			            <textarea class="form-control rowCheck" name="commentContent" style="resize: none; width: 65%; display: inline-block; outline: none;" maxlength="65" required="required"></textarea> 
+			            <button type="submit" class="btn btn-success btn-lg endDayCheck" style="background-color: #4d5075; color:white; border:none; margin-bottom:50px; margin-left:10px;">등록</button>
+		            </form>
+	            </div>
+	            </div> 
+	            </c:if>
+	             		    <div id="commentScrollDiv" style="width: 74%;">
+	            <!-- 전체 댓글 출력 및 본인 댓글 수정 / 삭제 -->
+	             <h4 style="font-size:20px;">댓글 리스트
+	             	<c:if test="${!empty reviewList}">
+	             		   <span class="toggle-review"><i class="fas fa-sort-down" width="20" style="transition-duration:0.2s;"></i></span>
+	             	</c:if>
+	             </h4>
+	        
+	               <ul class="commentList-ul" style=" width:100%; padding:0px 15px;" >
+	          
+	              	<c:forEach items="${reviewList}" var="r">
+	   
+	            		<li class="result-li" style="width:96%;  border:1px solid lightgrey; border-radius:15px 15px 15px 15px; padding:10px 15px; margin-bottom:8px;" >
+	            			<div class="name" style=" width:100%;">
+	            			       
+			                     	<p id="commentWriterP" style="margin: 0; font-size:18px;">${r.commentWriterName}<span><c:forEach var="i" begin="1" end="${r.commentRate }">	<a href="#" style="color:orange;">★</a></c:forEach></span></p>
+			                            		<input type="hidden" name="reviewNo" value="${r.reviewNo}">
+			                        <textarea name="commentContent" class="form-control changeComment" style="resize: none; display:inline-block;"  required="required" onfucs="this.value=this.value;" >${r.commentContent }</textarea>
+			           
+			             		<c:if test="${r.commentWriter eq sessionScope.sessionClient.clientNo }">
+			                    		<a onclick="modify(this,${r.reviewNo})" style="cursor:pointer;">수정</a>
+			                    <a  onclick="delete1(this,${r.reviewNo})" style="cursor:pointer;">삭제</a>
+			                  
+			                    	</c:if>
+			                     </div> 
+			          
+	            		         
+			                   
+			                 
+			                    
+			                    	
+			                 </li> 
+			  
+	           
+	                </c:forEach>
+	                 </ul>
+       </div>
+             </div>
 		</div>
 		
 
@@ -128,68 +190,7 @@
 	</div>
 	
 	
-			<div class="reviewContent" style="margin-top:1200px;" >
-			<a name="reviewGo"/>
-			<c:if test="${sessionId!=null }">
-			<div class="glTitle">
-                          <span style="font-size:25px;">댓글</span>
-            	<hr class="line">
-            </div>
-       <div class="gl">
-           
-	            <span id="rateCount"> </span>
-	            <div class="inputComment">
-		            <form action="/insertComment.sool" method="post">
-		            
-			            <input type="hidden" name="fundNo" value="${fund.fundNo}"> <!-- 스룹스터디no -->
-			            <input type="hidden" name="commentWriter" value="${sessionNo}"> <!-- 작성자 -->
-			            <input type="hidden" name="commentWriterName" value="${sessionName}"> <!-- 작성자 -->
-			      
-			            <textarea class="form-control rowCheck" name="commentContent" style="resize: none; width: 65%; display: inline-block; outline: none;" maxlength="65" required="required"></textarea> 
-			            
-			            <button type="submit" class="btn btn-success btn-lg endDayCheck" style="background-color: #3B4E32; margin-bottom:50px; margin-left:10px;">등록</button>
-		            </form>
-	            </div>
-	            </div> 
-	            </c:if>
-	             		    <div id="commentScrollDiv" style="width: 74%;">
-	            <!-- 전체 댓글 출력 및 본인 댓글 수정 / 삭제 -->
-	             <h4 style="font-size:20px;">댓글 리스트
-	             	<c:if test="${!empty reviewList}">
-	             		   <span class="toggle-review"><i class="fas fa-sort-down" width="20" style="transition-duration:0.2s;"></i></span>
-	             	</c:if>
-	             </h4>
-	        
-	               <ul class="commentList-ul" style=" width:100%; padding:0px 15px;" >
-	          
-	              	<c:forEach items="${reviewList}" var="r">
-	   
-	            		<li class="result-li" style="width:96%;  border:1px solid lightgrey; border-radius:15px 15px 15px 15px; padding:10px 15px; margin-bottom:8px;" >
-	            			<div class="name" style=" width:100%;">
-	            			       
-			                     	<p id="commentWriterP" style="margin: 0; font-size:18px;">${r.commentWriterName}</p>
-			                            		<input type="hidden" name="reviewNo" value="${r.reviewNo}">
-			                        <textarea name="commentContent" class="form-control changeComment" style="resize: none; display:inline-block;"  required="required" onfucs="this.value=this.value;" >${r.commentContent }</textarea>
-			           
-			             		<c:if test="${r.commentWriter eq sessionScope.sessionClient.clientNo  }">
-			                    		<a href="javascript:void(0)" onclick="modify(this,${r.reviewNo})">수정</a>
-			                    <a href="javascript:void(0)" onclick="delete1(this,${r.reviewNo})">삭제</a>
-			                  
-			                    	</c:if>
-			                     </div> 
-			          
-	            		         
-			                   
-			                 
-			                    
-			                    	
-			                 </li> 
-			  
-	           
-	                </c:forEach>
-	                 </ul>
-       </div>
-             </div>
+	
 </div>
 
 
@@ -389,6 +390,7 @@ var count=0;
 	  console.log("수정완료");
 	  console.log("수정완료 : "+obj);
 	  console.log(reviewNo);
+	  console.log($(obj).prev());
 	  var content=$(obj).prev().val();
 	  console.log(content);
 	  $.ajax({
@@ -424,21 +426,15 @@ var count=0;
   	var tx=$(obj).prev().prev();
   	console.log(tx);
   	tx.focusout();
+
   	$(obj).html('삭제');
-  	$(obj).attr('class','delete');
+  	$(obj).attr('onclick','delete');
   	$(obj).prev().html('수정');
-  	$(obj).prev().attr('class','modify');
-	  
+  	$(obj).prev().attr('onclick','modify');
+  	location.reload();
   }
       
-        $(".modifyComplete").click(function(){
-        	console.log("수정완료");
-			var reviewNo=$(this).prev().prev().val();
-			console.log(reviewNo);
-        	var content=$(".changeComment").val();
-      	
-        })
-      
+
         
 </script>
 </body>

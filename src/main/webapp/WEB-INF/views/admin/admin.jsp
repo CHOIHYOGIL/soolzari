@@ -26,6 +26,9 @@
 
         var options = {
           title: '사용자 현황',
+          titleTextStyle: {
+        	  fontSize: 24
+          },
           pieHole: 0.4,
           colors:['#4d5075','#bca0c9','#f7b8b4','#ffd0bf'],
           fontSize: 16
@@ -46,6 +49,9 @@
 
                 var options = {
                   title: '상품 판매량',
+                  titleTextStyle: {
+                	  fontSize: 24
+                  },
                   vAxis: {title: '판매 개수'},
                   hAxis: {title: '월'},
                   seriesType: 'bars',
@@ -72,6 +78,9 @@
 
           var options = {
         	 title: '클래스 예약 현황',
+        	 titleTextStyle: {
+           	  fontSize: 24
+             },
         	 vAxis: {title: '클래스 예약 수'},
              hAxis: {title: '월'},
              colors: ['#4d5075','#bca0c9','#f7b8b4','#ffd0bf', 'rgb(251, 220, 173)', 'rgb(215, 109, 119)', 'rgb(254, 180, 123)'],
@@ -104,6 +113,9 @@
 
             var options = {
               title: '펀딩 달성률',
+              titleTextStyle: {
+            	  fontSize: 24
+              },
               pieHole: 0.4,
               colors: ['#4d5075','#bca0c9','#f7b8b4','#ffd0bf', 'rgb(251, 220, 173)', 'rgb(215, 109, 119)', 'rgb(254, 180, 123)'],
               fontSize: 16
@@ -124,7 +136,7 @@
 		    <div id="classChart"></div>
 		    <div id="fundingChart"></div>
 		    <div>
-		    	펀딩 최고 금액
+		    	<h2>이번 달 펀딩 최고 금액</h2>
 		    	${bestFunding.fundTotalMoney }
 		    </div>
 		    <div>

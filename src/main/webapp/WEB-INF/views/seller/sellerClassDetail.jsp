@@ -52,41 +52,58 @@
 <div id="goods_det">
     <div id="goods_det_con">
         <div id="goods_det_img">
-            <img src="/resources/image/${gd.filename }" id="det_img">
+            <img src="/resources/image/ex1.PNG" id="det_img">
         </div>
         <div id="goods_det_cons">
             <div id="goods_det_con_1">
-                <span id="det_title">${gd.gdsName }</span><br>
-                <span id="det_content">판매된 갯수 : ${gd.gdsBcnt }개</span>
+                <span id="det_title">${cl.className }</span><br>
+                <span id="det_content">예약 인원 : ${cl.classNow }명</span>
             </div>
             <div id="goods_det_con_2">
-                <span id="det_score">평점 : ${gd.avgRevScore }/5.0</span><span id="det_revcnt"> [리뷰 갯수:${gd.countRevScore }]</span><br>
-                <span id="det_date">등록일 : ${gd.goodsDate }</span>
+               
+                <span id="det_date">등록일 : ${cl.classDate }</span>
             </div>
             <div id="goods_det_con_3">
-                <span id="det_price_title">판매가격</span><br>
-                <span id="det_price">${gd.gdsPri }원</span>
+                <span id="det_price_title">수강 가격</span><br>
+                <span id="det_price">${cl.classPrice }원</span>
             </div>
         </div>
     </div>
 
     <div id="goods_det_fix">
-    <form action="/seller/fixGds.sool" method="post">
+    
+    <form action="/seller/fixClass.sool" method="post">
           
-        <table style="border:1px solid black; width:100%;height: 100%;">
-            <tr style="height:30%;">
-                <th style="width:25%;text-align:center;">상품명</th>
+        <table style="width:100%;height: 100%;">
+            <tr style="height:40%;">
+                <th style="width:45%;text-align:left; height:50px;" >클래스명</th>
          
-                <td><input type="text" name="gdsName"></td>
-                <td> <input type="hidden" name="gdsNo" value="${gd.gdsNo }"></td>
+                <td><input type="text" name="className" value="${cl.className}"></td>
+                <td> <input type="hidden" name="classNo" value="${cl.classNo }" ></td>
             </tr>
-            <tr style="height:30%;">
-                <th style="width:25%;text-align:center;">판매가</th>
-                <td><input type="text" name="gdsPri"></td>
+            <tr style="height:40%;">
+                <th style="width:45%;text-align:left; height:50px;">클래스 설명</th>
+                <td><input type="text" name="classDetail" value="${cl.classDetail }"></td>
+            </tr>
+             <tr style="height:40%;">
+                <th style="width:45%;text-align:left; height:50px;">클래스 가격</th>
+                <td><input type="text" name="classPrice" value="${cl.classPrice }"></td>
+            </tr>
+             <tr style="height:40%;">
+                <th style="width:45%;text-align:left; height:50px;">클래스 날짜</th>
+                <td><input type="text" name="classEnroll" value="${cl.classEnroll }"></td>
+            </tr>
+             <tr style="height:40%;">
+                <th style="width:45%;text-align:left; height:50px;">클래스 시작시간</th>
+                <td><input type="text" name="classStartTime" value="${cl.classStartTime }"></td>
+            </tr>
+             <tr style="height:40%;">
+                <th style="width:45%;text-align:left; height:50px;">클래스 정원</th>
+                <td><input type="text" name="classPerson" value="${cl.classPerson }"></td>
             </tr>
             <tr style="height:40%;">
             	
-                <td colspan="2"><input type="submit" value="수정하기" style="width:100%; border:none; height:100%;background-color: #4d5075; color:white;"></td>
+                <td colspan="2"><input type="submit" value="수정하기" style="width:100%; height:40px; border:none; background-color: #4d5075; color:white;"></td>
             
             </tr>
         </table>

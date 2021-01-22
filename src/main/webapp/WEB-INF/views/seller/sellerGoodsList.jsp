@@ -51,6 +51,8 @@
         <div id="main_container">
             <div id="main_content">
             <h2 style="text-align: center;padding:20px;margin: 0 auto;background-color:#f7b8b4;"> 내 상품 목록 </h2>
+            
+            
 <form action="deleteGoods.sool" method="post">
 <table class="table">
     <thead>

@@ -18,9 +18,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.soolzari.shop.client.model.vo.Client;
 import com.soolzari.shop.common.FileNameOverlap;
 import com.soolzari.shop.seller.model.service.SellerService;
 import com.soolzari.shop.seller.model.vo.Goods;
@@ -60,6 +62,7 @@ public class SellerController {
 	
 	@RequestMapping("/goodsAdd.sool")
 	public String goodsAdd() {
+		System.out.println("Dsfsd");
 		return "seller/sellerGoodsAdd";
 	}
 	
@@ -151,60 +154,66 @@ public class SellerController {
 	
 	//상품등록
 	@RequestMapping("/insertGoods.sool")
-	public String insertGoods(Goods g, MultipartFile file1, MultipartFile file2, Model model, HttpServletRequest request) {
+
+	public String insertGoods(Goods g, @RequestParam("files")MultipartFile[] files, Model model, HttpServletRequest request) {
 		//상품등록
+		System.out.println(files);
+
 		g.setGdsBcnt(0);
 		int result = service.insertGoods(g);
-		System.out.println(result);
+		//System.out.println(result);
 		int gdsNo = service.searchLastGoods();
 		//이미지 업로드
 		String root = request.getSession().getServletContext().getRealPath("/");
-		String path = root+"resources/image";
-		Image i1 = new Image();
-		Image i2 = new Image();
-			if( !(file1.isEmpty()) && !(file2.isEmpty()) ) {
-				String filename1 = file1.getOriginalFilename();
-				String filename2 = file2.getOriginalFilename();
-				String filepath1 = new FileNameOverlap().rename(path, filename1);
-				String filepath2 = new FileNameOverlap().rename(path, filename2);
+
+		String path = root+"resources/upload";
+		Image i = new Image();
+		int count=0;
+		int result2=0;
+		for(MultipartFile file:files) {
+			if(!file.isEmpty()) {
+				System.out.println("hi");
+				System.out.println(file);
+		
+				String filename = file.getOriginalFilename();
+				String filepath = new FileNameOverlap().rename(path, filename);
 				try {
-					byte[] bytes1 = file1.getBytes();
-					byte[] bytes2 = file2.getBytes();
-					File upFile1 = new File(path+filepath1);
-					File upFile2 = new File(path+filepath2);
-					FileOutputStream fos1 = new FileOutputStream(upFile1);
-					FileOutputStream fos2 = new FileOutputStream(upFile2);
-					BufferedOutputStream bos1 = new BufferedOutputStream(fos1);
-					BufferedOutputStream bos2 = new BufferedOutputStream(fos2);
-					bos1.write(bytes1);
-					bos2.write(bytes2);
-					bos1.close();
-					bos2.close();
-					i1.setFilename(filename1);
-					i1.setFilepath(filepath1);
-					i1.setImgType("g");
-					i1.setTypeNo(gdsNo);
-					i2.setFilename(filename2);
-					i2.setFilepath(filepath2);
-					i2.setImgType("gd");
-					i2.setTypeNo(gdsNo);
+					byte[] bytes = file.getBytes();
+					File upFile = new File(path+filepath);
+					FileOutputStream fos = new FileOutputStream(upFile);
+					BufferedOutputStream bos = new BufferedOutputStream(fos);
+					bos.write(bytes);
+					bos.close();
+					i.setFilename(filename);
+					i.setFilepath(filepath);
+					if(count==0) {
+						i.setImgType("g");
+					}else {
+						i.setImgType("gd");
+					}
+					
+					i.setTypeNo(gdsNo);
+				 result2 = service.insertImage(i);
+					count++;
+
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 		}
-		int result2 = service.insertImage(i1);
-		int result3 = service.insertImage(i2);
-		
-		if(result>0 && result2>0 && result3>0) {
+
+		if(result>0 && result2>0 ) {
 			model.addAttribute("msg","상품 등록이 완료되었습니다.");
-		}else if(result>0 && !(result2>0) && !(result3>0)) {
+		}else if(result>0 && !(result2>0) ) {
 			model.addAttribute("msg","이미지등록 실패");
-		}else if(!(result>0) && result2>0 && result3>0){
+		}else if(!(result>0) && result2>0){
 			model.addAttribute("msg","글작성 실패 이미지등록 성공");
 		}else {
 			model.addAttribute("msg","상품 등록이 실패했습니다.");
 		}
 		model.addAttribute("loc","/seller/goodsList.sool?reqPage=1");
+
+	}
+		
 		return "common/msg";
 	}
 	
@@ -316,7 +325,24 @@ public class SellerController {
 		return "common/msg";
 	}
 	
-	@RequestMapping("/logout.sool")
+
+	@RequestMapping("fixClass.sool")
+	public String fixClass(Class c, Model model) {
+		
+		System.out.println("fix :"+c);
+		int result = service.modifyClass(c);
+		System.out.println(result);
+		if(result>0) {
+			model.addAttribute("msg","클래스 수정이 완료되었습니다.");
+		}else {
+			model.addAttribute("msg","클래스 수정이 실패했습니다.");
+		}
+		model.addAttribute("loc","/seller/classList.sool?reqPage=1");
+		return "common/msg";
+		
+	}
+	
+	@RequestMapping("logout.sool")
 	public String logout(HttpSession session, Model model) {
 		session.invalidate();
 		model.addAttribute("loc","/seller/login.sool");
@@ -419,7 +445,47 @@ public class SellerController {
 		return "common/msg";
 	}
 	
-
-	
+	@RequestMapping("deleteClass.sool")
+	public String deleteClass(@RequestParam("checkbox") List<Integer> values, Model model) {
+		System.out.println("delete");
+		int cnt = values.size();
+		System.out.println(cnt);
+		int result = 0;
+		int delResult = 0;
+		for(Integer value : values) {
+			System.out.println("value : "+value);
+			delResult = service.deleteClass(value);
+			System.out.println("delResult:"+delResult);
+			result += delResult;
+		}
+		System.out.println("result : "+result);
+		if(result < cnt) {
+			model.addAttribute("msg","삭제 실패");
+		}else {
+			model.addAttribute("msg","삭제 성공");
+		}
+		model.addAttribute("loc","/seller/classList.sool?reqPage=1");
+		return "common/msg";
+	} 
+	//마이페이지 이동
+	@RequestMapping("mypage.sool")
+	public String mypage() {
+		return "seller/sellerMypage";
+	}
+		
+	//마이페이지 - 판매자 정보 수정
+	@RequestMapping("/mypageSellerUpdate.sool")
+	public String mypageSellerUpdate (Seller seller,Model model, @SessionAttribute(required=false) Seller sessionSeller) {
+		int selNo = sessionSeller.getSelNo();
+		seller.setSelNo(selNo);
+		int result = service.mypageUpdateSeller(seller);
+		if(result>0) {
+			model.addAttribute("msg","수정 성공");
+		}else {
+			model.addAttribute("msg","수정 실패");
+		}
+		model.addAttribute("loc","/seller/sellerMain.sool");
+		return "common/msg";
+	}
 	
 }

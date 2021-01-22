@@ -182,7 +182,7 @@
 		var person=$('input[name=classPerson]').val();
 		var title=$('input[name=className]').val();
 		  var sessionNo='<%=session.getAttribute("sessionNo")%>';
-		  
+		  console.log("k:"+k);
 		$.ajax({
 				
 				url:"checkPerson.sool",

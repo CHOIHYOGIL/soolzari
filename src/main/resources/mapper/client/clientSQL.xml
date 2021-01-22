@@ -59,7 +59,7 @@
  		select  class_person as classPerson from class_db where cls_name=#{title} and class_enroll=#{date} and status=1
  	</select>
  	
- 	<select id="sumPerson" parameterType="map" resultType="r">
+ 	<select id="sumPerson" parameterType="int" resultType="Integer">
  	<!-- null일경우 NVL 함수 사용 -->
  		select NVL(sum(class_person),0)as classPerson from class_list_db where cls_class_no=#{classNo} 
  	</select>
@@ -139,11 +139,12 @@ order by g.gds_no DESC
  	</select>
  	
  	<select id="getFund" resultType="f">
- 		select f.fund_no as fundNo, f.fund_name as fundName , f.fund_money as fundMoney, f.fund_chk as fundChk, f.fund_det as fundDet, status, f.fund_Date as fundDate, f.sel_no as selNo, f.fund_enrolldate as fundEnrollDate , f.fund_enddate as fundEndDate, 
-i.FILEPATH as imagePath, d.fnd_d_price as fundMoneyNow, g.fnd_g_pri as fundPrice
- from funding_db f, img_db i, fnd_det_db d, fnd_gds_db g
-where i.IMG_TYPE='f' and f.fund_no=i.TYPE_NO and d.fund_no=f.fund_no and g.fund_no = f.fund_no and f.status=1
-order by f.fund_no DESC
+SELECT FUND_NO as fundNo,FUND_NAME as fundName,FUND_MONEY as fundMoney,FILEPATH as imagePath,FUND_ENROLLDATE as fundEnrollDate, FUND_ENDDATE as fundEndDate,NVL(SUM(FND_D_PRICE),0) as fundMoneyNow FROM FUNDING_DB F1
+LEFT JOIN FND_DET_DB F2 USING(FUND_NO)
+LEFT JOIN IMG_DB ON (FUND_NO = TYPE_NO)
+WHERE IMG_TYPE='f' and status=1 
+GROUP BY (FUND_NO,FUND_NAME,FUND_MONEY,FILENAME,FILEPATH, FUND_ENROLLDATE, FUND_ENDDATE)
+ORDER BY 1
  			</select>
  	
 	<select id="checkUsergrade" parameterType="string" resultType="int">
@@ -175,17 +176,19 @@ order by f.fund_no DESC
  	</update>
  	
  	<insert id="insertComment" parameterType="fr">
- 		insert into review_Db values(review_seq.nextval, 0, #{commentContent}, #{commentWriter}, to_char(sysdate, 'yyyy-mm-dd'), #{commentRate},#{fundNo} ,#{commentWriterName})
+ 		insert into review_Db values(review_seq.nextval, 0, #{commentContent}, #{commentWriter}, to_char(sysdate, 'yyyy-mm-dd'), #{commentRate},#{fundNo} ,#{commentWriterName}) 
  	</insert>
  	 <insert id="insertComment1" parameterType="fr">
  		insert into review_Db values(review_seq.nextval, #{goodNo}, #{commentContent}, #{commentWriter}, to_char(sysdate, 'yyyy-mm-dd'), #{commentRate},0 ,#{commentWriterName})
  	</insert>
  	<select id="getReview" parameterType="integer" resultType="fr">
- 		select rev_no as reviewNo, rev_GDSNO as goodNo, rev_con as commentContent, rev_writer as commentWriter, rev_enroll as reviewDate, rev_score as commentRate, rev_fundno as fundNo, rev_writername as commentWriterName from review_db where rev_fundno=#{fundNo}
+ 		select rev_no as reviewNo, rev_GDSNO as goodNo, rev_con as commentContent, rev_writer as commentWriter, rev_enroll as reviewDate, 
+ 		rev_score as commentRate, rev_fundno as fundNo, rev_writername as commentWriterName from review_db where rev_fundno=#{fundNo} order by rev_no desc
  	</select>
  	
  	<select id="getReview1" parameterType="integer" resultType="fr">
- 		select rev_no as reviewNo, rev_GDSNO as goodNo, rev_con as commentContent, rev_writer as commentWriter, rev_enroll as reviewDate, rev_score as commentRate, rev_fundno as fundNo, rev_writername as commentWriterName from review_db where rev_gdsno=#{gdsNo}
+ 		select rev_no as reviewNo, rev_GDSNO as goodNo, rev_con as commentContent, rev_writer as commentWriter, rev_enroll as reviewDate, rev_score as commentRate, rev_fundno as fundNo, rev_writername as commentWriterName from review_db 
+ 		where rev_gdsno=#{gdsNo} order by rev_no desc
  	</select>
  	<update id="modifyComment" parameterType="fr">
  		update review_db set rev_con=#{commentContent} where rev_no=#{reviewNo}

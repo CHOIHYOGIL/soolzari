@@ -168,6 +168,22 @@ public Class getClassInfo(int classNo) {
 	return dao.getClassInfo(classNo);
 }
 
+//마이페이지 - 판매자 정보 수정
+public int mypageUpdateSeller(Seller seller) {
+	return dao.mypageUpdateSeller(seller);
+}
+
+
+public int deleteClass(int value) {
+	
+	return dao.deleteClass(value);
+}
+
+public int modifyClass(Class c) {
+	return dao.modifyClass(c);
+}
+
+
 public FundingPage selectAllFunding(int reqPage, int selNo) {
 	int numPerPage = 10;
 	int start = (reqPage-1)*numPerPage+1;
@@ -238,6 +254,7 @@ public int deleteFunding(String[] tokens) {
 	}
 	return result;
 }
+
 
 
 

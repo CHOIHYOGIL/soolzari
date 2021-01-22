@@ -67,56 +67,7 @@
 				<img src="/resources/upload/${gsdGD.filepath }">
 			</div>
 		</div>
-		
-		
-	</div>
-	<div class="fixContent">
-		<form action="/client/basketInsert.sool" method="post">
-			<h4><p class="fundName">${gsd.gdsName }</p></h4>
-			<h4 class="gh4"><span class="goodsPrice comma">${gsd.gdsPri }</span> 원</h4>
-			<table class="table fixTable">
-				<tr>
-					<th>등록일</th>
-					<td>${gsd.goodsDate }</td>
-				</tr>
-				<tr>
-					<th>평점</th>
-					<td></td>
-				</tr>
-				<tr>
-					<th>총판매수량</th>
-					<td>${gsd.gdsBcnt }</td>
-				</tr>
-				<tr>
-					<th>배송비</th>
-					<td>2,500원</td>
-				</tr>
-				<tr>
-					<th>수량</th>
-					<td>
-						<button type="button" class="btn btn-outline-secondary btn-sm mi" onclick="plusMinusBtn(this,0);">-</button>
-						<span class="basCnt">1</span>
-						<button type="button" class="btn btn-outline-secondary btn-sm pl"  onclick="plusMinusBtn(this,1);">+</button>
-					</td>
-				</tr>
-			</table>
-			<hr style="width: 90%;">
-			<div class="totalWrap">
-				<div class="totalDiv1">총 상품금액</div>
-				<div class="totalDiv2"><h3 class="totalPrice comma">0</h3>원</div>
-			</div>
-			<div class="btnDiv">
-				<button type="button" class="btn btn-lg basketBtn">장바구니 담기</button> 
-				<button type="button" class="btn btn-lg paymentBtn">구매하기</button> 
-			</div>
-			<div class="aTarget">
-				<a href="#mainGo" class="mainGo at">상품 상세</a> 
-				<a href="#reviewGo" class="reviewGo at">상품 후기 보기</a>
-			</div>
-			
-		</form>
-	</div>
-		<div class="reviewContent" style="margin-top:1200px;" >
+				<div class="reviewContent" >
 			<a name="reviewGo"/>
 				<c:if test="${sessionId!=null }">
 			<div class="glTitle">
@@ -136,7 +87,7 @@
 	            </p>
 	            <span id="rateCount"> </span>
 	            <div class="inputComment">
-		            <form action="/insertComment1.sool" method="post">
+		            <form action="/insertComment1.sool" method="post" onsubmit='return check()'>
 		
 			            <input type="hidden" name="goodNo" value="${goodNo}"> <!-- 스룹스터디no -->
 			            <input type="hidden" name="commentWriter" value="${sessionNo}"> <!-- 작성자 -->
@@ -186,6 +137,55 @@
 	                 </ul>
        </div>
              </div>
+		
+	</div>
+	<div class="fixContent">
+		<form action="/client/basketInsert.sool" method="post">
+			<h4><p class="fundName">${gsd.gdsName }</p></h4>
+			<h4 class="gh4"><span class="goodsPrice comma">${gsd.gdsPri }</span> 원</h4>
+			<table class="table fixTable">
+				<tr>
+					<th>등록일</th>
+					<td>${gsd.goodsDate }</td>
+				</tr>
+				<tr>
+					<th>평점</th>
+					<td></td>
+				</tr>
+				<tr>
+					<th>총판매수량</th>
+					<td>${gsd.gdsBcnt }</td>
+				</tr>
+				<tr>
+					<th>배송비</th>
+					<td>2,500원</td>
+				</tr>
+				<tr>
+					<th>수량</th>
+					<td>
+						<button type="button" class="btn btn-outline-secondary btn-sm mi" onclick="plusMinusBtn(this,0);">-</button>
+						<span class="basCnt">1</span>
+						<button type="button" class="btn btn-outline-secondary btn-sm pl"  onclick="plusMinusBtn(this,1);">+</button>
+					</td>
+				</tr>
+			</table>
+			<hr style="width: 90%;">
+			<div class="totalWrap">
+				<div class="totalDiv1">총 상품금액</div>
+				<div class="totalDiv2"><h3 class="totalPrice comma">0</h3>원</div>
+			</div>
+			<div class="btnDiv">
+				<button type="button" class="btn btn-lg basketBtn">장바구니 담기</button> 
+				<button type="button" class="btn btn-lg paymentBtn">구매하기</button> 
+			</div>
+			<div class="aTarget">
+				<a href="#mainGo" class="mainGo at">상품 상세</a> 
+				<a href="#reviewGo" class="reviewGo at">상품 후기 보기</a>
+			</div>
+			
+		</form>
+	</div>
+
 </div>
 
 
@@ -253,7 +253,16 @@
 
 
 <script>
-
+	function check(){
+		
+		var rate=$("#commentRate").val();
+		if(rate==0){
+			alert('별점을 체크해주세요.');
+			return false;
+		}else{
+			return true;
+		}
+	}
 	
 var count=0;
         $('#star_grade a').click(function(){
@@ -350,14 +359,17 @@ var count=0;
   function modifyCancel(obj){
 	  console.log("cancel");
   	var tx=$(obj).prev().prev();
-  	console.log(tx);
+  
   	tx.focusout();
+
   	$(obj).html('삭제');
-  	$(obj).attr('class','delete');
+  	$(obj).attr('onclick','delete');
   	$(obj).prev().html('수정');
-  	$(obj).prev().attr('class','modify');
+  	$(obj).prev().attr('onclick','modify');
+  	location.reload();
 	  
   }
+      
       
         $(".modifyComplete").click(function(){
         	console.log("수정완료");

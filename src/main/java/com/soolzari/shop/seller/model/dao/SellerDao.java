@@ -108,7 +108,19 @@ public class SellerDao {
 		return sqlSession.selectOne("seller.getClassInfo",classNo);
 		
 	}
+	//마이페이지 - 판매자 정보 수정
+	public int mypageUpdateSeller(Seller seller) {
+		return sqlSession.update("seller.mypageSellerUpdate",seller);
+	}
 
+	public int deleteClass(int value) {
+		System.out.println(value);
+		return sqlSession.delete("seller.deleteClass",value);
+	}
+
+	public int modifyClass(Class c) {
+		return sqlSession.update("seller.updateClass",c);
+	}
 	public ArrayList<Funding> selectAllFunding(HashMap<String, Integer> pageNo) {
 		List<Funding> list = sqlSession.selectList("seller.selectAllFunding", pageNo);
 		System.out.println(list.size());

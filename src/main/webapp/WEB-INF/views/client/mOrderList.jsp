@@ -64,9 +64,6 @@
 									<p>결제완료</p>
 									<button type="button" class="btn btn-outline-secondary btn-sm cancelBtn">취소신청</button>
 								</c:if>
-								<c:if test="${olData.gdsDStatus==1}">
-									<p>취소신청<br>승인대기중</p>
-								</c:if>
 								<c:if test="${olData.gdsDStatus==2}">
 									<p>취소완료</p>
 								</c:if>
@@ -135,7 +132,7 @@
 	$(".cancelBtn").click(function(){
 		if(confirm("취소신청 하시겠습니까?\n판매자가 취소승인이후 환불이 진행됩니다.\n이미 배송이 진행됐을 경우 환불이 불가능할 수 있습니다.")){
 			var gdsLNo = $(this).parent().parent().find(".gdsLNo").html();
-			location.href="/client/orderDeliveryStatus.sool?gdsLNo="+gdsLNo+"&deliveryStatus="+1+"&reqPage="+${reqPage}+"&period="+${period};
+			location.href="/client/orderDeliveryStatus.sool?gdsLNo="+gdsLNo+"&deliveryStatus="+2+"&reqPage="+${reqPage}+"&period="+${period};
 		}
 	})
 	//수취확인
