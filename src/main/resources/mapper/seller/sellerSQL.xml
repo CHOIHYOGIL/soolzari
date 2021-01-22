@@ -150,4 +150,5 @@ group by c.cls_no , c.cls_name, c.sel_no, c.cls_det, c.cls_price, c.class_enroll
    <select id="selectLastFunding" resultType="_int">
      select max(fund_no) from funding_db
   </select>
+
 </mapper>
