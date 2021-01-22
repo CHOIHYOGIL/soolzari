@@ -211,4 +211,10 @@ public class ClientDao {
 		return result;
 	}
 
+	public ArrayList<Goods> getNewProduct() {
+		List<Goods> list =sqlSession.selectList("client.getNewProduct");
+		return (ArrayList<Goods>)list;
+	
+	}
+
 }

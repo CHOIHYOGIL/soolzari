@@ -76,14 +76,7 @@
         </div>
         <h2 class="fw300 fs34 f_scd text-center mb40" style="background:#f4f4f4; font-size:25px;">술자리 <span>구독 </span>안내 </h2><br><br>
 
-        <div class="choiceBtn">
-            <ul class>
-                <li>
-                    <a href="/reservation_intro.sool">구독 예약</a>
-                </li>
-              
-            </ul>
-        </div>
+
 
         <div class="text-table">
             <div>
