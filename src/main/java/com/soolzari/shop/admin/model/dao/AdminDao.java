@@ -132,8 +132,7 @@ public class AdminDao {
 	}
 
 	public Goods bestGoods() {
-		// TODO Auto-generated method stub
-		return null;
+		return session.selectOne("admin.selectOneGoods");
 	}
 
 }

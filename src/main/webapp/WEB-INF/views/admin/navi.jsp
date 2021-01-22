@@ -17,12 +17,6 @@
         font-family: 'S-CoreDream-3Light';
     }
     
-    section{
-    	float: left;
-    	width: 270px;
-    	height: 100vh;
-    }
-    
     .navis li {
         list-style-type: none;
     }
