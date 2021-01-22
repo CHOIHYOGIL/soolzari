@@ -18,6 +18,7 @@ import com.soolzari.shop.admin.model.vo.Sool;
 import com.soolzari.shop.admin.model.vo.User;
 import com.soolzari.shop.admin.model.vo.UserPage;
 import com.soolzari.shop.client.model.vo.Funding;
+import com.soolzari.shop.client.model.vo.Goods;
 import com.soolzari.shop.client.model.vo.Qna;
 import com.soolzari.shop.client.model.vo.QnaPageData;
 
@@ -389,6 +390,10 @@ public class AdminService {
 		goods.put("totalSales", totalSales);
 		goods.put("totalPrice", totalPrice);
 		return goods;
+	}
+
+	public Goods bestGoods() {
+		return dao.bestGoods();
 	}
 
 //	public HashMap<String, Integer> selectSubscribe() {
