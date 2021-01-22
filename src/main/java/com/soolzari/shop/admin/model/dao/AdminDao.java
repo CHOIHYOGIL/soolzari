@@ -12,6 +12,7 @@ import com.soolzari.shop.admin.model.vo.Qrv;
 import com.soolzari.shop.admin.model.vo.Sool;
 import com.soolzari.shop.admin.model.vo.User;
 import com.soolzari.shop.client.model.vo.Funding;
+import com.soolzari.shop.client.model.vo.Goods;
 import com.soolzari.shop.client.model.vo.Qna;
 
 @Repository
@@ -128,6 +129,11 @@ public class AdminDao {
 
 	public int totalSales() {//총 판매량
 		return session.selectOne("admin.totalSales");
+	}
+
+	public Goods bestGoods() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

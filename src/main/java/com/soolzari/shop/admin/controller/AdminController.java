@@ -22,6 +22,7 @@ import com.soolzari.shop.admin.model.vo.Qrv;
 import com.soolzari.shop.admin.model.vo.Sool;
 import com.soolzari.shop.admin.model.vo.UserPage;
 import com.soolzari.shop.client.model.vo.Funding;
+import com.soolzari.shop.client.model.vo.Goods;
 import com.soolzari.shop.client.model.vo.Qna;
 import com.soolzari.shop.client.model.vo.QnaPageData;
 
@@ -81,6 +82,8 @@ public class AdminController {
 	    	
 	    	HashMap<String, Object> goods = service.selectGoods();
 	    	model.addAttribute("goods", goods);
+	    	
+	    	Goods bestGoods = service.bestGoods();
 			return "admin/admin";
 		}
 		else {
