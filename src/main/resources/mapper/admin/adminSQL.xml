@@ -679,12 +679,12 @@
     	group by (fund_no, f2.fund_money, f2.fund_name, f2.fund_enrolldate, f2.fund_enddate, f2.sel_no) order by fundTotalMoney desc)m) where rownum=1
 	</select>
 	<select id="totalSales" resultType="_int">
-		select sum(totalSales) from (
+		select nvl(sum(totalSales),0) from (
 			select pur_no, nvl(sum(gds_l_cnt),0) as totalSales, substr(pur_date,1,6) month, pur_cancel from goods_list_db left join purchase_db using(pur_no) group by pur_no, pur_date, pur_cancel
 		)where month = to_char(sysdate, 'yyyymm') and pur_cancel=0
 	</select>
 	<select id="totalSalePrice" resultType="_int">
-		select sum(totalSalePrice) from (
+		select nvl(sum(totalSalePrice),0) from (
 			select pur_no, gds_l_no, substr(pur_date,1,6) month, (gds_l_price * gds_l_cnt) totalSalePrice, gds_no, pur_cancel from goods_list_db join purchase_db using (pur_no)
 		) where month = to_char(sysdate, 'yyyymm') and pur_cancel=0
 	</select>
