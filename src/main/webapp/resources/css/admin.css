@@ -59,3 +59,11 @@
 	margin-top: 20px;
 	font-size: 20px;
 }
+section{
+	width: 1450px;
+	margin-left: 70px;
+}
+body{
+	width: 2000px;
+	height: 100vh;
+}

@@ -11,6 +11,10 @@
     font-family: 'S-CoreDream-3Light';
 }
 
+section{
+	margin-left: 120px;
+}
+
 .faq {
     width: 1200px;
     margin: 0 auto;

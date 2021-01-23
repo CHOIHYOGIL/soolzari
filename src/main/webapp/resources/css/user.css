@@ -185,7 +185,7 @@
         }
         section{
         	width: 1200px;
-            margin: 0 auto;
+            margin-left: 100px;
         }
         .sel{
             display: inline-block;
