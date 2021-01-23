@@ -119,9 +119,26 @@
                                                 
                                                 <div class="item_info_cont">
                                                   <div class="item_tit_box">
-                                                      <a href="javascript:void(0)">
+                                                  
+                                                                <c:choose>
+                                    	<c:when test="${itDate < today2 }">
+                                    	   <a href="javascript:void(0)">
                                                           <strong class="item_name" style="font-size:20px;">${f.fundName }</strong>
                                                       </a>
+                                    	</c:when> 
+                                    	<c:when test="${isDate >today2 }">
+                                    		   <a href="javascript:void(0)">
+                                                          <strong class="item_name" style="font-size:20px;">${f.fundName }</strong>
+                                                      </a>
+                                    	</c:when>
+                                    	<c:otherwise>
+                                    	 <a href="/client/oFundingDetail1.sool?fundNo=${f.fundNo }">
+                                                          <strong class="item_name" style="font-size:20px;">${f.fundName }</strong>
+                                                      </a>
+                                    	
+                                    	</c:otherwise>
+                                    </c:choose>
+                                                    
                                                   </div>
                                                       <div class="rate">
        
