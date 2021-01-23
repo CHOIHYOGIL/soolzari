@@ -77,12 +77,10 @@
                 <span id="det_price_title">후원가격</span><br>
                 <input type="hidden" value="${f.fndGNo}" name="fndgdsNo">
                 <span id="det_price">${f.fndGPri }원</span><br><br>
-                <input type="submit" name="deleteGoods" value="삭제하기" style="width:98%;">
                 </form>
             </div>
             <hr>
             </c:forEach>
-            
         </div>
     </div>
     <div class="funding_det_fix">
