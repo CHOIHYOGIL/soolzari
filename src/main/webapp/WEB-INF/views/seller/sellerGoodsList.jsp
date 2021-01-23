@@ -22,14 +22,14 @@
                         <a href="#goods_con" class="btn-left">상품 관리</a>
                         <div class="subMenu">
                             <a href="/seller/goodsAdd.sool">상품 등록</a>
-                            <a href="/seller/goodsList.sool?reqPage=1">상품 보기</a>
+                            <a href="/seller/goodsList.sool?reqPage=1&selNo=${sessionScope.sessionSeller.selNo}">상품 보기</a>
                         </div>
                     </li>
                     <li class="item" id="class_con">
                         <a href="#class_con" class="btn-left">클래스 관리</a>
                         <div class="subMenu">
                             <a href="/seller/classAdd.sool">클래스 등록</a>
-                            <a href="/seller/classList.sool?reqPage=1">클래스 확인</a>
+                            <a href="/seller/classList.sool?reqPage=1&selNo=${sessionScope.sessionSeller.selNo}">클래스 확인</a>
                         </div>
                     </li>
                     <li class="item" id="funding_con">
@@ -86,7 +86,7 @@
     </div>
 </form>
 <div id="main_sub">
-    <div id="main_search">
+    <!-- <div id="main_search">
         <form action="/seller/searchGoods.sool" method="post">
             <select name="search_type" style="margin-left: 10px;">
                 <option value="name">이름</option>
@@ -95,7 +95,7 @@
             <input type="text" name="search" placeholder="검색할 내용을 적어주세요">
             <input type="submit" value="찾기">
         </form>
-    </div>
+    </div> -->
 </div>
 
             </div>

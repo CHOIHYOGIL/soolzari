@@ -76,8 +76,8 @@ public class SellerController {
 	
 	
 	@RequestMapping("/goodsList.sool")
-	public String goodsList(int reqPage, Model model) {
-		GoodsPage gp = service.selectAllGoods(reqPage);
+	public String goodsList(int reqPage, int selNo, Model model) {
+		GoodsPage gp = service.selectAllGoods(reqPage, selNo);
 		model.addAttribute("list", gp.getList());
 		model.addAttribute("page",gp.getPage());
 		return "seller/sellerGoodsList";
@@ -89,8 +89,8 @@ public class SellerController {
 	}
 	
 	@RequestMapping("/classList.sool")
-	public String classList(int reqPage, Model model) {
-		ClassPage cp = service.selectAllClass(reqPage);
+	public String classList(int reqPage, int selNo, Model model) {
+		ClassPage cp = service.selectAllClass(reqPage, selNo);
 		
 		System.out.println(cp.getList());
 		model.addAttribute("list",cp.getList());
@@ -448,7 +448,7 @@ public class SellerController {
 		return "common/msg";
 	}
 	
-	@RequestMapping("deleteClass.sool")
+	@RequestMapping("/deleteClass.sool")
 	public String deleteClass(@RequestParam("checkbox") List<Integer> values, Model model) {
 		System.out.println("delete");
 		int cnt = values.size();

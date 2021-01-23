@@ -43,12 +43,12 @@ public class SellerDao {
 		return (ArrayList<Class>)list;
 	}
 	
-	public int classTotalCount() {
-		return sqlSession.selectOne("seller.classTotalCount");
+	public int classTotalCount(int selNo) {
+		return sqlSession.selectOne("seller.classTotalCount", selNo);
 	}
 	
-	public int goodsTotalCount() {
-		return sqlSession.selectOne("seller.goodsTotalCount");
+	public int goodsTotalCount(int selNo) {
+		return sqlSession.selectOne("seller.goodsTotalCount", selNo);
 	}
 
 	public ArrayList<Goods> selectAllGoods(HashMap<String, Integer> pageNo) {
@@ -129,8 +129,8 @@ public class SellerDao {
 		return (ArrayList<Funding>)list;
 	}
 
-	public int FundingTotalCount() {
-		return sqlSession.selectOne("seller.fundingTotalCount");
+	public int FundingTotalCount(int selNo) {
+		return sqlSession.selectOne("seller.fundingTotalCount", selNo);
 	}
 
 	public Funding selectOneFunding(int fundNo) {
