@@ -56,10 +56,25 @@
 														<p>${purchase.purDate }</p>
 													</td>
 													<td>
-														<p>${olData.gdsName }</p>
-														<p class="indent">개수 : ${olData.gdsLCnt }</p>
-														<p class="indent">가격 : <span class="comma">${olData.gdsLPrice}</span>*${olData.gdsLCnt }=<span class="comma">${olData.gdsLPrice*olData.gdsLCnt }</span></p>
-														<p class="indent">배송지 : ${purchase.purGet }</p>
+														<c:choose>
+															<c:when test="${olData.gdsDStatus==5}"><!-- 수취확인완료됐을때만 리뷰쓸수있는 페이지로 안내 -->
+																<a href="/client/oGoodsDetail.sool?gdsNo=${olData.gdsNo }">
+																	<p>${olData.gdsName }</p>
+																	<p class="indent">개수 : ${olData.gdsLCnt }</p>
+																	<p class="indent">가격 : <span class="comma">${olData.gdsLPrice}</span>*${olData.gdsLCnt }=<span class="comma">${olData.gdsLPrice*olData.gdsLCnt }</span></p>
+																	<p class="indent">배송지 : ${purchase.purGet }</p>
+																</a>
+															</c:when>
+															<c:otherwise>
+																<a href="/client/oGoodsDetail1.sool?gdsNo=${olData.gdsNo }">
+																	<p>${olData.gdsName }</p>
+																	<p class="indent">개수 : ${olData.gdsLCnt }</p>
+																	<p class="indent">가격 : <span class="comma">${olData.gdsLPrice}</span>*${olData.gdsLCnt }=<span class="comma">${olData.gdsLPrice*olData.gdsLCnt }</span></p>
+																	<p class="indent">배송지 : ${purchase.purGet }</p>
+																</a>
+															</c:otherwise>
+														</c:choose>
+														
 													</td>
 													<td>
 														<p><span class="comma">${purchase.purTtp }</span></p>
@@ -67,9 +82,9 @@
 															<c:when test="${olData.gdsDStatus==0}">
 																<button type="button" class="btn btn-outline-secondary btn-sm cancelBtn">취소신청</button>
 															</c:when>
-															<c:otherwise>
+															<c:when test="${olData.gdsDStatus==2}">
 																<p>취소완료</p>
-															</c:otherwise>
+															</c:when>
 														</c:choose>
 													</td>
 													<td>
@@ -88,6 +103,7 @@
 														</c:if>
 														<c:if test="${olData.gdsDStatus==5}">
 															<p>수취확인완료</p>
+															<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='/client/oGoodsDetail.sool?fundNo=${olData.gdsNo }'">리뷰쓰기</button>
 														</c:if>
 													</td>
 												</tr>
@@ -101,10 +117,24 @@
 														<p>${purchase.purDate }</p>
 													</td>
 													<td>
-														<p>${olData.gdsName }</p>
-														<p class="indent">개수 : ${olData.gdsLCnt }</p>
-														<p class="indent">가격 : <span class="comma">${olData.gdsLPrice}</span>*${olData.gdsLCnt }=<span class="comma">${olData.gdsLPrice*olData.gdsLCnt }</span></p>
-														<p class="indent">배송지 : ${purchase.purGet }</p>
+														<c:choose>
+															<c:when test="${olData.gdsDStatus==5}"><!-- 수취확인완료됐을때만 리뷰쓸수있는 페이지로 안내 -->
+																<a href="/client/oGoodsDetail.sool?gdsNo=${olData.gdsNo }">
+																	<p>${olData.gdsName }</p>
+																	<p class="indent">개수 : ${olData.gdsLCnt }</p>
+																	<p class="indent">가격 : <span class="comma">${olData.gdsLPrice}</span>*${olData.gdsLCnt }=<span class="comma">${olData.gdsLPrice*olData.gdsLCnt }</span></p>
+																	<p class="indent">배송지 : ${purchase.purGet }</p>
+																</a>
+															</c:when>
+															<c:otherwise>
+																<a href="/client/oGoodsDetail1.sool?gdsNo=${olData.gdsNo }">
+																	<p>${olData.gdsName }</p>
+																	<p class="indent">개수 : ${olData.gdsLCnt }</p>
+																	<p class="indent">가격 : <span class="comma">${olData.gdsLPrice}</span>*${olData.gdsLCnt }=<span class="comma">${olData.gdsLPrice*olData.gdsLCnt }</span></p>
+																	<p class="indent">배송지 : ${purchase.purGet }</p>
+																</a>
+															</c:otherwise>
+														</c:choose>
 													</td>
 													<td>
 														<p><span class="comma">${purchase.purTtp }</span></p>
@@ -112,9 +142,9 @@
 															<c:when test="${olData.gdsDStatus==0}">
 																<button type="button" class="btn btn-outline-secondary btn-sm cancelBtn">취소신청</button>
 															</c:when>
-															<c:otherwise>
+															<c:when test="${olData.gdsDStatus==2}">
 																<p>취소완료</p>
-															</c:otherwise>
+															</c:when>
 														</c:choose>
 													</td>
 													<td>
@@ -133,6 +163,7 @@
 														</c:if>
 														<c:if test="${olData.gdsDStatus==5}">
 															<p>수취확인완료</p>
+															<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='/client/oGoodsDetail.sool?fundNo=${olData.gdsNo }'">리뷰쓰기</button>
 														</c:if>
 													</td>
 												</tr>
@@ -299,6 +330,18 @@
 		});
 		$("tr").last().children().show();
 	}); 
+	
+	
+	//리뷰 줄 수 제한
+	$("textarea[name=qnaCon]").keyup(function(){
+		 var rows = $(this).val().split('\n').length;
+	        var maxRows = 5;
+	        if( rows > maxRows){
+	            modifiedText = $(this).val().split("\n").slice(0, maxRows);
+	            $(this).val(modifiedText.join("\n"));
+	        }
+	});
+	
 	
 	
 </script>

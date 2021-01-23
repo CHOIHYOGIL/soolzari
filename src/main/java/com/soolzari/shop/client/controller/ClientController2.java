@@ -412,7 +412,7 @@ public class ClientController2 {
 	
 	//상품상세페이지
 	@RequestMapping("/oGoodsDetail.sool")
-	public String oGoodsDetail (int gdsNo, String gdsRate, Model model){
+	public String oGoodsDetail (int gdsNo, Model model){
 		ArrayList<GoodsSellerDetail> gsd = service.oGoodsDetail(gdsNo);
 		if(gsd!=null) {//상품이 있을 경우
 			model.addAttribute("gsd",gsd.get(0));//상품정보 전달(기본이미지를 포함하고있음)
@@ -420,7 +420,6 @@ public class ClientController2 {
 			ArrayList<FundReview> reviewList= service.reviewList1(gdsNo);
 			model.addAttribute("reviewList",reviewList);
 			
-			model.addAttribute("gdsRate",gdsRate);
 			model.addAttribute("goodNo",gdsNo);
 			System.out.println(gdsNo);
 			System.out.println(reviewList);
@@ -433,7 +432,7 @@ public class ClientController2 {
 	}
 	//상품상세페이지
 	@RequestMapping("/oGoodsDetail1.sool")
-	public String oGoodsDetail1 (int gdsNo, String gdsRate, Model model){
+	public String oGoodsDetail1 (int gdsNo, Model model){
 		ArrayList<GoodsSellerDetail> gsd = service.oGoodsDetail(gdsNo);
 		if(gsd!=null) {//상품이 있을 경우
 			model.addAttribute("gsd",gsd.get(0));//상품정보 전달(기본이미지를 포함하고있음)
@@ -441,7 +440,6 @@ public class ClientController2 {
 			ArrayList<FundReview> reviewList= service.reviewList1(gdsNo);
 			model.addAttribute("reviewList",reviewList);
 			
-			model.addAttribute("gdsRate",gdsRate);
 			model.addAttribute("goodNo",gdsNo);
 			System.out.println(gdsNo);
 			System.out.println(reviewList);
@@ -521,8 +519,9 @@ public class ClientController2 {
 			fd.setFndDCli(sessionClient.getClientNo());
 			System.out.println("펀딩후원insert");
 			int result = service.fundReservationInsert(fd);
+			System.out.println(result);
 			if(result>0) {
-				model.addAttribute("msg","고객님의 후원으로 목표치에 달성하였습니다!!\\n펀딩종료일에 메일로 결제안내를 드립니다\\n확인하시고 결제 부탁드립니다");
+				model.addAttribute("msg","후원이 완료되었습니다!!\\n펀딩종료일에 메일로 결제안내를 드립니다\\n확인하시고 결제 부탁드립니다");
 			}else {
 				model.addAttribute("msg","후원하기에 실패하였습니다");
 			}

@@ -150,7 +150,6 @@
     	var type = ${type};
         $(function(){
             $("[type=date]").val(new Date().toISOString().substring(0, 10));
-            console.log("${list}");
             $(".navi a").click(function(){
                 var index = $(".navi a").index(this);
                 location.href="/accept.sool?type="+(index+1)+"&reqPage=1";

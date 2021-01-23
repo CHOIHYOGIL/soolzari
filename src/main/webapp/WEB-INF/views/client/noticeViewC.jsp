@@ -34,7 +34,7 @@
                 </c:if>
             </tr> --%>
             <tr>
-                <td colspan="4">${n.noticeContent}</td>
+                <td colspan="4" class="noticeContent">${n.noticeContent}</td>
             </tr>
         </table>
         <button id="list">목록</button>

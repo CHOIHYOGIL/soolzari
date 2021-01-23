@@ -38,11 +38,12 @@
  
   </select>
   <select id="selectAllClass" parameterType="map" resultType="sellerClass">
-  select c.cls_no as classNo, c.cls_name as className, c.sel_no as selNo, c.cls_det as classDetail, c.cls_price as classPrice, c.class_enroll as classEnroll, c.classstarttime as classStartTime,
+  select * from (select rownum as rnum, c.* from (select c.cls_no as classNo, c.cls_name as className, c.sel_no as selNo, c.cls_det as classDetail, c.cls_price as classPrice, c.class_enroll as classEnroll, c.classstarttime as classStartTime,
   c.status as status,c.class_person as classPerson,c.class_date as classDate,sum(cl.class_person) as classNow
 from class_db c
-left join class_list_db cl on(cl.cls_class_no = c.cls_no)
+left join class_list_db cl on(cl.cls_class_no = c.cls_no) where c.sel_no = #{selNo}
 group by c.cls_no , c.cls_name, c.sel_no, c.cls_det, c.cls_price, c.class_enroll, c.classstarttime,c.status,c.class_person,c.class_date
+order by c.class_enroll)c) where rnum between #{start} and #{end}
   </select>
   
   <select id="selectAllGoods" parameterType="map" resultType="sellerGoods">
@@ -56,13 +57,13 @@ group by c.cls_no , c.cls_name, c.sel_no, c.cls_det, c.cls_price, c.class_enroll
         status,
         goods_date as goodsDate,
         goods_type as goodsType
-     from goods_db order by 1 desc)g) where rnum between #{start} and #{end}
+     from goods_db where sel_no = #{selNo} order by 1 desc)g) where rnum between #{start} and #{end}
   </select>
-  <select id="classTotalCount" resultType="_int">
-      select count(*) from class_db
+  <select id="classTotalCount" parameterType="_int" resultType="_int">
+      select count(*) from class_db where sel_no=#{_parameter}
    </select>
-   <select id="goodsTotalCount" resultType="_int">
-      select count(*) from goods_db
+   <select id="goodsTotalCount" parameterType="_int" resultType="_int">
+      select count(*) from goods_db where sel_no=#{_parameter}
    </select>
    
    
@@ -129,11 +130,12 @@ group by c.cls_no , c.cls_name, c.sel_no, c.cls_det, c.cls_price, c.class_enroll
         sel_no as selNo,
         fund_enrolldate as fundEnrollDate,
         fund_enddate as fundEndDate
-     from funding_db order by 1 desc)f) where (rnum between #{start} and #{end}) and (selno = #{selNo}) and (fundChk <![CDATA[>]]>=0)
+     from funding_db where sel_no = #{selNo}
+     order by 1 desc)f) where (rnum between #{start} and #{end})
   </select>
   
-  	<select id="fundingTotalCount" resultType="_int">
-      select count(*) from funding_db
+  	<select id="fundingTotalCount" parameterType="_int" resultType="_int">
+      select count(*) from funding_db where sel_no=#{_parameter}
    </select>
    
    <select id="selectOneFunding" resultType="sellerFunding" parameterType="_int">
@@ -145,7 +147,7 @@ group by c.cls_no , c.cls_name, c.sel_no, c.cls_det, c.cls_price, c.class_enroll
    </select>
    
    <insert id="insertFunding" parameterType="sellerFunding">
-   insert into funding_db values (funding_db_seq.nextval, #{fundName}, #{fundMoney}, #{fundChk}, #{fundDet}, #{status}, #{fundDate}, #{selNo}, to_char(sysdate,'yyyy-mm-dd'), #{fundEndDate})
+   insert into funding_db values (funding_db_seq.nextval, #{fundName}, #{fundMoney}, #{fundChk}, #{fundDet}, #{status}, to_char(sysdate,'yyyy-mm-dd'), #{selNo}, #{fundDate}, #{fundEndDate})
    </insert>
    <select id="selectLastFunding" resultType="_int">
      select max(fund_no) from funding_db

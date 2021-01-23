@@ -27,13 +27,14 @@ public class AdminService {
 	@Autowired
 	private AdminDao dao;
 
-	public UserPage selectAllUser(int type, int reqPage) {
+	public UserPage selectAllUser(int type, int reqPage, int order) {
 		int numPerPage = 5;
 		int start = (reqPage-1)*numPerPage+1;
 		int end = reqPage*numPerPage;
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("start", start);
 		map.put("end", end);
+		map.put("order", order);
 		ArrayList<User> list = new ArrayList<User>();
 		int totalCount = 0;
 		if(type == 1) {
@@ -53,12 +54,12 @@ public class AdminService {
 		String page = "";
 		int pageNo = ((reqPage-1)/pageNaviSize)*pageNaviSize + 1;
 		if(pageNo>1) {
-			page += "<a href='/user.sool?type="+type+"&reqPage=1'><<</a>";
-			page += "<a href='/user.sool?type="+type+"&reqPage="+(pageNo-1)+"'><</a>";
+			page += "<a href='/user.sool?type="+type+"&reqPage=1&order="+order+"'><<</a>";
+			page += "<a href='/user.sool?type="+type+"&reqPage="+(pageNo-1)+"&order="+order+"'><</a>";
 		}
 		for(int i=0;i<pageNaviSize;i++) {
 			if(reqPage != pageNo) {
-				page += "<a href='/user.sool?type="+type+"&reqPage="+pageNo+"' class='num'>"+pageNo+"</a>";
+				page += "<a href='/user.sool?type="+type+"&reqPage="+pageNo+"&order="+order+"' class='num'>"+pageNo+"</a>";
 			}else {
 				page += "<span class='sel'>"+pageNo+"</span>";
 			}
@@ -68,8 +69,8 @@ public class AdminService {
 			}
 		}
 		if(pageNo<=totalPage) {
-			page += "<a href='/user.sool?type="+type+"&reqPage="+pageNo+"'>></a>";
-			page += "<a href='/user.sool?type="+type+"&reqPage="+totalPage+"'>>></a>";
+			page += "<a href='/user.sool?type="+type+"&reqPage="+pageNo+"&order="+order+"'>></a>";
+			page += "<a href='/user.sool?type="+type+"&reqPage="+totalPage+"&order="+order+"'>>></a>";
 		}
 		UserPage up = new UserPage();
 		up.setList(list);

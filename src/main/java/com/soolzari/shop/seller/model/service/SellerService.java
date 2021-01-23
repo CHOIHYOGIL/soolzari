@@ -44,17 +44,18 @@ public class SellerService {
 		return dao.selectAllGoods();
 	}
 
-	public ClassPage selectAllClass(int reqPage) {
+	public ClassPage selectAllClass(int reqPage, int selNo) {
 		int numPerPage = 10;
 		int start = (reqPage-1)*numPerPage+1;
 		int end = reqPage*numPerPage;
 		HashMap<String, Integer> pageNo = new HashMap<String, Integer>();
 		pageNo.put("start", start);
 		pageNo.put("end", end);
+		pageNo.put("selNo", selNo);
 		ArrayList<Class> list = dao.selectAllClass(pageNo);
 		ClassPage cp = new ClassPage();
 		cp.setList(list);
-		int totalCount = dao.classTotalCount();//총 게시물 수
+		int totalCount = dao.classTotalCount(selNo);//총 게시물 수
 		int totalPage = 0;
 		if(totalCount%numPerPage==0) {
 			totalPage = totalCount/numPerPage;
@@ -87,17 +88,18 @@ public class SellerService {
 		return cp;
 	}
 
-public GoodsPage selectAllGoods(int reqPage) {
+public GoodsPage selectAllGoods(int reqPage, int selNo) {
 	int numPerPage = 10;
 	int start = (reqPage-1)*numPerPage+1;
 	int end = reqPage*numPerPage;
 	HashMap<String, Integer> pageNo = new HashMap<String, Integer>();
 	pageNo.put("start", start);
 	pageNo.put("end", end);
+	pageNo.put("selNo", selNo);
 	ArrayList<Goods> list = dao.selectAllGoods(pageNo);
 	GoodsPage gp = new GoodsPage();
 	gp.setList(list);
-	int totalCount = dao.goodsTotalCount();//총 게시물 수
+	int totalCount = dao.goodsTotalCount(selNo);//총 게시물 수
 	int totalPage = 0;
 	if(totalCount%numPerPage==0) {
 		totalPage = totalCount/numPerPage;
@@ -203,7 +205,7 @@ public FundingPage selectAllFunding(int reqPage, int selNo) {
 	ArrayList<Funding> list = dao.selectAllFunding(pageNo);
 	FundingPage fp = new FundingPage();
 	fp.setList(list);
-	int totalCount = dao.FundingTotalCount();//총 게시물 수
+	int totalCount = dao.FundingTotalCount(selNo);//총 게시물 수
 	int totalPage = 0;
 	if(totalCount%numPerPage==0) {
 		totalPage = totalCount/numPerPage;
