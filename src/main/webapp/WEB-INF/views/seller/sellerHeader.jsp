@@ -17,7 +17,6 @@
             <nav>
                <span>판매자 ${sessionScope.sessionSeller.selName}님 환영합니다.</span>
                 <span><input type="button" class="btn btn-primary" value="고객페이지" id="customerBtn"></span>
-                <span><input type="button" class="btn btn-primary" value="마이페이지"></span>
                 <span><input type="button" class="btn btn-danger" value="로그아웃" id="logoutBtn"></span>
             </nav>
         </header>
