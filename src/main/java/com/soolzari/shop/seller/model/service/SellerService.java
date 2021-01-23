@@ -277,7 +277,7 @@ public int updateGdsDStatus(int gdsLNo, int gdsDStatus) {
 	return result1+result2;
 }
 
-public GoodsListPage selectAllGoodsList(int reqPage) {
+public GoodsListPage selectAllGoodsList(int reqPage, int selNo) {
 	GoodsListPage glp = new GoodsListPage();
 	int numPerPage = 5;
 	int start = (reqPage-1)*numPerPage+1;
@@ -285,6 +285,7 @@ public GoodsListPage selectAllGoodsList(int reqPage) {
 	HashMap<String, Integer> pageNo = new HashMap<String, Integer>();
 	pageNo.put("start", start);
 	pageNo.put("end", end);
+	pageNo.put("selNo",selNo);
 	ArrayList<GoodsList> gdsList = dao.selectAllGoodsList(pageNo);
 	glp.setGdsList(gdsList);
 	int totalCount = dao.goodsListTotalCount();//총 게시물 수
@@ -298,12 +299,12 @@ public GoodsListPage selectAllGoodsList(int reqPage) {
 	String page = "";
 	int pageStart = ((reqPage-1)/pageNaviSize)*pageNaviSize + 1;
 	if(pageStart>1) {
-		page += "<a href='/seller/mypage.sool?gReqPage=1&fReqPage=1'></a>";
-		page += "<a href='/seller/mypage.sool?gReqPage="+(pageStart-1)+"&fReqPage=1'></a>";
+		page += "<a href='/seller/mypage2.sool?reqPage=1'></a>";
+		page += "<a href='/seller/mypage2.sool?reqPage="+(pageStart-1)+"'></a>";
 	}
 	for(int i=0;i<pageNaviSize;i++) {
 		if(reqPage != pageStart) {
-			page += "<a href='/seller/mypage.sool?gReqPage="+pageStart+"&fReqPage=1' class='num'>"+pageStart+"</a>";
+			page += "<a href='/seller/mypage2.sool?reqPage="+pageStart+"' class='num'>"+pageStart+"</a>";
 		}else {
 			page += "<span class='sel'>"+pageStart+"</span>";
 		}
@@ -313,8 +314,8 @@ public GoodsListPage selectAllGoodsList(int reqPage) {
 		}
 	}
 	if(pageStart<=totalPage) {
-		page += "<a href='/seller/mypage.sool?gReqPage="+pageStart+"&fReqPage=1'></a>";
-		page += "<a href='/seller/mypage.sool?gReqPage="+totalPage+"&fReqPage=1'></a>";
+		page += "<a href='/seller/mypage2.sool?reqPage="+pageStart+"'></a>";
+		page += "<a href='/seller/mypage2.sool?reqPage="+totalPage+"'></a>";
 	}
 	glp.setGdsPage(page);
 	return glp;

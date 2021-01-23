@@ -475,8 +475,8 @@ public class SellerController {
 		return "seller/sellerMypage1";
 	}
 	@RequestMapping("mypage2.sool")
-	public String mypage2(Model model, int reqPage) {
-		GoodsListPage glp = service.selectAllGoodsList(reqPage);
+	public String mypage2(Model model, int reqPage, int selNo) {
+		GoodsListPage glp = service.selectAllGoodsList(reqPage, selNo);
 		
 		model.addAttribute("gdsList",glp.getGdsList());
 		model.addAttribute("gdsPage",glp.getGdsPage());
@@ -526,7 +526,7 @@ public class SellerController {
 		}else {
 			model.addAttribute("msg","수정 오류");
 		}
-		model.addAttribute("loc","/seller/mypage2.sool?gReqPage=1");
+		model.addAttribute("loc","/seller/mypage2.sool?reqPage=1");
 		return "common/msg";
 	}
 	
