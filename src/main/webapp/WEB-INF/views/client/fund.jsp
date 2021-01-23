@@ -99,12 +99,12 @@
                                  
                                                    <c:choose>
                                     	<c:when test="${itDate < today2 }">
-                                    	   <a href="javascript:void(0)">
+                                    	   <a href="javascript:void(0)" onclick="return past();">
                                                         <img src="/resources/upload/${f.imagePath }" alt="전통주 짱맛있어" class="middle" style= "max-height:180px; width:100%;" >
                                                 </a>
                                     	</c:when> 
                                     	<c:when test="${isDate >today2 }">
-                                    		 <a href="javascript:void(0)">
+                                    		 <a href="javascript:void(0)" onclick="return future();">
                                                         <img src="/resources/upload/${f.imagePath }" alt="전통주 짱맛있어" class="middle" style= "max-height:180px; width:100%;" >
                                                     </a>
                                     	</c:when>
@@ -302,4 +302,12 @@
 		paging(parseInt($(this).html()));
 	});
   
+	
+	function past(){
+		alert('이미 종료 펀딩이므로 구매할 수 없습니다');
+	}
+	
+	function future(){
+		alert('아직 오픈전인 펀딩이므로 구매할 수 없습니다.');
+	}
 </script>
