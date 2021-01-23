@@ -1,5 +1,12 @@
 @charset "utf-8";
 
+section{
+	margin-left: 150px;
+}
+body{
+	width: 2000px;
+	height: 100vh;
+}
         @font-face {
             font-family: 'S-CoreDream-3Light';
             src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
@@ -130,3 +137,4 @@
         	display: flex;
         	margin-bottom: 7px;
         }
+        

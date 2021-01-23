@@ -10,7 +10,10 @@
 *{
     font-family: 'S-CoreDream-3Light';
 }
-
+body{
+	width: 2000px;
+	height: 100vh;
+}
 .notice tr {
     border-top: 1px solid lightgray;
     text-align: center;
@@ -48,13 +51,9 @@ input[type="submit"],
     text-align: left;
 }
 .wrap>h1{
-    margin: 50px;
+    margin: 100px;
     text-align: center;
     font-weight: bold;
-}
-form{
-    width: 1200px;
-    margin: 0 auto;
 }
 .inputbtn{
     width: 1200px;
@@ -73,4 +72,8 @@ form{
 }
 .note-editor .note-editable {
     line-height: 1;
+}
+.frm{
+	margin-left: 250px;
+	width: 1200px;
 }

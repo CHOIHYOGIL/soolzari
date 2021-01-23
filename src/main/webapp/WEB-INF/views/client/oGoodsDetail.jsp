@@ -30,7 +30,7 @@
 		list-style:none;
 	}
 	.result-li textarea{
-		width:650px !important;
+		width:450px !important;
 		height:50px !important;
 		margin-top:15px;
 	}
@@ -72,7 +72,7 @@
 				<c:if test="${sessionId!=null }">
 			<div class="glTitle">
                           <span style="font-size:25px;">댓글</span>
-            	<hr width="860px" align="left">
+            	<hr width="800px" align="left">
             </div>
        <div class="gl">
             	<!-- 댓글 입력하는 창 -->

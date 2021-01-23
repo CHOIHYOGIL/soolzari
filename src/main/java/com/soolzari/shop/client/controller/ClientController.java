@@ -548,6 +548,21 @@ public class ClientController {
 		return "client/subscribe";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/getNewProduct.sool",produces="application/json;charset=utf-8",method=RequestMethod.POST)
+	public ArrayList<Goods> getNewProduct(Model model) {
+		System.out.println("getNew");
+		ArrayList<Goods> newList=service.getNewProduct();
+		System.out.println(newList);
+		if(newList!=null) {
+			model.addAttribute("list",newList);
+			model.addAttribute("loc","/");
+		}else {
+			System.out.println("상품비었음");
+		}
+		return newList;
+	}
+	
 	@RequestMapping("/fund.sool")
 	public String fund(Model model) {
 		

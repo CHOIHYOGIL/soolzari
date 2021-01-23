@@ -37,11 +37,13 @@
                             <a href="/seller/fundingList.sool?reqPage=1&selNo=${sessionScope.sessionSeller.selNo}">펀딩 확인</a>
                         </div>
                     </li>
-                    <li class="item">
-                        <a href="/seller/main.sool" class="btn-left">마이페이지</a>
-                    </li>
-                    <li class="item">
-                        <a href="/seller/logout.sool" class="btn-left">로그아웃</a>
+                    <li class="item" id="mypage_con">
+                        <a href="#mypage_con" class="btn-left">마이페이지</a>
+                        <div class="subMenu">
+                            <a href="/seller/mypage1.sool">정보 수정</a>
+                            <a href="/seller/mypage2.sool?reqPage=1&selNo=${sessionScope.sessionSeller.selName}">상품 배송 관리</a>
+                            <a href="/seller/mypage3.sool?reqPage=1">펀딩 배송 관리</a>
+                        </div>
                     </li>
                 </ui>
             </div>
@@ -63,29 +65,22 @@
           <div class="funding_det_con_1">
                 <span id="funding_det_title">${fd.fundName }</span><br>
                 <span id="funding_det_date">종료 날짜 : ${fd.fundEndDate}일</span>
-            </div>
-            <div class="funding_det_con_2">
                 <span id="funding_det_money">목표 모금액 : ${fd.fundMoney } 원</span><br>
                 <span id="funding_det_nowpri">현재 모금액 : ${fd.fundTotal }</span><span id="funding_det_percent"> [${fd.fundPercent }% 달성]</span>
             </div>
             <hr>
            <c:forEach items="${list }" var="f">
-            <div funding="class_det_con_1">
+            <div class="funding_det_con_1">
                 <span id="det_title">${f.fndGName }</span><br>
                 <span id="det_content">구성품 : ${f.fndGCon}</span>
-            </div>
-            <div class="funding_det_con_3">
-               <form action="/seller/fixfndgds.sool" method="post">
+               <form action="/seller/deleteFundingGoods.sool" method="post">
                 <span id="det_price_title">후원가격</span><br>
                 <input type="hidden" value="${f.fndGNo}" name="fndgdsNo">
                 <span id="det_price">${f.fndGPri }원</span><br><br>
-                <input type="button" name="modifyGoods" value="수정하기" style="width:49%;">
-                <input type="button" name="deleteGoods" value="삭제하기" style="width:49%;">
                 </form>
             </div>
             <hr>
             </c:forEach>
-            
         </div>
     </div>
     <div class="funding_det_fix">
@@ -94,15 +89,15 @@
         <table style="border:1px solid black; width:100%;height: 100%;">
             <tr style="height:30%;">
                 <th style="width:25%;text-align:center;">상품 이름</th>
-                <td><input type="text" name="gdsName"></td>
+                <td><input type="hidden" name="fundNo" value="${fd.fundNo }"><input type="text" name="fndGName"></td>
             </tr>
             <tr style="height:30%;">
                 <th style="width:25%;text-align:center;">상품 설명</th>
-                <td><input type="text" name="gdsPri"></td>
+                <td><input type="text" name="fndGCon"></td>
             </tr>
             <tr style="height:30%;">
                 <th style="width:25%;text-align:center;">상품 가격</th>
-                <td><input type="text" name="gdsPri"></td>
+                <td><input type="text" name="fndGPri"></td>
             </tr>
             <tr style="height:40%;">
                 <td colspan="2"><input type="submit" value="추가하기" style="width:100%; border:none; height:100%;background-color: #4d5075; color:white;"></td>

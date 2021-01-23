@@ -123,6 +123,10 @@ public class ClientService {
 	public int insertComment1(FundReview f) {
 		return dao.insertComment1(f);
 	}
+	public ArrayList<Goods> getNewProduct() {
+	
+		return dao.getNewProduct();
+	}
 
 	
 	

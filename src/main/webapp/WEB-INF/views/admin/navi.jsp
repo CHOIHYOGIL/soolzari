@@ -17,12 +17,6 @@
         font-family: 'S-CoreDream-3Light';
     }
     
-    section{
-    	float: left;
-    	width: 270px;
-    	height: 100vh;
-    }
-    
     .navis li {
         list-style-type: none;
     }
@@ -98,10 +92,17 @@
     .navis>ul{
     	margin-top: 80px;
     }
+    section{
+    	float: left;
+    }
+    .sect{
+    	width: 270px;
+    	height: 100vh;
+    }
 </style>
 </head>
 <body>
-	<section>
+	<section class="sect">
 		<div class="navis">
 	        <h1>관리자</h1>
 	        <ul>

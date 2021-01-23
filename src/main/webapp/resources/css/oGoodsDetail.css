@@ -8,6 +8,10 @@ body .wrap2{
 p {
 	margin-bottom: 5px;
 }
+
+.name{
+	font-size:15px !important;
+}
 /* 제일 상단 이미지----------------------------------------- */
 .mainContent{
 	width: 68%;

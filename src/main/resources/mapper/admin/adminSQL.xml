@@ -680,4 +680,18 @@
 			select pur_no, gds_l_no, substr(pur_date,1,6) month, (gds_l_price * gds_l_cnt) totalSalePrice, gds_no, pur_cancel from goods_list_db join purchase_db using (pur_no)
 		) where month = to_char(sysdate, 'yyyymm') and pur_cancel=0
 	</select>
+	<select id="selectBestGoods" resultType="com.soolzari.shop.admin.model.vo.Goods">
+		select * from (select rownum, g.* from (
+			select
+				gds_no as goodsNo,
+				gds_name as goodsName,
+				gds_pri as goodsPrice,
+				gds_bcnt as buyCount,
+				sel_name as seller,
+				status,
+				goods_date as goodsDate,
+				goods_type as goodsType
+			from goods_db join seller_db using (sel_no) where status=1 and substr(goods_date,1,7) = to_char(sysdate, 'yyyy-mm')
+		order by gds_bcnt desc)g) where rownum=1
+	</select>
 </mapper>

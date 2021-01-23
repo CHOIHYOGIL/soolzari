@@ -68,7 +68,11 @@
  		select class_enroll as classDate from class_db where cls_no=#{classNo} and status=1
  	</select>
  	
- 	
+ 	<select id="getNewProduct" resultType="g">
+ 		select goodsNo,  goodsName,  goodsPrice,  goodsCount, imagePath
+ 		 from (select g.gds_no as goodsNo, g.gds_name as goodsName, g.gds_pri as goodsPrice, g.GDS_BCNT as goodsCount, i.filepath as imagePath
+ 		 from goods_db g,img_Db i where i.type_no=g.gds_no and i.img_type='g' order by rownum DESC) <![CDATA[ where rownum<5]]>
+ 	</select>
  	
  	<insert id="setClass_list" parameterType="map">
  		

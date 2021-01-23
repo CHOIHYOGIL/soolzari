@@ -51,6 +51,8 @@
 		<typeAlias type="com.soolzari.shop.seller.model.vo.Score" alias="sellerScore"/>
 		<typeAlias type="com.soolzari.shop.seller.model.vo.Funding" alias="sellerFunding"/>
 		<typeAlias type="com.soolzari.shop.seller.model.vo.FundingGoods" alias="sellerFG"/>
+		<typeAlias type="com.soolzari.shop.seller.model.vo.GoodsList" alias="sellerGL"/>
+		<typeAlias type="com.soolzari.shop.seller.model.vo.FundingList" alias="sellerFL"/>
 	<typeAlias type="com.soolzari.shop.client.model.vo.FundingListData" alias="fundingListData"/>
 
 	</typeAliases>

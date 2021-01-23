@@ -129,7 +129,7 @@ group by c.cls_no , c.cls_name, c.sel_no, c.cls_det, c.cls_price, c.class_enroll
         sel_no as selNo,
         fund_enrolldate as fundEnrollDate,
         fund_enddate as fundEndDate
-     from funding_db order by 1 desc)f) where (rnum between #{start} and #{end}) and selno = #{selNo}
+     from funding_db order by 1 desc)f) where (rnum between #{start} and #{end}) and (selno = #{selNo}) and (fundChk <![CDATA[>]]>=0)
   </select>
   
   	<select id="fundingTotalCount" resultType="_int">
@@ -153,4 +153,52 @@ group by c.cls_no , c.cls_name, c.sel_no, c.cls_det, c.cls_price, c.class_enroll
   	<delete id="deleteFunding" parameterType="_int">
   	delete from funding_db where fund_no = #{fundNo }
   	</delete>
+  	
+  	<insert id="insertFundingGoods" parameterType="sellerFG">
+  	insert into fnd_gds_db values (fund_gds_seq.nextval, #{fundNo}, #{fndGName}, #{fndGCon}, #{fndGPri})
+  	</insert>
+  	
+  	<update id="updateGdsDStatus" parameterType="map">
+  	update goods_list_db set gds_d_status = #{gdsDStatus } where gds_l_no = #{gdsLNo }
+  	</update>
+  	<select id="selectPurNo" parameterType="_int" resultType="_int">
+  	select pur_no from goods_list_db where gds_l_no = #{gdsLNo }
+  	</select>
+  	<update id="updatePurchaseStatus" parameterType="_int">
+  	update purchase_db set pur_cancel = 1 where pur_no = #{purNo }
+  	</update>
+  	<select id="selectAllGoodsList" parameterType="map" resultType="sellerGL">
+  	select * from(
+  		select rownum as rnum, g.* from(
+  			select gds_l_no as gdsLNo,
+  			pur_no as purNo,
+  			pur_get as purGet,
+  			gds_no as gdsNo,
+  			gds_l_price as gdsLPrice,
+  			gds_d_status as gdsDStatus,
+  			sel_no as selNo
+  		from goods_list_db join purchase_db using(pur_no) join goods_db using(gds_no)
+  		where ((gds_d_status<![CDATA[<]]>5) and (gds_d_status<![CDATA[>]]>=1)) and (sel_no = ${selNo}) order by 1 desc)g)
+  	where rnum between #{start} and #{end}
+  	</select>
+  	<select id="goodsListTotalCount" resultType="_int">
+  	select count(*) from goods_list_db join purchase_db using(pur_no) where (gds_d_status<![CDATA[<]]>5 and gds_d_status<![CDATA[>]]>=1)
+  	</select>
+  	
+  	<select id="selectAllFundingList" parameterType="map" resultType="sellerFL">
+  	select * from (select rownum as rnum, f.* from (
+     select
+        fnd_d_no as fndDNo,
+        fund_no as fundNo,
+        fnd_d_price as fndDPrice,
+        fnd_g_no as fndGNo,
+        fnd_d_status as fndDStatus
+     from fnd_det_db where (fnd_d_status <![CDATA[>]]> 0 and fnd_d_status <![CDATA[<]]> 5) order by 1 desc)f) where (rnum between #{start} and #{end})
+  	</select>
+  	<select id="fundingListTotalCount" resultType="_int">
+  	select count(*) from fnd_det_db
+  	</select>
+  	<update id="updateFndDStatus" parameterType="map">
+  	update fnd_det_db set fnd_d_status = #{fndDStatus } where fnd_d_no = #{fndDNo }
+  	</update>
 </mapper>

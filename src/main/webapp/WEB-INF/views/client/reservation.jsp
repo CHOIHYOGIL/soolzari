@@ -107,10 +107,10 @@
             <div class="choiceBtn">
                 <ul class>
                     <li>
-                        <a href="/reservation_intro.sool">체험안내</a>
+                        <a href="/reservation_intro.sool">클래스 안내</a>
                     </li>
                     <li>
-                        <a href="/reservation.sool">체험예약</a>
+                        <a href="/reservation.sool">클래스 예약</a>
                     </li>
                 </ul>
             </div>
@@ -135,26 +135,26 @@
                <form method="post">
                 
                 <div class="name">
-                     <span class="first">클래스 이름 : </span> <input type="text" class="className" name="className" placeholder="클래스이름">
+                     <span class="first">클래스 이름 : </span> <input type="text" class="className" name="className" placeholder="클래스이름" readonly>
                 </div><br>
                 <div class="creator">
-                      <span class="first">클래스 개설자 : </span> <input  type="text" class="classCreator" name="classCreator" placeholder="클래스개설자">
+                      <span class="first">클래스 개설자 : </span> <input  type="text" class="classCreator" name="classCreator" placeholder="클래스개설자" readonly>
                 </div><br>
                         <div class="description">
                                          <span class="first" style="text-align: center;">클래스 설명 </span> 
-               <input type="text" name="classDescription" class="classDescription" placeholder="음식디미방 전통주(감향주 등) 만들기체험">
+               <input type="text" name="classDescription" class="classDescription" placeholder="음식디미방 전통주(감향주 등) 만들기체험" readonly>
                   
                  </div><br>
                  
                  <div class="person">
-                     <span class="first">인원 : </span><input type="number" class="classPerson" min="1" max="15" name="classPerson" placeholder="1">
+                     <span class="first">인원 : </span><input type="number" class="classPerson" min="1" max="15" name="classPerson" placeholder="1" >
                  </div><br>
                   <div class="price">
-                       <span class="first">클래스 참가비 : </span><input type="text"class="classPrice" name="classPrice"placeholder="20000">
+                       <span class="first">클래스 참가비 : </span><input type="text"class="classPrice" name="classPrice"placeholder="20000" readonly>
                   </div><br>
 
                      <div class="date">
-                         <span class="first">예약일</span><input type="text"  class="classDate"name="classEnroll" placeholder="2020-02-24">
+                         <span class="first">예약일</span><input type="text"  class="classDate"name="classEnroll" placeholder="2020-02-24" readonly>
                      </div><br>
                      
                      

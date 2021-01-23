@@ -13,8 +13,12 @@ import com.soolzari.shop.seller.model.vo.Class;
 import com.soolzari.shop.seller.model.vo.ClassPage;
 import com.soolzari.shop.seller.model.vo.Funding;
 import com.soolzari.shop.seller.model.vo.FundingGoods;
+import com.soolzari.shop.seller.model.vo.FundingList;
+import com.soolzari.shop.seller.model.vo.FundingListPage;
 import com.soolzari.shop.seller.model.vo.FundingPage;
 import com.soolzari.shop.seller.model.vo.Goods;
+import com.soolzari.shop.seller.model.vo.GoodsList;
+import com.soolzari.shop.seller.model.vo.GoodsListPage;
 import com.soolzari.shop.seller.model.vo.GoodsPage;
 import com.soolzari.shop.seller.model.vo.Image;
 import com.soolzari.shop.seller.model.vo.Score;
@@ -254,6 +258,123 @@ public int deleteFunding(String[] tokens) {
 	}
 	return result;
 }
+
+public int insertFundingGoods(FundingGoods fg) {
+	return dao.insertFundingGoods(fg);
+}
+
+public int updateGdsDStatus(int gdsLNo, int gdsDStatus) {
+	HashMap<String, Integer> gdsInfo = new HashMap<String, Integer>();
+	gdsInfo.put("gdsLNo", gdsLNo);
+	gdsInfo.put("gdsDStatus", gdsDStatus);
+	int result1 = dao.updateGdsDStatus(gdsInfo);
+	int purNo = 0;
+	int result2 = 1;
+	if(gdsDStatus==2) {
+		purNo = dao.selectPurNo(gdsLNo);
+		result2 = dao.updatePurchaseStatus(purNo);
+	}
+	return result1+result2;
+}
+
+public GoodsListPage selectAllGoodsList(int reqPage, int selNo) {
+	GoodsListPage glp = new GoodsListPage();
+	int numPerPage = 5;
+	int start = (reqPage-1)*numPerPage+1;
+	int end = reqPage*numPerPage;
+	HashMap<String, Integer> pageNo = new HashMap<String, Integer>();
+	pageNo.put("start", start);
+	pageNo.put("end", end);
+	pageNo.put("selNo",selNo);
+	ArrayList<GoodsList> gdsList = dao.selectAllGoodsList(pageNo);
+	glp.setGdsList(gdsList);
+	int totalCount = dao.goodsListTotalCount();//총 게시물 수
+	int totalPage = 0;
+	if(totalCount%numPerPage==0) {
+		totalPage = totalCount/numPerPage;
+	}else {
+		totalPage = (totalCount/numPerPage)+1;
+	}
+	int pageNaviSize = 5;
+	String page = "";
+	int pageStart = ((reqPage-1)/pageNaviSize)*pageNaviSize + 1;
+	if(pageStart>1) {
+		page += "<a href='/seller/mypage2.sool?reqPage=1'></a>";
+		page += "<a href='/seller/mypage2.sool?reqPage="+(pageStart-1)+"'></a>";
+	}
+	for(int i=0;i<pageNaviSize;i++) {
+		if(reqPage != pageStart) {
+			page += "<a href='/seller/mypage2.sool?reqPage="+pageStart+"' class='num'>"+pageStart+"</a>";
+		}else {
+			page += "<span class='sel'>"+pageStart+"</span>";
+		}
+		pageStart++;
+		if(pageStart>totalPage) {
+			break;
+		}
+	}
+	if(pageStart<=totalPage) {
+		page += "<a href='/seller/mypage2.sool?reqPage="+pageStart+"'></a>";
+		page += "<a href='/seller/mypage2.sool?reqPage="+totalPage+"'></a>";
+	}
+	glp.setGdsPage(page);
+	return glp;
+}
+
+public FundingListPage selectAllFundingList(int reqPage) {
+	FundingListPage flp = new FundingListPage();
+	int numPerPage = 5;
+	int start = (reqPage-1)*numPerPage+1;
+	int end = reqPage*numPerPage;
+	HashMap<String, Integer> pageNo = new HashMap<String, Integer>();
+	pageNo.put("start", start);
+	pageNo.put("end", end);
+	ArrayList<FundingList> fndList = dao.selectAllFundingList(pageNo);
+	flp.setFndList(fndList);
+	int totalCount = dao.fundingListTotalCount();//총 게시물 수
+	int totalPage = 0;
+	if(totalCount%numPerPage==0) {
+		totalPage = totalCount/numPerPage;
+	}else {
+		totalPage = (totalCount/numPerPage)+1;
+	}
+	int pageNaviSize = 5;
+	String page = "";
+	int pageStart = ((reqPage-1)/pageNaviSize)*pageNaviSize + 1;
+	if(pageStart>1) {
+		page += "<a href='/seller/mypage3.sool?reqPage=1'></a>";
+		page += "<a href='/seller/mypage3.sool?reqPage="+(pageStart-1)+"'></a>";
+	}
+	for(int i=0;i<pageNaviSize;i++) {
+		if(reqPage != pageStart) {
+			page += "<a href='/seller/mypage3.sool?reqPage="+pageStart+"' class='num'>"+pageStart+"</a>";
+		}else {
+			page += "<span class='sel'>"+pageStart+"</span>";
+		}
+		pageStart++;
+		if(pageStart>totalPage) {
+			break;
+		}
+	}
+	if(pageStart<=totalPage) {
+		page += "<a href='/seller/mypage3.sool?reqPage="+pageStart+"'></a>";
+		page += "<a href='/seller/mypage3.sool?reqPage="+totalPage+"'></a>";
+	}
+	flp.setFndPage(page);
+	return flp;
+}
+
+public int updateFndDStatus(int fndDNo, int fndDStatus) {
+	HashMap<String, Integer> fndInfo = new HashMap<String, Integer>();
+	fndInfo.put("fndDNo", fndDNo);
+	fndInfo.put("fndDStatus", fndDStatus);
+	int result = dao.updateFndDStatus(fndInfo);
+	return result;
+}
+
+
+
+
 
 
 

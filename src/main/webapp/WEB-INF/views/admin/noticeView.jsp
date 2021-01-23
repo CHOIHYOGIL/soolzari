@@ -15,7 +15,7 @@
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/admin/navi.jsp"/>
-	<section>
+	<section class="view">
         <h1 class="noticetitle">공지사항</h1>
         <form action="/notice/update.sool" method="post">
         	<input type="hidden" name="noticeNo" value="${n.noticeNo }">
