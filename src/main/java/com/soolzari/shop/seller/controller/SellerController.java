@@ -484,8 +484,13 @@ public class SellerController {
 	}
 	@RequestMapping("mypage3.sool")
 	public String mypage3(Model model, int reqPage) {
+		System.out.println("ㄴㅇㄻㄴㅀㅁㄶ");
 		FundingListPage flp = service.selectAllFundingList(reqPage);
-
+		System.out.println("1111111111122222222222");
+		System.out.println(flp.getFndList().size());
+		System.out.println(flp.getFndList().get(0));
+		System.out.println(flp.getFndList().get(1));
+		System.out.println(flp.getFndList().get(2));
 		model.addAttribute("fndList",flp.getFndList());
 		model.addAttribute("fndPage",flp.getFndPage());
 		return "seller/sellerMypage3";

@@ -10,4 +10,5 @@ public class GoodsList {
 	private int gdsNo;
 	private int gdsLPrice;
 	private int gdsDStatus;
+	private int selNo;
 }
