@@ -100,7 +100,7 @@
         © SoolZaRi 술자리
     </div>
     <script>
-    	
+       
     </script>
 </body>
 </html>
