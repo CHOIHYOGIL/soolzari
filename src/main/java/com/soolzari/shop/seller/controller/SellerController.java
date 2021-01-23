@@ -471,11 +471,11 @@ public class SellerController {
 		return "common/msg";
 	} 
 	//마이페이지 이동
-	@RequestMapping("mypage1.sool")
+	@RequestMapping("/mypage1.sool")
 	public String mypage1() {
 		return "seller/sellerMypage1";
 	}
-	@RequestMapping("mypage2.sool")
+	@RequestMapping("/mypage2.sool")
 	public String mypage2(Model model, int reqPage, int selNo) {
 		GoodsListPage glp = service.selectAllGoodsList(reqPage, selNo);
 		
@@ -483,11 +483,9 @@ public class SellerController {
 		model.addAttribute("gdsPage",glp.getGdsPage());
 		return "seller/sellerMypage2";
 	}
-	@RequestMapping("mypage3.sool")
+	@RequestMapping("/mypage3.sool")
 	public String mypage3(Model model, int reqPage) {
-		System.out.println("ㄴㅇㄻㄴㅀㅁㄶ");
 		FundingListPage flp = service.selectAllFundingList(reqPage);
-		System.out.println("1111111111122222222222");
 		System.out.println(flp.getFndList().size());
 		System.out.println(flp.getFndList().get(0));
 		System.out.println(flp.getFndList().get(1));
