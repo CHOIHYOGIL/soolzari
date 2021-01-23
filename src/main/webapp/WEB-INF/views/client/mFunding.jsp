@@ -48,15 +48,31 @@
 									<p>${fund.fndDReserdate }</p>
 								</td>
 								<td>
-									<a class="linkGo" href="/client/oFundingDetail.sool?fundNo=${fund.fundNo }">
-										<p><h6><span>${fund.fundName }</span></h6></p>
-										<%-- <p>상세 : <span>${fund.fundDet }</span></p> --%>
-										<p class="indent">후원한 상품 : <span>${fund.fndGName }</span></p>
-										<p class="indent">상품 구성 : <span>${fund.fndGCon }</span></p>
-										<p class="indent">가격 : <span class="comma">${fund.fndGPri }</span></p>
-										<p class="indent">추가 후원한 금액 : <span class="comma">${fund.fndDPrice-fund.fndGPri }</span></p>
-										<p class="indent textRight">총 후원 금액 : <span class="comma red">${fund.fndDPrice }</span></p>
-									</a>
+									<c:choose>
+										<c:when test="${fund.fndDStatus==5}">
+											<a class="linkGo" href="/client/oFundingDetail.sool?fundNo=${fund.fundNo }">
+												<p><h6><span>${fund.fundName }</span></h6></p>
+												<%-- <p>상세 : <span>${fund.fundDet }</span></p> --%>
+												<p class="indent">후원한 상품 : <span>${fund.fndGName }</span></p>
+												<p class="indent">상품 구성 : <span>${fund.fndGCon }</span></p>
+												<p class="indent">가격 : <span class="comma">${fund.fndGPri }</span></p>
+												<p class="indent">추가 후원한 금액 : <span class="comma">${fund.fndDPrice-fund.fndGPri }</span></p>
+												<p class="indent textRight">총 후원 금액 : <span class="comma red">${fund.fndDPrice }</span></p>
+											</a>
+										</c:when>
+										<c:otherwise>
+											<a class="linkGo" href="/client/oFundingDetail1.sool?fundNo=${fund.fundNo }">
+												<p><h6><span>${fund.fundName }</span></h6></p>
+												<%-- <p>상세 : <span>${fund.fundDet }</span></p> --%>
+												<p class="indent">후원한 상품 : <span>${fund.fndGName }</span></p>
+												<p class="indent">상품 구성 : <span>${fund.fndGCon }</span></p>
+												<p class="indent">가격 : <span class="comma">${fund.fndGPri }</span></p>
+												<p class="indent">추가 후원한 금액 : <span class="comma">${fund.fndDPrice-fund.fndGPri }</span></p>
+												<p class="indent textRight">총 후원 금액 : <span class="comma red">${fund.fndDPrice }</span></p>
+											</a>
+										</c:otherwise>
+									</c:choose>
+									
 								</td>
 								<td>
 									<c:if test="${fund.fndDStatus<=1 || fund.fndDStatus>=6}">
@@ -87,6 +103,7 @@
 									</c:if>
 									<c:if test="${fund.fndDStatus==5 }">
 										<p>수취확인<br>완료</p>
+										<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='/client/oFundingDetail.sool?fundNo=${fund.fundNo }'">리뷰쓰기</button>
 									</c:if>
 									<c:if test="${fund.fndDStatus==6 }">
 										<p>미결제취소</p><!-- 메일로 결제알림을 줬으나 일주일안에 결제하지 않은 경우 -->
@@ -164,6 +181,11 @@
 		var str = String(price);
 		let price1 = str.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		return price1;
+	}
+	
+	//리뷰쓰기버튼
+	$(".reviewBtn").click(){
+		
 	}
 </script>
 </html>

@@ -412,7 +412,7 @@ public class ClientController2 {
 	
 	//상품상세페이지
 	@RequestMapping("/oGoodsDetail.sool")
-	public String oGoodsDetail (int gdsNo, String gdsRate, Model model){
+	public String oGoodsDetail (int gdsNo, Model model){
 		ArrayList<GoodsSellerDetail> gsd = service.oGoodsDetail(gdsNo);
 		if(gsd!=null) {//상품이 있을 경우
 			model.addAttribute("gsd",gsd.get(0));//상품정보 전달(기본이미지를 포함하고있음)
@@ -420,7 +420,6 @@ public class ClientController2 {
 			ArrayList<FundReview> reviewList= service.reviewList1(gdsNo);
 			model.addAttribute("reviewList",reviewList);
 			
-			model.addAttribute("gdsRate",gdsRate);
 			model.addAttribute("goodNo",gdsNo);
 			System.out.println(gdsNo);
 			System.out.println(reviewList);
