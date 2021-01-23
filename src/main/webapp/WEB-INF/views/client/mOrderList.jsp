@@ -58,7 +58,7 @@
 													<td>
 														<c:choose>
 															<c:when test="${olData.gdsDStatus==5}"><!-- 수취확인완료됐을때만 리뷰쓸수있는 페이지로 안내 -->
-																<a href="/client/oGoodsDetail.sool?fundNo=${olData.gdsNo }">
+																<a href="/client/oGoodsDetail.sool?gdsNo=${olData.gdsNo }">
 																	<p>${olData.gdsName }</p>
 																	<p class="indent">개수 : ${olData.gdsLCnt }</p>
 																	<p class="indent">가격 : <span class="comma">${olData.gdsLPrice}</span>*${olData.gdsLCnt }=<span class="comma">${olData.gdsLPrice*olData.gdsLCnt }</span></p>
@@ -66,7 +66,7 @@
 																</a>
 															</c:when>
 															<c:otherwise>
-																<a href="/client/oGoodsDetail1.sool?fundNo=${olData.gdsNo }">
+																<a href="/client/oGoodsDetail1.sool?gdsNo=${olData.gdsNo }">
 																	<p>${olData.gdsName }</p>
 																	<p class="indent">개수 : ${olData.gdsLCnt }</p>
 																	<p class="indent">가격 : <span class="comma">${olData.gdsLPrice}</span>*${olData.gdsLCnt }=<span class="comma">${olData.gdsLPrice*olData.gdsLCnt }</span></p>
@@ -119,7 +119,7 @@
 													<td>
 														<c:choose>
 															<c:when test="${olData.gdsDStatus==5}"><!-- 수취확인완료됐을때만 리뷰쓸수있는 페이지로 안내 -->
-																<a href="/client/oGoodsDetail.sool?fundNo=${olData.gdsNo }">
+																<a href="/client/oGoodsDetail.sool?gdsNo=${olData.gdsNo }">
 																	<p>${olData.gdsName }</p>
 																	<p class="indent">개수 : ${olData.gdsLCnt }</p>
 																	<p class="indent">가격 : <span class="comma">${olData.gdsLPrice}</span>*${olData.gdsLCnt }=<span class="comma">${olData.gdsLPrice*olData.gdsLCnt }</span></p>
@@ -127,7 +127,7 @@
 																</a>
 															</c:when>
 															<c:otherwise>
-																<a href="/client/oGoodsDetail1.sool?fundNo=${olData.gdsNo }">
+																<a href="/client/oGoodsDetail1.sool?gdsNo=${olData.gdsNo }">
 																	<p>${olData.gdsName }</p>
 																	<p class="indent">개수 : ${olData.gdsLCnt }</p>
 																	<p class="indent">가격 : <span class="comma">${olData.gdsLPrice}</span>*${olData.gdsLCnt }=<span class="comma">${olData.gdsLPrice*olData.gdsLCnt }</span></p>
