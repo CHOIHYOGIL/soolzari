@@ -329,7 +329,7 @@ public class SellerController {
 	}
 	
 
-	@RequestMapping("fixClass.sool")
+	@RequestMapping("/fixClass.sool")
 	public String fixClass(Class c, Model model) {
 		
 		System.out.println("fix :"+c);
@@ -345,7 +345,7 @@ public class SellerController {
 		
 	}
 	
-	@RequestMapping("logout.sool")
+	@RequestMapping("/logout.sool")
 	public String logout(HttpSession session, Model model) {
 		session.invalidate();
 		model.addAttribute("loc","/seller/login.sool");
