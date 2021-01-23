@@ -562,13 +562,16 @@ public class ClientService2 {
 	public int subscribeUpdate(int cliNo) {
 		return dao.subscribeUpdate(cliNo);
 	}
-
+	
 	//상품주문취소시 purchase_db에 pur_cancel을 0->1로 전환
+	@Transactional
 	public int purCancelUpdate(int purNo) {
 		return dao.purCancelUpdate(purNo);
 	}
 
+	
 	//상품취소신청 버튼
+	@Transactional
 	public int orderDeliveryCancelStatus(int purNo, int deliveryStatus) {
 		return dao.orderDeliveryCancelStatus(purNo,deliveryStatus);
 	}
