@@ -27,6 +27,8 @@ import com.soolzari.shop.common.FileNameOverlap;
 import com.soolzari.shop.seller.model.service.SellerService;
 import com.soolzari.shop.seller.model.vo.Goods;
 import com.soolzari.shop.seller.model.vo.GoodsDetail;
+import com.soolzari.shop.seller.model.vo.GoodsList;
+import com.soolzari.shop.seller.model.vo.GoodsListPage;
 import com.soolzari.shop.seller.model.vo.GoodsPage;
 import com.soolzari.shop.seller.model.vo.Image;
 import com.soolzari.shop.seller.model.vo.Score;
@@ -36,6 +38,7 @@ import com.soolzari.shop.seller.model.vo.ClassPage;
 import com.soolzari.shop.seller.model.vo.Funding;
 import com.soolzari.shop.seller.model.vo.FundingDetail;
 import com.soolzari.shop.seller.model.vo.FundingGoods;
+import com.soolzari.shop.seller.model.vo.FundingListPage;
 import com.soolzari.shop.seller.model.vo.FundingPage;
 
 @Controller
@@ -98,7 +101,6 @@ public class SellerController {
 	@RequestMapping("/fundingList.sool")
 	public String fundingList(int reqPage, int selNo, Model model) {
 		FundingPage fp = service.selectAllFunding(reqPage, selNo);
-		/* 이부분 수정해야함. selNo로 한번 필터링 필요 */
 		System.out.println(fp.getList());
 		model.addAttribute("list",fp.getList());
 		model.addAttribute("page",fp.getPage());
@@ -468,9 +470,25 @@ public class SellerController {
 		return "common/msg";
 	} 
 	//마이페이지 이동
-	@RequestMapping("mypage.sool")
-	public String mypage() {
-		return "seller/sellerMypage";
+	@RequestMapping("mypage1.sool")
+	public String mypage1() {
+		return "seller/sellerMypage1";
+	}
+	@RequestMapping("mypage2.sool")
+	public String mypage2(Model model, int reqPage) {
+		GoodsListPage glp = service.selectAllGoodsList(reqPage);
+		
+		model.addAttribute("gdsList",glp.getGdsList());
+		model.addAttribute("gdsPage",glp.getGdsPage());
+		return "seller/sellerMypage2";
+	}
+	@RequestMapping("mypage3.sool")
+	public String mypage3(Model model, int reqPage) {
+		FundingListPage flp = service.selectAllFundingList(reqPage);
+
+		model.addAttribute("fndList",flp.getFndList());
+		model.addAttribute("fndPage",flp.getFndPage());
+		return "seller/sellerMypage3";
 	}
 		
 	//마이페이지 - 판매자 정보 수정
@@ -485,6 +503,42 @@ public class SellerController {
 			model.addAttribute("msg","수정 실패");
 		}
 		model.addAttribute("loc","/seller/sellerMain.sool");
+		return "common/msg";
+	}
+	//펀딩 상품추가
+	@RequestMapping("/addFundingGoods.sool")
+	public String addFundingGoods (FundingGoods fg, Model model) {
+		int result = service.insertFundingGoods(fg);
+		if(result>0) {
+			model.addAttribute("msg","등록 성공");
+		}else {
+			model.addAttribute("msg","등록 실패");
+		}
+		model.addAttribute("loc","/seller/fundingDetail.sool?fundNo="+fg.getFundNo());
+		return "common/msg";
+	}
+	//배송변경
+	@RequestMapping("/updateGdsDStatus")
+	public String updateGdsDStatus (int gdsLNo, int gdsDStatus, Model model) {
+		int result = service.updateGdsDStatus(gdsLNo,gdsDStatus);
+		if(result==2) {
+			model.addAttribute("msg","수정 성공");
+		}else {
+			model.addAttribute("msg","수정 오류");
+		}
+		model.addAttribute("loc","/seller/mypage2.sool?gReqPage=1");
+		return "common/msg";
+	}
+	
+	@RequestMapping("/updateFndDStatus")
+	public String updateFndDStatus (int fndDNo, int fndDStatus, Model model) {
+		int result = service.updateFndDStatus(fndDNo,fndDStatus);
+		if(result==2) {
+			model.addAttribute("msg","수정 성공");
+		}else {
+			model.addAttribute("msg","수정 오류");
+		}
+		model.addAttribute("loc","/seller/mypage3.sool?reqPage=1");
 		return "common/msg";
 	}
 	

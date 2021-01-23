@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,22 +16,25 @@
             </div>
             <nav>
                <span>판매자 ${sessionScope.sessionSeller.selName}님 환영합니다.</span>
-                <span><input type="button" class="btn btn-primary" value="고객페이지" id="customer"></span>
-                <span><input type="button" class="btn btn-primary" value="마이페이지"></span>
-                <span><input type="button" class="btn btn-danger" value="로그아웃" id="logout"></span>
+                <span><input type="button" class="btn btn-primary" value="고객페이지" id="customerBtn"></span>
+                <span><input type="button" class="btn btn-danger" value="로그아웃" id="logoutBtn"></span>
             </nav>
         </header>
     </div>
 </html>
 
 <script>
-	$("#customer").click(function(){
+	$("#customerBtn").click(function(){
 		
 		location.href="/";
 	})
 	
-	$("#logout").click(function(){
+	$("#logoutBtn").click(function(){
 		
 		location.href='/seller/logout.sool';
+	})
+	
+	$("seller_banner").click(function(){
+		location.href="/seller/mypage1.sool";
 	})
 </script>

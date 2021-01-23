@@ -37,11 +37,13 @@
                             <a href="/seller/fundingList.sool?reqPage=1&selNo=${sessionScope.sessionSeller.selNo}">펀딩 확인</a>
                         </div>
                     </li>
-                    <li class="item">
-                        <a href="/seller/main.sool" class="btn-left">마이페이지</a>
-                    </li>
-                    <li class="item">
-                        <a href="/seller/logout.sool" class="btn-left">로그아웃</a>
+                    <li class="item" id="mypage_con">
+                        <a href="#mypage_con" class="btn-left">마이페이지</a>
+                        <div class="subMenu">
+                            <a href="/seller/mypage1.sool">정보 수정</a>
+                            <a href="/seller/mypage2.sool?reqPage=1">상품 배송 관리</a>
+                            <a href="/seller/mypage3.sool?reqPage=1">펀딩 배송 관리</a>
+                        </div>
                     </li>
                 </ui>
             </div>
@@ -84,8 +86,7 @@
                                     <td><input type="text" name="classPerson"></td>
                                 </tr>
                                 <tr>
-                                    <th></th>
-                                    <td style="text-align: right; border-bottom: none;"><input type="submit" class="btn btn-primary" value="등록하기" style="width:30%"></td>
+                                    <td colspan="2" style="text-align: right; border-bottom: none; text-align:center;"><input type="submit" class="btn btn-primary" value="등록하기" style="width:30%"></td>
                                 </tr>
                             </tbody>
 
@@ -98,5 +99,8 @@
     <div id="seller_footer">
         © SoolZaRi 술자리
     </div>
+    <script>
+    	
+    </script>
 </body>
 </html>
