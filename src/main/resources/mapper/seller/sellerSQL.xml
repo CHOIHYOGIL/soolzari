@@ -129,7 +129,7 @@ group by c.cls_no , c.cls_name, c.sel_no, c.cls_det, c.cls_price, c.class_enroll
         sel_no as selNo,
         fund_enrolldate as fundEnrollDate,
         fund_enddate as fundEndDate
-     from funding_db order by 1 desc)f) where (rnum between #{start} and #{end}) and selno = #{selNo}
+     from funding_db order by 1 desc)f) where (rnum between #{start} and #{end}) and (selno = #{selNo}) and (fundChk <![CDATA[>]]>=0)
   </select>
   
   	<select id="fundingTotalCount" resultType="_int">
@@ -161,7 +161,7 @@ group by c.cls_no , c.cls_name, c.sel_no, c.cls_det, c.cls_price, c.class_enroll
   	<update id="updateGdsDStatus" parameterType="map">
   	update goods_list_db set gds_d_status = #{gdsDStatus } where gds_l_no = #{gdsLNo }
   	</update>
-  	<select id="selectPurNo" parameterType="_int">
+  	<select id="selectPurNo" parameterType="_int" resultType="_int">
   	select pur_no from goods_list_db where gds_l_no = #{gdsLNo }
   	</select>
   	<update id="updatePurchaseStatus" parameterType="_int">
@@ -175,12 +175,14 @@ group by c.cls_no , c.cls_name, c.sel_no, c.cls_det, c.cls_price, c.class_enroll
   			pur_get as purGet,
   			gds_no as gdsNo,
   			gds_l_price as gdsLPrice,
-  			gds_d_status as gdsDStatus
-  		from goods_list_db join purchase_db using(pur_no) where ((gds_d_status<![CDATA[<]]>5) and (gds_d_status<![CDATA[>]]>=1)) order by 1 desc)g)
+  			gds_d_status as gdsDStatus,
+  			sel_no as selNo
+  		from goods_list_db join purchase_db using(pur_no) join goods_db using(gds_no)
+  		where  (gds_d_status in (0,2,3,4,5)) and (sel_no = #{selNo}) order by 1 desc)g)
   	where rnum between #{start} and #{end}
   	</select>
   	<select id="goodsListTotalCount" resultType="_int">
-  	select count(*) from goods_list_db join purchase_db using(pur_no) where (gds_d_status<![CDATA[<]]>5 and gds_d_status<![CDATA[>]]>=1)
+  	select count(*) from goods_list_db join purchase_db using(pur_no) join goods_db using(gds_no) where  (gds_d_status in (0,2,3,4,5)) and (sel_no = #{selNo})
   	</select>
   	
   	<select id="selectAllFundingList" parameterType="map" resultType="sellerFL">
@@ -194,7 +196,7 @@ group by c.cls_no , c.cls_name, c.sel_no, c.cls_det, c.cls_price, c.class_enroll
      from fnd_det_db where (fnd_d_status <![CDATA[>]]> 0 and fnd_d_status <![CDATA[<]]> 5) order by 1 desc)f) where (rnum between #{start} and #{end})
   	</select>
   	<select id="fundingListTotalCount" resultType="_int">
-  	select count(*) from fnd_det_db
+  	select count(*) from fnd_det_db where (fnd_d_status <![CDATA[>]]> 0 and fnd_d_status <![CDATA[<]]> 5)
   	</select>
   	<update id="updateFndDStatus" parameterType="map">
   	update fnd_det_db set fnd_d_status = #{fndDStatus } where fnd_d_no = #{fndDNo }

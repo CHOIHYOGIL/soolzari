@@ -127,6 +127,7 @@ public class SellerController {
 	public String login(Seller s, HttpSession session, Model model) {
 		Seller seller = service.selectOneSeller(s);
 		if(seller!=null) {
+			session.setAttribute("selNo", seller.getSelNo());
 			session.setAttribute("sessionSeller", seller);
 			model.addAttribute("loc","/seller/sellerMain.sool");
 			model.addAttribute("msg","로그인 성공");
@@ -475,8 +476,8 @@ public class SellerController {
 		return "seller/sellerMypage1";
 	}
 	@RequestMapping("mypage2.sool")
-	public String mypage2(Model model, int reqPage) {
-		GoodsListPage glp = service.selectAllGoodsList(reqPage);
+	public String mypage2(Model model, int reqPage, int selNo) {
+		GoodsListPage glp = service.selectAllGoodsList(reqPage, selNo);
 		
 		model.addAttribute("gdsList",glp.getGdsList());
 		model.addAttribute("gdsPage",glp.getGdsPage());
@@ -484,8 +485,13 @@ public class SellerController {
 	}
 	@RequestMapping("mypage3.sool")
 	public String mypage3(Model model, int reqPage) {
+		System.out.println("ㄴㅇㄻㄴㅀㅁㄶ");
 		FundingListPage flp = service.selectAllFundingList(reqPage);
-
+		System.out.println("1111111111122222222222");
+		System.out.println(flp.getFndList().size());
+		System.out.println(flp.getFndList().get(0));
+		System.out.println(flp.getFndList().get(1));
+		System.out.println(flp.getFndList().get(2));
 		model.addAttribute("fndList",flp.getFndList());
 		model.addAttribute("fndPage",flp.getFndPage());
 		return "seller/sellerMypage3";
@@ -518,22 +524,22 @@ public class SellerController {
 		return "common/msg";
 	}
 	//배송변경
-	@RequestMapping("/updateGdsDStatus")
-	public String updateGdsDStatus (int gdsLNo, int gdsDStatus, Model model) {
+	@RequestMapping("/updateGdsDStatus.sool")
+	public String updateGdsDStatus (int gdsLNo, int gdsDStatus, Model model, int selNo) {
 		int result = service.updateGdsDStatus(gdsLNo,gdsDStatus);
-		if(result==2) {
+		if(result>0) {
 			model.addAttribute("msg","수정 성공");
 		}else {
 			model.addAttribute("msg","수정 오류");
 		}
-		model.addAttribute("loc","/seller/mypage2.sool?gReqPage=1");
+		model.addAttribute("loc","/seller/mypage2.sool?reqPage=1&selNo="+selNo);
 		return "common/msg";
 	}
 	
-	@RequestMapping("/updateFndDStatus")
+	@RequestMapping("/updateFndDStatus.sool")
 	public String updateFndDStatus (int fndDNo, int fndDStatus, Model model) {
 		int result = service.updateFndDStatus(fndDNo,fndDStatus);
-		if(result==2) {
+		if(result>0) {
 			model.addAttribute("msg","수정 성공");
 		}else {
 			model.addAttribute("msg","수정 오류");

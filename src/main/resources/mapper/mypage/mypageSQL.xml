@@ -88,9 +88,18 @@
 		</foreach>
 	</select>
 	
-	<!-- 주문내역 배송관리(취소신청) -->
+	<!-- 주문내역 배송관리(수취확인버튼) -->
 	<update id="orderDeliveryStatus" parameterType="map">
 		update goods_list_db set gds_d_status=#{deliveryStatus} where gds_l_no=#{gdsLNo}
+	</update>
+	
+	<!-- 상품주문취소시 purchase_db에 pur_cancel을 0->1로 전환 -->
+	<update id="purCancelUpdate" parameterType="_int">
+		update purchase_db set pur_cancel=1 where pur_no=#{_parameter}
+	</update>
+	<!-- 주문내역 배송관리(취소신청버튼) -->
+	<update id="orderDeliveryCancelStatus" parameterType="map">
+		update goods_list_db set gds_d_status=#{deliveryStatus} where pur_no=#{purNo}
 	</update>
 	
 	<!-- 마이페이제 - 클래스 -->
@@ -320,7 +329,7 @@
 	<select id="totalCountReview" parameterType="map" resultType="_int">
 		select count(*) from review_db where rev_writer=#{cliNo} and to_date(rev_enroll,'YYYY-MM-DD') between add_months(sysdate,-#{period}) and sysdate
 	</select>
-	
+	<!-- 마이페이지 - 내가 쓴 리뷰 페이징 -->
 	<select id="reviewDataPageSelect" parameterType="map" resultType="fr">
 		select
 		    rev_no as reviewNo,
@@ -341,7 +350,10 @@
 		            order by r.rev_no desc)n) where rnum between #{start} and #{end}
 	</select>
 	
+	<!-- 구독취소하기 -->
 	<update id="subScribeUpdate" parameterType="_int">
 		update client_db set cli_rank=0 where cli_no=#{_parameter}
 	</update>
+	
+	
 </mapper>

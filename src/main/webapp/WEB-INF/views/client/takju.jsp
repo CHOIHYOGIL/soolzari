@@ -126,7 +126,7 @@
                                         <li style="width:25%;" data-price=${g.goodsPrice } data-count=${g.goodsCount } data-review=${g.reviewScore }>
                                             <div class="item_cont">
                                                 <div class="item_photo_box">
-                                                    <a href="/client/oGoodsDetail.sool?gdsNo=${g.goodsNo}&gdsRate=${g.reviewScore}">
+                                                    <a href="/client/oGoodsDetail1.sool?gdsNo=${g.goodsNo}&gdsRate=${g.reviewScore}">
                                                         <img src="/resources/upload/${g.imagePath }" alt="전통주 짱맛있어" width="240" class="middle">
                                                     </a>
                                                 </div>
@@ -233,7 +233,7 @@
 			if("input:radio[name='sort']:checked"){
 				var sortVal=$(this).attr('value');
 				console.log("checkvalue");
-				console.log(sortVal);
+				console.log("sortVal:"+sortVal);
 				listSort(sortVal,1);
 			}
         
@@ -242,7 +242,8 @@
        
     })
     function listSort(sortVal,pg){
-    	 
+    	console.log("listSort");
+    	 console.log(sortVal);
     	if(sortVal=="highPrice"){
     		console.log('높은가격순');
     		$(".product-li").html(
@@ -267,7 +268,7 @@
     					return $(b).data("count") - $(a).data("count"); 
     				})
     		)
-    	}else if(sortVal="review"){
+    	}else if(sortVal=="review"){
     		console.log("평점순");
     		$(".product-li").html(
         		

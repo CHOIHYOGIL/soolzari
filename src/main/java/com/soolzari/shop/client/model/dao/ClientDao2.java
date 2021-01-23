@@ -339,6 +339,18 @@ public class ClientDao2 {
 		return sqlSession.update("mypage.subScribeUpdate",cliNo);
 	}
 
+	//상품주문취소시 purchase_db에 pur_cancel을 0->1로 전환
+	public int purCancelUpdate(int purNo) {
+		return sqlSession.update("mypage.purCancelUpdate",purNo);
+	}
+
+	public int orderDeliveryCancelStatus(int purNo, int deliveryStatus) {
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("purNo", purNo);
+		map.put("deliveryStatus", deliveryStatus);
+		return sqlSession.update("mypage.orderDeliveryCancelStatus",map);
+	}
+
 	
 
 

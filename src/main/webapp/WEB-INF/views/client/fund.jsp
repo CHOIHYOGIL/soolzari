@@ -90,7 +90,7 @@
                                         <li style="width:24%;" data-percent=${f.fundMoneyNow / f.fundMoney } data-date=${itDate-isDate} >
                                             <div class="item_cont">
                                                 <div class="item_photo_box">
-                                                    <a href="/client/oFundingDetail.sool?fundNo=${f.fundNo }">
+                                                    <a href="/client/oFundingDetail1.sool?fundNo=${f.fundNo }">
                                                         <img src="/resources/upload/${f.imagePath }" alt="전통주 짱맛있어" class="middle" style= "max-height:180px; width:100%;" >
                                                     </a>
                                                 </div>

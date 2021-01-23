@@ -74,30 +74,7 @@
                           <span style="font-size:25px;">댓글</span>
             	<hr width="800px" align="left">
             </div>
-       <div class="gl">
-            	<!-- 댓글 입력하는 창 -->
-            	  <span style="font-size:18px;">평점 :</span> <p id="star_grade" style="display:inline-block;">
-	            	<a href="#">★</a>
-	            	<a href="#">★</a>
-	            	<a href="#">★</a>
-	            	<a href="#">★</a>
-	            	<a href="#">★</a>
 
-
-	            </p>
-	            <span id="rateCount"> </span>
-	            <div class="inputComment">
-		            <form action="/insertComment1.sool" method="post" onsubmit='return check()'>
-		
-			            <input type="hidden" name="goodNo" value="${goodNo}"> <!-- 스룹스터디no -->
-			            <input type="hidden" name="commentWriter" value="${sessionNo}"> <!-- 작성자 -->
-			            <input type="hidden" name="commentWriterName" value="${sessionName}"> <!-- 작성자 -->
-			          	<input type="hidden" id="commentRate" name="commentRate">
-			            <textarea class="form-control rowCheck" name="commentContent" style="resize: none; width: 65%; display: inline-block; outline: none;" maxlength="65" required="required"></textarea> 
-			            <button type="submit" class="btn btn-success btn-lg endDayCheck" style="background-color: #4d5075; color:white; border:none; margin-bottom:50px; margin-left:10px;">등록</button>
-		            </form>
-	            </div>
-	            </div> 
 	            </c:if>
 	             		    <div id="commentScrollDiv" style="width: 74%;">
 	            <!-- 전체 댓글 출력 및 본인 댓글 수정 / 삭제 -->

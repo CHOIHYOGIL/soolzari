@@ -42,7 +42,7 @@
                         <a href="#mypage_con" class="btn-left">마이페이지</a>
                         <div class="subMenu">
                             <a href="/seller/mypage1.sool">정보 수정</a>
-                            <a href="/seller/mypage2.sool?reqPage=1">상품 배송 관리</a>
+                            <a href="/seller/mypage2.sool?reqPage=1&selNo=${sessionScope.sessionSeller.selNo}">상품 배송 관리</a>
                             <a href="/seller/mypage3.sool?reqPage=1">펀딩 배송 관리</a>
                         </div>
                     </li>
@@ -77,14 +77,12 @@
 					            <c:choose>
 					            <c:when test="${g.gdsDStatus <2}">
 					            <option value="0" selected>결제완료</option>
-					            <option value="2">결제취소</option>
 					            <option value="3">배송중</option>
 					            </c:when>
 					            <c:when test="${g.gdsDStatus ==2}">
 					            <option value="2" selected>취소</option>
 					            </c:when>
 					            <c:when test="${g.gdsDStatus ==3}">
-					            <option value="2">결제취소</option>
 					            <option value="3" selected>배송중</option>
 					            <option value="4">배송완료</option>
 					            </c:when>
@@ -129,11 +127,12 @@
 
     <script>
 	$(function(){
+		var selNo='<%=session.getAttribute("selNo")%>';
 		$("select[name=gdsDStatus]").change(function(){
 			var gdsLNo = $(this).prev().val();
 			console.log(gdsLNo);
 			console.log($(this).val());
-			location.href="/seller/updateGdsDStatus.sool?gdsLNo="+gdsLNo+"&gdsDStatus="+$(this).val();
+			location.href="/seller/updateGdsDStatus.sool?gdsLNo="+gdsLNo+"&gdsDStatus="+$(this).val()+"&selNo="+selNo;
 		})
 	})
 

@@ -34,5 +34,11 @@
 	text-indent: 30px;
 }
 
+.textRigth{
+	text-align: right;
+}
 
-
+.listTable a:hover{
+	color: black;
+	font-weight: bold;
+}
