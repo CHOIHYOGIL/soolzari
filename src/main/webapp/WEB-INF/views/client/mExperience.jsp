@@ -28,10 +28,12 @@
 						<th class="th5">취소신청</th>
 					</tr>
 					<c:choose>
-						<c:when test="${fn:length(eList) eq null}">
+						<c:when test="${eList=='[]'}">
 							<tr>
 								<td colspan="5">
+									<br><br><br>
 									<p>지난 ${period }개월 동안 예약한 클래스가 없습니다.</p>
+									<br><br><br>
 								</td>
 							</tr>
 						</c:when>

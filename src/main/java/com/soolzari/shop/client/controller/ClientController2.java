@@ -312,18 +312,25 @@ public class ClientController2 {
 	
 	//마이페이지 - 주문내역 배송관리(취소신청/수취확인)
 	@RequestMapping("/orderDeliveryStatus.sool")
-	public String orderDeliveryStatus(int gdsLNo, int deliveryStatus, int reqPage, int period, Model model) {
-		int result = service.orderDeliveryStatus(gdsLNo,deliveryStatus);
-		if(result>0) {
-			if(deliveryStatus==2) {
-				model.addAttribute("msg","취소신청이 완료되었습니다");
-			}else if(deliveryStatus==5){
-				model.addAttribute("msg","수취확인이 완료되었습니다");
-			}
-		}else {
-			if(deliveryStatus==2) {
+	public String orderDeliveryStatus(int purNo, int gdsLNo, int deliveryStatus, int reqPage, int period, Model model) {
+		int result = 0;
+		if(deliveryStatus==2) {//취소신청일 경우
+			result = service.purCancelUpdate(purNo);//purchase_db에 pur_cancel을 0->1로 전환
+			if(result>0) {
+				result = service.orderDeliveryCancelStatus(purNo,deliveryStatus);
+				if(result>0) {
+					model.addAttribute("msg","취소신청이 완료되었습니다");
+				}else {
+					model.addAttribute("msg","취소신청에 실패하였습니다");
+				}
+			}else {
 				model.addAttribute("msg","취소신청에 실패하였습니다");
-			}else if(deliveryStatus==5){
+			}
+		}else {//수취확인일 경우
+			result = service.orderDeliveryStatus(gdsLNo,deliveryStatus);
+			if(result>0) {
+				model.addAttribute("msg","수취확인이 완료되었습니다");
+			}else {
 				model.addAttribute("msg","수취확인에 실패하였습니다");
 			}
 		}

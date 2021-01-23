@@ -228,7 +228,7 @@ public class ClientService2 {
 	public OrderPageData mOrderListPaging(int reqPage, int period, int cliNo) {//period(조회기간/1,3,6,12개월)
 		int totalPage = dao.totalCountPage(cliNo, period); //총개수(purchase에서 저장된)
 		int per = 5;	//한페이지에 보여줄 주문개수
-		if(totalPage/per==0) {//총페이지수
+		if(totalPage%per==0) {//총페이지수
 			totalPage = totalPage/per;
 		}else {
 			totalPage = totalPage/per+1;
@@ -279,7 +279,7 @@ public class ClientService2 {
 	public ExperiencePageData mExperiencePaging(int reqPage, int period, int cliNo) {
 		int totalPage = dao.totalCountExperience(cliNo, period); //총개수(예약된 클래스(class_list_db)에서 저장된)
 		int per = 10;	//한페이지에 보여줄 주문개수
-		if(totalPage/per==0) {//총페이지수
+		if(totalPage%per==0) {//총페이지수
 			totalPage = totalPage/per;
 		}else {
 			totalPage = totalPage/per+1;
@@ -325,7 +325,7 @@ public class ClientService2 {
 	public QnaPageData mQuestionPaging(int reqPage, int period, int cliNo) {
 		int totalPage = dao.totalCountQuestion(cliNo, period); //총개수(예약된 클래스(class_list_db)에서 저장된)
 		int per = 10;	//한페이지에 보여줄 주문개수
-		if(totalPage/per==0) {//총페이지수
+		if(totalPage%per==0) {//총페이지수
 			totalPage = totalPage/per;
 		}else {
 			totalPage = totalPage/per+1;
@@ -409,7 +409,7 @@ public class ClientService2 {
 	public FundingPageData mFundingPaging(int reqPage, int period, int cliNo) {
 		int totalPage = dao.totalCountFunding(cliNo, period); //총개수(예약(후원)한 펀딩(fnd_det_db)에서 저장된)
 		int per = 10;	//한페이지에 보여줄 주문개수
-		if(totalPage/per==0) {//총페이지수
+		if(totalPage%per==0) {//총페이지수
 			totalPage = totalPage/per;
 		}else {
 			totalPage = totalPage/per+1;
@@ -518,7 +518,7 @@ public class ClientService2 {
 	public ReviewPageData mReviewPaging(int reqPage, int period, int cliNo) {
 		int totalPage = dao.totalCountReview(cliNo, period); //총개수(리뷰(review_db)에서 저장된)
 		int per = 10;	//한페이지에 보여줄 주문개수
-		if(totalPage/per==0) {//총페이지수
+		if(totalPage%per==0) {//총페이지수
 			totalPage = totalPage/per;
 		}else {
 			totalPage = totalPage/per+1;
@@ -561,6 +561,16 @@ public class ClientService2 {
 	@Transactional
 	public int subscribeUpdate(int cliNo) {
 		return dao.subscribeUpdate(cliNo);
+	}
+
+	//상품주문취소시 purchase_db에 pur_cancel을 0->1로 전환
+	public int purCancelUpdate(int purNo) {
+		return dao.purCancelUpdate(purNo);
+	}
+
+	//상품취소신청 버튼
+	public int orderDeliveryCancelStatus(int purNo, int deliveryStatus) {
+		return dao.orderDeliveryCancelStatus(purNo,deliveryStatus);
 	}
 	
 

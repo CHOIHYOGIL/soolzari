@@ -40,6 +40,137 @@
 							</td>
 						</tr>
 					</c:when>
+					<c:otherwise>					
+					<c:forEach items="${pList }" var="purchase">
+						<c:set var="count" value="0"/>														
+							<c:choose>								
+								<c:when test="${count == 0 }">
+									<c:forEach items="${olDataList }" var="olData" varStatus="i">
+									<c:if test="${purchase.purNo eq olData.purNo}">
+										<c:choose>
+											<c:when test="${i.index == 0 or count == 0}">
+												<tr class="rowSpan">
+													<td>
+														<span class="gdsLNo" style="display: none;">${olData.gdsLNo }</span><!-- 배송관리 update할때전달해줄값 -->
+														<p class="purNo">${purchase.purNo }</p>
+														<p>${purchase.purDate }</p>
+													</td>
+													<td>
+														<p>${olData.gdsName }</p>
+														<p class="indent">개수 : ${olData.gdsLCnt }</p>
+														<p class="indent">가격 : <span class="comma">${olData.gdsLPrice}</span>*${olData.gdsLCnt }=<span class="comma">${olData.gdsLPrice*olData.gdsLCnt }</span></p>
+														<p class="indent">배송지 : ${purchase.purGet }</p>
+													</td>
+													<td>
+														<p><span class="comma">${purchase.purTtp }</span></p>
+														<c:choose>
+															<c:when test="${olData.gdsDStatus==0}">
+																<button type="button" class="btn btn-outline-secondary btn-sm cancelBtn">취소신청</button>
+															</c:when>
+															<c:otherwise>
+																<p>취소완료</p>
+															</c:otherwise>
+														</c:choose>
+													</td>
+													<td>
+														<c:if test="${olData.gdsDStatus==0}">
+															<p>결제완료</p>
+														</c:if>
+														<c:if test="${olData.gdsDStatus==2}">
+															<p>-</p>
+														</c:if>
+														<c:if test="${olData.gdsDStatus==3}">
+															<p>배송중</p>
+														</c:if>
+														<c:if test="${olData.gdsDStatus==4}">
+															<p>배송완료</p>
+															<button type="button" class="btn btn-outline-secondary btn-sm completeBtn">수취확인</button>
+														</c:if>
+														<c:if test="${olData.gdsDStatus==5}">
+															<p>수취확인완료</p>
+														</c:if>
+													</td>
+												</tr>
+												<c:set var="count" value="1"/>
+											</c:when>
+											<c:otherwise>
+												<tr>
+													<td>
+														<span class="gdsLNo" style="display: none;">${olData.gdsLNo }</span><!-- 배송관리 update할때전달해줄값 -->
+														<p class="purNo">${purchase.purNo } / ${count }</p>
+														<p>${purchase.purDate }</p>
+													</td>
+													<td>
+														<p>${olData.gdsName }</p>
+														<p class="indent">개수 : ${olData.gdsLCnt }</p>
+														<p class="indent">가격 : <span class="comma">${olData.gdsLPrice}</span>*${olData.gdsLCnt }=<span class="comma">${olData.gdsLPrice*olData.gdsLCnt }</span></p>
+														<p class="indent">배송지 : ${purchase.purGet }</p>
+													</td>
+													<td>
+														<p><span class="comma">${purchase.purTtp }</span></p>
+														<c:choose>
+															<c:when test="${olData.gdsDStatus==0}">
+																<button type="button" class="btn btn-outline-secondary btn-sm cancelBtn">취소신청</button>
+															</c:when>
+															<c:otherwise>
+																<p>취소완료</p>
+															</c:otherwise>
+														</c:choose>
+													</td>
+													<td>
+														<c:if test="${olData.gdsDStatus==0}">
+															<p>결제완료</p>
+														</c:if>
+														<c:if test="${olData.gdsDStatus==2}">
+															<p>-</p>
+														</c:if>
+														<c:if test="${olData.gdsDStatus==3}">
+															<p>배송중</p>
+														</c:if>
+														<c:if test="${olData.gdsDStatus==4}">
+															<p>배송완료</p>
+															<button type="button" class="btn btn-outline-secondary btn-sm completeBtn">수취확인</button>
+														</c:if>
+														<c:if test="${olData.gdsDStatus==5}">
+															<p>수취확인완료</p>
+														</c:if>
+													</td>
+												</tr>
+											</c:otherwise>
+										</c:choose>		
+									</c:if>		
+									</c:forEach>						
+								</c:when>								
+							</c:choose>			
+					</c:forEach>
+					
+					</c:otherwise>
+					</c:choose>
+					<tr>
+						
+					</tr>
+				</table>
+				<br>
+				<div style="text-align: center;" id="pageNavi">${pageNavi }</div>
+			</div>
+			<%-- <div class="listDiv">
+				<table class="listTable">
+					<tr>
+						<th class="th1">주문번호/주문일자</th>
+						<th class="th2">상품 정보</th>
+						<th class="th3">총 결제 금액</th>
+						<th class="th4">배송관리</th>
+					</tr>
+					<c:choose>
+					<c:when test="${fn:length(pList) eq 0}">
+						<tr>
+							<td colspan="4">
+								<br><br><br>
+								<h4>지난 ${period }개월 동안 구매한 내역이 없습니다.</h4>
+								<br><br><br>
+							</td>
+						</tr>
+					</c:when>
 					<c:otherwise>
 					<c:forEach items="${pList }" var="purchase" varStatus="status">
 						<c:forEach items="${olDataList }" var="olData">
@@ -47,7 +178,7 @@
 						<tr>
 							<td class="rowSpan">
 								<span class="gdsLNo" style="display: none;">${olData.gdsLNo }</span><!-- 배송관리 update할때전달해줄값 -->
-								<p class="purNoRow">${purchase.purNo }</p>
+								<p class="purNo">${purchase.purNo }</p>
 								<p>${purchase.purDate }</p>
 							</td>
 							<td>
@@ -88,7 +219,7 @@
 					</c:otherwise>
 					</c:choose>
 				</table>
-			</div>
+			</div> --%>
 		</div>
 	</div>
 </div>
@@ -132,14 +263,16 @@
 	$(".cancelBtn").click(function(){
 		if(confirm("취소신청 하시겠습니까?\n판매자가 취소승인이후 환불이 진행됩니다.\n이미 배송이 진행됐을 경우 환불이 불가능할 수 있습니다.")){
 			var gdsLNo = $(this).parent().parent().find(".gdsLNo").html();
-			location.href="/client/orderDeliveryStatus.sool?gdsLNo="+gdsLNo+"&deliveryStatus="+2+"&reqPage="+${reqPage}+"&period="+${period};
+			var purNo = $(this).parent().parent().find(".purNo").html();
+			location.href="/client/orderDeliveryStatus.sool?purNo="+purNo+"&gdsLNo="+gdsLNo+"&deliveryStatus="+2+"&reqPage="+${reqPage}+"&period="+${period};
 		}
 	})
 	//수취확인
 	$(".completeBtn").click(function(){
 		if(confirm("상품을 확인하셨습니까?\n수취확인이후 환불이 불가능합니다.")){
 			var gdsLNo = $(this).parent().parent().find(".gdsLNo").html();
-			location.href="/client/orderDeliveryStatus.sool?gdsLNo="+gdsLNo+"&deliveryStatus="+5+"&reqPage="+${reqPage}+"&period="+${period};
+			var purNo = $(this).parent().parent().find(".purNo").html();
+			location.href="/client/orderDeliveryStatus.sool?purNo="+purNo+"&gdsLNo="+gdsLNo+"&deliveryStatus="+5+"&reqPage="+${reqPage}+"&period="+${period};
 		}
 	})
 	
@@ -153,48 +286,19 @@
 	
 	
 	//주문번호가 같으면 rowspan으로 행합치게
-	/* $(function(){
-		var start = 0;
-		var idx = 0;
-		var rowSpan = 0;
-		var removeStr = '';
-		$(".purNoRow").each(function(index){
-			start = index;
-			var rowSpan = 0;
-			if(start>=idx){
-			$(".purNoRow").each(function(index){
-				
-					//console.log("idx : "+idx);
-					//console.log("index : "+index);
-					if($(".purNoRow").eq(idx).html()==$(this).html()){
-						if(idx!=index){
-							//console.log("remove");
-							removeStr += String(index)+",";
-							console.log("idx : "+idx);
-							console.log("index : "+index);
-							idx = index+1;
-							//$(".rowSpan").eq(index).remove();
-						}
-						++rowSpan;
-					}
-					//console.log("idx : "+$(".purNoRow").eq(idx).html());
-					//console.log("index : "+$(this).html());
-					console.log("length : "+($('.purNoRow').length-1));
-					if(index==($(".purNoRow").length-1)){
-						$(".rowSpan").eq(idx).attr("rowspan",rowSpan);
-						
-						console.log("length");
-					}
-				
+	$(function(){
+		var arr = $(".rowSpan");
+		arr.each(function(idx,item){
+			var arr2 = $(item).nextUntil(".rowSpan");
+			$(item).children().eq(0).attr("rowspan",arr2.length+1);
+			$(item).children().eq(2).attr("rowspan",arr2.length+1);
+			arr2.each(function(index,item2){
+				$(item2).children().eq(0).hide();
+				$(item2).children().eq(2).hide();
 			});
-			}
 		});
-		
-		var removeList = removeStr.split(',');
-		for(var i in removeList){
-			console.log(removeList[i]);
-		}
-	}); */
+		$("tr").last().children().show();
+	}); 
 	
 	
 </script>
