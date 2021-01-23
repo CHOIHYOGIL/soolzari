@@ -13,8 +13,8 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 </head>
 <body>
-	<section>
-		<jsp:include page="/WEB-INF/views/admin/navi.jsp"/>
+	<jsp:include page="/WEB-INF/views/admin/navi.jsp"/>
+	<section class="frm">
         <div class="wrap">
             <h1>공지사항</h1>
             <form action="/notice/insert.sool" method="post" enctype="multipart/form-data">
