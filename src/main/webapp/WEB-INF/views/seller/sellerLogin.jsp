@@ -19,10 +19,6 @@
             <div class="loginNot">
                 <span>본 페이지는 판매자 전용입니다<br>일반 사용자는 고객페이지를 이용해주세요</span>
                 <div><a href="/seller/regist.sool">회원가입</a></div>
-                <span>로그인 정보가 기억나지 않으세요?</span>
-                <div class="box-flex">
-                    <a href="#">아이디 찾기</a>
-                </div>
             </div>
         </form>
     </div>

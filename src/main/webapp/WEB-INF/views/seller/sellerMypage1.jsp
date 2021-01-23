@@ -9,43 +9,7 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<style>
-	body .table{
-		width: 1000px;
-		margin: 0 auto;
-	}
-	.infoDiv{
-	 	text-indent: 200px;
-	 	padding-top: 100px;
-	}
-	.infoDiv .td2{
-		width: 80%;
-	}
-	.infoDiv input{
-		width: 300px;
-	}
-	
-	/* '수정' 버튼색----------------------------------------- */
-	.btnDiv{
-		text-align: center;
-		border-bottom: none;
-		padding-top: 100px;
-	}
-	.btnDiv .updateBtn{
-		background-color: rgb(188, 160, 201);
-		color: white;
-		width: 200px;
-		font-size: 20px;
-	}
-	.btnDiv .updateBtn:hover {
-		color: white;
-	}
-	.addr{
-		display: inline-block;
-	}
-	
-		
-</style>
+<link rel="stylesheet" href="/resources/css/sellerMypage.css">
 </head>
 <body>
 	<%@include file="/WEB-INF/views/seller/sellerHeader.jsp"%>
@@ -74,8 +38,13 @@
                             <a href="/seller/fundingList.sool?reqPage=1&selNo=${sessionScope.sessionSeller.selNo}">펀딩 확인</a>
                         </div>
                     </li>
-                    <li class="item">
-                        <a href="/seller/mypage.sool" class="btn-left">마이페이지</a>
+                    <li class="item" id="mypage_con">
+                        <a href="#mypage_con" class="btn-left">마이페이지</a>
+                        <div class="subMenu">
+                            <a href="/seller/mypage1.sool">정보 수정</a>
+                            <a href="/seller/mypage2.sool?reqPage=1">상품 배송 관리</a>
+                            <a href="/seller/mypage3.sool?reqPage=1">펀딩 배송 관리</a>
+                        </div>
                     </li>
                 </ui>
             </div>
@@ -83,8 +52,8 @@
         <div id="main_container">
             <div id="main_content">
             	<div class="infoDiv">
+            	<h5 style="text-align: center;padding:20px;margin: 0 auto;background-color:#f7b8b4;"> 판매자 정보 수정 </h5>
             		<form action="/seller/mypageSellerUpdate.sool" method="post">
-					<h4>판매자 정보</h4>
 						<table class="table">
 						  <tbody>
 						    <tr>
@@ -115,12 +84,14 @@
 						</table>
 					</form>
 				</div>
+				<br>
             </div>
         </div>
     </div>
     <div id="seller_footer">
         © SoolZaRi 술자리
     </div>
+
     <script>
   	//주소 수정
 	$(document).on("click", ".addrUpdate", function(){
@@ -251,6 +222,8 @@
          }
 	    
 	});
+
+
     </script>
 </body>
 </html>

@@ -107,11 +107,16 @@
         display: block;
         overflow: auto;
     }
+	
+	hr{
+    	background-color: black;
+    }
+
 
     #main_content>* {
         color: #4d5075;
-        background-color: white;
     }
+    
 
     ui {
         list-style-type: none;

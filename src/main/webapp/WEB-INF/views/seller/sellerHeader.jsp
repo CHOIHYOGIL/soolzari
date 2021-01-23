@@ -34,4 +34,8 @@
 		
 		location.href='/seller/logout.sool';
 	})
+	
+	$("seller_banner").click(function(){
+		location.href="/seller/mypage1.sool";
+	})
 </script>
