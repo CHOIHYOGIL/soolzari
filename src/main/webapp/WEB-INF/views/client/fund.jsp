@@ -110,8 +110,7 @@
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
            <fmt:parseDate var="today1" value="${today }" pattern="yyyy-MM-dd"/>
                                     <fmt:parseNumber value="${today1.time/(1000*60*60*24) }" integerOnly="true" var="today2" scope="request"/>
-<span>${today2}</span>
-<span>${itDate }</span>
+
 <span class="rateNum" > <span style="color:#f7b8b4; float:right; padding-top:30px;">
                                     
                                     
