@@ -431,7 +431,27 @@ public class ClientController2 {
 			return "common/msg";
 		}
 	}
-	
+	//상품상세페이지
+	@RequestMapping("/oGoodsDetail1.sool")
+	public String oGoodsDetail1 (int gdsNo, String gdsRate, Model model){
+		ArrayList<GoodsSellerDetail> gsd = service.oGoodsDetail(gdsNo);
+		if(gsd!=null) {//상품이 있을 경우
+			model.addAttribute("gsd",gsd.get(0));//상품정보 전달(기본이미지를 포함하고있음)
+			model.addAttribute("gsdGD",gsd.get(1));//상품정보 전달(상세이미지를 포함하고있음)
+			ArrayList<FundReview> reviewList= service.reviewList1(gdsNo);
+			model.addAttribute("reviewList",reviewList);
+			
+			model.addAttribute("gdsRate",gdsRate);
+			model.addAttribute("goodNo",gdsNo);
+			System.out.println(gdsNo);
+			System.out.println(reviewList);
+			return "client/oGoodsDetail1";
+		}else {
+			model.addAttribute("msg","상품을 불러오는데 실패했습니다");
+			model.addAttribute("loc","/");//상품리스트 경로수정
+			return "common/msg";
+		}
+	}
 	//펀딩상세페이지
 	@RequestMapping("/oFundingDetail.sool")
 	public String oFundingDetail (int fundNo, Model model){
@@ -448,6 +468,29 @@ public class ClientController2 {
 		
 			//System.out.println("fundGoodsList:"+fd.getFundGoodsList());
 			return "client/oFundingDetail";
+		}else {
+			model.addAttribute("msg","상품을 불러오는데 실패했습니다");
+			model.addAttribute("loc","/");//상품리스트 경로수정
+			return "common/msg";
+		}
+	}
+	
+	
+	@RequestMapping("/oFundingDetail1.sool")
+	public String oFundingDetail1 (int fundNo, Model model){
+		FundDetail fd = service.oFundingDetail(fundNo);
+		if(fd!=null) {//펀딩이 있을 경우
+			model.addAttribute("fund",fd.getFund().get(0));//펀딩정보와 기본이미지
+			model.addAttribute("fundFD",fd.getFund().get(1));//펀딩정보와 상세이미지
+			model.addAttribute("fundGoodsList",fd.getFundGoodsList());//펀딩상품정보
+			
+			ArrayList<FundReview> reviewList= service.reviewList(fundNo);
+			System.out.println("reviewList:"+reviewList);
+			model.addAttribute("reviewList",reviewList);
+			//System.out.println("fund:"+fd.getFund());
+		
+			//System.out.println("fundGoodsList:"+fd.getFundGoodsList());
+			return "client/oFundingDetail1";
 		}else {
 			model.addAttribute("msg","상품을 불러오는데 실패했습니다");
 			model.addAttribute("loc","/");//상품리스트 경로수정

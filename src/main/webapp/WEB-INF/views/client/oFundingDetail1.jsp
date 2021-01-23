@@ -70,21 +70,7 @@
                           <span style="font-size:25px;">댓글</span>
             	<hr width="800px" align="left">
             </div>
-      	 <div class="gl">
-            
-	          
-	            <div class="inputComment">
-		            <form action="/insertComment.sool" method="post">
-		
-			            <input type="hidden" name="fundNo" value="${fund.fundNo}"> <!-- 스룹스터디no -->
-			            <input type="hidden" name="commentWriter" value="${sessionNo}"> <!-- 작성자 -->
-			            <input type="hidden" name="commentWriterName" value="${sessionName}"> <!-- 작성자 -->
-			  			
-			            <textarea class="form-control rowCheck" name="commentContent" style="resize: none; width: 65%; display: inline-block; outline: none;" maxlength="65" required="required"></textarea> 
-			            <button type="submit" class="btn btn-success btn-lg endDayCheck" style="background-color: #4d5075; color:white; border:none; margin-bottom:50px; margin-left:10px;">등록</button>
-		            </form>
-	            </div>
-	            </div> 
+ 
 	            </c:if>
 	             		    <div id="commentScrollDiv" style="width: 74%;">
 	            <!-- 전체 댓글 출력 및 본인 댓글 수정 / 삭제 -->

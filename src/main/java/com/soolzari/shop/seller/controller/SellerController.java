@@ -127,6 +127,7 @@ public class SellerController {
 	public String login(Seller s, HttpSession session, Model model) {
 		Seller seller = service.selectOneSeller(s);
 		if(seller!=null) {
+			session.setAttribute("selNo", seller.getSelNo());
 			session.setAttribute("sessionSeller", seller);
 			model.addAttribute("loc","/seller/sellerMain.sool");
 			model.addAttribute("msg","로그인 성공");
@@ -523,19 +524,19 @@ public class SellerController {
 		return "common/msg";
 	}
 	//배송변경
-	@RequestMapping("/updateGdsDStatus")
-	public String updateGdsDStatus (int gdsLNo, int gdsDStatus, Model model) {
+	@RequestMapping("/updateGdsDStatus.sool")
+	public String updateGdsDStatus (int gdsLNo, int gdsDStatus, Model model, int selNo) {
 		int result = service.updateGdsDStatus(gdsLNo,gdsDStatus);
 		if(result==2) {
 			model.addAttribute("msg","수정 성공");
 		}else {
 			model.addAttribute("msg","수정 오류");
 		}
-		model.addAttribute("loc","/seller/mypage2.sool?reqPage=1");
+		model.addAttribute("loc","/seller/mypage2.sool?reqPage=1&selNo="+selNo);
 		return "common/msg";
 	}
 	
-	@RequestMapping("/updateFndDStatus")
+	@RequestMapping("/updateFndDStatus.sool")
 	public String updateFndDStatus (int fndDNo, int fndDStatus, Model model) {
 		int result = service.updateFndDStatus(fndDNo,fndDStatus);
 		if(result==2) {

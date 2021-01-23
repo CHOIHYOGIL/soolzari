@@ -127,11 +127,12 @@
 
     <script>
 	$(function(){
+		var selNo='<%=session.getAttribute("selNo")%>';
 		$("select[name=gdsDStatus]").change(function(){
 			var gdsLNo = $(this).prev().val();
 			console.log(gdsLNo);
 			console.log($(this).val());
-			location.href="/seller/updateGdsDStatus.sool?gdsLNo="+gdsLNo+"&gdsDStatus="+$(this).val();
+			location.href="/seller/updateGdsDStatus.sool?gdsLNo="+gdsLNo+"&gdsDStatus="+$(this).val()+"&selNo="+selNo;
 		})
 	})
 
