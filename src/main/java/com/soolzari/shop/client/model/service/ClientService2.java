@@ -173,11 +173,12 @@ public class ClientService2 {
 			}
 			//결제한 상품의 basket정보(개수)와 goods정보를 가져옴
 			//ArrayList<BasketList> basketList = paymentAllSelect(basNoList);//위에서 사용한 메소드 재활용
-			Goods2 goods = new Goods2();
-			Basket basket = new Basket();
+			
 			ArrayList<BasketList> basketList = new ArrayList<BasketList>();
 			int i = 0;
 			for(int gdsNo : gdsNoList) {
+				Goods2 goods = new Goods2();
+				Basket basket = new Basket();
 				basket.setBasCnt(gdsLCntList.get(i));
 				goods = dao.goodsBasketSelect(gdsNo);
 				BasketList bl = new BasketList();
@@ -186,7 +187,6 @@ public class ClientService2 {
 				basketList.add(bl);
 				i++;
 			}
-			
 			//ArrayList<GoodsList> goodsList = new ArrayList<GoodsList>();
 			for(BasketList bl : basketList) {//주문번호 하나당 상품여러개가능하니까(purchase한레코드당 여러개의 goodsList레코드 존재)
 				GoodsList gl = new GoodsList();

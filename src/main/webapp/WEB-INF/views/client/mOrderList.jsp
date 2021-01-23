@@ -67,9 +67,9 @@
 															<c:when test="${olData.gdsDStatus==0}">
 																<button type="button" class="btn btn-outline-secondary btn-sm cancelBtn">취소신청</button>
 															</c:when>
-															<c:otherwise>
+															<c:when test="${olData.gdsDStatus==2}">
 																<p>취소완료</p>
-															</c:otherwise>
+															</c:when>
 														</c:choose>
 													</td>
 													<td>
@@ -112,9 +112,9 @@
 															<c:when test="${olData.gdsDStatus==0}">
 																<button type="button" class="btn btn-outline-secondary btn-sm cancelBtn">취소신청</button>
 															</c:when>
-															<c:otherwise>
+															<c:when test="${olData.gdsDStatus==2}">
 																<p>취소완료</p>
-															</c:otherwise>
+															</c:when>
 														</c:choose>
 													</td>
 													<td>
@@ -299,6 +299,18 @@
 		});
 		$("tr").last().children().show();
 	}); 
+	
+	
+	//리뷰 줄 수 제한
+	$("textarea[name=qnaCon]").keyup(function(){
+		 var rows = $(this).val().split('\n').length;
+	        var maxRows = 5;
+	        if( rows > maxRows){
+	            modifiedText = $(this).val().split("\n").slice(0, maxRows);
+	            $(this).val(modifiedText.join("\n"));
+	        }
+	});
+	
 	
 	
 </script>
