@@ -10,8 +10,8 @@ public class Funding {
 	private int fundChk;//펀딩 성공 여부
 	private String fundDet;
 	private int status;
-	private String fundDate;
-	private String fundEndDate;
-	private String fundEnrollDate;
+	private String fundDate;//펀딩 승인날짜 sysdate
+	private String fundEnrollDate;//펀딩  시작날짜
+	private String fundEndDate;//펀딩 종료일
 	private int selNo;
 }

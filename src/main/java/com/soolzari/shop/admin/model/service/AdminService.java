@@ -13,12 +13,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.soolzari.shop.admin.model.dao.AdminDao;
+import com.soolzari.shop.admin.model.vo.Goods;
 import com.soolzari.shop.admin.model.vo.Qrv;
 import com.soolzari.shop.admin.model.vo.Sool;
 import com.soolzari.shop.admin.model.vo.User;
 import com.soolzari.shop.admin.model.vo.UserPage;
 import com.soolzari.shop.client.model.vo.Funding;
-import com.soolzari.shop.client.model.vo.Goods;
 import com.soolzari.shop.client.model.vo.Qna;
 import com.soolzari.shop.client.model.vo.QnaPageData;
 
@@ -344,7 +344,11 @@ public class AdminService {
 		for(Sool s : list) {
 			double avg = s.getTakju()+s.getChungju()+s.getSoju()+s.getWine()+s.getFruit();
 			s.setAvg(avg/5);
-			s.setMonth(s.getMonth().substring(4));			
+			if(s.getMonth().charAt(4) == '0') {
+				s.setMonth(s.getMonth().substring(5));
+			}else {
+				s.setMonth(s.getMonth().substring(4));	
+			}		
 		}
 		return list;
 	}

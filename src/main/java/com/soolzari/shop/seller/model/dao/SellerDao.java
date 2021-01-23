@@ -11,7 +11,9 @@ import org.springframework.stereotype.Repository;
 import com.soolzari.shop.seller.model.vo.Class;
 import com.soolzari.shop.seller.model.vo.Funding;
 import com.soolzari.shop.seller.model.vo.FundingGoods;
+import com.soolzari.shop.seller.model.vo.FundingList;
 import com.soolzari.shop.seller.model.vo.Goods;
+import com.soolzari.shop.seller.model.vo.GoodsList;
 import com.soolzari.shop.seller.model.vo.Image;
 import com.soolzari.shop.seller.model.vo.Score;
 import com.soolzari.shop.seller.model.vo.Seller;
@@ -150,6 +152,44 @@ public class SellerDao {
 
 	public int deleteFunding(int fundNo) {
 		return sqlSession.delete("seller.deleteFunding",fundNo);
+	}
+
+	public int insertFundingGoods(FundingGoods fg) {
+		return sqlSession.insert("seller.insertFundingGoods",fg);
+	}
+
+	public int updateGdsDStatus(HashMap<String, Integer> gdsInfo) {
+		return sqlSession.update("seller.updateGdsDStatus",gdsInfo);
+	}
+
+	public int updatePurchaseStatus(int purNo) {
+		return sqlSession.update("seller.updatePurchaseStatus",purNo);
+	}
+
+	public int selectPurNo(int gdsLNo) {
+		return sqlSession.selectOne("seller.selectPurNo",gdsLNo);
+	}
+
+	public ArrayList<GoodsList> selectAllGoodsList(HashMap<String, Integer> pageNo) {
+		List<GoodsList> gdsList = sqlSession.selectList("seller.selectAllGoodsList",pageNo);
+		return (ArrayList<GoodsList>)gdsList;
+	}
+
+	public int goodsListTotalCount() {
+		return sqlSession.selectOne("seller.goodsListTotalCount");
+	}
+
+	public ArrayList<FundingList> selectAllFundingList(HashMap<String, Integer> pageNo) {
+		List<FundingList> fndList = sqlSession.selectList("seller.selectAllFundingList",pageNo);
+		return (ArrayList<FundingList>)fndList;
+	}
+
+	public int fundingListTotalCount() {
+		return sqlSession.selectOne("seller.fundingListTotalCount");
+	}
+
+	public int updateFndDStatus(HashMap<String, Integer> fndInfo) {
+		return sqlSession.update("seller.updateFndDStatus",fndInfo);
 	}
 	
 	

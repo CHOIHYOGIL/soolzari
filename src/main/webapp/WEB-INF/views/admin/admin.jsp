@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +28,7 @@
         var options = {
           title: '사용자 현황',
           titleTextStyle: {
-        	  fontSize: 24
+        	  fontSize: 20
           },
           pieHole: 0.4,
           colors:['#4d5075','#bca0c9','#f7b8b4','#ffd0bf'],
@@ -43,14 +44,14 @@
     		  var arr = new Array();
         	  arr.push(['월', '탁주', '청주', '증류주', '와인', '과실주', '평균']);
         	  for(var i=0;i<list.length;i++){
-            	  arr.push([list[i].month, Number(list[i].takju), Number(list[i].chungju), Number(list[i].soju), Number(list[i].wine), Number(list[i].fruit), Number(list[i].avg)]);
+            	  arr.push([list[i].month+"월", Number(list[i].takju), Number(list[i].chungju), Number(list[i].soju), Number(list[i].wine), Number(list[i].fruit), Number(list[i].avg)]);
               }
         	  var data = google.visualization.arrayToDataTable(arr);
 
                 var options = {
                   title: '상품 판매량',
                   titleTextStyle: {
-                	  fontSize: 24
+                	  fontSize: 20
                   },
                   vAxis: {title: '판매 개수'},
                   hAxis: {title: '월'},
@@ -79,7 +80,7 @@
           var options = {
         	 title: '클래스 예약 현황',
         	 titleTextStyle: {
-           	  fontSize: 24
+           	  fontSize: 20
              },
         	 vAxis: {title: '클래스 예약 수'},
              hAxis: {title: '월'},
@@ -114,7 +115,7 @@
             var options = {
               title: '펀딩 달성률',
               titleTextStyle: {
-            	  fontSize: 24
+            	  fontSize: 20
               },
               pieHole: 0.4,
               colors: ['#4d5075','#bca0c9','#f7b8b4','#ffd0bf', 'rgb(251, 220, 173)', 'rgb(215, 109, 119)', 'rgb(254, 180, 123)'],
@@ -136,16 +137,48 @@
 		    <div id="classChart"></div>
 		    <div id="fundingChart"></div>
 		    <div>
-		    	<h2>이번 달 펀딩 최고 금액</h2>
-		    	${fundTotalMoney }
-		    	${bestFunding.fundName }
+		    	<div class="chart">
+			    	<h1 class="chartTitle">${now }월 펀딩 최고 금액</h1>
+			    	<h2 class="highlight">${fundTotalMoney } 원</h2>
+			    	<h3>${bestFunding.fundName }</h3>
+			    </div>
+		    	
+		    	<div class="chart">
+			    	<h1 class="chartTitle">${now }월 가장 많이 팔린 전통주</h1>
+			    	<div class="type">
+			    		<span>
+					    	<c:choose>
+					    		<c:when test="${bestGoods.goodsType eq 't' }">
+					    			탁주
+					    		</c:when>
+					    		<c:when test="${bestGoods.goodsType eq 'c' }">
+					    			청주
+					    		</c:when>
+					    		<c:when test="${bestGoods.goodsType eq 's' }">
+					    			증류주
+					    		</c:when>
+					    		<c:when test="${bestGoods.goodsType eq 'f' }">
+					    			과실주
+					    		</c:when>
+					    		<c:when test="${bestGoods.goodsType eq 'w' }">
+					    			와인
+					    		</c:when>
+					    	</c:choose>
+				    	</span>
+				    	<img src="/resources/image/wine.png">
+			    	</div>
+			    	<h2 class="highlight">${bestGoods.goodsName } - ${bestGoods.buyCount }개</h2>
+			    </div>
 		    </div>
 		    <div>
-		    	<h2>이번 달 총 상품 판매 금액</h2>
-		    	${goods.totalPrice }원
-		    	<h2>이번 달 총 상품 판매량</h2>
-		    	${goods.totalSales }개
-		    	<h2>이번 달 가장 많이 팔린 상품</h2>
+		    	<div class="chart">
+		    		<h1 class="chartTitle" style="margin-top:40px">${now }월 전통주 총 판매 금액</h1>
+		    		<h2 class="highlight">${goods.totalPrice } 원</h2>
+		    	</div>
+		    	<div class="chart">
+		    		<h1 class="chartTitle" style="margin-top:-20px">${now }월 전통주 총 판매량</h1>
+		    		<h2 class="highlight">${goods.totalSales } 개</h2>
+		    	</div>
 		    </div>
 	    </div>
 	</section>

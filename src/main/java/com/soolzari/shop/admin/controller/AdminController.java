@@ -14,15 +14,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.soolzari.shop.admin.model.service.AdminService;
+import com.soolzari.shop.admin.model.vo.Goods;
 import com.soolzari.shop.admin.model.vo.Qrv;
 import com.soolzari.shop.admin.model.vo.Sool;
 import com.soolzari.shop.admin.model.vo.UserPage;
+import com.soolzari.shop.client.model.vo.Client;
 import com.soolzari.shop.client.model.vo.Funding;
-import com.soolzari.shop.client.model.vo.Goods;
 import com.soolzari.shop.client.model.vo.Qna;
 import com.soolzari.shop.client.model.vo.QnaPageData;
 
@@ -42,15 +44,15 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/admin.sool")
-	public String admin(Model model, HttpSession session) {
-		if(session.getAttribute("sessionId").equals("admin")) {
+	public String admin(Model model, HttpSession session, @SessionAttribute(required=false) String sessionId) {
+		if(sessionId != null && sessionId.equals("admin")) {
 			HashMap<String, Integer> user = service.selectUserChart();
 			model.addAttribute("user", user);
 			
 	    	HashMap<String, Integer> classes = service.selectClass();
 	    	model.addAttribute("classes", classes);
 	    	Date date = new Date();
-			SimpleDateFormat sdf = new SimpleDateFormat("MM");
+			SimpleDateFormat sdf = new SimpleDateFormat("M");
 			String now = sdf.format(date);//1월
 			Calendar cal = Calendar.getInstance();
 	    	cal.setTime(date);
@@ -84,6 +86,9 @@ public class AdminController {
 	    	model.addAttribute("goods", goods);
 	    	
 	    	Goods bestGoods = service.bestGoods();
+	    	model.addAttribute("bestGoods", bestGoods);
+	    	System.out.println(bestGoods);
+	    	System.out.println(bestFunding);
 			return "admin/admin";
 		}
 		else {

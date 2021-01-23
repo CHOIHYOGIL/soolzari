@@ -68,7 +68,7 @@
 	
 	
 		<c:choose>
-			<c:when test="${sessionId!=null }">
+			<c:when test="${sessionScope.sessionId!=null }">
 				   <div>
 			
                     <ul class="login">
