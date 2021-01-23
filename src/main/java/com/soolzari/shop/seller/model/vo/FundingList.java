@@ -1,5 +1,8 @@
 package com.soolzari.shop.seller.model.vo;
 
+import lombok.Data;
+
+@Data
 public class FundingList {
 	private int fndDNo;
 	private int fundNo;
