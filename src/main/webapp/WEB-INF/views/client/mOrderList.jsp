@@ -103,7 +103,7 @@
 														</c:if>
 														<c:if test="${olData.gdsDStatus==5}">
 															<p>수취확인완료</p>
-															<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='/client/oGoodsDetail.sool?fundNo=${olData.gdsNo }'">리뷰쓰기</button>
+															<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='/client/oGoodsDetail.sool?gdsNo=${olData.gdsNo }'">리뷰쓰기</button>
 														</c:if>
 													</td>
 												</tr>
@@ -163,7 +163,7 @@
 														</c:if>
 														<c:if test="${olData.gdsDStatus==5}">
 															<p>수취확인완료</p>
-															<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='/client/oGoodsDetail.sool?fundNo=${olData.gdsNo }'">리뷰쓰기</button>
+															<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='/client/oGoodsDetail.sool?gdsNo=${olData.gdsNo }'">리뷰쓰기</button>
 														</c:if>
 													</td>
 												</tr>

@@ -157,7 +157,7 @@
 
 </div>
 
-
+<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 <script>
 	$(function(){
 		$(".goodsPrice").html(commaSet($(".goodsPrice").html()));
