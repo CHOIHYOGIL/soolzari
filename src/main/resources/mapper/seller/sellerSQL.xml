@@ -145,7 +145,7 @@ group by c.cls_no , c.cls_name, c.sel_no, c.cls_det, c.cls_price, c.class_enroll
    </select>
    
    <insert id="insertFunding" parameterType="sellerFunding">
-   insert into funding_db values (funding_db_seq.nextval, #{fundName}, #{fundMoney}, #{fundChk}, #{fundDet}, #{status}, #{fundDate}, #{selNo}, to_char(sysdate,'yyyy-mm-dd'), #{fundEndDate})
+   insert into funding_db values (funding_db_seq.nextval, #{fundName}, #{fundMoney}, #{fundChk}, #{fundDet}, #{status}, to_char(sysdate,'yyyy-mm-dd'), #{selNo}, #{fundDate}, #{fundEndDate})
    </insert>
    <select id="selectLastFunding" resultType="_int">
      select max(fund_no) from funding_db
