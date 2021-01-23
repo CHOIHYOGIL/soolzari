@@ -76,8 +76,6 @@
 					            <c:choose>
 					            <c:when test="${f.fndDStatus<2}">
 					            <option value="1">결제준비</option>
-					            <option value="2">결제완료</option>
-					            <option value="3">배송중</option>
 					            </c:when>
 					            <c:when test="${f.fndDStatus==2}">
 					            <option value="2" selected>결제완료</option>

@@ -527,7 +527,7 @@ public class SellerController {
 	@RequestMapping("/updateGdsDStatus.sool")
 	public String updateGdsDStatus (int gdsLNo, int gdsDStatus, Model model, int selNo) {
 		int result = service.updateGdsDStatus(gdsLNo,gdsDStatus);
-		if(result==2) {
+		if(result>0) {
 			model.addAttribute("msg","수정 성공");
 		}else {
 			model.addAttribute("msg","수정 오류");
@@ -539,7 +539,7 @@ public class SellerController {
 	@RequestMapping("/updateFndDStatus.sool")
 	public String updateFndDStatus (int fndDNo, int fndDStatus, Model model) {
 		int result = service.updateFndDStatus(fndDNo,fndDStatus);
-		if(result==2) {
+		if(result>0) {
 			model.addAttribute("msg","수정 성공");
 		}else {
 			model.addAttribute("msg","수정 오류");
