@@ -53,6 +53,7 @@
             <h2 style="text-align: center;padding:20px;margin: 0 auto;background-color:#f7b8b4;"> 내 전통주 클래스 목록 </h2>
             
             <form action="deleteClass.sool" method="post">
+            	<input type="hidden" name="selNo" value="${sessionScope.sessionSeller.selNo }">
 				<div id="class_maincon">
 				<table class="table">
 				    <thead>

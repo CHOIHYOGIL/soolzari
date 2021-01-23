@@ -309,7 +309,7 @@ public class SellerController {
 		}else {
 			model.addAttribute("msg","클래스 등록이 실패했습니다.");
 		}
-		model.addAttribute("loc","/seller/classList.sool?reqPage=1");
+		model.addAttribute("loc","/seller/classList.sool?reqPage=1&selNo="+cls.getSelNo());
 		return "common/msg";
 	}
 	
@@ -340,7 +340,7 @@ public class SellerController {
 		}else {
 			model.addAttribute("msg","클래스 수정이 실패했습니다.");
 		}
-		model.addAttribute("loc","/seller/classList.sool?reqPage=1");
+		model.addAttribute("loc","/seller/classList.sool?reqPage=1&selNo="+c.getSelNo());
 		return "common/msg";
 		
 	}
@@ -449,7 +449,7 @@ public class SellerController {
 	}
 	
 	@RequestMapping("/deleteClass.sool")
-	public String deleteClass(@RequestParam("checkbox") List<Integer> values, Model model) {
+	public String deleteClass(@RequestParam("checkbox") List<Integer> values, int selNo, Model model) {
 		System.out.println("delete");
 		int cnt = values.size();
 		System.out.println(cnt);
@@ -467,7 +467,7 @@ public class SellerController {
 		}else {
 			model.addAttribute("msg","삭제 성공");
 		}
-		model.addAttribute("loc","/seller/classList.sool?reqPage=1");
+		model.addAttribute("loc","/seller/classList.sool?reqPage=1&selNo="+selNo);
 		return "common/msg";
 	} 
 	//마이페이지 이동
