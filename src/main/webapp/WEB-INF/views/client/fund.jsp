@@ -106,7 +106,25 @@
                                          <span class="rateNum">진행 상황 :            <fmt:formatNumber value="${f.fundMoneyNow/f.fundMoney*100 }" pattern="0.00"/> %</span><br>
                                     <span class="rateNum">목표치 :<fmt:formatNumber type="number" maxFractionDigits="3" value="${f.fundMoney}" />원</span><br>
                       
-                                    <span class="rateNum" > <span style="color:#f7b8b4; float:right; padding-top:30px;">${itDate-isDate}일 남음</span></span>
+                                    <jsp:useBean id="now" class="java.util.Date" />
+<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
+           <fmt:parseDate var="today1" value="${today }" pattern="yyyy-MM-dd"/>
+                                    <fmt:parseNumber value="${today1.time/(1000*60*60*24) }" integerOnly="true" var="today2" scope="request"/>
+<span>${today2}</span>
+<span>${itDate }</span>
+<span class="rateNum" > <span style="color:#f7b8b4; float:right; padding-top:30px;">
+                                    
+                                    
+                                    <c:choose>
+                                    	<c:when test="${itDate < today2 }">
+                                    	  펀딩이 ${itDate-isDate}일 전에 종료되었습니다.</span></span>
+                                    	</c:when> 
+                                    	<c:otherwise>
+                                    	  펀딩이 ${itDate-isDate}일 남았습니다.</span></span>
+                                    	</c:otherwise>
+                                    </c:choose>
+                                    
+                                  
                                     </div>
                                                   
                                                 
