@@ -471,6 +471,7 @@ public class ClientController2 {
 			fd.setFndDCli(sessionClient.getClientNo());
 			System.out.println("펀딩후원insert");
 			int result = service.fundReservationInsert(fd);
+			System.out.println(result);
 			if(result>0) {
 				model.addAttribute("msg","고객님의 후원으로 목표치에 달성하였습니다!!\\n펀딩종료일에 메일로 결제안내를 드립니다\\n확인하시고 결제 부탁드립니다");
 			}else {

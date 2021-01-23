@@ -78,11 +78,11 @@
           ]);
 
           var options = {
-        	 title: '클래스 예약 현황',
+        	 title: '클래스 예약 인원 현황',
         	 titleTextStyle: {
            	  fontSize: 20
              },
-        	 vAxis: {title: '클래스 예약 수'},
+        	 vAxis: {title: '클래스 예약 인원 수'},
              hAxis: {title: '월'},
              colors: ['#4d5075','#bca0c9','#f7b8b4','#ffd0bf', 'rgb(251, 220, 173)', 'rgb(215, 109, 119)', 'rgb(254, 180, 123)'],
              fontSize: 16
@@ -167,7 +167,7 @@
 				    	</span>
 				    	<img src="/resources/image/wine.png">
 			    	</div>
-			    	<h2 class="highlight">${bestGoods.goodsName } - ${bestGoods.buyCount }개</h2>
+			    	<h2 class="highlight bestGoods">${bestGoods.goodsName } - ${bestGoods.buyCount }개</h2>
 			    </div>
 		    </div>
 		    <div>

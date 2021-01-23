@@ -78,9 +78,11 @@ public class AdminController {
 	    	
 	    	Funding bestFunding = service.selectBestFunding();
 	    	DecimalFormat formatter = new DecimalFormat("###,###");
-			String fundTotalMoney = formatter.format(bestFunding.getFundTotalMoney());
+	    	if(bestFunding != null) {
+	    		String fundTotalMoney = formatter.format(bestFunding.getFundTotalMoney());
+	    		model.addAttribute("fundTotalMoney", fundTotalMoney);
+	    	}
 	    	model.addAttribute("bestFunding", bestFunding);
-	    	model.addAttribute("fundTotalMoney", fundTotalMoney);
 	    	
 	    	HashMap<String, Object> goods = service.selectGoods();
 	    	model.addAttribute("goods", goods);
@@ -106,8 +108,8 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/user.sool")
-	public String user(int type, int reqPage, Model model) {//1=고객, 2=판매자
-		UserPage up = service.selectAllUser(type, reqPage);
+	public String user(int type, int reqPage, int order, Model model) {//1=고객, 2=판매자
+		UserPage up = service.selectAllUser(type, reqPage, order);
 		model.addAttribute("list", up.getList());
 		model.addAttribute("page", up.getPage());
 		model.addAttribute("type", type);

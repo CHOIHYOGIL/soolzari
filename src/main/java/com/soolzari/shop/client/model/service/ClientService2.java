@@ -400,7 +400,7 @@ public class ClientService2 {
 	public int fundReservationInsert(FundDetailDB fd) {
 		int result = dao.fundReservationInsert(fd);
 		if(result>0) {//예약완료 후 목표달성률을 넘긴 펀딩이면 chk를 1로 업데이트
-			result = dao.fundChkUpdate(fd.getFundNo());
+			result += dao.fundChkUpdate(fd.getFundNo());
 		}
 		return result;//0:예약실패, 1:예약성공 목표달성도 체크
 	}
