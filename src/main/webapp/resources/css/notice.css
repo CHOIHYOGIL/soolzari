@@ -101,11 +101,6 @@ a {
     justify-content: center;
 }
 
-section {
-    width: 1200px;
-    margin: 0 auto;
-}
-
 .sel {
     display: inline-block;
     width: 30px;
@@ -142,6 +137,11 @@ section {
 .btnwrap label{
     width: 100px;
 }
-section{
-	margin-left: 100px;
+.noticeList{
+	width: 1200px;
+	margin-left: 200px;
+}
+body{
+	width: 2000px;
+	height: 100vh;
 }

@@ -10,7 +10,10 @@
 *{
     font-family: 'S-CoreDream-3Light';
 }
-
+body{
+	width: 2000px;
+	height: 100vh;
+}
 .notice tr {
     border-top: 1px solid lightgray;
     text-align: center;

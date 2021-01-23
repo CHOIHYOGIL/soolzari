@@ -10,8 +10,12 @@
 * {
     font-family: 'S-CoreDream-3Light';
 }
-section{
-	margin-left: 100px;
+body{
+	width: 2000px;
+	height: 100vh;
+}
+.view{
+	margin-left: 250px;
 }
 
 .notice,

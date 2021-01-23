@@ -11,6 +11,11 @@
     font-family: 'S-CoreDream-3Light';
 }
 
+body{
+	width: 2000px;
+	height: 100vh;
+}
+
 section{
 	margin-left: 120px;
 }
