@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Array;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.soolzari.shop.admin.model.service.AdminService;
 import com.soolzari.shop.client.model.vo.Client;
 import com.soolzari.shop.common.FileNameOverlap;
 import com.soolzari.shop.seller.model.service.SellerService;
@@ -472,7 +474,15 @@ public class SellerController {
 	} 
 	//마이페이지 이동
 	@RequestMapping("/mypage1.sool")
-	public String mypage1() {
+	public String mypage1(Model model, HttpSession session) {
+		int selNo = (Integer) session.getAttribute("selNo");
+		int goods = service.selectSellerGoods(selNo);
+		int sales = service.selectSellerSales(selNo);
+		DecimalFormat formatter = new DecimalFormat("###,###");
+		String totalGoods = formatter.format(goods);
+		String totalSales = formatter.format(sales);
+		model.addAttribute("totalGoods", totalGoods);
+		model.addAttribute("totalSales", totalSales);
 		return "seller/sellerMypage1";
 	}
 	@RequestMapping("/mypage2.sool")

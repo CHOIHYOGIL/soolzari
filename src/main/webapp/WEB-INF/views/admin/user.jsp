@@ -175,11 +175,13 @@
         $("#partde").click(function(){//선택 탈퇴
         	var inputs = $("[type=checkbox]:checked");
         	if(inputs.length != 0){
-        		var userNo = new Array();
-            	inputs.each(function(index, item){
-            		userNo.push($(item).parent().next().html());
-            	});
-            	location.href="/deleteAll.sool?type="+type+"&userNo="+userNo.join("/");
+        		if(confirm("탈퇴시키면 복구할 수 없습니다. 그럼에도 탈퇴시키겠습니까?")){
+        			var userNo = new Array();
+                	inputs.each(function(index, item){
+                		userNo.push($(item).parent().next().html());
+                	});
+                	location.href="/deleteAll.sool?type="+type+"&userNo="+userNo.join("/");
+        		}
         	}else{
         		alert("선택해주세요");
         	}
@@ -190,8 +192,10 @@
         	location.href="/changeOne.sool?type="+type+"&userNo="+userNo+"&grade="+grade;
         });
         $(".delete").click(function(){
-        	var userNo = $(this).parent().parent().children().eq(1).html();
-        	location.href="/deleteOne.sool?type="+type+"&userNo="+userNo;
+        	if(confirm("탈퇴시키면 복구할 수 없습니다. 그럼에도 탈퇴시키겠습니까?")){
+        		var userNo = $(this).parent().parent().children().eq(1).html();
+            	location.href="/deleteOne.sool?type="+type+"&userNo="+userNo;
+        	}
         });
         $("[type=submit]").click(function(event){
         	if($("[name=search]").val() == ""){

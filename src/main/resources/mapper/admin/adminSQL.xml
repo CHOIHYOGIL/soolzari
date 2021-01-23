@@ -284,6 +284,15 @@
 			</otherwise>
 		</choose>
 	</select>
+	<select id="selectFundingGoods" resultType="fundingGoods">
+		select
+			fnd_g_no as fndGNo,
+			fund_no as fundNo,
+			fnd_g_name as fndGName,
+			fnd_g_con as fndGCon,
+			fnd_g_pri as fndGPri
+		from fnd_gds_db
+	</select>
 	
 	<select id="selectAllClient" parameterType="map" resultType="u">
 		select * from (select rownum as rnum, c.* from (
@@ -297,7 +306,7 @@
 			cli_rank as status,
 			cli_enroll as userEnroll,
 			cli_point as point
-		from client_db order by cli_enroll
+		from client_db where cli_rank not in (10) order by cli_enroll
 		<if test="order == 1">
 			desc
 		</if>
@@ -458,7 +467,7 @@
 			qna_enroll as qnaEnroll,
 			qna_ans qnaAns,
 			cli_id as qnaId
-		from qna_db join client_db on (cli_no = qna_writer) order by qna_ans)q) where rnum between #{start} and #{end}
+		from qna_db join client_db on (cli_no = qna_writer) order by qna_ans, qna_enroll)q) where rnum between #{start} and #{end}
 	</select>
 	<select id="totalQna" resultType="_int">
 		select count(*) from qna_db
@@ -580,7 +589,7 @@
 		           from goods_list_db
 		           left join goods_db using(gds_no)
 		           left join purchase_db using(pur_no)  
-		           where goods_type='w'
+		           where goods_type='w' and pur_cancel = 0
 		           group by (substr(pur_date,1,6),goods_type))
 		           using (month)
 		           left join
@@ -588,7 +597,7 @@
 		           from goods_list_db
 		           left join goods_db using(gds_no)
 		           left join purchase_db using(pur_no)  
-		           where goods_type='t'
+		           where goods_type='t' and pur_cancel = 0
 		           group by (substr(pur_date,1,6),goods_type))
 		           using (month)
 		           left join
@@ -596,7 +605,7 @@
 		           from goods_list_db
 		           left join goods_db using(gds_no)
 		           left join purchase_db using(pur_no)  
-		           where goods_type='c'
+		           where goods_type='c' and pur_cancel = 0
 		           group by (substr(pur_date,1,6),goods_type))
 		           using (month)
 		           left join
@@ -604,7 +613,7 @@
 		           from goods_list_db
 		           left join goods_db using(gds_no)
 		           left join purchase_db using(pur_no)  
-		           where goods_type='f'
+		           where goods_type='f' and pur_cancel = 0
 		           group by (substr(pur_date,1,6),goods_type))
 		           using (month)
 		           left join
@@ -612,7 +621,7 @@
 		           from goods_list_db
 		           left join goods_db using(gds_no)
 		           left join purchase_db using(pur_no)  
-		           where goods_type='s'
+		           where goods_type='s' and pur_cancel = 0
 		           group by (substr(pur_date,1,6),goods_type))
 		           using (month)
 		       )
@@ -675,7 +684,7 @@
             f2.sel_no as selNo,
 			f2.fund_enrolldate as fundEnrolldate,
 			f2.fund_enddate as fundEnddate
-		from fnd_det_db f1 right join funding_db f2 using(fund_no) where substr(fund_enrolldate,1,7) = to_char(sysdate, 'yyyy-mm')
+		from fnd_det_db f1 right join funding_db f2 using(fund_no) where substr(fund_enddate,1,7) = to_char(sysdate, 'yyyy-mm') 
     	group by (fund_no, f2.fund_money, f2.fund_name, f2.fund_enrolldate, f2.fund_enddate, f2.sel_no) order by fundTotalMoney desc)m) where rownum=1
 	</select>
 	<select id="totalSales" resultType="_int">
@@ -697,5 +706,11 @@
 				sum(gds_l_cnt) buyCount
 			from (select * from goods_db join goods_list_db using(gds_no) join purchase_db using (pur_no) where substr(pur_date,1,6) = to_char(sysdate, 'yyyymm') and pur_cancel=0 and status=1) group by gds_no, gds_name, goods_type
 		order by buyCount desc)g) where rownum=1
+	</select>
+	<select id="selectSellerGoods" parameterType="_int" resultType="_int">
+		select nvl(sum(gds_l_cnt),0) from (select gds_no, pur_no, gds_l_no, gds_l_cnt, pur_cancel, pur_date, sel_no, status from goods_list_db join purchase_db using(pur_no) join goods_db using(gds_no) where sel_no = #{_parameter} and pur_cancel=0 and status=1)
+	</select>
+	<select id="selectSellerSales" parameterType="_int" resultType="_int">
+		select nvl(sum(totalSales),0) from (select gds_no, pur_no, gds_l_no, gds_l_cnt, gds_l_price, (gds_l_cnt*gds_l_price) totalSales, pur_cancel, pur_date, sel_no, status from goods_list_db join purchase_db using(pur_no) join goods_db using(gds_no) where sel_no = #{_parameter} and pur_cancel=0 and status=1)
 	</select>
 </mapper>

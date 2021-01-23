@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.soolzari.shop.admin.model.service.NoticeService;
@@ -57,8 +58,14 @@ public class NoticeController {
 	}
 	
 	@RequestMapping("/form.sool")
-	public String noticeFrm() {
-		return "admin/noticeFrm";
+	public String noticeFrm(HttpSession session, @SessionAttribute(required=false) String sessionId, Model model) {
+		if(sessionId != null && sessionId.equals("admin")) {
+			return "admin/noticeFrm";
+		}else {
+			model.addAttribute("msg", "관리자만 접근 가능합니다");
+			model.addAttribute("loc", "/");
+			return "common/msg";
+		}
 	}
 	
 	@RequestMapping("/find.sool")

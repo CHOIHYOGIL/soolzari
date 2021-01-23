@@ -246,6 +246,12 @@ public class AdminService {
 			result = dao.deleteQna(qna);
 			if(result == 0) {
 				break;
+			}else {
+				Qrv qrv = dao.selectOneQrv(qna);
+				result = dao.deleteQrv(qrv.getQrvNo());
+				if(result == 0) {
+					break;
+				}
 			}
 		}
 		return result;
@@ -389,8 +395,9 @@ public class AdminService {
 	public HashMap<String, Object> selectGoods() {
 		HashMap<String, Object> goods = new HashMap<String, Object>();
 		int totalSalePrice = dao.totalSalePrice();//총 판매 금액
-		int totalSales = dao.totalSales();//총 판매량
+		int sales = dao.totalSales();//총 판매량
 		DecimalFormat formatter = new DecimalFormat("###,###");
+		String totalSales = formatter.format(sales);
 		String totalPrice = formatter.format(totalSalePrice);
 		goods.put("totalSales", totalSales);
 		goods.put("totalPrice", totalPrice);

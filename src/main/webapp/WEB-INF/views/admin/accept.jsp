@@ -33,7 +33,7 @@
 	                			<th>상품명</th>
 	                		</c:when>
 	                		<c:when test="${type eq 2 }">
-	                			<th>펀딩 상품</th>
+	                			<th>펀딩 이름</th>
 	                		</c:when>
 	                		<c:when test="${type eq 3 }">
 	                			<th>클래스명</th>
@@ -83,9 +83,10 @@
 		            <table class="funding">
 		                <tr>
 		                    <th>선택</th>
-		                    <th>펀딩 상품</th>
+		                    <th>펀딩 이름</th>
 		                    <th>신청자</th>
 		                    <th>펀딩 설명</th>
+		                    <th>펀딩 상품</th>
 		                    <th>목표 금액</th>
 		                    <th>신청일</th>
 		                    <th colspan="2">승인</th>
@@ -96,6 +97,7 @@
 			                    <td>${a.acceptName }</td>
 			                    <td>${a.seller }</td>
 			                    <td>${a.acceptDet }</td>
+			                    
 			                    <td>${a.acceptPrice }</td>
 			                    <td>${a.acceptDate }</td>
 			                    <input type="hidden" value="${a.acceptNo }">

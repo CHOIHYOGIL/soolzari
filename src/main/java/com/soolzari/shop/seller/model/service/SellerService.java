@@ -391,6 +391,14 @@ public int updateFndDStatus(int fndDNo, int fndDStatus) {
 	return result;
 }
 
+public int selectSellerGoods(int selNo) {
+	return dao.selectSellerGoods(selNo);
+}
+
+public int selectSellerSales(int selNo) {
+	return dao.selectSellerSales(selNo);
+}
+
 
 
 
