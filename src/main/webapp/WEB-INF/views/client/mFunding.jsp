@@ -182,10 +182,5 @@
 		let price1 = str.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		return price1;
 	}
-	
-	//리뷰쓰기버튼
-	$(".reviewBtn").click(){
-		
-	}
 </script>
 </html>
