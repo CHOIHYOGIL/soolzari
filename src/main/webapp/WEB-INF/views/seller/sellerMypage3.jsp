@@ -57,9 +57,10 @@
 					<table class="table">
 					    <thead>
 					        <tr>
-					            <th scope="col">펀딩 번호</th>
+					            <th scope="col">펀딩 이름</th><!-- 펀딩이름 -->
 					            <th scope="col">펀딩 결제금액</th>
-					            <th scope="col">펀딩상품 번호</th>
+					            <th scope="col">구매자 아이디</th><!-- 구매자 아이디 -->
+					            <th scope="col">펀딩상품 이름</th><!-- 펀딩상품이름 -->
 					            <th scope="col">배송</th>
 					            <th scope="col">상태</th>
 					        </tr>
@@ -67,29 +68,35 @@
 					    <tbody>
 					       <c:forEach items="${fndList}" var="f">
 					        <tr>
-					            <th scope="row">${f.fundNo}</th>
+					            <th scope="row">${f.fundName}</th><!-- f.fundName -->
 					            <td>${f.fndDPrice}</td>
-					            <td>${f.fndGNo}</td>
+					            <td>${f.cliId }</td><!-- f.cliId -->
+					            <td>${f.fndGName}</td><!-- f.fndGName -->
 					            <td>
-					            <input type="hidden" value="${f.fndDNo}">
-					            <select name="fndDStatus" id="fndDStatus">
+					            
 					            <c:choose>
 					            <c:when test="${f.fndDStatus<2}">
-					            <option value="1">결제준비</option>
+					            <span>결제준비</span>
 					            </c:when>
 					            <c:when test="${f.fndDStatus==2}">
+					            <input type="hidden" value="${f.fndDNo}">
+					            <select name="fndDStatus" id="fndDStatus">
 					            <option value="2" selected>결제완료</option>
 					            <option value="3">배송중</option>
+					            </select>
 					            </c:when>
 					            <c:when test="${f.fndDStatus==3}">
+					            <input type="hidden" value="${f.fndDNo}">
+					            <select name="fndDStatus" id="fndDStatus">
 					            <option value="3" selected>배송중</option>
 					            <option value="4">배송완료</option>
+					            </select>
 					            </c:when>
 					            <c:when test="${f.fndDStatus>=4}">
 					            <span>배송완료</span>
 					            </c:when>
 					            </c:choose>
-					            </select></td>
+					            </td>
 					            <td>
 					            <c:choose>
 					            <c:when test="${f.fndDStatus<2}">
@@ -111,7 +118,7 @@
 					    </tbody>
 					</table>
 					</div>
-					<div id="class_page">
+					<div id="page">
 					            ${fndPage}
 					</div>
 				</div>

@@ -9,6 +9,7 @@ public class Funding {
 	private int fundMoney;
 	private int fundChk;//펀딩 성공 여부
 	private String fundDet;
+	private String cliId;
 	private int status;
 	private String fundDate;//펀딩 승인날짜 sysdate
 	private String fundEnrollDate;//펀딩  시작날짜

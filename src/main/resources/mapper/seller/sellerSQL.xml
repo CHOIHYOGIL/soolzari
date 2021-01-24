@@ -180,30 +180,38 @@ order by c.class_enroll)c) where rnum between #{start} and #{end}
   			pur_no as purNo,
   			pur_get as purGet,
   			gds_no as gdsNo,
-  			gds_l_price as gdsLPrice,
+  			gds_l_price * gds_l_cnt as gdsLPrice,
   			gds_d_status as gdsDStatus,
   			sel_no as selNo
   		from goods_list_db join purchase_db using(pur_no) join goods_db using(gds_no)
   		where (gds_d_status in (0,2,3,4,5) and (sel_no = #{selNo})) order by 1 desc)g)
   	where rnum between #{start} and #{end}
   	</select>
-  	<select id="goodsListTotalCount" resultType="_int">
+  	<select id="goodsListTotalCount" parameterType="_int" resultType="_int">
   	  	select count(*) from goods_list_db join purchase_db using(pur_no) join goods_db using(gds_no) where  (gds_d_status in (0,2,3,4,5)) and (sel_no = #{selNo})
   	</select>
   	
   	<select id="selectAllFundingList" parameterType="map" resultType="sellerFL">
   	select * from (select rownum as rnum, f.* from (
      select
-        fnd_d_no as fndDNo,
-        fund_no as fundNo,
-        fnd_d_price as fndDPrice,
+        fdb.fnd_d_no as fndDNo,
+        fd.fund_name as fundName,
+        fd.fund_no as fundNo,
+        fdb.fnd_d_price as fndDPrice,
         fnd_g_no as fndGNo,
-        fnd_d_status as fndDStatus,
+        fgd.fnd_g_name as fndGName,
+        fdb.fnd_d_status as fndDStatus,
+        cd.cli_id as cliId,
         sel_no
-     from fnd_det_db join funding_db using(fund_no) where (fnd_d_status <![CDATA[>]]> 0 and fnd_d_status <![CDATA[<]]> 5) order by 1 desc)f) where (rnum between #{start} and #{end}) and sel_no=#{selNo}
+     from fnd_det_db fdb
+     join funding_db fd on (fdb.fund_no = fd.fund_no)
+     join client_db cd on (fdb.fnd_d_cli = cd.cli_no)
+     join fnd_gds_db fgd using(fnd_g_no)
+     where (fnd_d_status <![CDATA[>]]> 0 and fnd_d_status <![CDATA[<]]> 5) order by 1 desc)f)
+     where (rnum between #{start} and #{end}) and sel_no=#{selNo}
   	</select>
-  	<select id="fundingListTotalCount" resultType="_int">
-  	select count(*) from fnd_det_db where (fnd_d_status <![CDATA[>]]> 0 and fnd_d_status <![CDATA[<]]> 5)
+  	<select id="fundingListTotalCount" resultType="_int" parameterType="_int">
+  	select count(*) from fnd_det_db fdb join funding_db fd on (fdb.fund_no = fd.fund_no) join client_db cd on (fdb.fnd_d_cli = cd.cli_no) join fnd_gds_db fgd using(fnd_g_no) where (fnd_d_status <![CDATA[>]]> 0 and fnd_d_status <![CDATA[<]]> 5) and sel_no=#{selNo}
   	</select>
   	<update id="updateFndDStatus" parameterType="map">
   	update fnd_det_db set fnd_d_status = #{fndDStatus } where fnd_d_no = #{fndDNo }

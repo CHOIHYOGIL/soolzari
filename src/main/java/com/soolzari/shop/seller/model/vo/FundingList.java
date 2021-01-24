@@ -6,8 +6,11 @@ import lombok.Data;
 public class FundingList {
 	private int fndDNo;
 	private int fundNo;
+	private String fundName;
 	private int fndDPrice;
-	private int fndGNo;
+	private String cliId;
+	private int fndGNo;//미사용
+	private String fndGName;
 	private int fndDStatus;
 	private int selNo;
 	
