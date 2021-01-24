@@ -24,21 +24,17 @@ public class AcceptController {
 	public String accept(int type, int reqPage, Model model) {
 		AcceptPage ap = service.selectAll(type, reqPage);
 		if(type == 2) {//펀딩 상품 가져오기
-			ArrayList<FundingGoods> fundingGoods = service.fundingGoods();
-			int i =0;
-//			ArrayList<FundingGoods> fglist = new ArrayList<FundingGoods>();
-//			for(FundingGoods fg : fundingGoods) {
-//				for(Accept f : ap.getList()) {
-//					if(fg.getFundNo() == f.getAcceptNo()) {
-//						fglist.add(i, fg);
-//						System.out.println("fglist"+fglist);
-//					}
-//					i++;
-//					f.setFundingGoods(fglist);
-//					System.out.println(f.getAcceptNo()+","+f.getFundingGoods());
-//				}
-//			}
-//			System.out.println("fundingGoods"+fundingGoods);
+			ArrayList<FundingGoods> fundingGoods = service.fundingGoods();			
+			
+			for(Accept f : ap.getList()) {
+				ArrayList<FundingGoods> fglist = new ArrayList<FundingGoods>();
+				for(FundingGoods fg : fundingGoods) {
+					if(fg.getFundNo() == f.getAcceptNo()) {
+						fglist.add(fg);				
+					}	
+					f.setFundingGoods(fglist);
+				}
+			}
 		}
 //		if(type == 1) {
 //			ap = service.selectAllGoods(reqPage);
