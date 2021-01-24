@@ -29,7 +29,6 @@
     html,
     body,
     div,
-    span,
     ul,
     li,
     input,
@@ -87,7 +86,7 @@
     input::-webkit-input-placeholder{
         color: #ddd;
     }
-    button{
+    input[type=button],input[type=submit]{
         margin-top:10px;
         width:100%;
         border:none;
@@ -95,6 +94,6 @@
         background-color: #f7b8b4;
         color: white;
     }
-    .comment{
+    span{
     color:red;
     }

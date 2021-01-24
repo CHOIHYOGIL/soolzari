@@ -78,6 +78,9 @@
                         </c:forEach>
                     </tbody>
                 </table>
+                <div id="page">
+                        ${page }
+            </div>
                 <div id="main_sub">
                     <div id="main_crud">
                         <input id="deleteBtn" type="button" value="펀딩 삭제">

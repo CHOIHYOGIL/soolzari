@@ -63,7 +63,6 @@
 				            <th scope="col">클래스 가격</th>
 				            <th scope="col">클래스 시작시간</th>
 				            <th scope="col">클래스 인원</th>
-				            <th scope="col">선택</th>
 				        </tr>
 				    </thead>
 				    <tbody>
@@ -74,7 +73,6 @@
 				            <td>${cl.classPrice}</td>
 				            <td>${cl.classEnroll} ${cl.classStartTime}</td>
 				            <td>${cl.classNow} / ${cl.classPerson}</td>
-				               <td><input type="checkbox" name="checkbox" value="${cl.classNo }"></td>
 				        </tr>
 				        </c:forEach>
 				    </tbody>
@@ -95,6 +93,8 @@
     <div id="seller_footer">
         © SoolZaRi 술자리
     </div>
+
+    
 </body>
 
 </html>

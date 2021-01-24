@@ -67,7 +67,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">펀딩 목표금액</th>
-                                    <td><input type="text" name="fundMoney" required></td>
+                                    <td><input id="fundMoney" type="text" name="fundMoney" required></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">펀딩 설명</th>
@@ -75,11 +75,11 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">펀딩 시작일</th>
-                                    <td><input type="text" name="fundEnrollDate" required></td>
+                                    <td><input id="fundEnrollDate" type="text" name="fundEnrollDate" required></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">펀딩 종료일</th>
-                                    <td><input type="text" name="fundEndDate" required></td>
+                                    <td><input id="fundEndDate" type="text" name="fundEndDate" required></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">이미지(사진)</th>
@@ -90,7 +90,7 @@
                                     <td><input type="file" name="file2" required></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" style="text-align: right; border-bottom: none; text-align: center;"><input type="submit" class="btn btn-primary" value="등록하기" style="width:30%"></td>
+                                    <td colspan="2" style="text-align: right; border-bottom: none; text-align: center;"><input id="submitBtn" type="submit" class="btn btn-primary" value="등록하기" style="width:30%"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -102,5 +102,36 @@
     <div id="seller_footer">
         © SoolZaRi 술자리
     </div>
+    <script>
+    $(function(){
+    	$("#submitBtn").click(function(event){
+    		var count=0;
+    		
+    		var moneyReg = /^[0-9]{1,}$/;
+    		if(!moneyReg.test($("#fundMoney").val())){
+    			alert("올바르지 않은 펀딩금액입니다. (숫자만 입력가능)");
+    			count++;
+    		}
+    		
+    		
+    		
+    		var fundEnrollDate = $("#fundEnrollDate").val();
+    		var fundEndDate = $("#fundEndDate").val();
+    		
+    		var dateReg = /^(19|20)\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])$/;
+    		
+    		if(!dateReg.test(fundEnrollDate) || !dateReg.test(fundEndDate)){
+    			alert("올바르지 않은 날짜 지정입니다. (YYYY-MM-DD)");
+    			count++;
+    		};
+
+    		
+    		if(count>0){
+    			event.preventDefault();
+    		}
+    	});
+    	
+    })
+    </script>
 </body>
 </html>

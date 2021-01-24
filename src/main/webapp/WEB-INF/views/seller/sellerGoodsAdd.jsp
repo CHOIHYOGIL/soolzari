@@ -53,7 +53,7 @@
 	            <div id="goods_add">
 			 	   <div id="goods_add_con">
 				        <div class="goods_add_box">
-				        <span>${sessionScope.sessionSeller.selNo }</span>
+				        <!-- <span>${sessionScope.sessionSeller.selNo }</span>-->
 				        
 				            <form action="/seller/insertGoods.sool" method="post" enctype="multipart/form-data">
 				                <h2 id="goods_add_title">상품 등록하기</h2>
@@ -69,7 +69,7 @@
 				                </select>
 				                <label>상품사진</label><input type="file" name="files" required>
 				        <label>상품 설명 사진</label><input type="file" name="files" required>
-				                <button type="submit" name="button" class="submit-btn">등록</button>
+				                <input id="submitBtn" type="submit" name="button" class="submit-btn">등록</button>
 				            </form>
 				        </div>
 				        
@@ -81,6 +81,22 @@
     <div id="seller_footer">
         © SoolZaRi 술자리
     </div>
+    <script>
+    $(function(){
+    	$("#submitBtn").click(function(event){
+    		var count=0;
+    		var moneyReg = /^[0-9]{1,}$/;
+    		if(!moneyReg.test($("#gdsPri").val())){
+    			alert("올바르지 않은 펀딩금액입니다. (숫자만 입력가능)");
+    			count++;
+    		}
+    		if(count>0){
+    			event.preventDefault();
+    		}
+    	});
+    	
+    })
+    </script>
 </body>
 
 </html>

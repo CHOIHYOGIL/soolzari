@@ -75,18 +75,18 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">클래스 시작일</th>
-                                    <td><input type="text" name="classEnroll" required></td>
+                                    <td><input id="classEnroll" type="text" name="classEnroll" required></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">클래스 시작 시간</th>
-                                    <td><input type="text" name="classStartTime" required></td>
+                                    <td><input id="classStartTime" type="text" name="classStartTime" required></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">클래스 최대 인원</th>
                                     <td><input type="text" name="classPerson" required></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" style="text-align: right; border-bottom: none; text-align:center;"><input type="submit" class="btn btn-primary" value="등록하기" style="width:30%"></td>
+                                    <td colspan="2" style="text-align: right; border-bottom: none; text-align:center;"><input id="submitBtn" type="submit" class="btn btn-primary" value="등록하기" style="width:30%"></td>
                                 </tr>
                             </tbody>
 
@@ -100,7 +100,20 @@
         © SoolZaRi 술자리
     </div>
     <script>
-       
+    $(function(){
+    	$("#submitBtn").click(function(event){
+    		var count=0;
+    		var timeReg = /^([01][0-9]|2[0-3]):([0-5][0-9])$/;
+    		if(!timeReg.test($("#classStartTime").val())){
+    			alert("올바르지 않은 클래스 시작시간입니다.");
+    			count++;
+    		}
+    		if(count>0){
+    			event.preventDefault();
+    		}
+    	});
+    	
+    })
     </script>
 </body>
 </html>

@@ -184,7 +184,7 @@ order by c.class_enroll)c) where rnum between #{start} and #{end}
   			gds_d_status as gdsDStatus,
   			sel_no as selNo
   		from goods_list_db join purchase_db using(pur_no) join goods_db using(gds_no)
-  		where ((gds_d_status in (0,2,3,4,5)) and (sel_no = #{selNo}) order by 1 desc)g)
+  		where (gds_d_status in (0,2,3,4,5) and (sel_no = #{selNo})) order by 1 desc)g)
   	where rnum between #{start} and #{end}
   	</select>
   	<select id="goodsListTotalCount" resultType="_int">
