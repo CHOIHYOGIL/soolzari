@@ -170,13 +170,13 @@
                                     
                                     <c:choose>
                                     	<c:when test="${itDate < today2 }">
-                                    	  펀딩이 ${today2-itDate}일 전 종료되었습니다.</span></span>
+                                    	  <span style="color:lightgray;">펀딩이 ${today2-itDate}일 전 종료되었습니다.</span></span></span>
                                     	</c:when> 
                                     	<c:when test="${isDate >today2 }">
-                                    		펀딩이 오픈전입니다.<br> ${isDate-today2 }일 뒤 펀딩이 오픈됩니다.
+                                    		<span style="color:lightgray;">펀딩이 오픈전입니다.<br> ${isDate-today2 }일 뒤 펀딩이 오픈됩니다.</span>
                                     	</c:when>
                                     	<c:otherwise>
-                                    	  펀딩이 ${itDate-today2}일 남았습니다.</span></span>
+                                    	  	<span>펀딩이 ${itDate-today2}일 남았습니다.</span>
                                     	</c:otherwise>
                                     </c:choose>
                                     
@@ -253,11 +253,11 @@
     	
     			$(".product-li").find(".test3").show();
     		}else if (idx == 3){
-
-    			$(".product-li").find(".test2").show();
-    		}else {
     			$(".product-li").find(".test1").show();
-
+    		
+    		}else {
+    	
+    			$(".product-li").find(".test2").show();
     		}
     	});
     	
