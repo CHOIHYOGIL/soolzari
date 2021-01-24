@@ -98,6 +98,10 @@
             		<form action="/seller/mypageSellerUpdate.sool" method="post">
 						<table class="table">
 						  <tbody>
+						  <tr>
+						  <th scope="row"></th>
+						  <td></td>
+						  </tr>
 						    <tr>
 						      <th scope="row">이름</th>
 						      <td class="td2"><input type="text" name="selName" value="${sessionScope.sessionSeller.selName }"><span class='comment'></span></td>
