@@ -54,6 +54,9 @@
 	width: 200px;
 	background: linear-gradient(to top, yellow 50%, transparent 50%);
 }
+.bestGoods{
+	width: 300px;
+}
 .chart>h3{
 	margin: 0;
 	margin-top: 20px;

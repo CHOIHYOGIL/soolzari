@@ -149,10 +149,6 @@
 					<td>${gsd.goodsDate }</td>
 				</tr>
 				<tr>
-					<th>평점</th>
-					<td>${gdsRate } / 5.0</td>
-				</tr>
-				<tr>
 					<th>배송비</th>
 					<td>2,500원</td>
 				</tr>
@@ -184,7 +180,7 @@
 
 </div>
 
-
+<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 <script>
 	$(function(){
 		$(".goodsPrice").html(commaSet($(".goodsPrice").html()));

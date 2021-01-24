@@ -50,6 +50,8 @@
 	                </tr>
             	</table>
             </form>
+            <a href="/user.sool?type=${type }&reqPage=1&order=1" class="order">가입일 최신순</a>
+            <a href="/user.sool?type=${type }&reqPage=1&order=0" class="order">가입일 오래된 순</a>
             <c:choose>
 	            <c:when test="${type eq 1 }">
 		            <table class="client">
@@ -66,44 +68,43 @@
 		                    <th colspan="2">변경 / 탈퇴</th>
 		                </tr>
 		                <c:forEach items="${list }" var="u">
-		                	<tr>
-			                    <td><input type="checkbox" name="chk"></td>
-			                    <td>${u.userNo }</td>
-			                    <td>${u.userId }</td>
-			                    <td>${u.userName }</td>
-			                    <td>${u.userEmail }</td>
-			                    <td>${u.userPhone }</td>
-			                    <td>${u.userAddr }</td>
-			                    <td>${u.userEnroll }</td>
-			                    <td>
-			                        <select>
-			                        	<c:choose>
-			                        		<c:when test="${u.status == 0}">
-			                        			<option value="0" selected>일반 회원</option>
-					                        	<option value="1">구독 A</option>
-					                        	<option value="2">구독 B</option>
-			                        		</c:when>
-			                        		<c:when test="${u.status == 1}">
-			                        			<option value="0">일반 회원</option>
-					                        	<option value="1" selected>구독 A</option>
-					                        	<option value="2">구독 B</option>
-			                        		</c:when>
-			                        		<c:when test="${u.status == 2}">
-			                        			<option value="0">일반 회원</option>
-					                        	<option value="1">구독 A</option>
-					                        	<option value="2" selected>구독 B</option>
-			                        		</c:when>
-			                        		<c:when test="${u.status == 10}">
-			                        			<option value="10">관리자</option>
-			                        		</c:when>
-			                        	</c:choose>
-			                        </select>
-			                    </td>
-			                    <td>
-			                        <button class="change">변경</button>
-			                        <button class="delete">탈퇴</button>
-			                    </td>
-			                </tr>
+		                	<c:if test="${u.status != 10 }">
+		                		<tr>
+				                    <td><input type="checkbox" name="chk"></td>
+				                    <td>${u.userNo }</td>
+				                    <td>${u.userId }</td>
+				                    <td>${u.userName }</td>
+				                    <td>${u.userEmail }</td>
+				                    <td>${u.userPhone }</td>
+				                    <td>${u.userAddr }</td>
+				                    <td id="enrollDate">${u.userEnroll }</td>
+				                    <td>
+				                        <select>
+				                        	<c:choose>
+				                        		<c:when test="${u.status == 0}">
+				                        			<option value="0" selected>일반 회원</option>
+						                        	<option value="1">구독 A</option>
+						                        	<option value="2">구독 B</option>
+				                        		</c:when>
+				                        		<c:when test="${u.status == 1}">
+				                        			<option value="0">일반 회원</option>
+						                        	<option value="1" selected>구독 A</option>
+						                        	<option value="2">구독 B</option>
+				                        		</c:when>
+				                        		<c:when test="${u.status == 2}">
+				                        			<option value="0">일반 회원</option>
+						                        	<option value="1">구독 A</option>
+						                        	<option value="2" selected>구독 B</option>
+				                        		</c:when>
+				                        	</c:choose>
+				                        </select>
+				                    </td>
+				                    <td>
+				                        <button class="change">변경</button>
+				                        <button class="delete">탈퇴</button>
+				                    </td>
+				                </tr>
+		                	</c:if>
 		                </c:forEach>
 		            </table>
 		            <div>
@@ -131,7 +132,7 @@
 			                    <td>${u.userName }</td>
 			                    <td>${u.userPhone }</td>
 			                    <td>${u.userAddr }</td>
-			                    <td>${u.userEnroll }</td>
+			                    <td id="enrollDate">${u.userEnroll }</td>
 			                    <td>
 			                        <button class="delete">탈퇴</button>
 			                    </td>
@@ -154,7 +155,7 @@
     $(function(){
         $(".navi a").click(function(){
             var index = $(".navi a").index(this);
-            location.href="/user.sool?type="+(index+1)+"&reqPage=1";
+            location.href="/user.sool?type="+(index+1)+"&reqPage=1&order=1";
         });
         $(".navi a").eq(type-1).addClass('select');
         $("#partch").click(function(){//선택 변경
@@ -174,11 +175,13 @@
         $("#partde").click(function(){//선택 탈퇴
         	var inputs = $("[type=checkbox]:checked");
         	if(inputs.length != 0){
-        		var userNo = new Array();
-            	inputs.each(function(index, item){
-            		userNo.push($(item).parent().next().html());
-            	});
-            	location.href="/deleteAll.sool?type="+type+"&userNo="+userNo.join("/");
+        		if(confirm("탈퇴시키면 복구할 수 없습니다. 그럼에도 탈퇴시키겠습니까?")){
+        			var userNo = new Array();
+                	inputs.each(function(index, item){
+                		userNo.push($(item).parent().next().html());
+                	});
+                	location.href="/deleteAll.sool?type="+type+"&userNo="+userNo.join("/");
+        		}
         	}else{
         		alert("선택해주세요");
         	}
@@ -189,8 +192,10 @@
         	location.href="/changeOne.sool?type="+type+"&userNo="+userNo+"&grade="+grade;
         });
         $(".delete").click(function(){
-        	var userNo = $(this).parent().parent().children().eq(1).html();
-        	location.href="/deleteOne.sool?type="+type+"&userNo="+userNo;
+        	if(confirm("탈퇴시키면 복구할 수 없습니다. 그럼에도 탈퇴시키겠습니까?")){
+        		var userNo = $(this).parent().parent().children().eq(1).html();
+            	location.href="/deleteOne.sool?type="+type+"&userNo="+userNo;
+        	}
         });
         $("[type=submit]").click(function(event){
         	if($("[name=search]").val() == ""){

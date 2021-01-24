@@ -20,14 +20,14 @@
                         <a href="#goods_con" class="btn-left">상품 관리</a>
                         <div class="subMenu">
                             <a href="/seller/goodsAdd.sool">상품 등록</a>
-                            <a href="/seller/goodsList.sool?reqPage=1">상품 보기</a>
+                            <a href="/seller/goodsList.sool?reqPage=1&selNo=${sessionScope.sessionSeller.selNo}">상품 보기</a>
                         </div>
                     </li>
                     <li class="item" id="class_con">
                         <a href="#class_con" class="btn-left">클래스 관리</a>
                         <div class="subMenu">
                             <a href="/seller/classAdd.sool">클래스 등록</a>
-                            <a href="/seller/classList.sool?reqPage=1">클래스 확인</a>
+                            <a href="/seller/classList.sool?reqPage=1&selNo=${sessionScope.sessionSeller.selNo}">클래스 확인</a>
                         </div>
                     </li>
                     <li class="item" id="funding_con">
@@ -40,7 +40,7 @@
                     <li class="item" id="mypage_con">
                         <a href="#mypage_con" class="btn-left">마이페이지</a>
                         <div class="subMenu">
-                            <a href="/seller/mypage1.sool">정보 수정</a>
+                            <a href="/seller/mypage1.sool">내 정보 보기</a>
                             <a href="/seller/mypage2.sool?reqPage=1&selNo=${sessionScope.sessionSeller.selNo}">상품 배송 관리</a>
                             <a href="/seller/mypage3.sool?reqPage=1">펀딩 배송 관리</a>
                         </div>

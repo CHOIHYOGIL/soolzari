@@ -21,7 +21,7 @@
                 <table class="notice">
                     <tr>
                         <td>제목</td>
-                        <td><input type="text" name="noticeTitle"></td>
+                        <td><input type="text" name="noticeTitle" placeholder="제목을 작성해주세요"></td>
                     </tr>
                     <tr>
                         <td>작성자</td>

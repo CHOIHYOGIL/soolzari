@@ -344,7 +344,8 @@
 			return n;
 		}
 		var date=d.getFullYear()+''+az(d.getMonth()+1)+''+az(d.getDate())+''+az(d.getHours())+''+az(d.getMinutes())+''+az(d.getSeconds());
-		
+
+
 		IMP.init("imp54844867");
 		IMP.request_pay({//결제를 위해 전달해주는 정보
 			merchant_uid : "${client.cliId}"+date,//상점거래ID(필수)

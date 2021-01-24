@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.soolzari.shop.admin.model.vo.Notice;
 import com.soolzari.shop.admin.model.vo.NoticePage;
@@ -32,6 +33,7 @@ public class SellerService {
 	@Autowired
 	SellerDao dao;
 	
+	@Transactional
 	public int insertSeller(Seller s) {
 		return dao.insertSeller(s);
 	}
@@ -44,17 +46,18 @@ public class SellerService {
 		return dao.selectAllGoods();
 	}
 
-	public ClassPage selectAllClass(int reqPage) {
+	public ClassPage selectAllClass(int reqPage, int selNo) {
 		int numPerPage = 10;
 		int start = (reqPage-1)*numPerPage+1;
 		int end = reqPage*numPerPage;
 		HashMap<String, Integer> pageNo = new HashMap<String, Integer>();
 		pageNo.put("start", start);
 		pageNo.put("end", end);
+		pageNo.put("selNo", selNo);
 		ArrayList<Class> list = dao.selectAllClass(pageNo);
 		ClassPage cp = new ClassPage();
 		cp.setList(list);
-		int totalCount = dao.classTotalCount();//총 게시물 수
+		int totalCount = dao.classTotalCount(selNo);//총 게시물 수
 		int totalPage = 0;
 		if(totalCount%numPerPage==0) {
 			totalPage = totalCount/numPerPage;
@@ -87,17 +90,18 @@ public class SellerService {
 		return cp;
 	}
 
-public GoodsPage selectAllGoods(int reqPage) {
+public GoodsPage selectAllGoods(int reqPage, int selNo) {
 	int numPerPage = 10;
 	int start = (reqPage-1)*numPerPage+1;
 	int end = reqPage*numPerPage;
 	HashMap<String, Integer> pageNo = new HashMap<String, Integer>();
 	pageNo.put("start", start);
 	pageNo.put("end", end);
+	pageNo.put("selNo", selNo);
 	ArrayList<Goods> list = dao.selectAllGoods(pageNo);
 	GoodsPage gp = new GoodsPage();
 	gp.setList(list);
-	int totalCount = dao.goodsTotalCount();//총 게시물 수
+	int totalCount = dao.goodsTotalCount(selNo);//총 게시물 수
 	int totalPage = 0;
 	if(totalCount%numPerPage==0) {
 		totalPage = totalCount/numPerPage;
@@ -130,6 +134,7 @@ public GoodsPage selectAllGoods(int reqPage) {
 	return gp;
 }
 
+@Transactional
 public int insertGoods(Goods g) {
 	return dao.insertGoods(g);
 }	
@@ -138,6 +143,7 @@ public int searchLastGoods() {
 	return dao.searchLastGoods();
 }
 
+@Transactional
 public int insertImage(Image i) {
 	return dao.insertImage(i);
 }
@@ -158,14 +164,17 @@ public Score selectOneScore(int gdsNo) {
 	return dao.selectOneScore(gdsNo);
 }
 
+@Transactional
 public int addClass(Class cls) {
 	return dao.addClass(cls);
 }
 
+@Transactional
 public int modifyGoods(Goods g) {
 	return dao.modifyGoods(g);
 }
 
+@Transactional
 public int deleteGoods(int temp) {
 	return dao.deleteGoods(temp);
 }
@@ -175,16 +184,18 @@ public Class getClassInfo(int classNo) {
 }
 
 //마이페이지 - 판매자 정보 수정
+@Transactional
 public int mypageUpdateSeller(Seller seller) {
 	return dao.mypageUpdateSeller(seller);
 }
 
-
+@Transactional
 public int deleteClass(int value) {
 	
 	return dao.deleteClass(value);
 }
 
+@Transactional
 public int modifyClass(Class c) {
 	return dao.modifyClass(c);
 }
@@ -203,7 +214,7 @@ public FundingPage selectAllFunding(int reqPage, int selNo) {
 	ArrayList<Funding> list = dao.selectAllFunding(pageNo);
 	FundingPage fp = new FundingPage();
 	fp.setList(list);
-	int totalCount = dao.FundingTotalCount();//총 게시물 수
+	int totalCount = dao.FundingTotalCount(selNo);//총 게시물 수
 	int totalPage = 0;
 	if(totalCount%numPerPage==0) {
 		totalPage = totalCount/numPerPage;
@@ -240,6 +251,7 @@ public ArrayList<FundingGoods> selectAllFundingGoods(int fundNo) {
 	return dao.selectAllFundingGoods(fundNo);
 }
 
+@Transactional
 public int insertFunding(Funding f) {
 	return dao.insertFunding(f);
 }
@@ -248,6 +260,7 @@ public int searchLastFunding() {
 	return dao.searchLastFunding();
 }
 
+@Transactional
 public int deleteFunding(String[] tokens) {
 	int result = 1;
 	for(int i=0;i<tokens.length;i++) {
@@ -261,10 +274,12 @@ public int deleteFunding(String[] tokens) {
 	return result;
 }
 
+@Transactional
 public int insertFundingGoods(FundingGoods fg) {
 	return dao.insertFundingGoods(fg);
 }
 
+@Transactional
 public int updateGdsDStatus(int gdsLNo, int gdsDStatus) {
 	HashMap<String, Integer> gdsInfo = new HashMap<String, Integer>();
 	gdsInfo.put("gdsLNo", gdsLNo);
@@ -368,6 +383,7 @@ public FundingListPage selectAllFundingList(int reqPage, int selNo) {
 	return flp;
 }
 
+@Transactional
 public int updateFndDStatus(int fndDNo, int fndDStatus) {
 	HashMap<String, Integer> fndInfo = new HashMap<String, Integer>();
 	fndInfo.put("fndDNo", fndDNo);
@@ -379,6 +395,14 @@ public int updateFndDStatus(int fndDNo, int fndDStatus) {
 public Seller checkId(Seller s) {
 	return dao.checkId(s);
 }
+public int selectSellerGoods(int selNo) {
+	return dao.selectSellerGoods(selNo);
+}
+
+public int selectSellerSales(int selNo) {
+	return dao.selectSellerSales(selNo);
+}
+
 
 
 

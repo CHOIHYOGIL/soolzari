@@ -10,6 +10,37 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <link rel="stylesheet" href="/resources/css/sellerMypage.css">
+<style>
+	.chart{
+		width: 500px;
+		height: 200px;
+		float: left;
+		border: 1px solid lightgray;
+		margin-top : 50px;
+		margin-left: 50px;
+		text-align: center;
+	}
+	
+	.chartTitle{
+	    margin: 0 auto;
+	    width: 200px;
+	    margin-top: 20px;
+	    border-bottom: 3px solid #4d5075;
+	    height: 50px;
+	    line-height: 50px;
+	    font-size: 20px;
+	    margin-top: 20px;
+	}
+	.chart>h2{
+	    color: #4d5075;
+	}
+	.highlight{
+		margin:0 auto;
+		margin-top: 20px;
+		width: 200px;
+		background: linear-gradient(to top, yellow 50%, transparent 50%);
+	}
+</style>
 </head>
 <body>
 	<%@include file="/WEB-INF/views/seller/sellerHeader.jsp"%>
@@ -21,14 +52,14 @@
                         <a href="#goods_con" class="btn-left">상품 관리</a>
                         <div class="subMenu">
                             <a href="/seller/goodsAdd.sool">상품 등록</a>
-                            <a href="/seller/goodsList.sool?reqPage=1">상품 보기</a>
+                            <a href="/seller/goodsList.sool?reqPage=1&selNo=${sessionScope.sessionSeller.selNo}">상품 보기</a>
                         </div>
                     </li>
                     <li class="item" id="class_con">
                         <a href="#class_con" class="btn-left">클래스 관리</a>
                         <div class="subMenu">
                             <a href="/seller/classAdd.sool">클래스 등록</a>
-                            <a href="/seller/classList.sool?reqPage=1">클래스 확인</a>
+                            <a href="/seller/classList.sool?reqPage=1&selNo=${sessionScope.sessionSeller.selNo}">클래스 확인</a>
                         </div>
                     </li>
                     <li class="item" id="funding_con">
@@ -41,7 +72,7 @@
                     <li class="item" id="mypage_con">
                         <a href="#mypage_con" class="btn-left">마이페이지</a>
                         <div class="subMenu">
-                            <a href="/seller/mypage1.sool">정보 수정</a>
+                            <a href="/seller/mypage1.sool">내 정보 보기</a>
                             <a href="/seller/mypage2.sool?reqPage=1&selNo=${sessionScope.sessionSeller.selNo}">상품 배송 관리</a>
                             <a href="/seller/mypage3.sool?reqPage=1">펀딩 배송 관리</a>
                         </div>
@@ -52,7 +83,18 @@
         <div id="main_container">
             <div id="main_content">
             	<div class="infoDiv">
-            	<h5 style="text-align: center;padding:20px;margin: 0 auto;background-color:#f7b8b4;"> 판매자 정보 수정 </h5>
+            	<h5 style="text-align: center;padding:20px;margin: 0 auto;background-color:#f7b8b4;"> 판매자 정보 보기 </h5>
+            		<div class="chartwrap">
+            			<div class="chart">
+					    	<h1 class="chartTitle">총 판매량</h1>
+					    	<h2 class="highlight">${totalGoods } 개</h2>
+					    </div>
+					    <div class="chart">
+					    	<h1 class="chartTitle">총 판매 금액</h1>
+					    	<h2 class="highlight">${totalSales } 원</h2>
+					    </div>
+            		</div>
+            		
             		<form action="/seller/mypageSellerUpdate.sool" method="post">
 						<table class="table">
 						  <tbody>

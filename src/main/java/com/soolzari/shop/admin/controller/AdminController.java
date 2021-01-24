@@ -78,9 +78,11 @@ public class AdminController {
 	    	
 	    	Funding bestFunding = service.selectBestFunding();
 	    	DecimalFormat formatter = new DecimalFormat("###,###");
-			String fundTotalMoney = formatter.format(bestFunding.getFundTotalMoney());
+	    	if(bestFunding != null) {
+	    		String fundTotalMoney = formatter.format(bestFunding.getFundTotalMoney());
+	    		model.addAttribute("fundTotalMoney", fundTotalMoney);
+	    	}
 	    	model.addAttribute("bestFunding", bestFunding);
-	    	model.addAttribute("fundTotalMoney", fundTotalMoney);
 	    	
 	    	HashMap<String, Object> goods = service.selectGoods();
 	    	model.addAttribute("goods", goods);
@@ -106,8 +108,8 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/user.sool")
-	public String user(int type, int reqPage, Model model) {//1=고객, 2=판매자
-		UserPage up = service.selectAllUser(type, reqPage);
+	public String user(int type, int reqPage, int order, Model model) {//1=고객, 2=판매자
+		UserPage up = service.selectAllUser(type, reqPage, order);
 		model.addAttribute("list", up.getList());
 		model.addAttribute("page", up.getPage());
 		model.addAttribute("type", type);
@@ -122,7 +124,7 @@ public class AdminController {
 		}else {
 			model.addAttribute("msg", "구독 등급 변경 실패");
 		}
-		model.addAttribute("loc", "/user.sool?type="+type+"&reqPage=1");
+		model.addAttribute("loc", "/user.sool?type="+type+"&reqPage=1&order=1");
 		return "common/msg";
 	}
 	
@@ -134,7 +136,7 @@ public class AdminController {
 		}else {
 			model.addAttribute("msg", "구독 등급 변경 실패");
 		}
-		model.addAttribute("loc", "/user.sool?type="+type+"&reqPage=1");
+		model.addAttribute("loc", "/user.sool?type="+type+"&reqPage=1&order=1");
 		return "common/msg";
 	}
 	
@@ -146,7 +148,7 @@ public class AdminController {
 		}else {
 			model.addAttribute("msg", "탈퇴 실패");
 		}
-		model.addAttribute("loc", "/user.sool?type="+type+"&reqPage=1");
+		model.addAttribute("loc", "/user.sool?type="+type+"&reqPage=1&order=1");
 		return "common/msg";
 	}
 	
@@ -158,7 +160,7 @@ public class AdminController {
 		}else {
 			model.addAttribute("msg", "탈퇴 실패");
 		}
-		model.addAttribute("loc", "/user.sool?type="+type+"&reqPage=1");
+		model.addAttribute("loc", "/user.sool?type="+type+"&reqPage=1&order=1");
 		return "common/msg";
 	}
 	
@@ -207,7 +209,7 @@ public class AdminController {
 		return "client/qnaViewC";
 	}
 	
-	@RequestMapping("deleteQna.sool")
+	@RequestMapping("/deleteQna.sool")
 	public String deleteQna(String qnaNo, Model model) {
 		int result = service.deleteQna(qnaNo);
 		if(result>0) {

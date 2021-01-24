@@ -36,7 +36,7 @@ body{
             border-left: 1px solid lightgray;
             box-sizing: border-box;
         }
-        .navi a:last-child{
+        .navi li:last-child>a{
             border-right: 1px solid lightgray;
             box-sizing: border-box;
         }
@@ -106,9 +106,6 @@ body{
             margin-top: 30px;
             margin-bottom: 30px;
         }
-        .client, .seller{
-        	margin-top: 50px;
-        }
         .client th, .client td {
             box-sizing: border-box;
             height: 40px;
@@ -119,8 +116,8 @@ body{
         }
         .seller th, .seller td {
             box-sizing: border-box;
-            height: 40px;
-            line-height: 40px;
+            height: 60px;
+            line-height: 60px;
             border-bottom: 1px solid lightgray;
             width: 160px;
             text-align: center;
@@ -220,4 +217,10 @@ body{
         	margin-top: 100px;
         	margin-bottom: 100px;
         	font-size: 2em;
+        }
+        .order:hover{
+        	font-weight: bold;
+        }
+        .order{
+        	margin-right: 20px;
         }

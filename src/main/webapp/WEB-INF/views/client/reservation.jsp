@@ -528,12 +528,14 @@ var i=0;
     					},
     				success:function(data){
     					console.log("data : "+data) //이런식으로 하면 안뜬다. 왜냐하면 "data :" 를 붙이면 javascript에서 string형으로 변환시킴
-    					console.log(data);
+    					
  
     					if(data.msg=="예약 가능합니다."){
     						console.log("hihihihii");
     						$('.modal').modal("show");
         	        		getInput(info);
+    					}else{
+    						alert(data.msg);
     					}
     				},
     				error:function(error){

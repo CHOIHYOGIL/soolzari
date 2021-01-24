@@ -70,7 +70,7 @@
                           <span style="font-size:25px;">댓글</span>
             	<hr width="800px" align="left">
             </div>
-       <div class="gl">
+      	 <div class="gl">
             
 	          
 	            <div class="inputComment">
@@ -101,7 +101,8 @@
 	            		<li class="result-li" style="width:96%;  border:1px solid lightgrey; border-radius:15px 15px 15px 15px; padding:10px 15px; margin-bottom:8px;" >
 	            			<div class="name" style=" width:100%;">
 	            			       
-			                     	<p id="commentWriterP" style="margin: 0; font-size:18px;">${r.commentWriterName}<span><c:forEach var="i" begin="1" end="${r.commentRate }">	<a href="#" style="color:orange;">★</a></c:forEach></span></p>
+			                     	<p id="commentWriterP" style="margin: 0; font-size:18px;">${r.commentWriterName}<span>
+			                     	<c:forEach var="i" begin="1" end="${r.commentRate }">	<a href="#" style="color:orange;">★</a></c:forEach></span></p>
 			                            		<input type="hidden" name="reviewNo" value="${r.reviewNo}">
 			                        <textarea name="commentContent" class="form-control changeComment" style="resize: none; display:inline-block;"  required="required" onfucs="this.value=this.value;" >${r.commentContent }</textarea>
 			           
@@ -122,8 +123,10 @@
 	           
 	                </c:forEach>
 	                 </ul>
-       </div>
+      			 </div>
              </div>
+             
+             
 		</div>
 		
 
@@ -193,7 +196,7 @@
 	
 </div>
 
-
+<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 <script>
 	$(function(){
 		$(".goodsPrice").html(commaSet($(".goodsPrice").html()));

@@ -86,3 +86,6 @@ a {
 #next > a {
     margin-left: 80px;
 }
+.noticeContent{
+	width: 100%;
+}

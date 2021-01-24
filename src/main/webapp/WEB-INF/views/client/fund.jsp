@@ -81,6 +81,12 @@
                                     <ul class="product-li">
                                     
                                   	<c:forEach items="${list }" var="f">
+                                  	
+                                    <jsp:useBean id="now" class="java.util.Date" />
+								<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
+         						  <fmt:parseDate var="today1" value="${today }" pattern="yyyy-MM-dd"/>
+                                    <fmt:parseNumber value="${today1.time/(1000*60*60*24) }" integerOnly="true" var="today2" scope="request"/>
+                                  	
                                   	              <fmt:parseDate var="sDate" value="${f.fundEnrollDate }" pattern="yyyy-MM-dd"/>
                                     <fmt:parseNumber value="${sDate.time/(1000*60*60*24) }" integerOnly="true" var="isDate" scope="request"/>
                                     <fmt:parseDate var="tDate" value="${f.fundEndDate }" pattern="yyyy-MM-dd"/>
@@ -90,23 +96,71 @@
                                         <li style="width:24%;" data-percent=${f.fundMoneyNow / f.fundMoney } data-date=${itDate-isDate} >
                                             <div class="item_cont">
                                                 <div class="item_photo_box">
-                                                    <a href="/client/oFundingDetail.sool?fundNo=${f.fundNo }">
+                                 
+                                                   <c:choose>
+                                    	<c:when test="${itDate < today2 }">
+                                    	   <a href="javascript:void(0)" onclick="return past();">
+                                                        <img src="/resources/upload/${f.imagePath }" alt="전통주 짱맛있어" class="middle" style= "max-height:180px; width:100%;" >
+                                                </a>
+                                    	</c:when> 
+                                    	<c:when test="${isDate >today2 }">
+                                    		 <a href="javascript:void(0)" onclick="return future();">
                                                         <img src="/resources/upload/${f.imagePath }" alt="전통주 짱맛있어" class="middle" style= "max-height:180px; width:100%;" >
                                                     </a>
+                                    	</c:when>
+                                    	<c:otherwise>
+                                    	 <a href="/client/oFundingDetail1.sool?fundNo=${f.fundNo }">
+                                                        <img src="/resources/upload/${f.imagePath }" alt="전통주 짱맛있어" class="middle" style= "max-height:180px; width:100%;" >
+                                                    </a>
+                                    	</c:otherwise>
+                                    </c:choose>
+                                                   
                                                 </div>
                                                 
                                                 <div class="item_info_cont">
                                                   <div class="item_tit_box">
-                                                      <a href="#">
+                                                  
+                                                                <c:choose>
+                                    	<c:when test="${itDate < today2 }">
+                                    	   <a href="javascript:void(0)">
                                                           <strong class="item_name" style="font-size:20px;">${f.fundName }</strong>
                                                       </a>
+                                    	</c:when> 
+                                    	<c:when test="${isDate >today2 }">
+                                    		   <a href="javascript:void(0)">
+                                                          <strong class="item_name" style="font-size:20px;">${f.fundName }</strong>
+                                                      </a>
+                                    	</c:when>
+                                    	<c:otherwise>
+                                    	 <a href="/client/oFundingDetail1.sool?fundNo=${f.fundNo }">
+                                                          <strong class="item_name" style="font-size:20px;">${f.fundName }</strong>
+                                                      </a>
+                                    	
+                                    	</c:otherwise>
+                                    </c:choose>
+                                                    
                                                   </div>
                                                       <div class="rate">
        
                                          <span class="rateNum">진행 상황 :            <fmt:formatNumber value="${f.fundMoneyNow/f.fundMoney*100 }" pattern="0.00"/> %</span><br>
                                     <span class="rateNum">목표치 :<fmt:formatNumber type="number" maxFractionDigits="3" value="${f.fundMoney}" />원</span><br>
                       
-                                    <span class="rateNum" > <span style="color:#f7b8b4; float:right; padding-top:30px;">${itDate-isDate}일 남음</span></span>
+<span class="rateNum" > <span style="color:#f7b8b4; float:right; padding-top:20px; font-size:15px;">
+                                    
+                                    
+                                    <c:choose>
+                                    	<c:when test="${itDate < today2 }">
+                                    	  펀딩이 ${today2-isDate}일 전 종료되었습니다.</span></span>
+                                    	</c:when> 
+                                    	<c:when test="${isDate >today2 }">
+                                    		펀딩이 오픈전입니다.<br> ${isDate-today2 }일 뒤 펀딩이 오픈됩니다.
+                                    	</c:when>
+                                    	<c:otherwise>
+                                    	  펀딩이 ${itDate-isDate}일 남았습니다.</span></span>
+                                    	</c:otherwise>
+                                    </c:choose>
+                                    
+                                  
                                     </div>
                                                   
                                                 
@@ -265,4 +319,12 @@
 		paging(parseInt($(this).html()));
 	});
   
+	
+	function past(){
+		alert('이미 종료 펀딩이므로 구매할 수 없습니다');
+	}
+	
+	function future(){
+		alert('아직 오픈전인 펀딩이므로 구매할 수 없습니다.');
+	}
 </script>

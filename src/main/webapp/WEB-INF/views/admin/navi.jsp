@@ -129,8 +129,8 @@
 	            <li>
 	                <a href="javascript:void(0)">사용자 관리</a>
 	                <ul class="sub">
-	                    <li><a href="/user.sool?type=1&reqPage=1">고객</a></li>
-	                    <li><a href="/user.sool?type=2&reqPage=1">판매자</a></li>
+	                    <li><a href="/user.sool?type=1&reqPage=1&order=1">고객</a></li>
+	                    <li><a href="/user.sool?type=2&reqPage=1&order=1">판매자</a></li>
 	                </ul>
 	            </li>
 	            <li class="logout">

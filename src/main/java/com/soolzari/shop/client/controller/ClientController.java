@@ -642,7 +642,7 @@ public class ClientController {
 		
 	}
 	
-
+	//펀드리뷰
 	@RequestMapping("/insertComment.sool")
 	public String insertComment(Model model, int fundNo, int commentWriter, String commentContent, String commentWriterName,FundReview f) {
 		
@@ -671,6 +671,7 @@ public class ClientController {
 			return "common/msg";		
 		
 	}
+	//상품리뷰
 	@RequestMapping("/insertComment1.sool")
 	public String insertComment1(Model model, int goodNo, int commentWriter, @RequestParam(value="commentRate", defaultValue="null")int commentRate,String commentContent, String commentWriterName,FundReview f) {
 		

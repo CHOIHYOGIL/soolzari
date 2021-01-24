@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.soolzari.shop.admin.model.vo.Accept;
+import com.soolzari.shop.client.model.vo.FundingGoods;
 
 @Repository
 public class AcceptDao {
@@ -67,6 +68,11 @@ public class AcceptDao {
 
 	public int searchTotal(HashMap<String, Object> map) {
 		return session.selectOne("admin.searchTotal", map);
+	}
+
+	public ArrayList<FundingGoods> fundingGoods() {
+		List<FundingGoods> list = session.selectList("admin.selectFundingGoods");
+		return (ArrayList<FundingGoods>)list;
 	}
 
 }

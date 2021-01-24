@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Array;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.soolzari.shop.admin.model.service.AdminService;
 import com.soolzari.shop.client.model.vo.Client;
 import com.soolzari.shop.common.FileNameOverlap;
 import com.soolzari.shop.seller.model.service.SellerService;
@@ -90,8 +92,8 @@ public class SellerController {
 	
 	
 	@RequestMapping("/goodsList.sool")
-	public String goodsList(int reqPage, Model model) {
-		GoodsPage gp = service.selectAllGoods(reqPage);
+	public String goodsList(int reqPage, int selNo, Model model) {
+		GoodsPage gp = service.selectAllGoods(reqPage, selNo);
 		model.addAttribute("list", gp.getList());
 		model.addAttribute("page",gp.getPage());
 		return "seller/sellerGoodsList";
@@ -103,8 +105,8 @@ public class SellerController {
 	}
 	
 	@RequestMapping("/classList.sool")
-	public String classList(int reqPage, Model model) {
-		ClassPage cp = service.selectAllClass(reqPage);
+	public String classList(int reqPage, int selNo, Model model) {
+		ClassPage cp = service.selectAllClass(reqPage, selNo);
 		
 		System.out.println(cp.getList());
 		model.addAttribute("list",cp.getList());
@@ -141,6 +143,7 @@ public class SellerController {
 	public String login(Seller s, HttpSession session, Model model) {
 		Seller seller = service.selectOneSeller(s);
 		if(seller!=null) {
+			session.setAttribute("selNo", seller.getSelNo());
 			session.setAttribute("sessionSeller", seller);
 			model.addAttribute("loc","/seller/sellerMain.sool");
 			model.addAttribute("msg","로그인 성공");
@@ -322,7 +325,7 @@ public class SellerController {
 		}else {
 			model.addAttribute("msg","클래스 등록이 실패했습니다.");
 		}
-		model.addAttribute("loc","/seller/classList.sool?reqPage=1");
+		model.addAttribute("loc","/seller/classList.sool?reqPage=1&selNo="+cls.getSelNo());
 		return "common/msg";
 	}
 	
@@ -342,7 +345,7 @@ public class SellerController {
 	}
 	
 
-	@RequestMapping("fixClass.sool")
+	@RequestMapping("/fixClass.sool")
 	public String fixClass(Class c, Model model) {
 		
 		System.out.println("fix :"+c);
@@ -353,12 +356,12 @@ public class SellerController {
 		}else {
 			model.addAttribute("msg","클래스 수정이 실패했습니다.");
 		}
-		model.addAttribute("loc","/seller/classList.sool?reqPage=1");
+		model.addAttribute("loc","/seller/classList.sool?reqPage=1&selNo="+c.getSelNo());
 		return "common/msg";
 		
 	}
 	
-	@RequestMapping("logout.sool")
+	@RequestMapping("/logout.sool")
 	public String logout(HttpSession session, Model model) {
 		session.invalidate();
 		model.addAttribute("loc","/seller/login.sool");
@@ -461,8 +464,8 @@ public class SellerController {
 		return "common/msg";
 	}
 	
-	@RequestMapping("deleteClass.sool")
-	public String deleteClass(@RequestParam("checkbox") List<Integer> values, Model model) {
+	@RequestMapping("/deleteClass.sool")
+	public String deleteClass(@RequestParam("checkbox") List<Integer> values, int selNo, Model model) {
 		System.out.println("delete");
 		int cnt = values.size();
 		System.out.println(cnt);
@@ -480,15 +483,23 @@ public class SellerController {
 		}else {
 			model.addAttribute("msg","삭제 성공");
 		}
-		model.addAttribute("loc","/seller/classList.sool?reqPage=1");
+		model.addAttribute("loc","/seller/classList.sool?reqPage=1&selNo="+selNo);
 		return "common/msg";
 	} 
 	//마이페이지 이동
-	@RequestMapping("mypage1.sool")
-	public String mypage1() {
+	@RequestMapping("/mypage1.sool")
+	public String mypage1(Model model, HttpSession session) {
+		int selNo = (Integer) session.getAttribute("selNo");
+		int goods = service.selectSellerGoods(selNo);
+		int sales = service.selectSellerSales(selNo);
+		DecimalFormat formatter = new DecimalFormat("###,###");
+		String totalGoods = formatter.format(goods);
+		String totalSales = formatter.format(sales);
+		model.addAttribute("totalGoods", totalGoods);
+		model.addAttribute("totalSales", totalSales);
 		return "seller/sellerMypage1";
 	}
-	@RequestMapping("mypage2.sool")
+	@RequestMapping("/mypage2.sool")
 	public String mypage2(Model model, int reqPage, int selNo) {
 		GoodsListPage glp = service.selectAllGoodsList(reqPage, selNo);
 		
@@ -496,12 +507,10 @@ public class SellerController {
 		model.addAttribute("gdsPage",glp.getGdsPage());
 		return "seller/sellerMypage2";
 	}
-	@RequestMapping("mypage3.sool")
+	@RequestMapping("/mypage3.sool")
 	public String mypage3(Model model, int reqPage, @SessionAttribute(required=false) Seller sessionSeller) {
-		System.out.println("ㄴㅇㄻㄴㅀㅁㄶ");
 		int selNo = sessionSeller.getSelNo();
 		FundingListPage flp = service.selectAllFundingList(reqPage, selNo);
-		System.out.println("1111111111122222222222");
 		System.out.println(flp.getFndList().size());
 		model.addAttribute("fndList",flp.getFndList());
 		model.addAttribute("fndPage",flp.getFndPage());
@@ -535,19 +544,19 @@ public class SellerController {
 		return "common/msg";
 	}
 	//배송변경
-	@RequestMapping("/updateGdsDStatus")
-	public String updateGdsDStatus (int gdsLNo, int gdsDStatus, Model model) {
+	@RequestMapping("/updateGdsDStatus.sool")
+	public String updateGdsDStatus (int gdsLNo, int gdsDStatus, Model model, int selNo) {
 		int result = service.updateGdsDStatus(gdsLNo,gdsDStatus);
 		if(result>0) {
 			model.addAttribute("msg","수정 성공");
 		}else {
 			model.addAttribute("msg","수정 오류");
 		}
-		model.addAttribute("loc","/seller/mypage2.sool?reqPage=1");
+		model.addAttribute("loc","/seller/mypage2.sool?reqPage=1&selNo="+selNo);
 		return "common/msg";
 	}
 	
-	@RequestMapping("/updateFndDStatus")
+	@RequestMapping("/updateFndDStatus.sool")
 	public String updateFndDStatus (int fndDNo, int fndDStatus, Model model) {
 		int result = service.updateFndDStatus(fndDNo,fndDStatus);
 		if(result>0) {
