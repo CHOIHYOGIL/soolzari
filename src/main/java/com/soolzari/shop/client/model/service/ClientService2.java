@@ -247,7 +247,7 @@ public class ClientService2 {
 		int pageIdx = (reqPage-1)/pageAllIdx*pageAllIdx+1;
 		System.out.println(reqPage);
 		String pageNavi = "";
-		if(reqPage>1) {//이전버튼
+		if(pageIdx>1) {//이전버튼
 			pageNavi += "<a id='prev1' href='/client/mOrderList.sool?reqPage="+(pageIdx-1)+"&period="+period+"'><</a>";
 		}
 		
@@ -293,7 +293,7 @@ public class ClientService2 {
 		int pageIdx = (reqPage-1)/pageAllIdx*pageAllIdx+1;
 		System.out.println(reqPage);
 		String pageNavi = "";
-		if(reqPage>1) {//이전버튼
+		if(pageIdx>1) {//이전버튼
 			pageNavi += "<a id='prev1' href='/client/mExperience.sool?reqPage="+(pageIdx-1)+"&period="+period+"'><</a>";
 		}
 		
@@ -342,7 +342,7 @@ public class ClientService2 {
 		int pageIdx = (reqPage-1)/pageAllIdx*pageAllIdx+1;
 		System.out.println(reqPage);
 		String pageNavi = "";
-		if(reqPage>1) {//이전버튼
+		if(pageIdx>1) {//이전버튼
 			pageNavi += "<a id='prev1' href='/client/mQuestion.sool?reqPage="+(pageIdx-1)+"&period="+period+"'><</a>";
 		}
 		
@@ -426,7 +426,7 @@ public class ClientService2 {
 		int pageIdx = (reqPage-1)/pageAllIdx*pageAllIdx+1;
 		System.out.println(reqPage);
 		String pageNavi = "";
-		if(reqPage>1) {//이전버튼
+		if(pageIdx>1) {//이전버튼
 			pageNavi += "<a id='prev1' href='/client/mFunding.sool?reqPage="+(pageIdx-1)+"&period="+period+"'><</a>";
 		}
 		
@@ -535,7 +535,7 @@ public class ClientService2 {
 		int pageIdx = (reqPage-1)/pageAllIdx*pageAllIdx+1;
 		System.out.println(reqPage);
 		String pageNavi = "";
-		if(reqPage>1) {//이전버튼
+		if(pageIdx>1) {//이전버튼
 			pageNavi += "<a id='prev1' href='/client/mReview.sool?reqPage="+(pageIdx-1)+"&period="+period+"'><</a>";
 		}
 			

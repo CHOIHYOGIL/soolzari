@@ -113,7 +113,7 @@
 												<tr>
 													<td>
 														<span class="gdsLNo" style="display: none;">${olData.gdsLNo }</span><!-- 배송관리 update할때전달해줄값 -->
-														<p class="purNo">${purchase.purNo } / ${count }</p>
+														<p class="purNo">${purchase.purNo }</p> / ${count }
 														<p>${purchase.purDate }</p>
 													</td>
 													<td>
