@@ -85,18 +85,6 @@
         <input type="submit" value="선택 상품 삭제">
     </div>
 </form>
-<div id="main_sub">
-    <div id="main_search">
-        <form action="/seller/searchGoods.sool" method="post">
-            <select name="search_type" style="margin-left: 10px;">
-                <option value="name">이름</option>
-                <option value="price">가격</option>
-            </select>
-            <input type="text" name="search" placeholder="검색할 내용을 적어주세요">
-            <input type="submit" value="찾기">
-        </form>
-    </div>
-</div>
 
             </div>
         </div>

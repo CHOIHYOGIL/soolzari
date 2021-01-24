@@ -191,6 +191,10 @@ public class SellerDao {
 	public int updateFndDStatus(HashMap<String, Integer> fndInfo) {
 		return sqlSession.update("seller.updateFndDStatus",fndInfo);
 	}
+
+	public Seller checkId(Seller s) {
+		return sqlSession.selectOne("seller.checkId",s);
+	}
 	
 	
 }

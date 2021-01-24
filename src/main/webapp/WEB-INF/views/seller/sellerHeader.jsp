@@ -24,10 +24,19 @@
 </html>
 
 <script>
+
+	$(document).ready(function(){
+		var loginStatus = "${sessionScope.sessionSeller.selName}";
+		if(loginStatus=='null' || loginStatus==''){
+			alert("로그인이 만료되었습니다. 다시 로그인해주세요");
+			location.href="/seller/login.sool";
+		};
+	});
+	
 	$("#customerBtn").click(function(){
 		
 		location.href="/";
-	})
+	});
 	
 	$("#logoutBtn").click(function(){
 		

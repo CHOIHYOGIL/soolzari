@@ -71,7 +71,7 @@
                                 <th scope="row">${f.fundNo}</th>
                                 <td><a href="/seller/fundingDetail.sool?fundNo=${f.fundNo }">${f.fundName}</a></td>
                                 <td>${f.fundMoney}</td>
-                                <td>${f.fundDate}</td>
+                                <td>${f.fundEnrollDate}</td>
                                 <td>${f.fundEndDate}</td>
                                 <td><input type="checkbox" name="fundCheckBox" value="${f.fundNo }"></td>
                             </tr>
@@ -79,15 +79,6 @@
                     </tbody>
                 </table>
                 <div id="main_sub">
-                    <div id="main_search">
-                        <form action="/shop/seller/searchFunding.sool" method="post">
-                            <select name="search_type" style="margin-left: 10px;">
-                                <option value="name">펀딩 이름</option>
-                            </select>
-                            <input type="text" name="search" placeholder="검색할 내용을 적어주세요">
-                            <input type="submit" value="찾기">
-                        </form>
-                    </div>
                     <div id="main_crud">
                         <input id="deleteBtn" type="button" value="펀딩 삭제">
                     </div>

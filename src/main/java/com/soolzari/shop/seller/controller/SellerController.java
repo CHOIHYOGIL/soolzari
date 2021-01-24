@@ -74,6 +74,20 @@ public class SellerController {
 		return "seller/sellerFundingAdd";
 	}
 	
+	@ResponseBody
+	@RequestMapping("/ajaxCheckId.sool")
+	public int CheckId(Seller s) {
+
+		Seller seller=service.checkId(s);
+	
+		if(seller!=null) {
+			return 0;
+		}else {
+			return 1;
+		}
+		
+	}
+	
 	
 	@RequestMapping("/goodsList.sool")
 	public String goodsList(int reqPage, Model model) {
@@ -483,14 +497,12 @@ public class SellerController {
 		return "seller/sellerMypage2";
 	}
 	@RequestMapping("mypage3.sool")
-	public String mypage3(Model model, int reqPage) {
+	public String mypage3(Model model, int reqPage, @SessionAttribute(required=false) Seller sessionSeller) {
 		System.out.println("ㄴㅇㄻㄴㅀㅁㄶ");
-		FundingListPage flp = service.selectAllFundingList(reqPage);
+		int selNo = sessionSeller.getSelNo();
+		FundingListPage flp = service.selectAllFundingList(reqPage, selNo);
 		System.out.println("1111111111122222222222");
 		System.out.println(flp.getFndList().size());
-		System.out.println(flp.getFndList().get(0));
-		System.out.println(flp.getFndList().get(1));
-		System.out.println(flp.getFndList().get(2));
 		model.addAttribute("fndList",flp.getFndList());
 		model.addAttribute("fndPage",flp.getFndPage());
 		return "seller/sellerMypage3";

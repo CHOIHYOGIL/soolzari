@@ -85,7 +85,6 @@
 				<div id="page">
 				            ${page }
 				</div>
-        		<input type="submit" value="선택 상품 삭제">
     </div>
 				</form>
 				

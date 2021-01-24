@@ -323,7 +323,7 @@ public GoodsListPage selectAllGoodsList(int reqPage, int selNo) {
 	return glp;
 }
 
-public FundingListPage selectAllFundingList(int reqPage) {
+public FundingListPage selectAllFundingList(int reqPage, int selNo) {
 	FundingListPage flp = new FundingListPage();
 	int numPerPage = 10;
 	int start = (reqPage-1)*numPerPage+1;
@@ -331,6 +331,7 @@ public FundingListPage selectAllFundingList(int reqPage) {
 	HashMap<String, Integer> pageNo = new HashMap<String, Integer>();
 	pageNo.put("start", start);
 	pageNo.put("end", end);
+	pageNo.put("selNo",selNo);
 	ArrayList<FundingList> fndList = dao.selectAllFundingList(pageNo);
 	System.out.println(fndList);
 	flp.setFndList(fndList);
@@ -373,6 +374,10 @@ public int updateFndDStatus(int fndDNo, int fndDStatus) {
 	fndInfo.put("fndDStatus", fndDStatus);
 	int result = dao.updateFndDStatus(fndInfo);
 	return result;
+}
+
+public Seller checkId(Seller s) {
+	return dao.checkId(s);
 }
 
 

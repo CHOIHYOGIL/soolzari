@@ -51,30 +51,30 @@
         <div id="main_container">
             <div id="main_content">
 	            <div id="goods_add">
-	    <div id="goods_add_con">
-        <div class="goods_add_box">
-        <span>${sessionScope.sessionSeller.selNo }</span>
-        
-            <form action="/seller/insertGoods.sool" method="post" enctype="multipart/form-data">
-                <h2 id="goods_add_title">상품 등록하기</h2>
-                <label for="gdsName">상품 이름</label><input type="text" id="gdsName" name="gdsName">
-                <label for="gdsPri">상품 가격</label><input type="text" id="gdsPri" name="gdsPri">
-                <input type="hidden" name="selNo" value="${sessionScope.sessionSeller.selNo }">
-                <label>상품 타입</label><select name="goodsType">
-                    <option active value="t">탁주/막걸리</option>
-                    <option value="f">과일주</option>
-                    <option value="c">청주</option>
-                    <option value="w">와인</option>
-                    <option value="s">증류주</option>
-                </select>
-                <label>상품사진</label><input type="file" name="files" >
-        <label>상품 설명 사진</label><input type="file" name="files" >
-                <button type="submit" name="button" class="submit-btn">등록</button>
-            </form>
-        </div>
-        
-    </div>
-</div>
+			 	   <div id="goods_add_con">
+				        <div class="goods_add_box">
+				        <span>${sessionScope.sessionSeller.selNo }</span>
+				        
+				            <form action="/seller/insertGoods.sool" method="post" enctype="multipart/form-data">
+				                <h2 id="goods_add_title">상품 등록하기</h2>
+				                <label for="gdsName">상품 이름</label><input type="text" id="gdsName" name="gdsName" required>
+				                <label for="gdsPri">상품 가격</label><input type="text" id="gdsPri" name="gdsPri" required>
+				                <input type="hidden" name="selNo" value="${sessionScope.sessionSeller.selNo }">
+				                <label>상품 타입</label><select name="goodsType">
+				                    <option selected value="t">탁주/막걸리</option>
+				                    <option value="f">과일주</option>
+				                    <option value="c">청주</option>
+				                    <option value="w">와인</option>
+				                    <option value="s">증류주</option>
+				                </select>
+				                <label>상품사진</label><input type="file" name="files" required>
+				        <label>상품 설명 사진</label><input type="file" name="files" required>
+				                <button type="submit" name="button" class="submit-btn">등록</button>
+				            </form>
+				        </div>
+				        
+				    </div>
+				</div>
             </div>
         </div>
     </div>

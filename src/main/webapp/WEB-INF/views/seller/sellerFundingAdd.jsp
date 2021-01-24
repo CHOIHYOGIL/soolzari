@@ -75,7 +75,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">펀딩 시작일</th>
-                                    <td><input type="text" name="fundDate" required></td>
+                                    <td><input type="text" name="fundEnrollDate" required></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">펀딩 종료일</th>
