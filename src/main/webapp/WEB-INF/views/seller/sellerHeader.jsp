@@ -33,6 +33,10 @@
 		};
 	});
 	
+	$("#seller_banner").click(function(){
+		location.href="/seller/mypage1.sool";
+	})
+	
 	$("#customerBtn").click(function(){
 		
 		location.href="/";

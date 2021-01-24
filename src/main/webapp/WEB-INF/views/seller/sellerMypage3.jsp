@@ -86,7 +86,7 @@
 					            <option value="4">배송완료</option>
 					            </c:when>
 					            <c:when test="${f.fndDStatus>=4}">
-					            <option value="4" selected>배송완료</option>
+					            <span>배송완료</span>
 					            </c:when>
 					            </c:choose>
 					            </select></td>
