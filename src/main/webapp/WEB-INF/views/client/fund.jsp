@@ -49,6 +49,7 @@
                             <form name="frmList">
                                 <div class="pick_list_box">
                                     <ul class="pick_list">
+                                    <!--  
                                         <li>
                                             <input type="radio" id="sort1" class="radio" name="sort" value="date">
                                             <label for="sort1" ">최신순</label>
@@ -59,7 +60,7 @@
                                             <label for="sort5" >달성도순</label>
                                         </li>
                                     
-                                   
+                                   -->
                                          <li>
                                             <input type="radio" id="sort4" class="radio" name="sort" value="ongoing">
                                             <label for="sort4" >진행중인펀딩</label>
@@ -238,27 +239,32 @@
 
 <script>
     $(function(){
+
     	//product-li, pick_list
     	$(".pick_list li").click(function(){
     		var idx = $(".pick_list li").index(this);
     		console.log("idx : "+ idx);
     		$(".product-li li").hide();
     		if(idx == 0 ){
-    			$(".product-li li").show();	
+    			//$(".product-li li").show();	
+    			$(".product-li").find(".test3").show();
     		}else if (idx == 1){   
     			console.log("dfsd");
-    			listSort("percent",1);
-    	
-    		}else if (idx == 2){
-    	
-    			$(".product-li").find(".test3").show();
-    		}else if (idx == 3){
+    			//listSort("percent",1);
     			$(".product-li").find(".test1").show();
-    		
     		}else {
-    	
     			$(".product-li").find(".test2").show();
+    		//	$(".product-li").find(".test3").show();
+    	//	}else if (idx == 3){
+    			//$(".product-li").find(".test1").show();
+    		
+    		//}else {
+    	
+    			//$(".product-li").find(".test2").show();
     		}
+    	
+
+    	 
     	});
     	
     	
