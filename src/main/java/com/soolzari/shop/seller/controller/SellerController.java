@@ -410,6 +410,7 @@ public class SellerController {
 				f.setFundChk(0);
 				
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+				
 				Date day1 = null;
 				Date day2 = null;
 				int dateResult = 0;
@@ -426,7 +427,7 @@ public class SellerController {
 					e.printStackTrace();
 				}
 				
-				if(dateResult == 1) {
+				if(dateResult != 1) {
 					model.addAttribute("msg","펀딩 시작일이 종료일보다 뒤의 날짜입니다. 다시 입력해주세요.");
 					model.addAttribute("loc","/seller/fundingAdd.sool");
 					return "common/msg";
