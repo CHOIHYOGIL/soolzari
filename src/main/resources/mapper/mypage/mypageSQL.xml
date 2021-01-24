@@ -355,5 +355,9 @@
 		update client_db set cli_rank=0 where cli_no=#{_parameter}
 	</update>
 	
+	<!-- 구독중인 고객들만 뽑아서 매달 1일에 메일전송(cli_rank=1,2) -->
+	<select id="subscribePayMail" resultType="String">
+		select cli_email from client_db where cli_rank in (1,2)
+	</select>
 	
 </mapper>
