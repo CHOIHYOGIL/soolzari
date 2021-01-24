@@ -92,7 +92,7 @@
 	});
 	
 	$(function(){
-		$(".subTitle").html("예약 내역");
+		$(".subTitle").html("리뷰 내역");
 		$(".giftSel").remove();//선물함 선택 안보이게
 		//조회기간별 조회(1,3,6,12개월)
 		$(".searchA").eq(0).attr("href","/client/mReview.sool?reqPage=1&period=1");

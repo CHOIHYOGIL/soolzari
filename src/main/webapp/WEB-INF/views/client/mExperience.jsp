@@ -25,7 +25,7 @@
 						<th class="th2">클래스 정보</th>
 						<th class="th3">담당자</th>
 						<th class="th4">체험일자</th>
-						<th class="th5">취소신청</th>
+						<th class="th5">예약관리</th>
 					</tr>
 					<c:choose>
 						<c:when test="${eList=='[]'}">
@@ -60,6 +60,7 @@
 									<td>
 										<c:choose>
 											<c:when test="${eld.classCheck==0}">
+												<p>예약완료</p>
 												<button type="button" class="btn btn-outline-secondary btn-sm cancelBtn">취소신청</button>
 											</c:when>
 											<c:when test="${eld.classCheck==2 }">

@@ -351,6 +351,12 @@ public class ClientDao2 {
 		return sqlSession.update("mypage.orderDeliveryCancelStatus",map);
 	}
 
+	//구독중인 고객들만 뽑아서 매달 1일에 메일전송
+	public ArrayList<String> subscribePayMail() {
+		List<String> cliEmailList = sqlSession.selectList("mypage.subscribePayMail");
+		return (ArrayList<String>) cliEmailList;
+	}
+
 	
 
 
