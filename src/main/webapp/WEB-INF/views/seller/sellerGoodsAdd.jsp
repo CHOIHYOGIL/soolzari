@@ -69,7 +69,7 @@
 				                </select>
 				                <label>상품사진</label><input type="file" name="files" required>
 				        <label>상품 설명 사진</label><input type="file" name="files" required>
-				                <input id="submitBtn" type="submit" name="button" class="submit-btn">등록</button>
+				                <input id="submitBtn" type="submit" name="button" class="submit-btn">
 				            </form>
 				        </div>
 				        
