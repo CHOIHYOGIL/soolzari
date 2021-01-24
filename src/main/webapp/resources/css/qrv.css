@@ -69,7 +69,6 @@ body{
             padding: 30px;
             padding-bottom: 5px;
             box-sizing: border-box;
-            margin-bottom: 100px;
         }
         .qna tr:last-child>th{
             text-align: left;
@@ -137,4 +136,6 @@ body{
         	display: flex;
         	margin-bottom: 7px;
         }
-        
+        body{
+        	height: 1200px;
+        }
