@@ -19,6 +19,7 @@
 		margin-top : 50px;
 		margin-left: 50px;
 		text-align: center;
+		margin-bottom: 50px;
 	}
 	
 	.chartTitle{
@@ -39,6 +40,11 @@
 		margin-top: 20px;
 		width: 200px;
 		background: linear-gradient(to top, yellow 50%, transparent 50%);
+	}
+	.chartwrap{
+		width: 1200px;
+		margin: 0 auto;
+		border-bottom: 1px solid lightgray;
 	}
 </style>
 </head>
