@@ -62,7 +62,7 @@
         border: 1px solid #ddd;
     }
 
-    button {
+    input[type=submit] {
         margin-top: 10px;
         width: 100%;
         border: none;

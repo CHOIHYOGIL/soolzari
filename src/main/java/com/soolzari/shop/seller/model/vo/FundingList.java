@@ -9,5 +9,6 @@ public class FundingList {
 	private int fndDPrice;
 	private int fndGNo;
 	private int fndDStatus;
+	private int selNo;
 	
 }
