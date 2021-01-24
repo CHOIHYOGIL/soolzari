@@ -170,8 +170,8 @@ public class SellerDao {
 		return (ArrayList<GoodsList>)gdsList;
 	}
 
-	public int goodsListTotalCount() {
-		return sqlSession.selectOne("seller.goodsListTotalCount");
+	public int goodsListTotalCount(int selNo) {
+		return sqlSession.selectOne("seller.goodsListTotalCount",selNo);
 	}
 
 	public ArrayList<FundingList> selectAllFundingList(HashMap<String, Integer> pageNo) {
@@ -179,8 +179,8 @@ public class SellerDao {
 		return (ArrayList<FundingList>)fndList;
 	}
 
-	public int fundingListTotalCount() {
-		return sqlSession.selectOne("seller.fundingListTotalCount");
+	public int fundingListTotalCount(int selNo) {
+		return sqlSession.selectOne("seller.fundingListTotalCount", selNo);
 	}
 
 	public int updateFndDStatus(HashMap<String, Integer> fndInfo) {

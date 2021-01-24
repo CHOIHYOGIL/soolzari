@@ -36,7 +36,7 @@ body .table{
 	
 	/*-------------------------------------------------------------------------*/
 	
-	a{
+	td>a{
         text-decoration: none;
         color:#4d5075;
         display:block;
@@ -67,10 +67,11 @@ body .table{
         display: block;
     }
     
-    #class_page{
+    #page{
         width:100%;
         margin: 0 auto;
         text-align: center;
+        display:block;
     }
 
     #main_sub {
@@ -103,20 +104,10 @@ body .table{
         text-align: center;
         
     }
-
-
-    *>tr>th:nth-child(2) {
-        width: 40%;
-    }
-
-    *>tr>th:nth-child(3) {
-        width: 20%;
-    }
-
-    *>tr>th:nth-child(4) {
-        width: 25%;
-    }
-
-    *>tr>th:nth-child(5) {
-        width: 5%;
+    
+    
+    #page a, #page span{
+    padding:0 5px;
+    	display:inline-block !important;
+    	border:none !important;
     }
