@@ -97,7 +97,11 @@
 			                    <td>${a.acceptName }</td>
 			                    <td>${a.seller }</td>
 			                    <td>${a.acceptDet }</td>
-			                    
+			                    <td>
+			                    	<c:forEach items="${a.fundingGoods }" var="f" varStatus="i">
+			                    		<c:out value="${i.count }"/> - ${f.fndGName }<br>
+			                    	</c:forEach>
+			                    </td>
 			                    <td>${a.acceptPrice }</td>
 			                    <td>${a.acceptDate }</td>
 			                    <input type="hidden" value="${a.acceptNo }">

@@ -67,11 +67,11 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">등록 가격</th>
-                                    <td><input type="text" name="classPrice" required></td>
+                                    <td><input id="classPrice" type="text" name="classPrice" required></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">클래스 설명</th>
-                                    <td><textarea cols="100" rows="10" style="overflow-y:auto;resize: none;border:none;" name="classDetail"></textarea></td>
+                                    <td><textarea cols="100" rows="10" style="overflow-y:auto;resize: none;border:none;" name="classDetail" required></textarea></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">클래스 시작일</th>
@@ -83,7 +83,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">클래스 최대 인원</th>
-                                    <td><input type="text" name="classPerson" required></td>
+                                    <td><input id="classPerson" type="text" name="classPerson" required></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" style="text-align: right; border-bottom: none; text-align:center;"><input id="submitBtn" type="submit" class="btn btn-primary" value="등록하기" style="width:30%"></td>
@@ -108,6 +108,24 @@
     			alert("올바르지 않은 클래스 시작시간입니다.");
     			count++;
     		}
+    		var moneyReg = /^[0-9]{1,}$/;
+    		if(!moneyReg.test($("#classPrice").val())){
+    			alert("올바르지 않은 펀딩금액입니다. (숫자만 입력가능)");
+    			count++;
+    		}
+    		
+    		var dateReg = /^(19|20)\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])$/;
+    		if(!dateReg.test($("#classEnroll").val())){
+    			alert("올바르지 않은 날짜 지정입니다. (YYYY-MM-DD)");
+    			count++;
+    		};
+    		
+    		var peopleReg = /^[0-9]{1,}$/;
+    		if(!peopleReg.test($("#classPerson").val())){
+    			alert("올바르지 않은 펀딩금액입니다. (숫자만 입력가능)");
+    			count++;
+    		}
+    		
     		if(count>0){
     			event.preventDefault();
     		}
