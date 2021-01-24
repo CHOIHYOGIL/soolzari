@@ -115,7 +115,7 @@
 					    </tbody>
 					</table>
 					</div>
-					<div id="class_page">
+					<div id="page">
 					           ${gdsPage }
 					</div>
 				</div>

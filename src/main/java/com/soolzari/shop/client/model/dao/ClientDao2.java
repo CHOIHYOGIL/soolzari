@@ -271,7 +271,7 @@ public class ClientDao2 {
 	public void fndDStatusNUpdate() {
 		sqlSession.update("mypage.fndDStatusNUpdate");
 	}
-	//매일 자정 종료일인 펀딩 중 미달성된 펀딩일 경우funding_db의 fund_chk를 -1로 변경
+	//매일 자정 종료일인 펀딩 중 미달성된 펀딩일 경우funding_db의 fund_chk를 2로 변경
 	public void fundChkNUpdate() {
 		sqlSession.update("mypage.fundChkNUpdate");
 	}

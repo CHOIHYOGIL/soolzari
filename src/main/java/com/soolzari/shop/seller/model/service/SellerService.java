@@ -302,7 +302,7 @@ public GoodsListPage selectAllGoodsList(int reqPage, int selNo) {
 	pageNo.put("selNo",selNo);
 	ArrayList<GoodsList> gdsList = dao.selectAllGoodsList(pageNo);
 	glp.setGdsList(gdsList);
-	int totalCount = dao.goodsListTotalCount();//총 게시물 수
+	int totalCount = dao.goodsListTotalCount(selNo);//총 게시물 수
 	int totalPage = 0;
 	if(totalCount%numPerPage==0) {
 		totalPage = totalCount/numPerPage;
@@ -316,6 +316,8 @@ public GoodsListPage selectAllGoodsList(int reqPage, int selNo) {
 		page += "<a href='/seller/mypage2.sool?reqPage=1&selNo="+selNo+"'>처음</a>";
 		page += "<a href='/seller/mypage2.sool?reqPage="+(pageStart-1)+"&selNo"+selNo+"'><</a>";
 	}
+	System.out.println(totalCount);
+	System.out.println(totalPage);
 	for(int i=0;i<pageNaviSize;i++) {
 		if(reqPage != pageStart) {
 			page += "<a href='/seller/mypage2.sool?reqPage="+pageStart+"&selNo="+selNo+"' class='num'>"+pageStart+"</a>";
@@ -347,7 +349,7 @@ public FundingListPage selectAllFundingList(int reqPage, int selNo) {
 	ArrayList<FundingList> fndList = dao.selectAllFundingList(pageNo);
 	System.out.println(fndList);
 	flp.setFndList(fndList);
-	int totalCount = dao.fundingListTotalCount();//총 게시물 수
+	int totalCount = dao.fundingListTotalCount(selNo);//총 게시물 수
 	int totalPage = 0;
 	if(totalCount%numPerPage==0) {
 		totalPage = totalCount/numPerPage;
