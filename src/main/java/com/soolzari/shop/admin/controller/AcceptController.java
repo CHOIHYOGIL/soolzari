@@ -8,7 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.soolzari.shop.admin.model.service.AcceptService;
+import com.soolzari.shop.admin.model.vo.Accept;
 import com.soolzari.shop.admin.model.vo.AcceptPage;
+import com.soolzari.shop.client.model.vo.FundingGoods;
 import com.soolzari.shop.client.model.vo.Goods;
 import com.soolzari.shop.seller.model.vo.Class;
 import com.soolzari.shop.seller.model.vo.Funding;
@@ -21,6 +23,19 @@ public class AcceptController {
 	@RequestMapping("/accept.sool")
 	public String accept(int type, int reqPage, Model model) {
 		AcceptPage ap = service.selectAll(type, reqPage);
+		if(type == 2) {//펀딩 상품 가져오기
+			ArrayList<FundingGoods> fundingGoods = service.fundingGoods();			
+			
+			for(Accept f : ap.getList()) {
+				ArrayList<FundingGoods> fglist = new ArrayList<FundingGoods>();
+				for(FundingGoods fg : fundingGoods) {
+					if(fg.getFundNo() == f.getAcceptNo()) {
+						fglist.add(fg);				
+					}	
+					f.setFundingGoods(fglist);
+				}
+			}
+		}
 //		if(type == 1) {
 //			ap = service.selectAllGoods(reqPage);
 //		}else if(type == 2) {

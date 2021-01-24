@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.soolzari.shop.admin.model.dao.AcceptDao;
 import com.soolzari.shop.admin.model.vo.Accept;
 import com.soolzari.shop.admin.model.vo.AcceptPage;
+import com.soolzari.shop.client.model.vo.FundingGoods;
 import com.soolzari.shop.client.model.vo.Goods;
 
 @Service
@@ -191,6 +192,10 @@ public class AcceptService {
 		ap.setList(list);
 		ap.setPage(page);
 		return ap;
+	}
+
+	public ArrayList<FundingGoods> fundingGoods() {
+		return dao.fundingGoods();
 	}
 	
 }

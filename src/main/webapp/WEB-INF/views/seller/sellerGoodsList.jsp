@@ -42,7 +42,7 @@
                     <li class="item" id="mypage_con">
                         <a href="#mypage_con" class="btn-left">마이페이지</a>
                         <div class="subMenu">
-                            <a href="/seller/mypage1.sool">정보 수정</a>
+                            <a href="/seller/mypage1.sool">내 정보 보기</a>
                             <a href="/seller/mypage2.sool?reqPage=1&selNo=${sessionScope.sessionSeller.selNo}">상품 배송 관리</a>
                             <a href="/seller/mypage3.sool?reqPage=1">펀딩 배송 관리</a>
                         </div>
@@ -85,18 +85,6 @@
         <input type="submit" value="선택 상품 삭제">
     </div>
 </form>
-<div id="main_sub">
-    <!-- <div id="main_search">
-        <form action="/seller/searchGoods.sool" method="post">
-            <select name="search_type" style="margin-left: 10px;">
-                <option value="name">이름</option>
-                <option value="price">가격</option>
-            </select>
-            <input type="text" name="search" placeholder="검색할 내용을 적어주세요">
-            <input type="submit" value="찾기">
-        </form>
-    </div> -->
-</div>
 
             </div>
         </div>

@@ -54,19 +54,25 @@
                                             <label for="sort1" ">최신순</label>
                                          
                                         </li>
+                                          <li>
+                                            <input type="radio" id="sort5" class="radio" name="sort" value="percent">
+                                            <label for="sort5" >달성도순</label>
+                                        </li>
+                                    
+                                   
                                          <li>
-                                            <input type="radio" id="sort2" class="radio" name="sort" value="lowDate">
-                                            <label for="sort2" >기간 적게남은순</label>
+                                            <input type="radio" id="sort4" class="radio" name="sort" value="ongoing">
+                                            <label for="sort4" >진행중인펀딩</label>
+                                        </li>
+                                       
+                                             <li>
+                                            <input type="radio" id="sort2" class="radio" name="sort" value="finish">
+                                            <label for="sort2" >종료된 펀딩</label>
                                         </li> 
-                                        <li>
-                                            <input type="radio" id="sort3" class="radio" name="sort" value="highDate">
-                                            <label for="sort3">기간 많게남은순</label>
+                                             <li>
+                                            <input type="radio" id="sort3" class="radio" name="sort" value="future">
+                                            <label for="sort3">오픈 예정 펀딩</label>
                                         </li>
-                                         <li>
-                                            <input type="radio" id="sort4" class="radio" name="sort" value="percent">
-                                            <label for="sort4" >달성도 순</label>
-                                        </li>
-                                        
                                     </ul>
                                     
                                  
@@ -78,7 +84,10 @@
                         <div class="goods_list">
                             <div class="goods_list_cont">
                                 <div class="item_gallery_type clearfix">
+                                
+                                
                                     <ul class="product-li">
+                                    
                                     
                                   	<c:forEach items="${list }" var="f">
                                   	
@@ -92,9 +101,20 @@
                                     <fmt:parseDate var="tDate" value="${f.fundEndDate }" pattern="yyyy-MM-dd"/>
                                     <fmt:parseNumber value="${tDate.time/(1000*60*60*24) }" integerOnly="true" var="itDate" scope="request"/>
                                     
-                                    
-                                        <li style="width:24%;" data-percent=${f.fundMoneyNow / f.fundMoney } data-date=${itDate-isDate} >
+                                    <!--  li 태그 만들때 오늘날짜랑 enrollDate비교해서 클래스만 넣어주면 되거든요지금  -->
+                                    <c:choose>
+                                    	<c:when test="${itDate <today2 }"><!-- 종료날짜랑 비교좀해줄래요  이거면 종료된 거에요 -->
+                                    		<li class="test1" style="width:24%;" data-percent=${f.fundMoneyNow / f.fundMoney } data-date=${itDate-today2} >
+                                    	</c:when>
+                                    	<c:when test="${isDate >today2 }"> <!-- 이런식으로 비교하긴했는데 어떻게 넣어야해요? 여긴 a태그만들어가있고  -->
+                                    		<li class="test2" style="width:24%;" data-percent=${f.fundMoneyNow / f.fundMoney } data-date=${itDate-today2} >	 
+                                    	</c:when>
+                                    	<c:otherwise>
+                                    		<li class="test3" style="width:24%;" data-percent=${f.fundMoneyNow / f.fundMoney } data-date=${itDate-today2} >
+                                    	</c:otherwise>
+                                    </c:choose>
                                             <div class="item_cont">
+                                            
                                                 <div class="item_photo_box">
                                  
                                                    <c:choose>
@@ -103,7 +123,7 @@
                                                         <img src="/resources/upload/${f.imagePath }" alt="전통주 짱맛있어" class="middle" style= "max-height:180px; width:100%;" >
                                                 </a>
                                     	</c:when> 
-                                    	<c:when test="${isDate >today2 }">
+                                    	<c:when test="${isDate >today2 }"> <!-- 이런식으로 비교하긴했는데 어떻게 넣어야해요? 여긴 a태그만들어가있고  -->
                                     		 <a href="javascript:void(0)" onclick="return future();">
                                                         <img src="/resources/upload/${f.imagePath }" alt="전통주 짱맛있어" class="middle" style= "max-height:180px; width:100%;" >
                                                     </a>
@@ -144,19 +164,19 @@
        
                                          <span class="rateNum">진행 상황 :            <fmt:formatNumber value="${f.fundMoneyNow/f.fundMoney*100 }" pattern="0.00"/> %</span><br>
                                     <span class="rateNum">목표치 :<fmt:formatNumber type="number" maxFractionDigits="3" value="${f.fundMoney}" />원</span><br>
-                      
-<span class="rateNum" > <span style="color:#f7b8b4; float:right; padding-top:20px; font-size:15px;">
+                        <!--  <span class="rateNum">종료일 :${f.fundEndDate}</span><br>
+                         --> <span class="rateNum" > <span style="color:#f7b8b4; float:right; padding-top:20px; font-size:15px;">
                                     
                                     
                                     <c:choose>
                                     	<c:when test="${itDate < today2 }">
-                                    	  펀딩이 ${today2-isDate}일 전 종료되었습니다.</span></span>
+                                    	  <span style="color:lightgray;">펀딩이 ${today2-itDate}일 전 종료되었습니다.</span></span></span>
                                     	</c:when> 
                                     	<c:when test="${isDate >today2 }">
-                                    		펀딩이 오픈전입니다.<br> ${isDate-today2 }일 뒤 펀딩이 오픈됩니다.
+                                    		<span style="color:lightgray;">펀딩이 오픈전입니다.<br> ${isDate-today2 }일 뒤 펀딩이 오픈됩니다.</span>
                                     	</c:when>
                                     	<c:otherwise>
-                                    	  펀딩이 ${itDate-isDate}일 남았습니다.</span></span>
+                                    	  	<span>펀딩이 ${itDate-today2}일 남았습니다.</span>
                                     	</c:otherwise>
                                     </c:choose>
                                     
@@ -169,6 +189,9 @@
                                         </li>
                                 </c:forEach>
                                     </ul>
+                                    
+                                    
+              
                                 </div>
                             </div>
                         </div>
@@ -215,6 +238,31 @@
 
 <script>
     $(function(){
+    	//product-li, pick_list
+    	$(".pick_list li").click(function(){
+    		var idx = $(".pick_list li").index(this);
+    		console.log("idx : "+ idx);
+    		$(".product-li li").hide();
+    		if(idx == 0 ){
+    			$(".product-li li").show();	
+    		}else if (idx == 1){   
+    			console.log("dfsd");
+    			listSort("percent",1);
+    	
+    		}else if (idx == 2){
+    	
+    			$(".product-li").find(".test3").show();
+    		}else if (idx == 3){
+    			$(".product-li").find(".test1").show();
+    		
+    		}else {
+    	
+    			$(".product-li").find(".test2").show();
+    		}
+    	});
+    	
+    	
+    	
     	
     	  $(".pick_list li:nth-child(1) label").addClass('on');
         /* 홈메뉴 ul*/
@@ -245,7 +293,7 @@
     })
  
     
-    /* 정렬 */
+    /* 정렬   */
       var recent=$(".product-li").html();
     $(document).ready(function(){
      
@@ -264,23 +312,7 @@
     })
     function listSort(sortVal,pg){
     	 
-    	if(sortVal=="highDate"){
-    		console.log('기간 많이남은순');
-    		$(".product-li").html(
-    			
-    				$(".product-li li").sort(function(a,b){
-    					return $(b).data("date") - $(a).data("date"); 
-    				})
-    		)
-    	}else if(sortVal=="lowDate"){
-    		console.log("기간 적게남은순")
-    		$(".product-li").html(
-    			
-    				$(".product-li li").sort(function(a,b){
-    					return $(a).data("date") - $(b).data("date"); 
-    				})
-    		)
-    	}else if(sortVal=="percent"){
+    if(sortVal=="percent"){
     		console.log("달성도 순")
     		$(".product-li").html(
     			
@@ -295,7 +327,7 @@
     	}
     	paging(pg);
     }
-    
+  
     /* 페이징 */
 	function paging(page){
     	console.log("paging입장");

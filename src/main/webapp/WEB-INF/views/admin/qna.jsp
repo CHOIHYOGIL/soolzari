@@ -11,7 +11,7 @@
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/admin/navi.jsp"/>
-	<section>
+	<section class="qnasect">
 		<h1 class="qnatitle">1:1 문의</h1>
 		<table class="qna">
 			<tr>
@@ -34,7 +34,7 @@
 							<td><a href="/qnaView.sool?qnaNo=${q.qnaNo }&qnaAns=${q.qnaAns}">${q.qnaName }</a></td>
 						</c:otherwise>
 					</c:choose>
-					<td>${q.qnaWriter }</td>
+					<td>${q.qnaId }</td>
 					<td>${q.qnaEnroll }</td>
 					<c:choose>
 						<c:when test="${q.qnaAns == 0 }">

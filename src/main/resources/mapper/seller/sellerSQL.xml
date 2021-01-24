@@ -26,6 +26,10 @@
      </if>
   </select>
   
+  <select id="checkId" parameterType="sl" resultType="sl">
+ 		select sel_id as selId from seller_db where sel_id=#{selId}
+ 	</select>
+  
   <select id="getClassInfo" parameterType="int" resultType="sellerClass">
   	select c1.cls_no as classNo, c1.cls_name as className, c1.sel_no as selNo, c1.cls_Det as classDetail, c1.cls_price as classPrice, c1.class_person as classPerson, 
   	c1.class_enroll as classEnroll, c1.classstarttime as classStartTime, c1.status, c1.class_date as classDate , NVL(sum(c2.class_person),0) as classNow
@@ -147,7 +151,7 @@ order by c.class_enroll)c) where rnum between #{start} and #{end}
    </select>
    
    <insert id="insertFunding" parameterType="sellerFunding">
-   insert into funding_db values (funding_db_seq.nextval, #{fundName}, #{fundMoney}, #{fundChk}, #{fundDet}, #{status}, to_char(sysdate,'yyyy-mm-dd'), #{selNo}, #{fundDate}, #{fundEndDate})
+   insert into funding_db values (funding_db_seq.nextval, #{fundName}, #{fundMoney}, #{fundChk}, #{fundDet}, #{status}, to_char(sysdate,'yyyy-mm-dd'), #{selNo}, #{fundEnrollDate}, #{fundEndDate})
    </insert>
    <select id="selectLastFunding" resultType="_int">
      select max(fund_no) from funding_db
@@ -180,11 +184,11 @@ order by c.class_enroll)c) where rnum between #{start} and #{end}
   			gds_d_status as gdsDStatus,
   			sel_no as selNo
   		from goods_list_db join purchase_db using(pur_no) join goods_db using(gds_no)
-  		where  (gds_d_status in (0,2,3,4,5)) and (sel_no = #{selNo}) order by 1 desc)g)
+  		where (gds_d_status in (0,2,3,4,5) and (sel_no = #{selNo})) order by 1 desc)g)
   	where rnum between #{start} and #{end}
   	</select>
   	<select id="goodsListTotalCount" resultType="_int">
-  	select count(*) from goods_list_db join purchase_db using(pur_no) join goods_db using(gds_no) where  (gds_d_status in (0,2,3,4,5)) and (sel_no = #{selNo})
+  	  	select count(*) from goods_list_db join purchase_db using(pur_no) join goods_db using(gds_no) where  (gds_d_status in (0,2,3,4,5)) and (sel_no = #{selNo})
   	</select>
   	
   	<select id="selectAllFundingList" parameterType="map" resultType="sellerFL">
@@ -194,8 +198,9 @@ order by c.class_enroll)c) where rnum between #{start} and #{end}
         fund_no as fundNo,
         fnd_d_price as fndDPrice,
         fnd_g_no as fndGNo,
-        fnd_d_status as fndDStatus
-     from fnd_det_db where (fnd_d_status <![CDATA[>]]> 0 and fnd_d_status <![CDATA[<]]> 5) order by 1 desc)f) where (rnum between #{start} and #{end})
+        fnd_d_status as fndDStatus,
+        sel_no
+     from fnd_det_db join funding_db using(fund_no) where (fnd_d_status <![CDATA[>]]> 0 and fnd_d_status <![CDATA[<]]> 5) order by 1 desc)f) where (rnum between #{start} and #{end}) and sel_no=#{selNo}
   	</select>
   	<select id="fundingListTotalCount" resultType="_int">
   	select count(*) from fnd_det_db where (fnd_d_status <![CDATA[>]]> 0 and fnd_d_status <![CDATA[<]]> 5)

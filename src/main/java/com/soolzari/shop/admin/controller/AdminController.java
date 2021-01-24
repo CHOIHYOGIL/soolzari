@@ -124,7 +124,7 @@ public class AdminController {
 		}else {
 			model.addAttribute("msg", "구독 등급 변경 실패");
 		}
-		model.addAttribute("loc", "/user.sool?type="+type+"&reqPage=1");
+		model.addAttribute("loc", "/user.sool?type="+type+"&reqPage=1&order=1");
 		return "common/msg";
 	}
 	
@@ -136,7 +136,7 @@ public class AdminController {
 		}else {
 			model.addAttribute("msg", "구독 등급 변경 실패");
 		}
-		model.addAttribute("loc", "/user.sool?type="+type+"&reqPage=1");
+		model.addAttribute("loc", "/user.sool?type="+type+"&reqPage=1&order=1");
 		return "common/msg";
 	}
 	
@@ -148,7 +148,7 @@ public class AdminController {
 		}else {
 			model.addAttribute("msg", "탈퇴 실패");
 		}
-		model.addAttribute("loc", "/user.sool?type="+type+"&reqPage=1");
+		model.addAttribute("loc", "/user.sool?type="+type+"&reqPage=1&order=1");
 		return "common/msg";
 	}
 	
@@ -160,7 +160,7 @@ public class AdminController {
 		}else {
 			model.addAttribute("msg", "탈퇴 실패");
 		}
-		model.addAttribute("loc", "/user.sool?type="+type+"&reqPage=1");
+		model.addAttribute("loc", "/user.sool?type="+type+"&reqPage=1&order=1");
 		return "common/msg";
 	}
 	
@@ -209,7 +209,7 @@ public class AdminController {
 		return "client/qnaViewC";
 	}
 	
-	@RequestMapping("deleteQna.sool")
+	@RequestMapping("/deleteQna.sool")
 	public String deleteQna(String qnaNo, Model model) {
 		int result = service.deleteQna(qnaNo);
 		if(result>0) {

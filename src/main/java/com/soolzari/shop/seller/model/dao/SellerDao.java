@@ -32,11 +32,6 @@ public class SellerDao {
 		return sqlSession.selectOne("seller.selectOneSeller",s);
 	}
 
-	public ArrayList<Goods> selectAllGoods() {
-		List<Goods> list = sqlSession.selectList("seller.selectAllGoods");
-		return (ArrayList<Goods>)list;
-	}
-
 
 	public ArrayList<Class> selectAllClass(HashMap<String, Integer> pageNo) {
 		List<Class> list = sqlSession.selectList("seller.selectAllClass", pageNo);
@@ -190,6 +185,17 @@ public class SellerDao {
 
 	public int updateFndDStatus(HashMap<String, Integer> fndInfo) {
 		return sqlSession.update("seller.updateFndDStatus",fndInfo);
+	}
+
+	public Seller checkId(Seller s) {
+		return sqlSession.selectOne("seller.checkId",s);
+	}
+	public int selectSellerGoods(int selNo) {
+		return sqlSession.selectOne("admin.selectSellerGoods", selNo);
+	}
+
+	public int selectSellerSales(int selNo) {
+		return sqlSession.selectOne("admin.selectSellerSales", selNo);
 	}
 	
 	

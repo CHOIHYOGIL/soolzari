@@ -344,10 +344,9 @@
 			return n;
 		}
 		var date=d.getFullYear()+''+az(d.getMonth()+1)+''+az(d.getDate())+''+az(d.getHours())+''+az(d.getMinutes())+''+az(d.getSeconds());
-		
-		$("input[name=purDate]").val(date);//성공시 상점거래아이디 넘기기
-		$("form").submit();//성공시 결제완료 페이지이동
-		/* IMP.init("imp54844867");
+
+
+		IMP.init("imp54844867");
 		IMP.request_pay({//결제를 위해 전달해주는 정보
 			merchant_uid : "${client.cliId}"+date,//상점거래ID(필수)
 			name : "결제테스트",			//결제이름
@@ -365,7 +364,7 @@
 				alert("결제에 실패했습니다\n결제 실패사유 : "+rsp.error_msg);
 				location.href='/client/basketList.sool';//실패 후 장바구니페이지로 이동
 			}
-		}) */
+		})
 	});
 	
 </script>

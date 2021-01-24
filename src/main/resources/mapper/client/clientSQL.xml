@@ -148,7 +148,7 @@ LEFT JOIN FND_DET_DB F2 USING(FUND_NO)
 LEFT JOIN IMG_DB ON (FUND_NO = TYPE_NO)
 WHERE IMG_TYPE='f' and status=1 
 GROUP BY (FUND_NO,FUND_NAME,FUND_MONEY,FILENAME,FILEPATH, FUND_ENROLLDATE, FUND_ENDDATE)
-ORDER BY 1
+ORDER BY 5
  			</select>
  	
 	<select id="checkUsergrade" parameterType="string" resultType="int">

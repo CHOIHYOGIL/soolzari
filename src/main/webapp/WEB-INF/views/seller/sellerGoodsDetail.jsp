@@ -40,7 +40,7 @@
                     <li class="item" id="mypage_con">
                         <a href="#mypage_con" class="btn-left">마이페이지</a>
                         <div class="subMenu">
-                            <a href="/seller/mypage1.sool">정보 수정</a>
+                            <a href="/seller/mypage1.sool">내 정보 보기</a>
                             <a href="/seller/mypage2.sool?reqPage=1&selNo=${sessionScope.sessionSeller.selNo}">상품 배송 관리</a>
                             <a href="/seller/mypage3.sool?reqPage=1">펀딩 배송 관리</a>
                         </div>
@@ -80,16 +80,16 @@
             <tr style="height:30%;">
                 <th style="width:25%;text-align:center;">상품명</th>
          
-                <td><input type="text" name="gdsName" value="${gd.gdsName }"></td>
+                <td><input id="gdsName" type="text" name="gdsName" value="${gd.gdsName }"></td>
                 <td> <input type="hidden" name="gdsNo" value="${gd.gdsNo }"></td>
             </tr>
             <tr style="height:30%;">
                 <th style="width:25%;text-align:center;">판매가</th>
-                <td><input type="text" name="gdsPri" value="${gd.gdsPri }"></td>
+                <td><input id="gdsPri" type="text" name="gdsPri" value="${gd.gdsPri }"></td>
             </tr>
             <tr style="height:40%;">
             	
-                <td colspan="2"><input type="submit" value="수정하기" style="width:100%; border:none; height:100%;background-color: #4d5075; color:white;"></td>
+                <td colspan="2"><input id="submitBtn" type="submit" value="수정하기" style="width:100%; border:none; height:100%;background-color: #4d5075; color:white;"></td>
             
             </tr>
         </table>

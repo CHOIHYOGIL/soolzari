@@ -41,7 +41,7 @@
                     <li class="item" id="mypage_con">
                         <a href="#mypage_con" class="btn-left">마이페이지</a>
                         <div class="subMenu">
-                            <a href="/seller/mypage1.sool">정보 수정</a>
+                            <a href="/seller/mypage1.sool">내 정보 보기</a>
                             <a href="/seller/mypage2.sool?reqPage=1&selNo=${sessionScope.sessionSeller.selNo}">상품 배송 관리</a>
                             <a href="/seller/mypage3.sool?reqPage=1">펀딩 배송 관리</a>
                         </div>
@@ -86,7 +86,7 @@
 					            <option value="4">배송완료</option>
 					            </c:when>
 					            <c:when test="${f.fndDStatus>=4}">
-					            <option value="4" selected>배송완료</option>
+					            <span>배송완료</span>
 					            </c:when>
 					            </c:choose>
 					            </select></td>

@@ -42,9 +42,6 @@ public class SellerService {
 		return dao.selectOneSeller(s);
 	}
 
-	public ArrayList<Goods> selectAllGoods() {
-		return dao.selectAllGoods();
-	}
 
 	public ClassPage selectAllClass(int reqPage, int selNo) {
 		int numPerPage = 10;
@@ -68,12 +65,12 @@ public class SellerService {
 		String page = "";
 		int pageStart = ((reqPage-1)/pageNaviSize)*pageNaviSize + 1;
 		if(pageStart>1) {
-			page += "<a href='/seller/ClassList.sool?reqPage=1'></a>";
-			page += "<a href='/seller/ClassList.sool?reqPage="+(pageStart-1)+"'></a>";
+			page += "<a href='/seller/ClassList.sool?reqPage=1&selNo="+selNo+"'>처음</a>";
+			page += "<a href='/seller/ClassList.sool?reqPage="+(pageStart-1)+"&selNo="+selNo+"'><</a>";
 		}
 		for(int i=0;i<pageNaviSize;i++) {
 			if(reqPage != pageStart) {
-				page += "<a href='/seller/ClassList.sool?reqPage="+pageStart+"' class='num'>"+pageStart+"</a>";
+				page += "<a href='/seller/ClassList.sool?reqPage="+pageStart+"&selNo="+selNo+"' class='num'>"+pageStart+"</a>";
 			}else {
 				page += "<span class='sel'>"+pageStart+"</span>";
 			}
@@ -83,8 +80,8 @@ public class SellerService {
 			}
 		}
 		if(pageStart<=totalPage) {
-			page += "<a href='/seller/ClassList.sool?reqPage="+pageStart+"'></a>";
-			page += "<a href='/seller/ClassList.sool?reqPage="+totalPage+"'></a>";
+			page += "<a href='/seller/ClassList.sool?reqPage="+pageStart+"&selNo="+selNo+"'>></a>";
+			page += "<a href='/seller/ClassList.sool?reqPage="+totalPage+"&selNo="+selNo+"'>마지막</a>";
 		}
 		cp.setPage(page);
 		return cp;
@@ -112,12 +109,12 @@ public GoodsPage selectAllGoods(int reqPage, int selNo) {
 	String page = "";
 	int pageStart = ((reqPage-1)/pageNaviSize)*pageNaviSize + 1;
 	if(pageStart>1) {
-		page += "<a href='/seller/goodsList.sool?reqPage=1'></a>";
-		page += "<a href='/seller/goodsList.sool?reqPage="+(pageStart-1)+"'></a>";
+		page += "<a href='/seller/goodsList.sool?reqPage=1&selNo="+selNo+"'>처음</a>";
+		page += "<a href='/seller/goodsList.sool?reqPage="+(pageStart-1)+"&selNo="+selNo+"'><</a>";
 	}
 	for(int i=0;i<pageNaviSize;i++) {
 		if(reqPage != pageStart) {
-			page += "<a href='/seller/goodsList.sool?reqPage="+pageStart+"' class='num'>"+pageStart+"</a>";
+			page += "<a href='/seller/goodsList.sool?reqPage="+pageStart+"&selNo="+selNo+"' class='num'>"+pageStart+"</a>";
 		}else {
 			page += "<span class='sel'>"+pageStart+"</span>";
 		}
@@ -127,8 +124,8 @@ public GoodsPage selectAllGoods(int reqPage, int selNo) {
 		}
 	}
 	if(pageStart<=totalPage) {
-		page += "<a href='/seller/goodsList.sool?reqPage="+pageStart+"'></a>";
-		page += "<a href='/seller/goodsList.sool?reqPage="+totalPage+"'></a>";
+		page += "<a href='/seller/goodsList.sool?reqPage="+pageStart+"&selNo="+selNo+"'>></a>";
+		page += "<a href='/seller/goodsList.sool?reqPage="+totalPage+"&selNo="+selNo+"'>마지막</a>";
 	}
 	gp.setPage(page);
 	return gp;
@@ -225,12 +222,12 @@ public FundingPage selectAllFunding(int reqPage, int selNo) {
 	String page = "";
 	int pageStart = ((reqPage-1)/pageNaviSize)*pageNaviSize + 1;
 	if(pageStart>1) {
-		page += "<a href='/seller/fundingList.sool?reqPage=1'></a>";
-		page += "<a href='/seller/fundingList.sool?reqPage="+(pageStart-1)+"'></a>";
+		page += "<a href='/seller/fundingList.sool?reqPage=1&selNo="+selNo+"'>처음</a>";
+		page += "<a href='/seller/fundingList.sool?reqPage="+(pageStart-1)+"&selNo="+selNo+"'><</a>";
 	}
 	for(int i=0;i<pageNaviSize;i++) {
 		if(reqPage != pageStart) {
-			page += "<a href='/seller/fundingList.sool?reqPage="+pageStart+"' class='num'>"+pageStart+"</a>";
+			page += "<a href='/seller/fundingList.sool?reqPage="+pageStart+"&selNo="+selNo+"' class='num'>"+pageStart+"</a>";
 		}else {
 			page += "<span class='sel'>"+pageStart+"</span>";
 		}
@@ -240,8 +237,8 @@ public FundingPage selectAllFunding(int reqPage, int selNo) {
 		}
 	}
 	if(pageStart<=totalPage) {
-		page += "<a href='/seller/fundingList.sool?reqPage="+pageStart+"'></a>";
-		page += "<a href='/seller/fundingList.sool?reqPage="+totalPage+"'></a>";
+		page += "<a href='/seller/fundingList.sool?reqPage="+pageStart+"&selNo="+selNo+"'>></a>";
+		page += "<a href='/seller/fundingList.sool?reqPage="+totalPage+"&selNo="+selNo+"'>머지막</a>";
 	}
 	fp.setPage(page);
 	return fp;
@@ -316,8 +313,8 @@ public GoodsListPage selectAllGoodsList(int reqPage, int selNo) {
 	String page = "";
 	int pageStart = ((reqPage-1)/pageNaviSize)*pageNaviSize + 1;
 	if(pageStart>1) {
-		page += "<a href='/seller/mypage2.sool?reqPage=1&selNo="+selNo+"'></a>";
-		page += "<a href='/seller/mypage2.sool?reqPage="+(pageStart-1)+"&selNo"+selNo+"'></a>";
+		page += "<a href='/seller/mypage2.sool?reqPage=1&selNo="+selNo+"'>처음</a>";
+		page += "<a href='/seller/mypage2.sool?reqPage="+(pageStart-1)+"&selNo"+selNo+"'><</a>";
 	}
 	for(int i=0;i<pageNaviSize;i++) {
 		if(reqPage != pageStart) {
@@ -331,14 +328,14 @@ public GoodsListPage selectAllGoodsList(int reqPage, int selNo) {
 		}
 	}
 	if(pageStart<=totalPage) {
-		page += "<a href='/seller/mypage2.sool?reqPage="+pageStart+"&selNo="+selNo+"'></a>";
-		page += "<a href='/seller/mypage2.sool?reqPage="+totalPage+"&selNo="+selNo+"'></a>";
+		page += "<a href='/seller/mypage2.sool?reqPage="+pageStart+"&selNo="+selNo+"'>></a>";
+		page += "<a href='/seller/mypage2.sool?reqPage="+totalPage+"&selNo="+selNo+"'>마지막</a>";
 	}
 	glp.setGdsPage(page);
 	return glp;
 }
 
-public FundingListPage selectAllFundingList(int reqPage) {
+public FundingListPage selectAllFundingList(int reqPage, int selNo) {
 	FundingListPage flp = new FundingListPage();
 	int numPerPage = 10;
 	int start = (reqPage-1)*numPerPage+1;
@@ -346,6 +343,7 @@ public FundingListPage selectAllFundingList(int reqPage) {
 	HashMap<String, Integer> pageNo = new HashMap<String, Integer>();
 	pageNo.put("start", start);
 	pageNo.put("end", end);
+	pageNo.put("selNo",selNo);
 	ArrayList<FundingList> fndList = dao.selectAllFundingList(pageNo);
 	System.out.println(fndList);
 	flp.setFndList(fndList);
@@ -360,12 +358,12 @@ public FundingListPage selectAllFundingList(int reqPage) {
 	String page = "";
 	int pageStart = ((reqPage-1)/pageNaviSize)*pageNaviSize + 1;
 	if(pageStart>1) {
-		page += "<a href='/seller/mypage3.sool?reqPage=1'></a>";
-		page += "<a href='/seller/mypage3.sool?reqPage="+(pageStart-1)+"'></a>";
+		page += "<a href='/seller/mypage3.sool?reqPage=1&selNo="+selNo+"'>처음</a>";
+		page += "<a href='/seller/mypage3.sool?reqPage="+(pageStart-1)+"&selNo="+selNo+"'><</a>";
 	}
 	for(int i=0;i<pageNaviSize;i++) {
 		if(reqPage != pageStart) {
-			page += "<a href='/seller/mypage3.sool?reqPage="+pageStart+"' class='num'>"+pageStart+"</a>";
+			page += "<a href='/seller/mypage3.sool?reqPage="+pageStart+"&selNo="+selNo+"' class='num'>"+pageStart+"</a>";
 		}else {
 			page += "<span class='sel'>"+pageStart+"</span>";
 		}
@@ -375,8 +373,8 @@ public FundingListPage selectAllFundingList(int reqPage) {
 		}
 	}
 	if(pageStart<=totalPage) {
-		page += "<a href='/seller/mypage3.sool?reqPage="+pageStart+"'></a>";
-		page += "<a href='/seller/mypage3.sool?reqPage="+totalPage+"'></a>";
+		page += "<a href='/seller/mypage3.sool?reqPage="+pageStart+"&selNo="+selNo+"'>></a>";
+		page += "<a href='/seller/mypage3.sool?reqPage="+totalPage+"&selNo="+selNo+"'>마지막</a>";
 	}
 	flp.setFndPage(page);
 	return flp;
@@ -390,6 +388,18 @@ public int updateFndDStatus(int fndDNo, int fndDStatus) {
 	int result = dao.updateFndDStatus(fndInfo);
 	return result;
 }
+
+public Seller checkId(Seller s) {
+	return dao.checkId(s);
+}
+public int selectSellerGoods(int selNo) {
+	return dao.selectSellerGoods(selNo);
+}
+
+public int selectSellerSales(int selNo) {
+	return dao.selectSellerSales(selNo);
+}
+
 
 
 

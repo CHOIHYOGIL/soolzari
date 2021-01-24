@@ -5,7 +5,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Array;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +26,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.soolzari.shop.admin.model.service.AdminService;
 import com.soolzari.shop.client.model.vo.Client;
 import com.soolzari.shop.common.FileNameOverlap;
 import com.soolzari.shop.seller.model.service.SellerService;
@@ -74,7 +79,20 @@ public class SellerController {
 		return "seller/sellerFundingAdd";
 	}
 	
+	@ResponseBody
+	@RequestMapping("/ajaxCheckId.sool")
+	public int CheckId(Seller s) {
+
+		Seller seller=service.checkId(s);
 	
+		if(seller!=null) {
+			return 0;
+		}else {
+			return 1;
+		}
+		
+	}
+
 	@RequestMapping("/goodsList.sool")
 	public String goodsList(int reqPage, int selNo, Model model) {
 		GoodsPage gp = service.selectAllGoods(reqPage, selNo);
@@ -129,7 +147,7 @@ public class SellerController {
 		if(seller!=null) {
 			session.setAttribute("selNo", seller.getSelNo());
 			session.setAttribute("sessionSeller", seller);
-			model.addAttribute("loc","/seller/sellerMain.sool");
+			model.addAttribute("loc","/seller/mypage1.sool");
 			model.addAttribute("msg","로그인 성공");
 		}else {
 			model.addAttribute("loc","/seller/login.sool");
@@ -157,10 +175,12 @@ public class SellerController {
 	
 	//상품등록
 	@RequestMapping("/insertGoods.sool")
-
-	public String insertGoods(Goods g, @RequestParam("files")MultipartFile[] files, Model model, HttpServletRequest request) {
+	public String insertGoods(Goods g,HttpSession session, @RequestParam("files")MultipartFile[] files, Model model, HttpServletRequest request) {
 		//상품등록
 		System.out.println(files);
+		
+		Seller seller = (Seller)session.getAttribute("sessionSeller");
+		int selNo = seller.getSelNo();
 
 		g.setGdsBcnt(0);
 		int result = service.insertGoods(g);
@@ -213,7 +233,7 @@ public class SellerController {
 		}else {
 			model.addAttribute("msg","상품 등록이 실패했습니다.");
 		}
-		model.addAttribute("loc","/seller/goodsList.sool?reqPage=1");
+		model.addAttribute("loc","/seller/goodsList.sool?reqPage=1&selNo="+selNo);
 
 	}
 		
@@ -315,16 +335,20 @@ public class SellerController {
 	
 
 	@RequestMapping("/fixGds.sool")
-	public String fixGds(Goods g, Model model) {
+	public String fixGds(Goods g, Model model, HttpSession session) {
 		System.out.println("fix:"+g);
 		int result = service.modifyGoods(g);
+		
+		Seller seller = (Seller)session.getAttribute("sessionSeller");
+		int selNo = seller.getSelNo();
+		
 		System.out.println(result);
 		if(result>0) {
 			model.addAttribute("msg","상품 수정이 완료되었습니다.");
 		}else {
 			model.addAttribute("msg","상품 수정이 실패했습니다.");
 		}
-		model.addAttribute("loc","/seller/goodsList.sool?reqPage=1");
+		model.addAttribute("loc","/seller/goodsList.sool?reqPage=1&selNo="+selNo);
 		return "common/msg";
 	}
 	
@@ -354,10 +378,14 @@ public class SellerController {
 	}
 	
 	@RequestMapping("/deleteGoods.sool")
-	public String deleteGoods(@RequestParam("checkbox") List<Integer> values, Model model) {
+	public String deleteGoods(@RequestParam("checkbox") List<Integer> values, Model model, HttpSession session) {
 		System.out.println("delete");
 		int cnt = values.size();
 		System.out.println(cnt);
+		
+		Seller seller = (Seller)session.getAttribute("sessionSeller");
+		int selNo = seller.getSelNo();
+		
 		int result = 0;
 		int delResult = 0;
 		for(Integer value : values) {
@@ -372,7 +400,7 @@ public class SellerController {
 		}else {
 			model.addAttribute("msg","삭제 성공");
 		}
-		model.addAttribute("loc","/seller/goodsList.sool?reqPage=1");
+		model.addAttribute("loc","/seller/goodsList.sool?reqPage=1&selNo="+selNo);
 		return "common/msg";
 	}
 	
@@ -380,6 +408,32 @@ public class SellerController {
 	public String insertFunding(Funding f, MultipartFile file1, MultipartFile file2, Model model, HttpServletRequest request) {
 		//상품등록
 				f.setFundChk(0);
+				
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+				Date day1 = null;
+				Date day2 = null;
+				int dateResult = 0;
+				try {
+					day1 = dateFormat.parse(f.getFundEnrollDate());
+					day2 = dateFormat.parse(f.getFundEndDate());
+					int compare = day1.compareTo(day2);
+					if(compare>0) {
+						dateResult = 1;
+					}else {
+						dateResult = 0;
+					}
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				
+				if(dateResult == 1) {
+					model.addAttribute("msg","펀딩 시작일이 종료일보다 뒤의 날짜입니다. 다시 입력해주세요.");
+					model.addAttribute("loc","/seller/fundingAdd.sool");
+					return "common/msg";
+				}
+				
+				
+				
 				int result = service.insertFunding(f);
 				System.out.println(result);
 				int fundNo = service.searchLastFunding();
@@ -444,7 +498,7 @@ public class SellerController {
 		}else {
 			model.addAttribute("msg","삭제 실패");
 		}
-		model.addAttribute("loc","/seller/main.sool");
+		model.addAttribute("loc","/seller/mypage1.sool");
 		return "common/msg";
 	}
 	
@@ -472,7 +526,15 @@ public class SellerController {
 	} 
 	//마이페이지 이동
 	@RequestMapping("/mypage1.sool")
-	public String mypage1() {
+	public String mypage1(Model model, HttpSession session) {
+		int selNo = (Integer) session.getAttribute("selNo");
+		int goods = service.selectSellerGoods(selNo);
+		int sales = service.selectSellerSales(selNo);
+		DecimalFormat formatter = new DecimalFormat("###,###");
+		String totalGoods = formatter.format(goods);
+		String totalSales = formatter.format(sales);
+		model.addAttribute("totalGoods", totalGoods);
+		model.addAttribute("totalSales", totalSales);
 		return "seller/sellerMypage1";
 	}
 	@RequestMapping("/mypage2.sool")
@@ -484,12 +546,10 @@ public class SellerController {
 		return "seller/sellerMypage2";
 	}
 	@RequestMapping("/mypage3.sool")
-	public String mypage3(Model model, int reqPage) {
-		FundingListPage flp = service.selectAllFundingList(reqPage);
+	public String mypage3(Model model, int reqPage, @SessionAttribute(required=false) Seller sessionSeller) {
+		int selNo = sessionSeller.getSelNo();
+		FundingListPage flp = service.selectAllFundingList(reqPage, selNo);
 		System.out.println(flp.getFndList().size());
-		System.out.println(flp.getFndList().get(0));
-		System.out.println(flp.getFndList().get(1));
-		System.out.println(flp.getFndList().get(2));
 		model.addAttribute("fndList",flp.getFndList());
 		model.addAttribute("fndPage",flp.getFndPage());
 		return "seller/sellerMypage3";
@@ -506,7 +566,7 @@ public class SellerController {
 		}else {
 			model.addAttribute("msg","수정 실패");
 		}
-		model.addAttribute("loc","/seller/sellerMain.sool");
+		model.addAttribute("loc","/seller/mypage1.sool");
 		return "common/msg";
 	}
 	//펀딩 상품추가

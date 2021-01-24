@@ -23,19 +23,4 @@
         </form>
     </div>
 </body>
-<script>
-	var idCheck=0;
-	$(function(){
-		
-		$("input[type='submit']").click(function(event){
-		
-			var count=0;
-			var inputs=$("input");
-			var irReg = /^[a-z][a-z0-9]{3,11}$/;
-			if(!idReg.test())
-		})
-		
-	})
-</script>
-
 </html>
