@@ -49,31 +49,38 @@
                             <form name="frmList">
                                 <div class="pick_list_box">
                                     <ul class="pick_list">
+<<<<<<< HEAD
                                     <!--  
                                         <li>
+=======
+<!--                                         <li>
+>>>>>>> 03dba37c4323bc3da6d5808ba8391f1b8478e689
                                             <input type="radio" id="sort1" class="radio" name="sort" value="date">
                                             <label for="sort1" ">최신순</label>
                                          
-                                        </li>
-                                          <li>
+                                        </li> -->
+<!--                                           <li>
                                             <input type="radio" id="sort5" class="radio" name="sort" value="percent">
                                             <label for="sort5" >달성도순</label>
                                         </li>
+<<<<<<< HEAD
                                     
                                    -->
+=======
+                                     -->
+>>>>>>> 03dba37c4323bc3da6d5808ba8391f1b8478e689
                                          <li>
                                             <input type="radio" id="sort4" class="radio" name="sort" value="ongoing">
                                             <label for="sort4" >진행중인펀딩</label>
                                         </li>
-                                       
-                                             <li>
-                                            <input type="radio" id="sort2" class="radio" name="sort" value="finish">
-                                            <label for="sort2" >종료된 펀딩</label>
-                                        </li> 
-                                             <li>
+                                        <li>
                                             <input type="radio" id="sort3" class="radio" name="sort" value="future">
                                             <label for="sort3">오픈 예정 펀딩</label>
                                         </li>
+                                        <li>
+                                            <input type="radio" id="sort2" class="radio" name="sort" value="finish">
+                                            <label for="sort2" >종료된 펀딩</label>
+                                        </li> 
                                     </ul>
                                     
                                  
@@ -93,11 +100,11 @@
                                   	<c:forEach items="${list }" var="f">
                                   	
                                     <jsp:useBean id="now" class="java.util.Date" />
-								<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
-         						  <fmt:parseDate var="today1" value="${today }" pattern="yyyy-MM-dd"/>
+									<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
+         						    <fmt:parseDate var="today1" value="${today }" pattern="yyyy-MM-dd"/>
                                     <fmt:parseNumber value="${today1.time/(1000*60*60*24) }" integerOnly="true" var="today2" scope="request"/>
                                   	
-                                  	              <fmt:parseDate var="sDate" value="${f.fundEnrollDate }" pattern="yyyy-MM-dd"/>
+                                  	<fmt:parseDate var="sDate" value="${f.fundEnrollDate }" pattern="yyyy-MM-dd"/>
                                     <fmt:parseNumber value="${sDate.time/(1000*60*60*24) }" integerOnly="true" var="isDate" scope="request"/>
                                     <fmt:parseDate var="tDate" value="${f.fundEndDate }" pattern="yyyy-MM-dd"/>
                                     <fmt:parseNumber value="${tDate.time/(1000*60*60*24) }" integerOnly="true" var="itDate" scope="request"/>
@@ -124,10 +131,10 @@
                                                         <img src="/resources/upload/${f.imagePath }" alt="전통주 짱맛있어" class="middle" style= "max-height:180px; width:100%;" >
                                                 </a>
                                     	</c:when> 
-                                    	<c:when test="${isDate >today2 }"> <!-- 이런식으로 비교하긴했는데 어떻게 넣어야해요? 여긴 a태그만들어가있고  -->
+                                    	<c:when test="${isDate > today2 }"> <!-- 이런식으로 비교하긴했는데 어떻게 넣어야해요? 여긴 a태그만들어가있고  -->
                                     		 <a href="javascript:void(0)" onclick="return future();">
-                                                        <img src="/resources/upload/${f.imagePath }" alt="전통주 짱맛있어" class="middle" style= "max-height:180px; width:100%;" >
-                                                    </a>
+                                                 <img src="/resources/upload/${f.imagePath }" alt="전통주 짱맛있어" class="middle" style= "max-height:180px; width:100%;" >
+                                             </a>
                                     	</c:when>
                                     	<c:otherwise>
                                     	 <a href="/client/oFundingDetail1.sool?fundNo=${f.fundNo }">
@@ -240,11 +247,11 @@
 <script>
     $(function(){
 
-    	//product-li, pick_list
     	$(".pick_list li").click(function(){
     		var idx = $(".pick_list li").index(this);
     		console.log("idx : "+ idx);
     		$(".product-li li").hide();
+
     		if(idx == 0 ){
     			//$(".product-li li").show();	
     			$(".product-li").find(".test3").show();
@@ -264,7 +271,7 @@
     		}
     	
 
-    	 
+
     	});
     	
     	
@@ -287,22 +294,19 @@
         
    
         $(".pick_list li label").click(function(){
-        
-        	
              $(".pick_list li label").removeClass('on');
             $(this).addClass('on');
        
-        })
+        });
         
 
         
-    })
+    });
  
     
     /* 정렬   */
-      var recent=$(".product-li").html();
+    /*   var recent=$(".product-li").html();
     $(document).ready(function(){
-     
         $("input:radio[name='sort']").prop("checked",false);
         $("input:radio[name='sort']").click(function(){
 			if("input:radio[name='sort']:checked"){
@@ -315,8 +319,8 @@
         	
         })
        
-    })
-    function listSort(sortVal,pg){
+    }) */
+   /*  function listSort(sortVal,pg){
     	 
     if(sortVal=="percent"){
     		console.log("달성도 순")
@@ -332,7 +336,7 @@
     		$(".product-li").html(recent);
     	}
     	paging(pg);
-    }
+    } */
   
     /* 페이징 */
 	function paging(page){
@@ -349,7 +353,9 @@
 	$(function(){
 		paging(1);
 		$(".page-num").eq(0).css({color:'black'});
-	})
+		$(".product-li li").hide();
+		$(".pick_list li").eq(0).click();
+	});
 	
 	$(".page-num").click(function(){
 		$(".page-num").css({color:'darkgray'});

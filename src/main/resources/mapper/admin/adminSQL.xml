@@ -671,7 +671,7 @@
 				where goal <![CDATA[ >= ]]> 0.5 and goal <![CDATA[ < ]]> 0.8
 			</when>
 			<when test="_parameter == 0">
-				funding_db where fund_chk=-1
+				funding_db where fund_chk=2
 			</when>
 		</choose>
 	</select>
