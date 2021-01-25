@@ -153,9 +153,9 @@
                     <li style="width:27%;">
                         <div class="item_cont">
                             <div class="item_photo_box">
-                                <a href="#">
+                        
                                     <img src="/resources/image/ex2.PNG" alt="전통주 짱맛있어" width="100%;" class="middle">
-                                </a>
+                             
                             </div>
 
                             <div class="item_info_cont">
@@ -187,9 +187,9 @@
                     <li style="width:27%;">
                         <div class="item_cont">
                             <div class="item_photo_box">
-                                <a href="#">
+                          
                                     <img src="/resources/image/ex3.PNG" alt="전통주 짱맛있어" width="100%;" class="middle">
-                                </a>
+                               
                             </div>
 
                             <div class="item_info_cont">

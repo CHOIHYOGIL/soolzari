@@ -84,7 +84,7 @@
 	             	</c:if>
 	             </h4>
 	        
-	               <ul class="commentList-ul" style=" width:100%; padding:0px 15px;" >
+	               <ul class="commentList-ul" style=" width:110%; padding:0px 15px;" >
 	          
 	              	<c:forEach items="${reviewList}" var="r">
 	   
@@ -93,7 +93,7 @@
 	            			       
 			                     	<p id="commentWriterP" style="margin: 0; font-size:18px;">${r.commentWriterName}<span><c:forEach var="i" begin="1" end="${r.commentRate }">	<a href="#" style="color:orange;">★</a></c:forEach></span></p>
 			                            		<input type="hidden" name="reviewNo" value="${r.reviewNo}">
-			                        <textarea name="commentContent" class="form-control changeComment" style="resize: none; display:inline-block;"  required="required" onfucs="this.value=this.value;" >${r.commentContent }</textarea>
+			                        <textarea name="commentContent" class="form-control changeComment" style="resize: none; display:inline-block;"  required="required" onfucs="this.value=this.value;" readonly>${r.commentContent }</textarea>
 			           
 			             		<c:if test="${r.commentWriter eq sessionScope.sessionClient.clientNo }">
 			                    		<a href="javascript:void(0)" onclick="modify(this,${r.reviewNo})">수정</a>
@@ -256,6 +256,7 @@ var count=0;
         	tx.focus();
         	tx.val(tx.val()+' ');  //textarea 글끝으로 커서 보내기
         	$(obj).html('수정완료');
+        	$(obj).prev().removeAttr("readonly");
         	$(obj).attr('onclick','modifyComplete(this,"'+reviewNo+'")');
         	$(obj).next().html('수정취소');
         	$(obj).next().attr('onclick','modifyCancel(this)');

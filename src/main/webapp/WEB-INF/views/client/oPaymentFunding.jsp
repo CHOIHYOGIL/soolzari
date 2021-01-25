@@ -340,7 +340,7 @@
 		IMP.request_pay({//결제를 위해 전달해주는 정보
 			merchant_uid : "${client.cliId}"+date,//상점거래ID(필수)
 			name : "결제테스트",			//결제이름
-			amount : '100',				//결제금액(필수)
+			amount : 100,				//결제금액(필수)
 			buyer_email : "${client.cliEmail}",//구매자 email
 			buyer_name : "${client.cliName}",		//구매자이름
 			buyer_tel : "${client.cliTel}",//구매자전화번호(필수)

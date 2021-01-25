@@ -85,7 +85,7 @@
                 <ul class="nList">
 
                     <li class="newList-li">
-                        <a href="/client/oGoodsDetail.sool?gdsNo=21&gdsRate=3.8">
+                        <a href="/client/oGoodsDetail1.sool?gdsNo=21&gdsRate=3.8">
                             <div class="newImg-wrap">
 
                                 <img src="resources/image/product.PNG" style="width: 100%;">
@@ -111,7 +111,7 @@
 
 
                     <li class="newList-li">
-                        <a href="/client/oGoodsDetail.sool?gdsNo=23&gdsRate=4.2">
+                        <a href="/client/oGoodsDetail1.sool?gdsNo=23&gdsRate=4.2">
                             <div class="newImg-wrap">
 
 
@@ -140,7 +140,7 @@
 
 
                     <li class="newList-li">
-                        <a href="/client/oGoodsDetail.sool?gdsNo=22&gdsRate=4.4">
+                        <a href="/client/oGoodsDetail1.sool?gdsNo=22&gdsRate=4.4">
                             <div class="newImg-wrap">
 
                                 <img src="/resources/image/product2.PNG" style="width:100%; object-fit:contain; ">
@@ -163,7 +163,7 @@
                     </li>
 
                     <li class="newList-li">
-                        <a href="/client/oGoodsDetail.sool?gdsNo=24&gdsRate=3.9">
+                        <a href="/client/oGoodsDetail1.sool?gdsNo=24&gdsRate=3.9">
                             <div class="newImg-wrap">
 
 
@@ -206,7 +206,7 @@
                 <ul class="bList">
 
                     <li class="bestList-li">
-                        <a href="/client/oGoodsDetail.sool?gdsNo=25&gdsRate=3.9">
+                        <a href="/client/oGoodsDetail1.sool?gdsNo=25&gdsRate=3.9">
                             <div class="newImg-wrap">
 
                                 <img src="/resources/image/product5.PNG" style="width: 100%;">
@@ -231,7 +231,7 @@
 
 
                     <li class="bestList-li">
-                        <a href="/client/oGoodsDetail.sool?gdsNo=26&gdsRate=4.6">
+                        <a href="/client/oGoodsDetail1.sool?gdsNo=26&gdsRate=4.6">
                             <div class="newImg-wrap">
 
 
@@ -257,7 +257,7 @@
 
                     <li class="bestList-li">
 
-                        <a href="/client/oGoodsDetail.sool?gdsNo=27&gdsRate=3.6">
+                        <a href="/client/oGoodsDetail1.sool?gdsNo=27&gdsRate=3.6">
                             <div class="newImg-wrap">
 
                                 <img src="/resources/image/product7.PNG" style="width: 100%;">
@@ -280,7 +280,7 @@
 
 
                     <li class="bestList-li">
-                        <a href="/client/oGoodsDetail.sool?gdsNo=28&gdsRate=3.6">
+                        <a href="/client/oGoodsDetail1.sool?gdsNo=28&gdsRate=3.6">
                             <div class="newImg-wrap">
 
 

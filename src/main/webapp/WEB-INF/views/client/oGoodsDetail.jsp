@@ -107,7 +107,7 @@
 	             	</c:if>
 	             </h4>
 	        
-	               <ul class="commentList-ul" style=" width:100%; padding:0px 15px;" >
+	               <ul class="commentList-ul" style=" width:110%; padding:0px 15px;" >
 	          
 	              	<c:forEach items="${reviewList}" var="r">
 	   

@@ -504,6 +504,9 @@ public class ClientController {
 		System.out.println(person1);
 		System.out.println(result);
 		System.out.println(okPerson);
+		if(okPerson<0) {
+			okPerson=okPerson*-1;
+		}
 		if(resultPerson>person1) {
 			System.out.println("here");
 			
