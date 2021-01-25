@@ -282,7 +282,7 @@
 		where fund_enddate=to_char(sysdate-1,'yyyy-mm-dd') and fund_chk=0)
 	</update>
 	
-	<!-- 매일 자정 종료일인 펀딩 중 미달성된 펀딩일경우 funding_db의 fund_chk를 -1로 변경 -->
+	<!-- 매일 자정 종료일인 펀딩 중 미달성된 펀딩일경우 funding_db의 fund_chk를 2로 변경 -->
 	<update id="fundChkNUpdate">
 		update funding_db set fund_chk=2 where fund_no in(select 
 		   fund_no 

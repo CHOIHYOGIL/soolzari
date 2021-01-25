@@ -1,10 +1,12 @@
 @charset "utf-8";
 
 section{
-	margin-left: 70px;
+
+	margin-left: 100px;
+
 }
 body{
-	width: 2000px;
+	width: 1800px;
 	height: 100vh;
 }
         @font-face {
@@ -46,9 +48,6 @@ body{
             color: dimgray;
         }
 
-        h1{
-            text-align: center;
-        }
         .qna textarea{
             resize: none;
             width: 1000px;
@@ -69,7 +68,6 @@ body{
             padding: 30px;
             padding-bottom: 5px;
             box-sizing: border-box;
-            margin-bottom: 100px;
         }
         .qna tr:last-child>th{
             text-align: left;
@@ -132,9 +130,12 @@ body{
         .qnatitle{
         	margin: 100px;
         	font-size: 2em;
+        	text-align: center;
         }
         .btnwrap{
         	display: flex;
         	margin-bottom: 7px;
         }
-        
+        body{
+        	height: 1200px;
+        }
