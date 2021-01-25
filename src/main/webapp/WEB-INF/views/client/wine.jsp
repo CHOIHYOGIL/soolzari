@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
                <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
                <%@page import="com.soolzari.shop.client.model.vo.Goods"%>
+                 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -133,7 +134,7 @@
                                                 
                                                 <div class="item_info_cont">
                                                   <div class="item_tit_box">
-                                                      <a href="#">
+                                                       <a href="/client/oGoodsDetail.sool?gdsNo=${g.goodsNo}&gdsRate=${g.reviewScore}">
                                                           <strong class="item_name" style="font-size:20px;">${g.goodsName }</strong>
                                                       </a>
                                                   </div>
@@ -144,7 +145,7 @@
                                                   
                                                   <div class="item_money_box">
                                                       <strong class="item_price" style="font-size:16px;">
-                                                          <span>${g.goodsPrice }원</span>
+                                                             <span><fmt:formatNumber type="number" maxFractionDigits="3" value="${g.goodsPrice }" />원</span>
                                                       </strong>
                                                   </div>
                                                 </div>

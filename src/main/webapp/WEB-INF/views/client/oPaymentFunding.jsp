@@ -335,13 +335,12 @@
 			return n;
 		}
 		var date=d.getFullYear()+''+az(d.getMonth()+1)+''+az(d.getDate())+''+az(d.getHours())+''+az(d.getMinutes())+''+az(d.getSeconds());
-		$("input[name=fndDPaydate]").val(date);//결제일자
-		$("form").submit();//포인트 결제일자 총결제금액 fndDNo 4개를 넘김
-		/* IMP.init("imp54844867");
+
+		 IMP.init("imp54844867");
 		IMP.request_pay({//결제를 위해 전달해주는 정보
 			merchant_uid : "${client.cliId}"+date,//상점거래ID(필수)
 			name : "결제테스트",			//결제이름
-			amount : price,				//결제금액(필수)
+			amount : 100,				//결제금액(필수)
 			buyer_email : "${client.cliEmail}",//구매자 email
 			buyer_name : "${client.cliName}",		//구매자이름
 			buyer_tel : "${client.cliTel}",//구매자전화번호(필수)
@@ -356,7 +355,7 @@
 				alert("결제에 실패했습니다\n결제 실패사유 : "+rsp.error_msg);
 				location.href="/client/mFunding.sool?reqPage=1&period=1";//실패 후 장바구니페이지로 이동
 			}
-		}) */
+		}) 
 	});
 	
 </script>
